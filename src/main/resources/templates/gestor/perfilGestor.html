@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/general-gestor.html ::gestor-head(title='Perfil')">
+
+    </head>
+    <body id="page-top">
+
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+
+            <!-- Sidebar -->
+            <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='...',param2='...')"></div>
+            <!-- End of Sidebar -->
+
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+
+                <!-- Main Content -->
+                <div id="content">
+
+                    <div th:replace="fragments/general-gestor.html :: topbar"></div>
+
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+
+                        <!-- Page Heading -->
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-900">Perfil del Gestor</h1>
+                        </div>
+
+
+                            <div class="col-md-9 mx-auto">
+
+                                <!-- Profile widget -->
+                                <div class="bg-white shadow rounded overflow-hidden">
+                                    <div class="px-4 pt-0 pb-4 bg-dark">
+                                        <div class="media align-items-end profile-header">
+                                            <div class="profile mr-3 mt-3"><img
+                                                    src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-4.jpg"
+                                                    alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                                                <a data-toggle="modal" data-target="#editModal" style="color: white" class="btn btn-dark btn-sm btn-block">Editar perfil</a></div>
+                                            <div class="media-body mb-5 text-white">
+                                                <h4 class="mt-0 mb-0">Valerie Luna</h4>
+                                                <p class="small mb-4"><i class="fa fa-map-marker mr-2"></i>Lima</p>
+                                                <p class="small mb-4"><i class="fa fa-map-marker mr-2"></i>a20160555@pucp.edu.pe</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-light p-4 d-flex justify-content-end text-center">
+                                        <ul class="list-inline mb-0">
+                                            <li class="list-inline-item">
+                                                <h5 class="font-weight-bold mb-0 d-block">241</h5><small
+                                                    class="text-muted"> <i
+                                                    class="fa fa-picture-o mr-1"></i>Sedes</small>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <h5 class="font-weight-bold mb-0 d-block">84K</h5><small
+                                                    class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Artesanos</small>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="py-4 px-4">
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <h5 class="mb-0">Fotos</h5>
+                                            <a href="#" class="btn btn-link text-muted">Mostrar todas</a>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 mb-2 pr-lg-1"><img
+                                                    src="https://res.cloudinary.com/mhmd/image/upload/v1556294928/nicole-honeywill-546848-unsplash_ymprvp.jpg"
+                                                    alt="" class="img-fluid rounded shadow-sm"></div>
+                                            <div class="col-lg-6 mb-2 pl-lg-1"><img
+                                                    src="https://res.cloudinary.com/mhmd/image/upload/v1556294927/dose-juice-1184444-unsplash_bmbutn.jpg"
+                                                    alt="" class="img-fluid rounded shadow-sm"></div>
+                                            <div class="col-lg-6 pr-lg-1 mb-2"><img
+                                                    src="https://res.cloudinary.com/mhmd/image/upload/v1556294926/cody-davis-253925-unsplash_hsetv7.jpg"
+                                                    alt="" class="img-fluid rounded shadow-sm"></div>
+                                            <div class="col-lg-6 pl-lg-1"><img
+                                                    src="https://res.cloudinary.com/mhmd/image/upload/v1556294928/tim-foster-734470-unsplash_xqde00.jpg"
+                                                    alt="" class="img-fluid rounded shadow-sm"></div>
+                                        </div>
+                                        <div class="py-4">
+                                            <h5 class="mb-3">Quotes</h5>
+                                            <div class="p-4 bg-light rounded shadow-sm">
+                                                <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur
+                                                    adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                                                    dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End profile widget -->
+                            </div>
+
+
+
+                    </div>
+                    <!-- /.container-fluid -->
+
+                </div>
+                <!-- End of Main Content -->
+
+                <div th:replace="fragments/general-gestor.html :: footer"></div>
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
+
+        <!-- Bootstrap core JavaScript-->
+        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+        <!-- Page level plugins -->
+        <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+
+        <!-- Page level custom scripts -->
+        <script th:src="@{/js/demo/chart-area-demo.js}"></script>
+        <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
+
+        <!-- Modal Edit-->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar Perfil</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name2" class="col-form-label">Nombre:</label>
+                                <input type="text" class="form-control" id="recipient-name2" placeholder="Valerie">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name3" class="col-form-label">Apellido:</label>
+                                <input type="text" class="form-control" id="recipient-name3" placeholder="Luna">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name4" class="col-form-label">Ciudad:</label>
+                                <input type="text" class="form-control" id="recipient-name4" placeholder="Lima">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name5" class="col-form-label">Correo:</label>
+                                <input type="text" class="form-control" id="recipient-name5" placeholder="a20160555@pucp.edu.pe">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary"><a href="perfilGestor.html" style="color:white;text-decoration:none">Guardar cambios</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
