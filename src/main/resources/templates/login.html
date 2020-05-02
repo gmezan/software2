@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html class="h-100" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
   <meta charset="utf-8">
@@ -19,9 +19,9 @@
 
 </head>
 
-<body class="bg-gradient-dark">
-
-  <div class="container">
+<body class="bg-gradient-dark mh-100" >
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <div class="container my-auto">
 
     <!-- Outer Row -->
     <div class="row justify-content-center">
@@ -32,8 +32,10 @@
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-              <div class="col-lg-6">
+              <div class="col-lg-6 container-fluid my-auto mx-auto">
+                <img class="mx-auto  img-fluid d-block" th:src="@{/img/bandi.png}" alt="Responsive image">
+              </div>
+              <div class="col-lg-6 mx-auto">
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
@@ -54,15 +56,15 @@
                     <a href="index.html" class="btn btn-primary btn-user btn-block">
                       Login
                     </a>
-                    <hr>
-                    <a href="index.html" class="btn btn-google btn-user btn-block">
-                      <i class="fab fa-google fa-fw"></i> Login with Google
-                    </a>
-                    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                      <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                    </a>
+                    <!--                    <hr>
+                                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                                          <i class="fab fa-google fa-fw"></i> Login with Google
+                                        </a>
+                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                          <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                        </a> -->
                   </form>
-                  <hr>
+                  <!--                  <hr> -->
                   <div class="text-center">
                     <a class="small" href="forgot-password.html">Forgot Password?</a>
                   </div>
@@ -80,6 +82,7 @@
     </div>
 
   </div>
+</div>
 
   <!-- Bootstrap core JavaScript-->
   <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
