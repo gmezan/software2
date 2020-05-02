@@ -23,15 +23,97 @@
                     <div class="container-fluid">
                         
                         <!-- Page Heading -->
-                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-3">
                             <h1 class="h3 mb-0 text-gray-900">Comunidades</h1>
                         </div>
-                    
-                    
-                    
-                    
-                    
-                    
+                        <div class="d-sm-flex align-items-center justify-content-between mb-3">
+                            <button data-toggle="modal" data-target="#addModal" type="button" class="btn btn-outline-success">+ Agregar</button>
+                        </div>
+
+
+                        <!-- Database Table -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Lista de comunidades</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nombre</th>
+                                                <th>Código</th>
+                                                <th>Cantidad de artesanos</th>
+                                                <th>Edit/Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nombre</th>
+                                                <th>Código</th>
+                                                <th>Cantidad de artesanos</th>
+                                                <th>Edit/Delete</th>
+                                            </tr>
+                                        </tfoot>
+
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Amaru</th>
+                                                <td>AM</td>
+                                                <td>8</td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Huaran</td>
+                                                <td>HU</td>
+                                                <td>16</td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Cancha Cancha</td>
+                                                <td>CC</td>
+                                                <td>7</td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Parobamba</td>
+                                                <td>PA</td>
+                                                <td>21</td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>Pitukiska</td>
+                                                <td>PI</td>
+                                                <td>18</td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     
                     
                     </div>
@@ -72,6 +154,77 @@
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/chart-area-demo.js}"></script>
         <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
-    
+
+        <!-- Modal Add-->
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Nueva Comunidad</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                                <input type="text" class="form-control" id="recipient-name">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary"><a href="comunidades" style="color:white;text-decoration:none">Agregar</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Edit-->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar Comunidad</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                                <input type="text" class="form-control" id="recipient-name2" placeholder="Nombre de comunidad">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary"><a href="comunidades.html" style="color:white;text-decoration:none">Guardar cambios</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Delete -->
+        <div id="deleteModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Borrar Comunidad</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Seguro que desea borrar esta comunidad? Esta acción no se puede deshacer.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger"><a href="comunidades.html" style="color:white;text-decoration:none">Borrar</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>
