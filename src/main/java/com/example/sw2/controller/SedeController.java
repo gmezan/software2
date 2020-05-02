@@ -10,3 +10,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SedeController {
     @GetMapping("/{p}") public String dummyGet(@PathVariable("p") String page){ return "sede/"+ page;}
 }
+    
