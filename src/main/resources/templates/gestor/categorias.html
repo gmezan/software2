@@ -154,6 +154,13 @@
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/chart-area-demo.js}"></script>
         <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
+    
+        <!-- Page level plugins -->
+        <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+    
+        <!-- Page level custom scripts -->
+        <script th:src="@{/js/demo/datatables-demo.js}"></script>
 
         <!-- Modal Add-->
         <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -194,7 +201,7 @@
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                                <label for="recipient-name2" class="col-form-label">Nombre:</label>
                                 <input type="text" class="form-control" id="recipient-name2" placeholder="Nombre de categoría">
                             </div>
                         </form>
