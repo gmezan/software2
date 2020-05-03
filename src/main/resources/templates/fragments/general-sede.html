@@ -151,7 +151,8 @@
 
 
 <!-- Sidebar -->
-<ul th:fragment="admin-sidebar(param1,param2)" class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul th:fragment="sede-sidebar(param1,param2)"
+    class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <i class="fas fa-user-circle"></i>
@@ -177,26 +178,30 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item" th:classappend="${param1=='Productos'}? active : ''">
+            <a class="nav-link" th:classappend="${param1=='Productos'}? '': collapsed" href="#"
+               data-toggle="collapse" data-target="#collapseInv" aria-expanded="true" aria-controls="collapseInv">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Productos</span>
+            </a>
+            <div id="collapseInv" class="collapse" th:classappend="${param1=='¨Productos'}?  show : ''"
+             aria-labelledby="headingInv" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" th:classappend="${param2=='ListaProductosConfirmados'}?  active : ''"
+                       href="ListaProductosConfirmados.html">Productos confirmados</a>
+                    <a class="collapse-item" th:classappend="${param2=='ListaProductosPorConfirmar'}?  active : ''"
+                       href="ListaProductosPorConfirmar.html">Productos por confirmar</a>
+                    <a class="collapse-item" th:classappend="${param2=='ListaProductosVendidos'}?  active : ''"
+                       href="ListaProductosVendidos.html">Productos vendidos</a>
 
-    <li class="nav-item" th:classappend="${param2=='ListaProductosPorConfirmar'}? active : ''">
-        <a class="nav-link" href="ListaProductosPorConfirmar.html">
-            <i class="fas fa-clock"></i>
-            <span>Productos por confirmar</span></a>
+                </div>
+            </div>
     </li>
-    <li class="nav-item" th:classappend="${param2=='ListaProductosConfirmados'}? active : ''">
-        <a class="nav-link" href="ListaProductosConfirmados.html">
-            <i class="fas fa-check-circle"></i>
-            <span>Productos confirmados</span></a>
-    </li>
+
     <li class="nav-item" th:classappend="${param2=='ListaOrdenes'}? active : ''">
         <a class="nav-link" href="ListaOrdenes.html">
             <i class="fas fa-list-ul"></i>
             <span>Ordenes</span></a>
-    </li>
-    <li class="nav-item" th:classappend="${param2=='ListaProductosVendidos'}? active : ''">
-        <a class="nav-link" href="ListaProductosVendidos.html">
-            <i class="fas fa-list-ul"></i>
-            <span>Productos vendidos</span></a>
     </li>
     <li class="nav-item" th:classappend="${param2=='ListaTiendas'}? active : ''">
         <a class="nav-link" href="ListaTiendas.html">

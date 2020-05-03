@@ -10,7 +10,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <div th:replace="fragments/general-sede.html ::admin-sidebar(param1='Listas',param2='ListaOrdenes')"></div>
+            <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='Listas',param2='ListaOrdenes')"></div>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -26,7 +26,6 @@
 
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-900">Lista de Ordenes</h1>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                         </div>
                         <!-- Page Heading -->
 
@@ -37,7 +36,6 @@
                                     <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>N° de orden</th>
                                                 <th>Nombre del cliente</th>
                                                 <th>Tipo de documento</th>
                                                 <th>N° de documento</th>
@@ -54,7 +52,6 @@
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>N° de orden</th>
                                                 <th>Nombre del cliente</th>
                                                 <th>Tipo de documento</th>
                                                 <th>N° de documento</th>
@@ -72,7 +69,6 @@
 
                                         <tbody>
                                             <tr>
-                                                <td>1</td>
                                                 <td>Juar Perez</td>
                                                 <td>factura</td>
                                                 <td>87651216</td>
@@ -88,7 +84,6 @@
                                             </tr>
 
                                             <tr>
-                                                <td>2</td>
                                                 <td>Pedro Jimenez</td>
                                                 <td>factura</td>
                                                 <td>132165465</td>
@@ -104,7 +99,6 @@
                                             </tr>
 
                                             <tr>
-                                                <td>3</td>
                                                 <td>Gustavo Montes</td>
                                                 <td>factura</td>
                                                 <td>146546798</td>
@@ -141,6 +135,8 @@
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
+
+
 
         <!-- Logout Modal-->
         <div th:replace="fragments/general-sede.html :: logout-modal"></div>
