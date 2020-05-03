@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/general-sede.html ::sede-head(title='Lista de productos por confirmar')">
+    </head>
+
+    <body id="page-top">
+
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+
+            <!-- Sidebar -->
+            <div th:replace="fragments/general-sede.html ::admin-sidebar(param1='Listas',param2='ListaProductosPorConfirmar')"></div>
+            <!-- End of Sidebar -->
+
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+
+                <!-- Main Content -->
+                <div id="content">
+
+                    <div th:replace="fragments/general-sede.html :: topbar"></div>
+
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Lista de productos por confirmar</h1>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        </div>
+
+                        <!-- Page Heading -->
+
+
+                        <!-- DataTales Example -->
+                        <div class="card shadow mb-4">
+                            <!--div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Lista de productos confirmados</h6>
+                            </div-->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover" id="dataTable" width="100%"
+                                           cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Codigo</th>
+                                                <th>Nombre</th>
+                                                <th>Color</th>
+                                                <th>Tamaño</th>
+                                                <th>Comunidad</th>
+                                                <th>Stock asignado</th>
+                                                <th>Foto</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Codigo</th>
+                                                <th>Nombre</th>
+                                                <th>Color</th>
+                                                <th>Tamaño</th>
+                                                <th>Comunidad</th>
+                                                <th>Stock asignado</th>
+                                                <th>Foto</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <tr>
+                                                <th>1</th>
+                                                <td>THLLIBLAOSHU</td>
+                                                <td>Awana</td>
+                                                <td>Rojo</td>
+                                                <td>Small</td>
+                                                <td>Amaru</td>
+                                                <td>200</td>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmarRecepcionModal" data-whatever="@mdo">Confirmar recepcion sin problemas</button>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#problemaModal" data-whatever="@mdo">Registrar un problema</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>2</th>
+                                                <td>MHQONRUGSHUASH19MAY</td>
+                                                <td>Qespe</td>
+                                                <td>Amarillo</td>
+                                                <td>One Size</td>
+                                                <td>Amaru</td>
+                                                <td>300</td>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmarRecepcionModal" data-whatever="@mdo">Confirmar recepcion sin problemas</button>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#problemaModal" data-whatever="@mdo">Registrar un problema</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>3</th>
+                                                <td>ALQONROGSHUASH19AUG</td>
+                                                <td>Lama</td>
+                                                <td>Rojo</td>
+                                                <td>Large</td>
+                                                <td>Amaru</td>
+                                                <td>190</td>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmarRecepcionModal" data-whatever="@mdo">Confirmar recepcion sin problemas</button>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#problemaModal" data-whatever="@mdo">Registrar un problema</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.container-fluid -->
+
+                </div>
+                <!-- End of Main Content -->
+
+                <div th:replace="fragments/general-sede.html :: footer"></div>
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div th:replace="fragments/general-sede.html :: logout-modal"></div>
+
+        <div class="modal fade" id="confirmarRecepcionModal" tabindex="-1"
+             role="dialog" aria-labelledby="confirmarRecepcionModal"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel">¿Esta
+                            seguro que desea confirmar la recepcion del
+                            producto?</h4>
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <h6><b>Antes de confirmar, se recomienda
+                                verificar
+                                todos los datos del producto</b></h6></br>
+                            <h6>Codigo: THLLIBLAOSHU</h6>
+                            <h6>Nombre: Awana</h6>
+                            <h6>Color: Rojo</h6>
+                            <h6>Tamaño: Small</h6>
+                            <h6>Comunidad: Amaru</h6>
+                            <h6>Stock asignado: 200</h6>
+                            <h6>Foto: </h6>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger"
+                                data-dismiss="modal">Cancelar
+                        </button>
+                        <a type="button" class="btn btn-primary"
+                           href="ListaProductosPorConfirmar">Confirmar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal fade" id="problemaModal" tabindex="-1"
+                 role="dialog" aria-labelledby="problemaModal"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLabel2">
+                                <b>Descripcion del problema:</b></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <textarea type="text" class="form-control"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            <a type="button" class="btn btn-primary" href="ListaProductosPorConfirmar">Confirmar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap core JavaScript-->
+        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+        <!-- Page level plugins -->
+        <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+        <!-- Page level custom scripts -->
+        <script th:src="@{/js/demo/datatables-demo.js}"></script>
+
+    </body>
+
+</html>
