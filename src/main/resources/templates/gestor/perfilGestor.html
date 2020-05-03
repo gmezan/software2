@@ -33,16 +33,16 @@
 
                                 <!-- Profile widget -->
                                 <div class="bg-white shadow rounded overflow-hidden">
-                                    <div class="px-4 pt-0 pb-4 bg-dark">
+                                    <div class="px-4 pt-0 pb-4 bg-gradient-dark">
                                         <div class="media align-items-end profile-header">
                                             <div class="profile mr-3 mt-3"><img
                                                     src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-4.jpg"
                                                     alt="..." width="130" class="rounded mb-2 img-thumbnail">
                                                 <a data-toggle="modal" data-target="#editModal" style="color: white" class="btn btn-dark btn-sm btn-block">Editar perfil</a></div>
                                             <div class="media-body mb-5 text-white">
-                                                <h4 class="mt-0 mb-0">Valerie Luna</h4>
+                                                <h4 class="mt-0 mb-0">Katherine Vargas</h4>
                                                 <p class="small mb-4"><i class="fa fa-map-marker mr-2"></i>Lima</p>
-                                                <p class="small mb-4"><i class="fa fa-map-marker mr-2"></i>a20160555@pucp.edu.pe</p>
+                                                <p class="small mb-4"><i class="fa fa-mail-bulk mr-2"></i>a20160555@pucp.edu.pe</p>
                                             </div>
                                         </div>
                                     </div>
@@ -50,13 +50,12 @@
                                     <div class="bg-light p-4 d-flex justify-content-end text-center">
                                         <ul class="list-inline mb-0">
                                             <li class="list-inline-item">
-                                                <h5 class="font-weight-bold mb-0 d-block">241</h5><small
-                                                    class="text-muted"> <i
-                                                    class="fa fa-picture-o mr-1"></i>Sedes</small>
+                                                <h5 class="font-weight-bold mb-0 d-block">241</h5>
+                                                <small class="text-muted"> <i class="fa fa-picture-o mr-1"></i>Sedes</small>
                                             </li>
                                             <li class="list-inline-item">
-                                                <h5 class="font-weight-bold mb-0 d-block">84K</h5><small
-                                                    class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Artesanos</small>
+                                                <h5 class="font-weight-bold mb-0 d-block">84K</h5>
+                                                <small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Productos</small>
                                             </li>
                                         </ul>
                                     </div>
@@ -64,7 +63,7 @@
                                     <div class="py-4 px-4">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
                                             <h5 class="mb-0">Fotos</h5>
-                                            <a href="#" class="btn btn-link text-muted">Mostrar todas</a>
+                                            <!--a href="#" class="btn btn-link text-muted">Mostrar todas</a-->
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6 mb-2 pr-lg-1"><img
@@ -81,7 +80,10 @@
                                                     alt="" class="img-fluid rounded shadow-sm"></div>
                                         </div>
                                         <div class="py-4">
-                                            <h5 class="mb-3">Quotes</h5>
+                                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                                <h5 class="mb-1">Notas</h5>
+                                                <button data-toggle="modal" data-target="#noteModal" class="btn btn-link text-muted">Modificar</button>
+                                            </div>
                                             <div class="p-4 bg-light rounded shadow-sm">
                                                 <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur
                                                     adipisicing elit, sed do eiusmod tempor incididunt ut labore et
@@ -148,11 +150,11 @@
                         <form>
                             <div class="form-group">
                                 <label for="recipient-name2" class="col-form-label">Nombre:</label>
-                                <input type="text" class="form-control" id="recipient-name2" placeholder="Valerie">
+                                <input type="text" class="form-control" id="recipient-name2" placeholder="Katherine">
                             </div>
                             <div class="form-group">
                                 <label for="recipient-name3" class="col-form-label">Apellido:</label>
-                                <input type="text" class="form-control" id="recipient-name3" placeholder="Luna">
+                                <input type="text" class="form-control" id="recipient-name3" placeholder="Vargas">
                             </div>
                             <div class="form-group">
                                 <label for="recipient-name4" class="col-form-label">Ciudad:</label>
@@ -161,6 +163,31 @@
                             <div class="form-group">
                                 <label for="recipient-name5" class="col-form-label">Correo:</label>
                                 <input type="text" class="form-control" id="recipient-name5" placeholder="a20160555@pucp.edu.pe">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary"><a href="perfilGestor.html" style="color:white;text-decoration:none">Guardar cambios</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Note-->
+        <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modificar Nota</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <textarea type="text" class="form-control" id="recipient-name1" placeholder="Nota...."></textarea>
                             </div>
                         </form>
                     </div>

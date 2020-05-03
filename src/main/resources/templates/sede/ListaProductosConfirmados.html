@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/general-sede.html ::sede-head(title='Lista de productos confirmados')">
+    </head>
+
+    <body id="page-top">
+
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+
+            <!-- Sidebar -->
+            <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='Productos',param2='ListaProductosConfirmados')"></div>
+            <!-- End of Sidebar -->
+
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+
+                <!-- Main Content -->
+                <div id="content">
+
+                    <div th:replace="fragments/general-sede.html :: topbar"></div>
+
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Lista de productos confirmados</h1>
+                        </div>
+
+                        <!-- Page Heading -->
+
+
+                        <!-- DataTales Example -->
+                        <div class="card shadow mb-4">
+                            <!--div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Lista de productos confirmados</h6>
+                            </div-->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Codigo</th>
+                                                <th>Nombre</th>
+                                                <th>Color</th>
+                                                <th>Tamaño</th>
+                                                <th>Comunidad</th>
+                                                <th>Stock asignado</th>
+                                                <th>Stock actual</th>
+                                                <th>Foto</th>
+                                                <th>Asignar a una tienda</th>
+                                                <th>Registrar venta</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Codigo</th>
+                                                <th>Nombre</th>
+                                                <th>Color</th>
+                                                <th>Tamaño</th>
+                                                <th>Comunidad</th>
+                                                <th>Stock asignado</th>
+                                                <th>Stock actual</th>
+                                                <th>Foto</th>
+                                                <th>Asignar a una tienda</th>
+                                                <th>Registrar venta</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <tr>
+                                                <th>1</th>
+                                                <td>THLLIBLAOSHU</td>
+                                                <td>Awana</td>
+                                                <td>Rojo</td>
+                                                <td>Small</td>
+                                                <td>Amaru</td>
+                                                <td>200</td>
+                                                <td>20</td>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#AsignarProductoModal" data-whatever="@mdo"><i class="fas fa-store"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#registrarVentaModal" data-whatever="@mdo"><i class="fas fa-dollar-sign"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>2</th>
+                                                <td>MHQONRUGSHUASH19MAY</td>
+                                                <td>Qespe</td>
+                                                <td>Amarillo</td>
+                                                <td>One Size</td>
+                                                <td>Amaru</td>
+                                                <td>300</td>
+                                                <td>150</td>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#AsignarProductoModal" data-whatever="@mdo"><i class="fas fa-store"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#registrarVentaModal" data-whatever="@mdo"><i class="fas fa-dollar-sign"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>3</th>
+                                                <td>ALQONROGSHUASH19AUG</td>
+                                                <td>Lama</td>
+                                                <td>Rojo</td>
+                                                <td>Large</td>
+                                                <td>Amaru</td>
+                                                <td>190</td>
+                                                <td>57</td>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#AsignarProductoModal" data-whatever="@mdo"><i class="fas fa-store"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#registrarVentaModal" data-whatever="@mdo"><i class="fas fa-dollar-sign"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.container-fluid -->
+
+                </div>
+                <!-- End of Main Content -->
+
+                <div th:replace="fragments/general-sede.html :: footer"></div>
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div th:replace="fragments/general-sede.html :: logout-modal"></div>
+
+
+        <div class="modal fade" id="registrarVentaModal" tabindex="-1" role="dialog" aria-labelledby="registrarVentaModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="registrarVentaModalLabel">Registrar venta de un producto</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="nombrecliente" class="col-form-label">Nombre del cliente:</label>
+                                <input type="text" class="form-control" name="nombrecliente" id="nombrecliente">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tipodocumento">Tipo de Documento:</label>
+                                <input type="text" class="form-control" name="tipodocumento" id="tipodocumento">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="numero" class="col-form-label">Numero:</label>
+                                <input type="text" class="form-control" name="numero" id="numero">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lugarventa" class="col-form-label">Lugar de venta:</label>
+                                <input type="text" class="form-control" name="lugarventa" id="lugarventa">
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha" class="col-form-label">Fecha:</label>
+                                <input type="text" class="form-control" name="fecha" id="fecha">
+                            </div>
+                            <div class="form-group">
+                                <label for="rucodni" class="col-form-label">RUC/DNI(Opcional):</label>
+                                <input type="text" class="form-control" name="rucodni" id="rucodni">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary">Registrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="AsignarProductoModal" tabindex="-1" role="dialog" aria-labelledby="AsignarProductoModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AsignarProductoModalLabel">Asignar producto a una tienda</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="nombretienda" class="col-form-label">Nombre de la tienda:</label>
+                                <input type="text" class="form-control" name="nombretienda" id="nombretienda">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fechaasignacion">Fecha en la que se deja el producto:</label>
+                                <input type="text" class="form-control" name="fechaasignacion" id="fechaasignacion">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cantidad" class="col-form-label">Cantidad</label>
+                                <input type="text" class="form-control" name="cantidad" id="cantidad">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary">Asignar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap core JavaScript-->
+        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+        <!-- Page level plugins -->
+        <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+        <!-- Page level custom scripts -->
+        <script th:src="@{/js/demo/datatables-demo.js}"></script>
+
+    </body>
+
+</html>

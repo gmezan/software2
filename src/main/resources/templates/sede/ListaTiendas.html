@@ -1,23 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Lista de Ordenes</title>
-
-    <!-- Custom fonts for this template-->
-    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
-
+<head th:replace="fragments/general-sede.html ::sede-head(title='Lista de tiendas')">
 </head>
 
 <body id="page-top">
@@ -26,7 +10,7 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <div th:replace="fragments/general-sede.html ::admin-sidebar(param1='Listas',param2='ListaOrdenes')"></div>
+    <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='Listas',param2='ListaTiendas')"></div>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -43,7 +27,6 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-900">Lista de Tiendas</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                 </div>
                 <div class="card shadow mb-4">
 
@@ -51,70 +34,57 @@
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                <tr>
-                                    <th>Tienda</th>
-                                    <th>Nombre del producto</th>
-                                    <th>Fecha(modificar)</th>
-                                    <th>Fecha fin</th>
-                                    <th>Cantidad</th>
-                                    <th></th>
-                                </tr>
+                                    <tr>
+                                        <th>Tienda</th>
+                                        <th>Nombre del producto</th>
+                                        <th>Fecha de asignación</th>
+                                        <th>Fecha fin</th>
+                                        <th>Cantidad</th>
+                                        <th></th>
+                                    </tr>
                                 </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Tienda</th>
+                                        <th>Nombre del producto</th>
+                                        <th>Fecha de asignación</th>
+                                        <th>Fecha fin</th>
+                                        <th>Cantidad</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
 
                                 <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Editar</button>
-
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Editar</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form>
-                                                            <div class="form-group">
-                                                                <label for="nombretienda" class="col-form-label">Nombre de la tienda</label>
-                                                                <input type="text" class="form-control" id="nombretienda">
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label for="producto">Producto</label>
-                                                                <select class="form-control" name="producto" id="producto">
-                                                                    <option>
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label for="fecha" class="col-form-label">Fecha en la que se deja el producto</label>
-                                                                <input type="text" class="form-control" id="fecha">
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label for="cantidad" class="col-form-label">Cantidad</label>
-                                                                <input type="text" class="form-control" id="cantidad">
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                        <button type="button" class="btn btn-primary">Guardar cambios</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>Comercial Rosita</td>
+                                        <td>Lliclla</td>
+                                        <td>01/AUG/20</td>
+                                        <td>30/AUG/20</td>
+                                        <td>20</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditarTiendaModal" data-whatever="@mdo">Editar</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>La tiendita de Don Pepe</td>
+                                        <td>Qamaña</td>
+                                        <td>01/MAY/20</td>
+                                        <td>30/MAY/20</td>
+                                        <td>15</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditarTiendaModal" data-whatever="@mdo">Editar</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Comercial Rosita</td>
+                                        <td>Yanapay</td>
+                                        <td>15/JAN/20</td>
+                                        <td>15/FEB/20</td>
+                                        <td>10</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditarTiendaModal" data-whatever="@mdo">Editar</button>
+                                        </td>
+                                    </tr>
 
                                 </tbody>
                             </table></div>
@@ -148,6 +118,49 @@
 <!-- Logout Modal-->
 <div th:replace="fragments/general-sede.html :: logout-modal"></div>
 
+<div class="modal fade" id="EditarTiendaModal" tabindex="-1" role="dialog" aria-labelledby="EditarTiendaModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="EditarTiendaModalLabel">Editar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="nombretienda" class="col-form-label">Nombre de la tienda</label>
+                        <input type="text" class="form-control" id="nombretienda">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="producto">Producto</label>
+                        <select class="form-control" name="producto" id="producto">
+                            <option>
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha" class="col-form-label">Fecha en la que se deja el producto</label>
+                        <input type="text" class="form-control" id="fecha">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cantidad" class="col-form-label">Cantidad</label>
+                        <input type="text" class="form-control" id="cantidad">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Bootstrap core JavaScript-->
 <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
@@ -160,10 +173,13 @@
 
 <!-- Page level plugins -->
 <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
 
 <!-- Page level custom scripts -->
 <script th:src="@{/js/demo/chart-area-demo.js}"></script>
 <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
+<script th:src="@{/js/demo/datatables-demo.js}"></script>
 
 </body>
 

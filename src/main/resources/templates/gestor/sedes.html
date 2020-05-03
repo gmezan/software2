@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/general-gestor.html ::gestor-head(title='Productos')">
+<head th:replace="fragments/general-gestor.html ::gestor-head(title='Categorias')">
 </head>
 <body id="page-top">
 
@@ -8,7 +8,7 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='Campos',param2='Productos')"></div>
+    <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='Sedes',param2='...')"></div>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -24,24 +24,16 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-3">
-                    <h1 class="h3 mb-0 text-gray-900">Productos</h1>
+                    <h1 class="h3 mb-0 text-gray-900">Sedes</h1>
                 </div>
-
-                <!-- -->
-                <!-- -->
-                <!-- -->
-                <!-- -->
-                <!-- -->
-
-
                 <div class="d-sm-flex align-items-center justify-content-between mb-3">
                     <button data-toggle="modal" data-target="#addModal" type="button" class="btn btn-outline-success">+ Agregar</button>
                 </div>
 
-
+                <!-- Database Table -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Lista de Productos</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Lista de sedes</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -50,12 +42,10 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nombre</th>
-                                    <th>Descripcion</th>
-                                    <!--
+                                    <th>Correo</th>
                                     <th>Telefono</th>
                                     <th>Asignar Productos</th>
-                                    -->
-                                    <th>Editar/Eliminar Producto</th>
+                                    <th>Editar/Eliminar Sede</th>
                                 </tr>
                                 </thead>
 
@@ -63,18 +53,12 @@
                                 <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>Producto 1</th>
-                                    <td>Descripcion 1</td>
-
-
-                                    <!--
                                     <td>Sede 1</th>
                                     <td>sede1@hotmail.com</td>
                                     <td>975654123</td>
                                     <td>
                                         <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
                                     </td>
-                                    -->
                                     <td>
                                         <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
                                         <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -82,17 +66,12 @@
                                 </tr>
                                 <tr>
                                     <td>2</td>
-                                    <td>Producto 2</th>
-                                    <td>Descripcion 2</td>
-
-                                    <!--
                                     <td>Sede 2</td>
                                     <td>sede2@hotmail.com</td>
                                     <td>951456874</td>
                                     <td>
                                         <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
                                     </td>
-                                    -->
                                     <td>
                                         <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
                                         <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -100,17 +79,12 @@
                                 </tr>
                                 <tr>
                                     <td>3</td>
-                                    <td>Producto 3</th>
-                                    <td>Descripcion 3</td>
-
-                                    <!--
                                     <td>Sede 3</td>
                                     <td>sede3@hotmail.com</td>
                                     <td>975684125</td>
                                     <td>
                                         <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
                                     </td>
-                                    -->
                                     <td>
                                         <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
                                         <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -118,17 +92,12 @@
                                 </tr>
                                 <tr>
                                     <td>4</td>
-                                    <td>Producto 4</th>
-                                    <td>Descripcion 4</td>
-
-                                    <!--
                                     <td>Sede 4</td>
                                     <td>sede4@hotmail.com</td>
                                     <td>912745258</td>
                                     <td>
                                         <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
                                     </td>
-                                    -->
                                     <td>
                                         <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
                                         <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -136,17 +105,12 @@
                                 </tr>
                                 <tr>
                                     <td>5</td>
-                                    <td>Producto 5</th>
-                                    <td>Descripcion 5</td>
-
-                                    <!--
                                     <td>Sede 5</td>
                                     <td>sede5@hotmail.com</td>
                                     <td>974158457</td>
                                     <td>
                                         <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
                                     </td>
-                                    -->
                                     <td>
                                         <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
                                         <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -159,16 +123,6 @@
                 </div>
 
 
-
-
-
-
-
-
-
-                <!-- -->
-                <!-- -->
-                <!-- -->
 
             </div>
             <!-- /.container-fluid -->
@@ -216,13 +170,12 @@
 <!-- Page level custom scripts -->
 <script th:src="@{/js/demo/datatables-demo.js}"></script>
 
-
 <!-- Modal Add-->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Nueva Producto</h5>
+                <h5 class="modal-title">Nueva Sede</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -230,14 +183,8 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Nombre :</label>
+                        <label for="nombre" class="col-form-label">Nombre:</label>
                         <input type="text" class="form-control" id="nombre">
-
-                        <label for="descripcion" class="col-form-label">Descripcion :</label>
-                        <textarea type="text" class="form-control" id="descripcion"></textarea>
-
-                        <!--
-
                         <label for="dni" class="col-form-label">DNI:</label>
                         <input type="text" class="form-control" id="dni">
                         <label for="correo" class="col-form-label">Correo:</label>
@@ -245,11 +192,7 @@
                         <label for="telefono" class="col-form-label">Telefono:</label>
                         <input type="text" class="form-control" id="telefono">
                         <br>
-
                         <button class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-camera"></i> Subir Foto</i></button>
-
-                        -->
-
                     </div>
                 </form>
 
@@ -304,13 +247,8 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Nombre :</label>
+                        <label for="nombre" class="col-form-label">Nombre:</label>
                         <input type="text" class="form-control" id="nombre" placeholder="Nombre de sede">
-
-                        <label for="descripcion" class="col-form-label">Descripcion :</label>
-                        <textarea type="text" class="form-control" id="descripcion" placeholder="Descripcion"></textarea>
-
-                        <!--
                         <label for="dni" class="col-form-label">DNI:</label>
                         <input type="text" class="form-control" id="dni" placeholder="DNI">
                         <label for="correo" class="col-form-label">Correo:</label>
@@ -319,8 +257,6 @@
                         <input type="text" class="form-control" id="telefono" placeholder="Telefono">
                         <br>
                         <button class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-camera"></i> Actualizar Foto</i></button>
-                        -->
-
                     </div>
                 </form>
             </div>
@@ -337,11 +273,11 @@
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Borrar Producto</h4>
+                <h4 class="modal-title">Borrar Sede</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-                <p>¿Seguro que desea borrar esta producto? Esta acción no se puede deshacer.</p>
+                <p>¿Seguro que desea borrar esta sede? Esta acción no se puede deshacer.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -350,8 +286,6 @@
         </div>
     </div>
 </div>
-
-
 
 </body>
 </html>

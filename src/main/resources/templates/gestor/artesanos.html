@@ -23,20 +23,250 @@
                     <div class="container-fluid">
                         
                         <!-- Page Heading -->
-                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-3">
                             <h1 class="h3 mb-0 text-gray-900">Artesanos</h1>
                         </div>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                        <div class="d-sm-flex align-items-center justify-content-between mb-3">
+                            <button data-toggle="modal" data-target="#addModal" type="button"
+                                    class="btn btn-outline-success">+ Agregar
+                            </button>
+                        </div>
+                        
+                        
+                        <!-- Database Table -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Lista de artesanos</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover" id="dataTable" width="100%"
+                                           cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nombre</th>
+                                                <th>Apellidos</th>
+                                                <th>Código</th>
+                                                <th>Comunidad a la que pertenece</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nombre</th>
+                                                <th>Apellidos</th>
+                                                <th>Código</th>
+                                                <th>Comunidad a la que pertenece</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </tfoot>
+                                        
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Angela</td>
+                                                <td>Ccana Zamata</td>
+                                                <td>ACZ</td>
+                                                <td>Amaru</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Paulina</td>
+                                                <td>Ccana Condori</td>
+                                                <td>PCC</td>
+                                                <td>Amaru</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Celia</td>
+                                                <td>Chipa Puma</td>
+                                                <td>CCP</td>
+                                                <td>Amaru</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Andres</td>
+                                                <td>Sallo Huaman</td>
+                                                <td>ASH</td>
+                                                <td>Huaran</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>Concepción</td>
+                                                <td>Hancco Sicos</td>
+                                                <td>CHS</td>
+                                                <td>Huaran</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>6</td>
+                                                <td>Eufemia</td>
+                                                <td>Landa Huallpa</td>
+                                                <td>ELH</td>
+                                                <td>Huaran</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>7</td>
+                                                <td>Alejandra</td>
+                                                <td>Mamani Ccarhuani</td>
+                                                <td>AMC</td>
+                                                <td>Cancha Cancha</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>8</td>
+                                                <td>Dorotea</td>
+                                                <td>Quispe Hancco</td>
+                                                <td>DQH</td>
+                                                <td>Cancha Cancha</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>9</td>
+                                                <td>Elena</td>
+                                                <td>Mamani Ccarhuani</td>
+                                                <td>EMC</td>
+                                                <td>Cancha Cancha</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>10</td>
+                                                <td>Brigida</td>
+                                                <td>Melo Mamani</td>
+                                                <td>BMM</td>
+                                                <td>Parobamba</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>11</td>
+                                                <td>Celsetina</td>
+                                                <td>Soncco Mamani</td>
+                                                <td>CSM</td>
+                                                <td>Parobamba</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>12</td>
+                                                <td>Cipriana</td>
+                                                <td>Chipa Huahuasoncco</td>
+                                                <td>CCH</td>
+                                                <td>Parobamba</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>13</td>
+                                                <td>Alfonsa</td>
+                                                <td>Mamani Huahuasoncco</td>
+                                                <td>AMH</td>
+                                                <td>Pitukiska</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>14</td>
+                                                <td>Bonifacia</td>
+                                                <td>Quispe Mendoza</td>
+                                                <td>BQM</td>
+                                                <td>Pitukiska</td>
+                                                <td>
+                                                    
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>15</td>
+                                                <td>Francisca</td>
+                                                <td>Tapara Quispe</td>
+                                                <td>FTQ</td>
+                                                <td>Pitukiska</td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#deleteModal"
+                                                            class="btn btn-datatable btn-icon btn-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+    
+    
+                       
+                        
                     </div>
                     <!-- /.container-fluid -->
                 
@@ -58,6 +288,74 @@
         
         <!-- Logout Modal-->
         <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
+    
+        <!-- Modal Add-->
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Nuevo Artesano</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Nombre:</label>
+                                <input type="text" class="form-control" id="nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="apPaterno" class="col-form-label">Apellido Paterno:</label>
+                                <input type="text" class="form-control" id="apPaterno">
+                            </div>
+                            <div class="form-group">
+                                <label for="apMaterno" class="col-form-label">Apellido Materno:</label>
+                                <input type="text" class="form-control" id="apMaterno">
+                            </div>
+                            <div class="form-group">
+                                <label for="cod" class="col-form-label">Código: (debe ser entre 2 y 4 caracteres)</label>
+                                <input type="text" class="form-control" id="cod">
+                            </div>
+                            <div class="form-group">
+                                <label for="comunidad" class="col-form-label">Comunidad a la que pertenece:</label>
+                                <select class="form-control" id="comunidad">
+                                    <option value="comu1">Amaru</option>
+                                    <option value="comu2">Huaran</option>
+                                    <option value="comu3">Cancha Cancha</option>
+                                    <option value="comu4">Parobamba</option>
+                                    <option value="comu5">Pitukiska</option>
+                                </select>
+                                
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary"><a href="artesanos.html" style="color:white;text-decoration:none">Agregar</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Modal Delete -->
+        <div id="deleteModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Borrar Artesano</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Seguro que desea borrar este artesano? Esta acción no se puede deshacer.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger"><a href="artesanos.html" style="color:white;text-decoration:none">Borrar</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <!-- Bootstrap core JavaScript-->
         <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
@@ -75,6 +373,12 @@
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/chart-area-demo.js}"></script>
         <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
+        <!-- Page level plugins -->
+        <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+        
+        <!-- Page level custom scripts -->
+        <script th:src="@{/js/demo/datatables-demo.js}"></script>
     
     </body>
 </html>
