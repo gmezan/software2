@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/general-gestor.html ::gestor-head(title='Inventario')">
+    </head>
+    <body id="page-top">
+        
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+            
+            <!-- Sidebar -->
+            <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='ProductosDisponibles',param2='...')"></div>
+            <!-- End of Sidebar -->
+            
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+                
+                <!-- Main Content -->
+                <div id="content">
+                    
+                    <div th:replace="fragments/general-gestor.html :: topbar"></div>
+                    
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+                        
+                        <!-- Page Heading -->
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-900">Productos Disponibles</h1>
+                            
+                        </div>
+                        
+                        
+                        <!-- DataTales Example -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Lista de productos disponibles</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover" id="dataTable" width="100%"
+                                           cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th># de Pedido</th>
+                                                <th>Nombre</th>
+                                                <th>Descripción</th>
+                                                <th>Tamaño</th>
+                                                <th>Comunidad</th>
+                                                <th>Cantidad Actual</th>
+                                                <th>Color</th>
+                                                <th>Costo Mosqoy(S/.)</th>
+                                                <th>Asignar a una sede</th>
+                                                <th>Registrar venta</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th># de Pedido</th>
+                                                <th>Nombre</th>
+                                                <th>Descripción</th>
+                                                <th>Tamaño</th>
+                                                <th>Comunidad</th>
+                                                <th>Cantidad Actual</th>
+                                                <th>Color</th>
+                                                <th>Costo Mosqoy(S/.)</th>
+                                                <th>Asignar a una sede</th>
+                                                <th>Registrar venta</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Lliklla</td>
+                                                <td>Blanket/Manta</td>
+                                                <td>One-Size</td>
+                                                <td>Amaru</td>
+                                                <td>10</td>
+                                                <td>Rojo</td>
+                                                <td>35</td>
+                                                
+                                                <td>
+                                                    <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                            data-target="#AsignarProductoModal" data-whatever="@mdo"><i
+                                                            class="fas fa-store"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success" data-toggle="modal"
+                                                            data-target="#registrarVentaModal" data-whatever="@mdo"><i
+                                                            class="fas fa-dollar-sign"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Awana</td>
+                                                <td>Loom</td>
+                                                <td>Small</td>
+                                                <td>Parobamba</td>
+                                                <td>43</td>
+                                                <td>Fucsia</td>
+                                                <td>50</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                            data-target="#AsignarProductoModal" data-whatever="@mdo"><i
+                                                            class="fas fa-store"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success" data-toggle="modal"
+                                                            data-target="#registrarVentaModal" data-whatever="@mdo"><i
+                                                            class="fas fa-dollar-sign"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                    </div>
+                    <!-- /.container-fluid -->
+                
+                </div>
+                <!-- End of Main Content -->
+                
+                <div th:replace="fragments/general-gestor.html :: footer"></div>
+            
+            </div>
+            <!-- End of Content Wrapper -->
+        
+        </div>
+        <!-- End of Page Wrapper -->
+        
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        
+        <!-- Logout Modal-->
+        <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
+    
+        <!-- Venta Modal-->
+        <div class="modal fade" id="registrarVentaModal" tabindex="-1" role="dialog" aria-labelledby="registrarVentaModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="registrarVentaModalLabel">Registrar venta</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="RucDni" class="col-form-label">RUC o DNI (opcional)</label>
+                                <input type="text" class="form-control" id="RucDni">
+                                <label for="nombre" class="col-form-label">Nombre del cliente:</label>
+                                <input type="text" class="form-control" id="nombre">
+                                <label for="documento" class="col-form-label">Número de Documento Físico:</label>
+                                <input type="text" class="form-control" id="documento">
+                                <label for="lugar" class="col-form-label">Lugar de venta:</label>
+                                <input type="text" class="form-control" id="lugar">
+                                <label for="codigo" class="col-form-label">Código de producto:</label>
+                                <input type="text" class="form-control" id="codigo" readonly="readonly">
+                                <label for="fecha" class="col-form-label">Fecha:</label>
+                                <input type="text" class="form-control" id="fecha">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary">Registrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Asignar Modal-->
+        <div class="modal fade" id="AsignarProductoModal" tabindex="-1" role="dialog" aria-labelledby="AsignarProductoModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AsignarProductoModalLabel">Asignar producto a una sede</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="producto" class="col-form-label">Producto:</label>
+                                <input type="text" class="form-control" id="producto" readonly="readonly">
+                                <label for="producto" class="col-form-label">Sede:</label>
+                                <input type="text" class="form-control" id="sede" >
+                                <label for="precioVenta" class="col-form-label">Precio de venta:</label>
+                                <input type="text" class="form-control" id="precioVenta">
+                                <label for="cantidad" class="col-form-label">Cantidad:</label>
+                                <input type="text" class="form-control" id="cantidad">
+                                <label for="fechaEnvio" class="col-form-label">Fecha de envio:</label>
+                                <input type="text" class="form-control" id="fechaEnvio">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary">Asignar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+        <!-- Bootstrap core JavaScript-->
+        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        
+        <!-- Core plugin JavaScript-->
+        <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+        
+        <!-- Custom scripts for all pages-->
+        <script th:src="@{/js/sb-admin-2.min.js}"></script>
+        
+        <!-- Page level plugins -->
+        <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+        
+        <!-- Page level custom scripts -->
+        <script th:src="@{/js/demo/datatables-demo.js}"></script>
+    
+    </body>
+</html>
