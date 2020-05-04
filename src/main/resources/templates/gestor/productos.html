@@ -27,7 +27,7 @@
                     <h1 class="h3 mb-0 text-gray-900">Productos</h1>
                     <button data-toggle="modal" data-target="#addModal" type="button"
                             class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-box-open fa-sm text-white-50"></i> Crear Producto
+                            class="fas fa-tshirt fa-sm text-white-50"></i> Nuevo Producto
                     </button>
                 </div>
 
@@ -42,7 +42,9 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Código de nombre</th>
                                     <th>Nombre</th>
+                                    <th>Código de descripción</th>
                                     <th>Descripcion</th>
                                     <!--
                                     <th>Telefono</th>
@@ -51,12 +53,27 @@
                                     <th>Editar/Eliminar Producto</th>
                                 </tr>
                                 </thead>
-
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Código de nombre</th>
+                                        <th>Nombre</th>
+                                        <th>Código de descripción</th>
+                                        <th>Descripcion</th>
+                                        <!--
+                                        <th>Telefono</th>
+                                        <th>Asignar Productos</th>
+                                        -->
+                                        <th>Editar/Eliminar Producto</th>
+                                    </tr>
+                                </tfoot>
 
                                 <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>Producto 1</th>
+                                    <td>ABC</td>
+                                    <td>Producto 1</td>
+                                    <td>DEF</td>
                                     <td>Descripcion 1</td>
 
 
@@ -75,7 +92,9 @@
                                 </tr>
                                 <tr>
                                     <td>2</td>
-                                    <td>Producto 2</th>
+                                    <td>ABC</td>
+                                    <td>Producto 2</td>
+                                    <td>DEF</td>
                                     <td>Descripcion 2</td>
 
                                     <!--
@@ -93,7 +112,9 @@
                                 </tr>
                                 <tr>
                                     <td>3</td>
-                                    <td>Producto 3</th>
+                                    <td>ABC</td>
+                                    <td>Producto 3</td>
+                                    <td>DEF</td>
                                     <td>Descripcion 3</td>
 
                                     <!--
@@ -111,7 +132,9 @@
                                 </tr>
                                 <tr>
                                     <td>4</td>
-                                    <td>Producto 4</th>
+                                    <td>ABC</td>
+                                    <td>Producto 4</td>
+                                    <td>DEF</td>
                                     <td>Descripcion 4</td>
 
                                     <!--
@@ -129,7 +152,9 @@
                                 </tr>
                                 <tr>
                                     <td>5</td>
-                                    <td>Producto 5</th>
+                                    <td>ABC</td>
+                                    <td>Producto 5</td>
+                                    <td>DEF</td>
                                     <td>Descripcion 5</td>
 
                                     <!--
@@ -215,7 +240,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Nueva Producto</h5>
+                <h5 class="modal-title">Nuevo Producto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -225,10 +250,12 @@
                     <div class="form-group">
                         <label for="nombre" class="col-form-label">Nombre :</label>
                         <input type="text" class="form-control" id="nombre">
-
+                        <label for="nombre" class="col-form-label">Codigo del nombre :</label>
+                        <input type="text" class="form-control" id="codnom">
                         <label for="descripcion" class="col-form-label">Descripcion :</label>
-                        <textarea type="text" class="form-control" id="descripcion"></textarea>
-
+                        <input type="text" class="form-control" id="descripcion"></input>
+                        <label for="nombre" class="col-form-label">Codigo de la descripción :</label>
+                        <input type="text" class="form-control" id="coddesc">
                         <!--
 
                         <label for="dni" class="col-form-label">DNI:</label>
@@ -247,7 +274,7 @@
                 </form>
 
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary"><a href="sedes.html" style="color:white;text-decoration:none">Agregar</a></button>
+                <button type="button" class="btn btn-primary"><a href="productos.html" style="color:white;text-decoration:none">Agregar</a></button>
             </div>
         </div>
     </div>
@@ -278,7 +305,7 @@
                 </form>
 
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary"><a href="sedes.html" style="color:white;text-decoration:none">Agregar</a></button>
+                <button type="button" class="btn btn-primary"><a href="productos.html" style="color:white;text-decoration:none">Agregar</a></button>
             </div>
         </div>
     </div>
@@ -289,7 +316,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Editar Sede</h5>
+                <h5 class="modal-title">Editar Producto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -298,11 +325,12 @@
                 <form>
                     <div class="form-group">
                         <label for="nombre" class="col-form-label">Nombre :</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="Nombre de sede">
+                        <input type="text" class="form-control" id="nombre1" placeholder="Nombre">
 
                         <label for="descripcion" class="col-form-label">Descripcion :</label>
-                        <textarea type="text" class="form-control" id="descripcion" placeholder="Descripcion"></textarea>
-
+                        <input type="text" class="form-control" id="descripcion1" placeholder="Descripcion"></input>
+                        <label for="nombre" class="col-form-label">Codigo de la descripción :</label>
+                        <input type="text" class="form-control" id="coddesc1"placeholder="DEF">
                         <!--
                         <label for="dni" class="col-form-label">DNI:</label>
                         <input type="text" class="form-control" id="dni" placeholder="DNI">
@@ -319,7 +347,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary"><a href="sedes.html" style="color:white;text-decoration:none">Guardar cambios</a></button>
+                <button type="button" class="btn btn-primary"><a href="productos.html" style="color:white;text-decoration:none">Guardar cambios</a></button>
             </div>
         </div>
     </div>
@@ -338,7 +366,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger"><a href="sedes.html" style="color:white;text-decoration:none">Borrar</a></button>
+                <button type="button" class="btn btn-danger"><a href="productos.html" style="color:white;text-decoration:none">Borrar</a></button>
             </div>
         </div>
     </div>

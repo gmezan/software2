@@ -27,13 +27,16 @@
                             <h1 class="h3 mb-0 text-gray-900">Productos Disponibles</h1>
                             
                         </div>
-                        
+    
+                        <p class="mb-4">Aquí se observan los productos que se pueden vender o asignar a sedes. Para ver el historial de productos vendidos, revisa la lista de <a href="ventas.html">ventas</a>. Para ver la asignación a sedes, revisa la lista de <a href="asignadosSedes.html">productos asignados</a>
+                        </p>
                         
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Lista de productos disponibles</h6>
                             </div>
+    
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-hover" id="dataTable" width="100%"
@@ -167,8 +170,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Registrar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success"><a href="ventas.html" style="color:white;text-decoration:none">Registrar venta</a></button>
                     </div>
                 </div>
             </div>
@@ -187,8 +190,8 @@
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
-                                <label for="producto" class="col-form-label">Producto:</label>
-                                <input type="text" class="form-control" id="producto" readonly="readonly">
+                                <label for="producto" class="col-form-label">Codigo del producto:</label>
+                                <input type="text" class="form-control" id="producto" readonly="readonly" placeholder="ABCDEFGH">
                                 <label for="producto" class="col-form-label">Sede:</label>
                                 <input type="text" class="form-control" id="sede" >
                                 <label for="precioVenta" class="col-form-label">Precio de venta:</label>
@@ -201,8 +204,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Asignar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-warning"><a href="asignadosSedes.html" style="color:white;text-decoration:none">Asignar</a></button>
                     </div>
                 </div>
             </div>

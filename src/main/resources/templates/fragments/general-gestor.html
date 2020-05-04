@@ -191,7 +191,7 @@
                 <a class="nav-link " th:classappend="${param1=='Campos'}?  '' : collapsed" href="#"
                    data-toggle="collapse" data-target="#collapseInv" aria-expanded="true" aria-controls="collapseInv">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Campos</span>
+                    <span>Campos del Inventario</span>
                 </a>
                 <div id="collapseInv" class="collapse" th:classappend="${param1=='Campos'}?  show : ''"
                      aria-labelledby="headingInv" data-parent="#accordionSidebar">
@@ -206,6 +206,12 @@
                            href="comunidades.html">Comunidades</a>
                     </div>
                 </div>
+            </li>
+            <!-- Nav Item - Productos Disponibles -->
+            <li class="nav-item" th:classappend="${param1=='ProductosDisponibles'}? active : ''">
+                <a class="nav-link" href="productosDisponibles.html">
+                    <i class="fas fa-fw fa-boxes"></i>
+                    <span>Productos Disponibles</span></a>
             </li>
             
             <!-- Divider -->
@@ -228,13 +234,13 @@
                     <span>Productos Asignados</span></a>
             </li>
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <hr class="sidebar-divider ">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Ventas
+            </div>
+            
             <!-- Nav Item - Ventas -->
-            <li class="nav-item" th:classappend="${param1=='ProductosDisponibles'}? active : ''">
-                <a class="nav-link" href="productosDisponibles.html">
-                    <i class="fas fa-fw fa-dollar-sign"></i>
-                    <span>Productos Disponibles</span></a>
-            </li>
             <li class="nav-item" th:classappend="${param1=='Ventas'}? active : ''">
                 <a class="nav-link" href="ventas.html">
                     <i class="fas fa-fw fa-dollar-sign"></i>
@@ -242,7 +248,11 @@
             </li>
             
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <hr class="sidebar-divider ">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                DATA
+            </div>
             <!-- Nav Item - Reportes -->
             <li class="nav-item" th:classappend="${param1=='Reportes'}? active : ''">
                 <a class="nav-link" href="#">
