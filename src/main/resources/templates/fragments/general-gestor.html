@@ -165,12 +165,12 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             
-            <!-- Nav Item - Dashboard -->
+            <!-- Nav Item - Dashboard
             <li class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
-            </li>
+            </li>-->
             
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -230,11 +230,17 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Ventas -->
+            <li class="nav-item" th:classappend="${param1=='ProductosDisponibles'}? active : ''">
+                <a class="nav-link" href="productosDisponibles.html">
+                    <i class="fas fa-fw fa-dollar-sign"></i>
+                    <span>Productos Disponibles</span></a>
+            </li>
             <li class="nav-item" th:classappend="${param1=='Ventas'}? active : ''">
                 <a class="nav-link" href="ventas.html">
                     <i class="fas fa-fw fa-dollar-sign"></i>
                     <span>Ventas</span></a>
             </li>
+            
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Reportes -->
