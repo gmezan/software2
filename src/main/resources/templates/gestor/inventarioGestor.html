@@ -43,106 +43,256 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-hover" id="dataTable" width="100%"
-                                           cellspacing="0">
+
+                                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
-                                            <tr>
-                                                <th># de Pedido</th>
-                                                <th>Linea</th>
-                                                <th>Categoría</th>
-                                                <th>Nombre</th>
-                                                <th>Descripción</th>
-                                                <th>Tamaño</th>
-                                                <th>Comunidad</th>
-                                                <th>Artesano</th>
-                                                <th>Cantidad</th>
-                                                <th>Tipo</th>
-                                                <th>Fecha</th>
-                                                <th>Color</th>
-                                                <th>Foto</th>
-                                                <th>Costo tejedor(S/.)</th>
-                                                <th>Costo Mosqoy(S/.)</th>
-                                                <th>Facilitador</th>
-                                                <th>Edit/Delete</th>
-                                            </tr>
+                                        <tr>
+                                            <th rowspan="2">Nº Pedido</th>
+                                            <th colspan="2">Producto</th>
+                                            <th colspan="5">Info del Producto</th>
+                                            <th colspan="2">Costo</th>
+                                            <th rowspan="2">Cantidad</th>
+                                            <th rowspan="2">Fecha</th>
+                                            <th rowspan="2">Facilitador</th>
+                                            <th rowspan="2">Tipo</th>
+                                            <th rowspan="2">Artesano (Consignación)</th>
+                                            <th rowspan="2">Foto</th>
+                                            <th rowspan="2">Edit/Delete</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Descripción</th>
+
+                                            <th>Linea</th>
+                                            <th>Categoría</th>
+                                            <th>Comunidad</th>
+                                            <th>Tamaño</th>
+                                            <th>Color</th>
+
+                                            <th>Tejedor (S/.)</th>
+                                            <th>Mosqoy (S/.)</th>
+
+                                        </tr>
                                         </thead>
                                         <tfoot>
-                                            <tr>
-                                                <th># de Pedido</th>
-                                                <th>Linea</th>
-                                                <th>Categoría</th>
-                                                <th>Nombre</th>
-                                                <th>Descripción</th>
-                                                <th>Tamaño</th>
-                                                <th>Comunidad</th>
-                                                <th>Artesano</th>
-                                                <th>Cantidad</th>
-                                                <th>Modo</th>
-                                                <th>Fecha</th>
-                                                <th>Color</th>
-                                                <th>Foto</th>
-                                                <th>Costo tejedor(S/.)</th>
-                                                <th>Costo Mosqoy(S/.)</th>
-                                                <th>Facilitador</th>
-                                                <th>Edit/Delete</th>
-                                            </tr>
+                                        <tr>
+                                            <th>Nº Pedido</th>
+                                            <th>Nombre</th>
+                                            <th>Descripción</th>
+                                            <th>Linea</th>
+                                            <th>Categoría</th>
+                                            <th>Comunidad</th>
+                                            <th>Tamaño</th>
+                                            <th>Color</th>
+                                            <th>Costo tejedor(S/.)</th>
+                                            <th>Costo Mosqoy(S/.)</th>
+                                            <th>Cantidad</th>
+                                            <th>Fecha</th>
+                                            <th>Facilitador</th>
+                                            <th>Tipo</th>
+                                            <th>Artesano</th>
+                                            <th>Foto</th>
+                                            <th>Edit/Delete</th>
+                                        </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Tradicional</td>
-                                                <td>Home</td>
-                                                <td>Lliklla</td>
-                                                <td>Blanket/Manta</td>
-                                                <td>One-Size</td>
-                                                <td>Amaru</td>
-                                                <td>Angela Ccana</td>
-                                                <td>10</td>
-                                                <td>Consignado</td>
-                                                <td>FEB/20</td>
-                                                <td>Rojo</td>
-                                                <td>ftx</td>
-                                                <td>20</td>
-                                                <td>35</td>
-                                                <td>Sam Sammie</td>
-                                                <td>
-                                                    <button data-toggle="modal" data-target="#editModal"
-                                                            class="btn btn-datatable btn-icon btn-primary mr-2"><i
-                                                            class="fa fa-edit"></i></button>
-                                                    <button data-toggle="modal" data-target="#deleteModal"
-                                                            class="btn btn-datatable btn-icon btn-danger"><i
-                                                            class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Mosqoy</td>
-                                                <td>Usable</td>
-                                                <td>Awana</td>
-                                                <td>Loom</td>
-                                                <td>Small</td>
-                                                <td>Parobamba</td>
-                                                <td>------</td>
-                                                <td>43</td>
-                                                <td>Comprado</td>
-                                                <td>15/AUG/20</td>
-                                                <td>Fucsia</td>
-                                                <td>ftx</td>
-                                                <td>25</td>
-                                                <td>50</td>
-                                                <td>Tom Tommy</td>
-                                                <td>
-                                                    <button data-toggle="modal" data-target="#editModal"
-                                                            class="btn btn-datatable btn-icon btn-primary mr-2"><i
-                                                            class="fa fa-edit"></i></button>
-                                                    <button data-toggle="modal" data-target="#deleteModal"
-                                                            class="btn btn-datatable btn-icon btn-danger"><i
-                                                            class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td>#########</td>
+                                            <td>Lliklla</td>
+                                            <td>Blanket/Manta</td>
+                                            <td>Tradicional</td>
+                                            <td>Home</td>
+                                            <td>Amaru</td>
+                                            <td>One-Size</td>
+                                            <td>Rojo</td>
+                                            <td>10</td>
+                                            <td>20</td>
+                                            <td>35</td>
+                                            <td>FEB, 20</td>
+                                            <td>Sam Sammie</td>
+                                            <td>Consignado</td>
+                                            <td>Angela Ccana</td>
+                                            <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                     alt=""  height=100 width=100></td>
+                                            <td>
+                                                <button data-toggle="modal" data-target="#editModal"
+                                                        class="btn btn-datatable btn-icon btn-primary mr-2"><i
+                                                        class="fa fa-edit"></i></button>
+                                                <button data-toggle="modal" data-target="#deleteModal"
+                                                        class="btn btn-datatable btn-icon btn-danger"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#########</td>
+                                            <td>Lliklla</td>
+                                            <td>Blanket/Manta</td>
+                                            <td>Tradicional</td>
+                                            <td>Home</td>
+                                            <td>Amaru</td>
+                                            <td>One-Size</td>
+                                            <td>Rojo</td>
+                                            <td>10</td>
+                                            <td>20</td>
+                                            <td>35</td>
+                                            <td>FEB, 20</td>
+                                            <td>Sam Sammie</td>
+                                            <td>Consignado</td>
+                                            <td>Angela Ccana</td>
+                                            <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                     alt=""  height=100 width=100></td>
+                                            <td>
+                                                <button data-toggle="modal" data-target="#editModal"
+                                                        class="btn btn-datatable btn-icon btn-primary mr-2"><i
+                                                        class="fa fa-edit"></i></button>
+                                                <button data-toggle="modal" data-target="#deleteModal"
+                                                        class="btn btn-datatable btn-icon btn-danger"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#########</td>
+                                            <td>Lliklla</td>
+                                            <td>Blanket/Manta</td>
+                                            <td>Tradicional</td>
+                                            <td>Home</td>
+                                            <td>Amaru</td>
+                                            <td>One-Size</td>
+                                            <td>Rojo</td>
+                                            <td>10</td>
+                                            <td>20</td>
+                                            <td>35</td>
+                                            <td>FEB, 20</td>
+                                            <td>Sam Sammie</td>
+                                            <td>Consignado</td>
+                                            <td>Angela Ccana</td>
+                                            <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                     alt=""  height=100 width=100></td>
+                                            <td>
+                                                <button data-toggle="modal" data-target="#editModal"
+                                                        class="btn btn-datatable btn-icon btn-primary mr-2"><i
+                                                        class="fa fa-edit"></i></button>
+                                                <button data-toggle="modal" data-target="#deleteModal"
+                                                        class="btn btn-datatable btn-icon btn-danger"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#########</td>
+                                            <td>Lliklla</td>
+                                            <td>Blanket/Manta</td>
+                                            <td>Tradicional</td>
+                                            <td>Home</td>
+                                            <td>Amaru</td>
+                                            <td>One-Size</td>
+                                            <td>Rojo</td>
+                                            <td>10</td>
+                                            <td>20</td>
+                                            <td>35</td>
+                                            <td>FEB, 20</td>
+                                            <td>Sam Sammie</td>
+                                            <td>Consignado</td>
+                                            <td>Angela Ccana</td>
+                                            <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                     alt=""  height=100 width=100></td>
+                                            <td>
+                                                <button data-toggle="modal" data-target="#editModal"
+                                                        class="btn btn-datatable btn-icon btn-primary mr-2"><i
+                                                        class="fa fa-edit"></i></button>
+                                                <button data-toggle="modal" data-target="#deleteModal"
+                                                        class="btn btn-datatable btn-icon btn-danger"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#########</td>
+                                            <td>Lliklla</td>
+                                            <td>Blanket/Manta</td>
+                                            <td>Tradicional</td>
+                                            <td>Home</td>
+                                            <td>Amaru</td>
+                                            <td>One-Size</td>
+                                            <td>Rojo</td>
+                                            <td>10</td>
+                                            <td>20</td>
+                                            <td>35</td>
+                                            <td>FEB, 20</td>
+                                            <td>Sam Sammie</td>
+                                            <td>Consignado</td>
+                                            <td>Angela Ccana</td>
+                                            <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                     alt=""  height=100 width=100></td>
+                                            <td>
+                                                <button data-toggle="modal" data-target="#editModal"
+                                                        class="btn btn-datatable btn-icon btn-primary mr-2"><i
+                                                        class="fa fa-edit"></i></button>
+                                                <button data-toggle="modal" data-target="#deleteModal"
+                                                        class="btn btn-datatable btn-icon btn-danger"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#########</td>
+                                            <td>Lliklla</td>
+                                            <td>Blanket/Manta</td>
+                                            <td>Tradicional</td>
+                                            <td>Home</td>
+                                            <td>Amaru</td>
+                                            <td>One-Size</td>
+                                            <td>Rojo</td>
+                                            <td>10</td>
+                                            <td>20</td>
+                                            <td>35</td>
+                                            <td>FEB, 20</td>
+                                            <td>Sam Sammie</td>
+                                            <td>Consignado</td>
+                                            <td>Angela Ccana</td>
+                                            <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                     alt=""  height=100 width=100></td>
+                                            <td>
+                                                <button data-toggle="modal" data-target="#editModal"
+                                                        class="btn btn-datatable btn-icon btn-primary mr-2"><i
+                                                        class="fa fa-edit"></i></button>
+                                                <button data-toggle="modal" data-target="#deleteModal"
+                                                        class="btn btn-datatable btn-icon btn-danger"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#########</td>
+                                            <td>Lliklla</td>
+                                            <td>Blanket/Manta</td>
+                                            <td>Tradicional</td>
+                                            <td>Home</td>
+                                            <td>Amaru</td>
+                                            <td>One-Size</td>
+                                            <td>Rojo</td>
+                                            <td>10</td>
+                                            <td>20</td>
+                                            <td>35</td>
+                                            <td>FEB, 20</td>
+                                            <td>Sam Sammie</td>
+                                            <td>Consignado</td>
+                                            <td>Angela Ccana</td>
+                                            <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                     alt=""  height=100 width=100></td>
+                                            <td>
+                                                <button data-toggle="modal" data-target="#editModal"
+                                                        class="btn btn-datatable btn-icon btn-primary mr-2"><i
+                                                        class="fa fa-edit"></i></button>
+                                                <button data-toggle="modal" data-target="#deleteModal"
+                                                        class="btn btn-datatable btn-icon btn-danger"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+
+
                                         </tbody>
-                                    
+
                                     </table>
+
+
+
                                 </div>
                             </div>
                         </div>
