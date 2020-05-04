@@ -46,6 +46,7 @@
                                     <th>Nombre</th>
                                     <th>Código de descripción</th>
                                     <th>Descripcion</th>
+                                    <th>Línea</th>
                                     <!--
                                     <th>Telefono</th>
                                     <th>Asignar Productos</th>
@@ -60,6 +61,7 @@
                                         <th>Nombre</th>
                                         <th>Código de descripción</th>
                                         <th>Descripcion</th>
+                                        <th>Línea</th>
                                         <!--
                                         <th>Telefono</th>
                                         <th>Asignar Productos</th>
@@ -75,7 +77,7 @@
                                     <td>Producto 1</td>
                                     <td>DEF</td>
                                     <td>Descripcion 1</td>
-
+                                    <td>Tradicional</td>
 
                                     <!--
                                     <td>Sede 1</th>
@@ -96,7 +98,7 @@
                                     <td>Producto 2</td>
                                     <td>DEF</td>
                                     <td>Descripcion 2</td>
-
+                                    <td>Tradicional</td>
                                     <!--
                                     <td>Sede 2</td>
                                     <td>sede2@hotmail.com</td>
@@ -116,7 +118,8 @@
                                     <td>Producto 3</td>
                                     <td>DEF</td>
                                     <td>Descripcion 3</td>
-
+                                    <td>Mosqoy</td>
+    
                                     <!--
                                     <td>Sede 3</td>
                                     <td>sede3@hotmail.com</td>
@@ -136,7 +139,7 @@
                                     <td>Producto 4</td>
                                     <td>DEF</td>
                                     <td>Descripcion 4</td>
-
+                                    <td>Tradicional</td>
                                     <!--
                                     <td>Sede 4</td>
                                     <td>sede4@hotmail.com</td>
@@ -156,7 +159,7 @@
                                     <td>Producto 5</td>
                                     <td>DEF</td>
                                     <td>Descripcion 5</td>
-
+                                    <td>Mosqoy</td>
                                     <!--
                                     <td>Sede 5</td>
                                     <td>sede5@hotmail.com</td>
@@ -256,6 +259,14 @@
                         <input type="text" class="form-control" id="descripcion"></input>
                         <label for="nombre" class="col-form-label">Codigo de la descripción :</label>
                         <input type="text" class="form-control" id="coddesc">
+                        <div class="form-group">
+                            <label for="linea" class="col-form-label">Línea:</label>
+                            <select class="form-control" id="linea">
+                                <option value="nombre">Tradicional</option>
+                                <option value="nombre">Mosqoy</option>
+                                <option value="nombre">Fibras</option>
+                            </select>
+                        </div>
                         <!--
 
                         <label for="dni" class="col-form-label">DNI:</label>
@@ -331,6 +342,14 @@
                         <input type="text" class="form-control" id="descripcion1" placeholder="Descripcion"></input>
                         <label for="nombre" class="col-form-label">Codigo de la descripción :</label>
                         <input type="text" class="form-control" id="coddesc1"placeholder="DEF">
+                        <div class="form-group">
+                            <label for="linea1" class="col-form-label">Línea:</label>
+                            <select class="form-control" id="linea1">
+                                <option value="nombre">Tradicional</option>
+                                <option value="nombre">Mosqoy</option>
+                                <option value="nombre">Fibras</option>
+                            </select>
+                        </div>
                         <!--
                         <label for="dni" class="col-form-label">DNI:</label>
                         <input type="text" class="form-control" id="dni" placeholder="DNI">

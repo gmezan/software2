@@ -24,9 +24,11 @@
                         
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-900">Productos asignados a sedes</h1>
+                            <h1 class="h3 mb-0 text-gray-900">Productos asignados a Sedes</h1>
                         </div>
-                        
+                        <p class="mb-4">Aquí puedes ver los productos asignados a sedes. Para asignar un producto, revisa la lista de <a
+                                href="productosDisponibles.html">productos disponibles</a>.
+                        </p>
                         
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -42,7 +44,8 @@
                                                 <th>Codigo del Producto</th>
                                                 <th>Nombre de la Sede</th>
                                                 <th>Stock</th>
-                                                <th>Cantidad de Ventas</th>
+                                                <th>Estado</th>
+                                                <th>Cantidad vendida</th>
                                                 
                                                 <!--
                                                 <th>Descripcion</th>
@@ -52,8 +55,24 @@
                                                 -->
                                             </tr>
                                         </thead>
-                                        
-                                        
+    
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Codigo del Producto</th>
+                                                <th>Nombre de la Sede</th>
+                                                <th>Stock</th>
+                                                <th>Estado</th>
+                                                <th>Cantidad vendida</th>
+            
+                                                <!--
+                                                <th>Descripcion</th>
+                                                <th>Telefono</th>
+                                                <th>Asignar Productos</th>
+                                                <th>Editar/Eliminar Producto</th>
+                                                -->
+                                            </tr>
+                                        </tfoot>
                                         <tbody>
                                             <tr>
                                                 <td>1</td>
@@ -61,6 +80,7 @@
                                                 </th>
                                                 <td>Sede 1</td>
                                                 <td>20</td>
+                                                <td>Recibido por sede</td>
                                                 <td>20</td>
                                                 
                                                 
@@ -83,6 +103,7 @@
                                                 </th>
                                                 <td>Sede 2</td>
                                                 <td>20</td>
+                                                <td>Recibido por sede</td>
                                                 <td>20</td>
                                                 
                                                 <!--
@@ -104,7 +125,8 @@
                                                 </th>
                                                 <td>Sede 3</td>
                                                 <td>20</td>
-                                                <td>20</td>
+                                                <td>Enviado a sede</td>
+                                                <td>--</td>
                                                 
                                                 <!--
                                                 <td>Sede 3</td>
@@ -126,7 +148,8 @@
                                                 </th>
                                                 <td>Sede 4</td>
                                                 <td>20</td>
-                                                <td>20</td>
+                                                <td>Problema en el envío</td>
+                                                <td>--</td>
                                                 <!--
                                                 <td>Sede 4</td>
                                                 <td>sede4@hotmail.com</td>
@@ -146,7 +169,8 @@
                                                 </th>
                                                 <td>Sede 5</td>
                                                 <td>20</td>
-                                                <td>20</td>
+                                                <td>Enviado a sede</td>
+                                                <td>--</td>
                                                 <!--
                                                 <td>Sede 5</td>
                                                 <td>sede5@hotmail.com</td>

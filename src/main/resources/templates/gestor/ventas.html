@@ -26,13 +26,18 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-3">
                             <h1 class="h3 mb-0 text-gray-900">Mis ventas</h1>
                         </div>
-                        
-                        
+    
+                        <p class="mb-4">Aquí puedes ver los productos vendidos. Para registrar una venta, revisa la lista de <a
+                                    href="productosDisponibles.html">productos disponibles</a>.
+                        </p>
                         <!-- Database Table -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Lista de Productos Vendidos</h6>
                             </div>
+                            
+                            
+                            
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-hover" id="dataTable" width="100%"
@@ -45,7 +50,7 @@
                                                 <th>Nº Documento</th>
                                                 <th>RUC/DNI</th>
                                                 <th>Cantidad vendida</th>
-                                                <th>Precio</th>
+                                                <th>Precio total</th>
                                                 <th>Fecha</th>
                                                 <th>Lugar de venta</th>
                                                 <th>Editar/Borrar</th>
@@ -59,7 +64,7 @@
                                                 <th>Nº Documento</th>
                                                 <th>RUC/DNI</th>
                                                 <th>Cantidad vendida</th>
-                                                <th>Precio</th>
+                                                <th>Precio total</th>
                                                 <th>Fecha</th>
                                                 <th>Lugar de venta</th>
                                                 <th>Editar/Borrar</th>
@@ -292,7 +297,7 @@
                 </div>
             </div>
         </div>
-    
+        
         <!-- Modal Delete -->
         <div id="deleteModal" class="modal fade">
             <div class="modal-dialog modal-confirm">
