@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/general-sede.html ::sede-head(title='Lista de productos vendidos')">
+<head th:replace="fragments/general-sede.html ::sede-head(title='Lista de ventas por producto')">
 </head>
 
 <body id="page-top">
@@ -11,7 +11,7 @@
 
     <!-- Sidebar -->
 
-    <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='Productos',param2='ListaProductosVendidos')"></div>
+    <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='Ventas',param2='VentasPorProducto')"></div>
 
     <!-- End of Sidebar -->
 
@@ -28,7 +28,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-900">Lista de Productos Vendidos</h1>
+                    <h1 class="h3 mb-0 text-gray-900">Lista de ventas por producto</h1>
                 </div>
                 <div class="card shadow mb-4">
 
@@ -42,7 +42,9 @@
                                         <th>Color</th>
                                         <th>Tamaño</th>
                                         <th>Comunidad</th>
-                                        <th>Stock</th>
+                                        <th>Stock asignado</th>
+                                        <th>Fecha de asignacion</th>
+                                        <th>Foto</th>
                                         <th>Cantidad de ventas</th>
                                     </tr>
                                 </thead>
@@ -53,37 +55,48 @@
                                         <th>Color</th>
                                         <th>Tamaño</th>
                                         <th>Comunidad</th>
-                                        <th>Stock</th>
+                                        <th>Stock asignado</th>
+                                        <th>Fecha de asignacion</th>
+                                        <th>Foto</th>
                                         <th>Cantidad de ventas</th>
                                     </tr>
                                 </tfoot>
 
                                 <tbody>
                                     <tr>
-                                        <td>QAT</td>
+                                        <td>THLLIBLAOSHU</td>
                                         <td>Qata</td>
                                         <td>Rojo</td>
                                         <td>Small</td>
                                         <td>Amaru</td>
                                         <td>20</td>
+                                        <th>3/5/2020</th>
+                                        <th><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                 alt=""  height=100 width=100></th>
                                         <td>10</td>
                                     </tr>
                                     <tr>
-                                        <td>SUR</td>
+                                        <td>MHQONRUGSHUASH19MAY</td>
                                         <td>Suri</td>
                                         <td>Marron</td>
                                         <td>Medium</td>
                                         <td>Huaran</td>
                                         <td>15</td>
+                                        <th>3/5/2020</th>
+                                        <th><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                 alt=""  height=100 width=100></th>
                                         <td>5</td>
                                     </tr>
                                     <tr>
-                                        <td>CHU</td>
+                                        <td>GSHUASH19MAY</td>
                                         <td>Chunpi</td>
                                         <td>Amarillo</td>
                                         <td>Large</td>
                                         <td>Parobamba</td>
                                         <td>20</td>
+                                        <th>3/5/2020</th>
+                                        <th><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                 alt=""  height=100 width=100></th>
                                         <td>2</td>
                                     </tr>
                                 </tbody>

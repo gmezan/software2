@@ -164,7 +164,7 @@
         Listas
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
+    <!-- Nav Item - Productos -->
     <li class="nav-item" th:classappend="${param1=='Productos'}? active : ''">
             <a class="nav-link" th:classappend="${param1=='Productos'}? '': collapsed" href="#"
                data-toggle="collapse" data-target="#collapseInv" aria-expanded="true" aria-controls="collapseInv">
@@ -178,27 +178,52 @@
                        href="ListaProductosConfirmados.html">Productos confirmados</a>
                     <a class="collapse-item" th:classappend="${param2=='ListaProductosPorConfirmar'}?  active : ''"
                        href="ListaProductosPorConfirmar.html">Productos por confirmar</a>
-                    <a class="collapse-item" th:classappend="${param2=='ListaProductosVendidos'}?  active : ''"
-                       href="ListaProductosVendidos.html">Productos vendidos</a>
-
                 </div>
             </div>
     </li>
-
-    <li class="nav-item" th:classappend="${param2=='ListaOrdenes'}? active : ''">
-        <a class="nav-link" href="ListaOrdenes.html">
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+    <!-- Nav Item - Ventas -->
+    <li class="nav-item" th:classappend="${param1=='Ventas'}? active : ''">
+        <a class="nav-link" th:classappend="${param1=='Ventas'}? '': collapsed" href="#"
+           data-toggle="collapse" data-target="#collapseInv2" aria-expanded="true" aria-controls="collapseInv">
             <i class="fas fa-list-ul"></i>
-            <span>Ventas</span></a>
+            <span>Ventas</span>
+        </a>
+        <div id="collapseInv2" class="collapse" th:classappend="${param1=='Ventas'}?  show : ''"
+             aria-labelledby="headingInv" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" th:classappend="${param2=='VentasPorProducto'}?  active : ''"
+                   href="ListaProductosVendidos.html">Ventas por producto</a>
+                <a class="collapse-item" th:classappend="${param2=='VentasPorCliente'}?  active : ''"
+                   href="ListaOrdenes.html">Ventas por cliente</a>
+
+            </div>
+        </div>
     </li>
-    <li class="nav-item" th:classappend="${param2=='ListaTiendas'}? active : ''">
+
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+    <!-- Nav Item - Tiendas -->
+    <li class="nav-item" th:classappend="${param1=='ListaTiendas'}? active : ''">
         <a class="nav-link" href="ListaTiendas.html">
             <i class="fas fa-store"></i>
             <span>Tiendas</span></a>
     </li>
 
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+    <!-- Nav Item - Reportes -->
+    <li class="nav-item" th:classappend="${param1=='Reportes'}? active : ''">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-file-download"></i>
+            <span>Reportes</span></a>
+    </li>
+
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
+
 
     <!-- Heading -->
 
@@ -206,9 +231,7 @@
 
 
     <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
+
 
 </ul>
 <!-- End of Sidebar -->
