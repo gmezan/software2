@@ -27,15 +27,14 @@
                             <h1 class="h3 mb-0 text-gray-900">Inventario</h1>
                             <button data-toggle="modal" data-target="#addModal" type="button"
                                     class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-box-open fa-sm text-white-50"></i> Registra un producto en el
+                                    class="fas fa-clipboard-list fa-sm text-white-50"></i> Registra un producto en el
                                 inventario
                             </button>
                         </div>
-                        <p class="mb-4">Aquí puedes ver los productos registrados en el inventario. Si quieres ver
-                            asignar productos a sedes, accede a la lista de <a href="sedesGestor.html">sedes</a>.
-                            También puedes ver la lista de <a href="asignadosSedes.html">productos asignados a sedes</a>.
+                        <p class="mb-4">Aquí puedes ver los productos registrados en el inventario. Para gestionar una
+                            venta o asignar productos a una sede, revisa la lista de <a
+                                    href="productosDisponibles.html">productos disponibles</a>.
                         </p>
-                        
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -51,7 +50,8 @@
                                             <th colspan="2">Producto</th>
                                             <th colspan="5">Info del Producto</th>
                                             <th colspan="2">Costo</th>
-                                            <th rowspan="2">Cantidad</th>
+                                            <th rowspan="2">Cantidad adquirida</th>
+                                            <th rowspan="2">Cantidad actual</th>
                                             <th rowspan="2">Fecha</th>
                                             <th rowspan="2">Facilitador</th>
                                             <th rowspan="2">Tipo</th>
@@ -86,7 +86,8 @@
                                             <th>Color</th>
                                             <th>Costo tejedor(S/.)</th>
                                             <th>Costo Mosqoy(S/.)</th>
-                                            <th>Cantidad</th>
+                                            <th>Cantidad adquirida</th>
+                                            <th>Cantidad actual</th>
                                             <th>Fecha</th>
                                             <th>Facilitador</th>
                                             <th>Tipo</th>
@@ -108,6 +109,7 @@
                                             <td>10</td>
                                             <td>20</td>
                                             <td>35</td>
+                                            <td>25</td>
                                             <td>FEB, 20</td>
                                             <td>Sam Sammie</td>
                                             <td>Consignado</td>
@@ -135,6 +137,7 @@
                                             <td>10</td>
                                             <td>20</td>
                                             <td>35</td>
+                                            <td>25</td>
                                             <td>FEB, 20</td>
                                             <td>Sam Sammie</td>
                                             <td>Consignado</td>
@@ -162,6 +165,7 @@
                                             <td>10</td>
                                             <td>20</td>
                                             <td>35</td>
+                                            <td>25</td>
                                             <td>FEB, 20</td>
                                             <td>Sam Sammie</td>
                                             <td>Consignado</td>
@@ -189,6 +193,7 @@
                                             <td>10</td>
                                             <td>20</td>
                                             <td>35</td>
+                                            <td>25</td>
                                             <td>FEB, 20</td>
                                             <td>Sam Sammie</td>
                                             <td>Consignado</td>
@@ -216,6 +221,7 @@
                                             <td>10</td>
                                             <td>20</td>
                                             <td>35</td>
+                                            <td>25</td>
                                             <td>FEB, 20</td>
                                             <td>Sam Sammie</td>
                                             <td>Consignado</td>
@@ -243,6 +249,7 @@
                                             <td>10</td>
                                             <td>20</td>
                                             <td>35</td>
+                                            <td>25</td>
                                             <td>FEB, 20</td>
                                             <td>Sam Sammie</td>
                                             <td>Consignado</td>
@@ -270,6 +277,7 @@
                                             <td>10</td>
                                             <td>20</td>
                                             <td>35</td>
+                                            <td>25</td>
                                             <td>FEB, 20</td>
                                             <td>Sam Sammie</td>
                                             <td>Consignado</td>
@@ -413,7 +421,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="foto" class="col-form-label">Foto:</label>
-                                <input type="text" class="form-control" id="foto1">
+                                <input type="file" class="form-control" id="foto1">
                             </div>
                             <div class="form-group">
                                 <label for="costotejedor" class="col-form-label">Costo del Tejedor:</label>
@@ -495,15 +503,6 @@
                                     <option value="nombre">Large</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="comunidad" class="col-form-label">Comunidad o Artesano:</label>
-                                <input type="text" class="form-control" id="comunidad">
-                            </div>
-                            <div class="form-group">
-                                <label for="cantidad" class="col-form-label">Cantidad:</label>
-                                <input type="text" class="form-control" id="cantidad">
-                            </div>
-                            
                             
                             <label class="col-form-label">Fecha:</label>
                             <div class="form-group align-items-center justify-content-between">
@@ -527,7 +526,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="foto" class="col-form-label">Foto:</label>
-                                <input type="text" class="form-control" id="foto">
+                                <input type="file" class="form-control" id="foto">
                             </div>
                             <div class="form-group">
                                 <label for="costo" class="col-form-label">Costo Mosqoy:</label>
@@ -537,8 +536,6 @@
                                 <label for="facilitador" class="col-form-label">Facilitador:</label>
                                 <input type="text" class="form-control" id="facilitador">
                             </div>
-                        
-                        
                         </form>
                     </div>
                     <div class="modal-footer">

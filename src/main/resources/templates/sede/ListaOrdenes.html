@@ -47,7 +47,11 @@
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
                                                 <th>Color</th>
+                                                <th>Precio de venta (Dolar)</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio total</th>
                                                 <th>Foto</th>
+                                                <th>Borrar</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -63,7 +67,11 @@
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
                                                 <th>Color</th>
+                                                <th>Precio de venta (Dolar)</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio total</th>
                                                 <th>Foto</th>
+                                                <th>Borrar</th>
                                             </tr>
                                         </tfoot>
 
@@ -80,9 +88,13 @@
                                                 <td>Small</td>
                                                 <td>Huaran</td>
                                                 <td>Rojo</td>
+                                                <td>20</td>
+                                                <td>2</td>
+                                                <td>40</td>
                                                 <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
                                                          alt=""  height=100 width=100></td>
-                                            </tr>
+                                                <td><button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                            </tr></td>
 
                                             <tr>
                                                 <td>Pedro Jimenez</td>
@@ -96,8 +108,12 @@
                                                 <td>Medium</td>
                                                 <td>Pitukiska</td>
                                                 <td>Marrón</td>
+                                                <td>30</td>
+                                                <td>3</td>
+                                                <td>90</td>
                                                 <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
                                                          alt=""  height=100 width=100></td>
+                                                <td><button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                             </tr>
 
                                             <tr>
@@ -112,8 +128,12 @@
                                                 <td>Small</td>
                                                 <td>Huaran</td>
                                                 <td>Rojo</td>
+                                                <td>57</td>
+                                                <td>1</td>
+                                                <td>57</td>
                                                 <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
                                                          alt=""  height=100 width=100></td>
+                                                <td><button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -163,6 +183,26 @@
         <script th:src="@{/js/demo/chart-area-demo.js}"></script>
         <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
+
+        <!-- Modal Delete -->
+        <div id="deleteModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Eliminar venta</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Seguro que desea eliminar esta venta? Esta acción no se puede deshacer.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger"><a href="ListaOrdenes.html" style="color:white;text-decoration:none">Borrar</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </body>
 

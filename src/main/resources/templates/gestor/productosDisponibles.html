@@ -25,15 +25,21 @@
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-900">Productos Disponibles</h1>
-                            
+                        
                         </div>
                         
+                        <p class="mb-4">Aquí puedes ver los productos que se pueden vender o asignar a sedes. Para ver
+                            el historial de productos vendidos, revisa la lista de <a href="ventas.html">ventas</a>.
+                            Para ver el estado de las asignaciones a sedes, revisa la lista de <a href="asignadosSedes.html">productos
+                                asignados</a>
+                        </p>
                         
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Lista de productos disponibles</h6>
                             </div>
+                            
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-hover" id="dataTable" width="100%"
@@ -47,7 +53,7 @@
                                                 <th>Comunidad</th>
                                                 <th>Cantidad Actual</th>
                                                 <th>Color</th>
-                                                <th>Costo Mosqoy(S/.)</th>
+                                                <th>Costo Unitario(S/.)</th>
                                                 <th>Asignar a una sede</th>
                                                 <th>Registrar venta</th>
                                             </tr>
@@ -61,7 +67,7 @@
                                                 <th>Comunidad</th>
                                                 <th>Cantidad Actual</th>
                                                 <th>Color</th>
-                                                <th>Costo Mosqoy(S/.)</th>
+                                                <th>Costo Unitario(S/.)</th>
                                                 <th>Asignar a una sede</th>
                                                 <th>Registrar venta</th>
                                             </tr>
@@ -137,9 +143,10 @@
         
         <!-- Logout Modal-->
         <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
-    
+        
         <!-- Venta Modal-->
-        <div class="modal fade" id="registrarVentaModal" tabindex="-1" role="dialog" aria-labelledby="registrarVentaModal" aria-hidden="true">
+        <div class="modal fade" id="registrarVentaModal" tabindex="-1" role="dialog"
+             aria-labelledby="registrarVentaModal" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -151,6 +158,8 @@
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
+                                <label for="codigo" class="col-form-label">Código de producto:</label>
+                                <input type="text" class="form-control" id="codigo" readonly="readonly">
                                 <label for="RucDni" class="col-form-label">RUC o DNI (opcional)</label>
                                 <input type="text" class="form-control" id="RucDni">
                                 <label for="nombre" class="col-form-label">Nombre del cliente:</label>
@@ -159,23 +168,28 @@
                                 <input type="text" class="form-control" id="documento">
                                 <label for="lugar" class="col-form-label">Lugar de venta:</label>
                                 <input type="text" class="form-control" id="lugar">
-                                <label for="codigo" class="col-form-label">Código de producto:</label>
-                                <input type="text" class="form-control" id="codigo" readonly="readonly">
+                                
+                                <label for="cantidad" class="col-form-label">Cantidad:</label>
+                                <input type="number" class="form-control" id="cantidad1">
+                                
                                 <label for="fecha" class="col-form-label">Fecha:</label>
                                 <input type="text" class="form-control" id="fecha">
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Registrar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success"><a href="ventas.html"
+                                                                         style="color:white;text-decoration:none">Registrar
+                            venta</a></button>
                     </div>
                 </div>
             </div>
         </div>
-    
+        
         <!-- Asignar Modal-->
-        <div class="modal fade" id="AsignarProductoModal" tabindex="-1" role="dialog" aria-labelledby="AsignarProductoModal" aria-hidden="true">
+        <div class="modal fade" id="AsignarProductoModal" tabindex="-1" role="dialog"
+             aria-labelledby="AsignarProductoModal" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -187,10 +201,17 @@
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
-                                <label for="producto" class="col-form-label">Producto:</label>
-                                <input type="text" class="form-control" id="producto" readonly="readonly">
-                                <label for="producto" class="col-form-label">Sede:</label>
-                                <input type="text" class="form-control" id="sede" >
+                                <label for="producto" class="col-form-label">Codigo del producto:</label>
+                                <input type="text" class="form-control" id="producto" readonly="readonly"
+                                       placeholder="ABCDEFGH">
+                                <label for="sede" class="col-form-label">Sede:</label>
+                                <select class="form-control" id="sede">
+                                    <option value="categoria1">Sede1</option>
+                                    <option value="categoria1">Sede2</option>
+                                    <option value="categoria1">Sede3</option>
+                                    <option value="categoria1">Sede4</option>
+                                    <option value="categoria1">Sede5</option>
+                                </select>
                                 <label for="precioVenta" class="col-form-label">Precio de venta:</label>
                                 <input type="text" class="form-control" id="precioVenta">
                                 <label for="cantidad" class="col-form-label">Cantidad:</label>
@@ -201,14 +222,16 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Asignar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-warning"><a href="asignadosSedes.html"
+                                                                         style="color:white;text-decoration:none">Asignar</a>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    
-    
+        
+        
         <!-- Bootstrap core JavaScript-->
         <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
         <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>

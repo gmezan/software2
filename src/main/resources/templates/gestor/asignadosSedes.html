@@ -1,218 +1,241 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/general-gestor.html ::gestor-head(title='Productos Asignados')">
-</head>
-<body id="page-top">
-
-<!-- Page Wrapper -->
-<div id="wrapper">
-
-    <!-- Sidebar -->
-    <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='Asignados',param2='...')"></div>
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-        <!-- Main Content -->
-        <div id="content">
-
-            <div th:replace="fragments/general-gestor.html :: topbar"></div>
-
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-900">Productos asignados a sedes</h1>
-                </div>
-
-
-
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Lista de Productos Asignados a Sedes</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Codigo del Producto</th>
-                                    <th>Nombre de la Sede</th>
-                                    <th>Stock</th>
-                                    <th>Cantidad de Ventas</th>
-
-                                    <!--
-                                    <th>Descripcion</th>
-                                    <th>Telefono</th>
-                                    <th>Asignar Productos</th>
-                                    <th>Editar/Eliminar Producto</th>
-                                    -->
-                                </tr>
-                                </thead>
-
-
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Codigo 1</th>
-                                    <td>Sede 1</td>
-                                    <td>20</td>
-                                    <td>20</td>
-
-
-                                    <!--
-                                    <td>Sede 1</th>
-                                    <td>sede1@hotmail.com</td>
-                                    <td>975654123</td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
-                                    </td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                        <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                    </td>
-                                    -->
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Codigo 2</th>
-                                    <td>Sede 2</td>
-                                    <td>20</td>
-                                    <td>20</td>
-
-                                    <!--
-                                    <td>Sede 2</td>
-                                    <td>sede2@hotmail.com</td>
-                                    <td>951456874</td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
-                                    </td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                        <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                    </td>
-                                    -->
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Codigo 3</th>
-                                    <td>Sede 3</td>
-                                    <td>20</td>
-                                    <td>20</td>
-
-                                    <!--
-                                    <td>Sede 3</td>
-                                    <td>sede3@hotmail.com</td>
-                                    <td>975684125</td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
-                                    </td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                        <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                    </td>
-
-                                    -->
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Codigo 4</th>
-                                    <td>Sede 4</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <!--
-                                    <td>Sede 4</td>
-                                    <td>sede4@hotmail.com</td>
-                                    <td>912745258</td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
-                                    </td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                        <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                    </td>
-                                    -->
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Codigo 5</th>
-                                    <td>Sede 5</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <!--
-                                    <td>Sede 5</td>
-                                    <td>sede5@hotmail.com</td>
-                                    <td>974158457</td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
-                                    </td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                        <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                    </td>
-                                    -->
-                                </tr>
-                                </tbody>
-                            </table>
+    <head th:replace="fragments/general-gestor.html ::gestor-head(title='Productos Asignados')">
+    </head>
+    <body id="page-top">
+        
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+            
+            <!-- Sidebar -->
+            <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='Asignados',param2='...')"></div>
+            <!-- End of Sidebar -->
+            
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+                
+                <!-- Main Content -->
+                <div id="content">
+                    
+                    <div th:replace="fragments/general-gestor.html :: topbar"></div>
+                    
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+                        
+                        <!-- Page Heading -->
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-900">Productos asignados a Sedes</h1>
                         </div>
+                        <p class="mb-4">Aquí puedes ver el estado de los productos asignados a sedes. Para asignar un producto, revisa la lista de <a
+                                href="productosDisponibles.html">productos disponibles</a>.
+                        </p>
+                        
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Lista de productos asignados</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover" id="dataTable" width="100%"
+                                           cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Codigo del Producto</th>
+                                                <th>Nombre de la Sede</th>
+                                                <th>Stock</th>
+                                                <th>Estado</th>
+                                                <th>Cantidad vendida</th>
+                                                
+                                                <!--
+                                                <th>Descripcion</th>
+                                                <th>Telefono</th>
+                                                <th>Asignar Productos</th>
+                                                <th>Editar/Eliminar Producto</th>
+                                                -->
+                                            </tr>
+                                        </thead>
+    
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Codigo del Producto</th>
+                                                <th>Nombre de la Sede</th>
+                                                <th>Stock</th>
+                                                <th>Estado</th>
+                                                <th>Cantidad vendida</th>
+            
+                                                <!--
+                                                <th>Descripcion</th>
+                                                <th>Telefono</th>
+                                                <th>Asignar Productos</th>
+                                                <th>Editar/Eliminar Producto</th>
+                                                -->
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Codigo 1
+                                                </th>
+                                                <td>Sede 1</td>
+                                                <td>20</td>
+                                                <td>Recibido por sede</td>
+                                                <td>20</td>
+                                                
+                                                
+                                                <!--
+                                                <td>Sede 1</th>
+                                                <td>sede1@hotmail.com</td>
+                                                <td>975654123</td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                                -->
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Codigo 2
+                                                </th>
+                                                <td>Sede 2</td>
+                                                <td>20</td>
+                                                <td>Recibido por sede</td>
+                                                <td>20</td>
+                                                
+                                                <!--
+                                                <td>Sede 2</td>
+                                                <td>sede2@hotmail.com</td>
+                                                <td>951456874</td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                                -->
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Codigo 3
+                                                </th>
+                                                <td>Sede 3</td>
+                                                <td>20</td>
+                                                <td>Enviado a sede</td>
+                                                <td>--</td>
+                                                
+                                                <!--
+                                                <td>Sede 3</td>
+                                                <td>sede3@hotmail.com</td>
+                                                <td>975684125</td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+            
+                                                -->
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Codigo 4
+                                                </th>
+                                                <td>Sede 4</td>
+                                                <td>20</td>
+                                                <td>Problema en el envío</td>
+                                                <td>--</td>
+                                                <!--
+                                                <td>Sede 4</td>
+                                                <td>sede4@hotmail.com</td>
+                                                <td>912745258</td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                                -->
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>Codigo 5
+                                                </th>
+                                                <td>Sede 5</td>
+                                                <td>20</td>
+                                                <td>Enviado a sede</td>
+                                                <td>--</td>
+                                                <!--
+                                                <td>Sede 5</td>
+                                                <td>sede5@hotmail.com</td>
+                                                <td>974158457</td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                                -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
                     </div>
+                    <!-- /.container-fluid -->
+                
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                <!-- End of Main Content -->
+                
+                <div th:replace="fragments/general-gestor.html :: footer"></div>
+            
             </div>
-            <!-- /.container-fluid -->
-
+            <!-- End of Content Wrapper -->
+        
         </div>
-        <!-- End of Main Content -->
-
-        <div th:replace="fragments/general-gestor.html :: footer"></div>
-
-    </div>
-    <!-- End of Content Wrapper -->
-
-</div>
-<!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<!-- Logout Modal-->
-<div th:replace="fragments/general-gestor.html :: logout-modal"></div>
-
-<!-- Bootstrap core JavaScript-->
-<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
-<!-- Core plugin JavaScript-->
-<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
-
-<!-- Custom scripts for all pages-->
-<script th:src="@{/js/sb-admin-2.min.js}"></script>
-
-<!-- Page level plugins -->
-<script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
-
-<!-- Page level custom scripts -->
-<script th:src="@{/js/demo/chart-area-demo.js}"></script>
-<script th:src="@{/js/demo/chart-pie-demo.js}"></script>
-
-</body>
+        <!-- End of Page Wrapper -->
+        
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        
+        <!-- Logout Modal-->
+        <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
+        
+        <!-- Bootstrap core JavaScript-->
+        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        
+        <!-- Core plugin JavaScript-->
+        <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+        
+        <!-- Custom scripts for all pages-->
+        <script th:src="@{/js/sb-admin-2.min.js}"></script>
+        
+        <!-- Page level plugins -->
+        <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+        
+        <!-- Page level custom scripts -->
+        <script th:src="@{/js/demo/chart-area-demo.js}"></script>
+        <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
+        <!-- Page level plugins -->
+        <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+        
+        <!-- Page level custom scripts -->
+        <script th:src="@{/js/demo/datatables-demo.js}"></script>
+    
+    
+    </body>
 </html>
