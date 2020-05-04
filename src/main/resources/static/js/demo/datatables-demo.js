@@ -1,7 +1,7 @@
 // Call the dataTables jQuery plugin
 $(document).ready(function() {
   $('#dataTable').DataTable({
-    "scrollX": true
+   
   });
 });
 
@@ -26,4 +26,4 @@ $(document).ready(function() {
 
   // Apply a search to the second table for the demo
   $('#myTable2').DataTable().search( 'New York' ).draw();
-} );
+} );*/
