@@ -357,7 +357,7 @@
                     </div>
                     
                     <div class="modal-body">
-                        <form>
+                        <form id="addForm" method="post" action="inventarioGestor.html">
                             <div class="form-group">
                                 <label for="linea1" class="col-form-label">Línea:</label>
                                 <select class="form-control" id="linea1">
@@ -420,11 +420,9 @@
                                 <input type="text" class="form-control" id="dia" placeholder="Día">
                             </div>
                             <div class="form-group">
-                                <select class="form-control" id="mes1">
-                                    <option value="nombre">JAN</option>
-                                    <option value="nombre">FEB</option>
-                                    <option value="nombre">MAR</option>
-                                    <option value="nombre">APR</option>
+                                <select class="form-control" id="mes1" name="mes1">
+                                    <option th:each="mes : ${Meses}" th:text="${mes.valor()}" th:value="${mes}"></option>
+                                    
                                 </select>
                             </div>
                             <div class="form-group">
@@ -451,9 +449,9 @@
                                 <label for="facilitador" class="col-form-label">Facilitador:</label>
                                 <input type="text" class="form-control" id="facilitador1">
                             </div>
-                        
-                        
+
                         </form>
+                       
                     
                     
                     </div>
@@ -461,10 +459,10 @@
                     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary"><a href="inventarioGestor.html"
-                                                                         style="color:white;text-decoration:none">Agregar</a>
-                        </button>
+                        <input form="addForm" type="submit" class="btn btn-primary" value="Agregar">
+                        
                     </div>
+                    
                 </div>
             </div>
         </div>
