@@ -26,10 +26,12 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-900">Categorías</h1>
                             <button data-toggle="modal" data-target="#addModal" type="button"
-                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                    class="new-Categoria d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                     class="fas fa-th-large fa-sm text-white-50"></i> Nueva Categoría
                             </button>
                         </div>
+
+                        <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
 
                         <!-- Database Table -->
                         <div class="card shadow mb-4">
@@ -41,80 +43,37 @@
                                     <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
                                                 <th>Código</th>
                                                 <th>Nombre</th>
-                                                
-                                                <th>Cantidad de productos</th>
+                                                <th>Fecha de creacion</th>
+                                                <th>Ultima modificacion</th>
                                                 <th>Edit/Delete</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>#</th>
                                                 <th>Código</th>
                                                 <th>Nombre</th>
-                                                <th>Cantidad de productos</th>
+                                                <th>Fecha de creacion</th>
+                                                <th>Ultima modificacion</th>
                                                 <th>Edit/Delete</th>
                                             </tr>
                                         </tfoot>
 
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>H</td>
-                                                <td>Home</th>
-                                                
-                                                <td>18</td>
+                                            <tr th:each="item : ${lista}">
+                                                <td th:text="${item.codigo}"></td>
+                                                <td th:text="${item.nombre}"></td>
+                                                <td th:text="${item.fechacreacion.toLocalDate()}"></td>
+                                                <td th:if="${item.fechamodificacion!=null}" th:text="${item.fechamodificacion.toLocalDate()}"></td>
+                                                <td th:if="${item.fechamodificacion==null}">-</td>
                                                 <td>
-                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#editModal" class="editar-Categoria btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#deleteModal" class="delete-Categoria btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>W</td>
-                                                <td>Wearable</td>
-                                                
-                                                <td>26</td>
-                                                <td>
-                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>U</td>
-                                                <td>Usable</td>
-                                                
-                                                <td>17</td>
-                                                <td>
-                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Y</td>
-                                                <td>Yarn</td>
-                                                
-                                                <td>29</td>
-                                                <td>
-                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>C</td>
-                                                <td>Custom</td>
-                                                
-                                                <td>18</td>
-                                                <td>
-                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
+
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -168,6 +127,7 @@
     
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
+        <script th:src="@{/js/gestor/categoria.js}"></script>
 
         <!-- Modal Add-->
         <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -180,19 +140,27 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Nombre:</label>
-                                <input type="text" class="form-control" id="recipient-name">
-                                <label for="cod" class="col-form-label">Código:</label>
-                                <input type="text" class="form-control" id="cod">
-                            </div>
-                        </form>
+                        <div class="modal-body">
+                            <form method="post" th:action="@{/gestor/categoria/save}" th:object="${categoria}">
+                                <div class="form-group">
+                                    <label class="col-form-label">Codigo:</label>
+                                    <input type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-form-label">Nombre:</label>
+                                    <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de categoría">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Guardar cambios</a></button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary"><a href="categorias.html" style="color:white;text-decoration:none">Agregar</a></button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -208,17 +176,23 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form method="post" th:action="@{/gestor/categoria/save}" th:object="${categoria}">
                             <div class="form-group">
-                                <label for="recipient-name2" class="col-form-label">Nombre:</label>
-                                <input type="text" class="form-control" id="recipient-name2" placeholder="Nombre de categoría">
+                                <label class="col-form-label">Codigo:</label>
+                                <input disabled type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-form-label">Nombre:</label>
+                                <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de categoría">
+                                <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Guardar cambios</a></button>
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary"><a href="categorias.html" style="color:white;text-decoration:none">Guardar cambios</a></button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -227,17 +201,20 @@
         <div id="deleteModal" class="modal fade">
             <div class="modal-dialog modal-confirm">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Borrar Categoría</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <p>¿Seguro que desea borrar esta categoría? Esta acción no se puede deshacer.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger"><a href="categorias.html" style="color:white;text-decoration:none">Borrar</a></button>
-                    </div>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Borrar Categoría</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                    <form method="get" th:action="@{/gestor/categoria/delete}" th:object="${categoria}">
+                        <div class="modal-body">
+                            <input hidden type="text" class="form-control" th:field="*{codigo}" >
+                            <p>¿Seguro que desea borrar esta categoría? Esta acción no se puede deshacer.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

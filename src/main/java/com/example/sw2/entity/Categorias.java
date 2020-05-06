@@ -5,6 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,7 +14,10 @@ import java.time.LocalDateTime;
 public class Categorias {
 
     @Id
+    @NotBlank
+    @Size(max = 1, message = "El codigo debe contener 1 caracter" )
     private String codigo;
+    @NotBlank
     @Column(nullable = false)
     private String nombre;
     @Column(name="fecha_modificacion")
