@@ -25,31 +25,46 @@ public class CategoriaController {
 
 
     @GetMapping(value = {"", "/"})
-    public String listCat(@ModelAttribute("categoria") Categorias cat, Model model) {
+    public String listCat(@ModelAttribute("categoria_modal") Categorias cat, Model model) {
         model.addAttribute("lista", categoriasRepository.findAll());
         return "gestor/categorias";
     }
 
-    /*
+
     @GetMapping("/new")
-    public String newCat(Model model) {
-        return "gestor/newFrm";
-    }*/
+    public String newCat(@ModelAttribute("categoria") Categorias cat) {
+            return "gestor/categoriasForm";
+    }
+
+    @GetMapping("/edit")
+    public String formCat(@ModelAttribute("categoria") Categorias cat, @RequestParam(value = "codigo") String id,
+                          Model model) {
+        Optional<Categorias> c = categoriasRepository.findById(id);
+        if (c.isPresent()) {
+            cat =c.get();
+            model.addAttribute("categoria",cat);
+            return "gestor/categoriasForm";
+        }
+        return "redirect:/gestor/categoria";
+    }
+
 
     @PostMapping("/save")
-    public String saveCat(@ModelAttribute("categoria") @Valid Categorias categorias,
+    public String editCat(@ModelAttribute("categoria") @Valid Categorias categorias,
                           BindingResult bindingResult, RedirectAttributes attr, Model model) {
         if(bindingResult.hasErrors()){
-            model.addAttribute("lista", categoriasRepository.findAll());
-            return "gestor/categorias";
+            return "gestor/categoriasForm";
         }
         else {
-            Optional<Categorias> c = categoriasRepository.findById(categorias.getCodigo());
-            if (c.isPresent()) {
+            Optional<Categorias> optionalCategorias = categoriasRepository.findById(categorias.getCodigo());
+            if (optionalCategorias.isPresent()) {
+                Categorias cat = optionalCategorias.get();
+                System.out.println(cat.getCodigo());
                 categorias.setFechamodificacion(LocalDateTime.now());
-                categorias.setFechacreacion(c.get().getFechacreacion());
+                categorias.setFechacreacion(cat.getFechacreacion());
                 attr.addFlashAttribute("msg", "Producto actualizado exitosamente");
-            } else {
+            }
+            else {
                 categorias.setFechacreacion(LocalDateTime.now());
                 attr.addFlashAttribute("msg", "Producto creado exitosamente");
             }
@@ -57,20 +72,6 @@ public class CategoriaController {
             return "redirect:/gestor/categoria";
         }
 
-    }
-
-    @GetMapping("/edit")
-    public String editCat(Model model,@RequestParam("id") String id) {
-
-        Optional<Categorias> optProduct = categoriasRepository.findById(id);
-
-        if (optProduct.isPresent()) {
-            Categorias product = optProduct.get();
-            model.addAttribute("product", product);
-            return "product/editFrm";
-        } else {
-            return "redirect:/gestor/categoria";
-        }
     }
 
     @GetMapping("/delete")

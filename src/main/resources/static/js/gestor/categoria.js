@@ -23,3 +23,4 @@ $(document).on("click",".delete-Categoria", function(){
     console.log(id);
     $("#deleteModal #codigo").val(id);
 });
+
