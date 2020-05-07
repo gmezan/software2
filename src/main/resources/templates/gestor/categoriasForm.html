@@ -28,16 +28,16 @@
                 </div>
 
                 <!-- Database Table -->
-                <div class="card shadow mb-4 col-6">
+                <div class="card shadow mb-4 col-6 ">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Lista de categorías</h6>
+                        <h6 class="m-0 font-weight-bold text-primary"><span th:text="${categoria.codigo==null}? 'Nueva' : 'Editar'"></span> categoría</h6>
                     </div>
                     <div class="card-body">
                         <form method="post" th:action="@{/gestor/categoria/save}" th:object="${categoria}">
                             <div class="form-group">
                                 <label class="col-form-label">Codigo:</label>
-                                <input hidden type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
-                                <input  th:hidden="${categoria.codigo==null}" th:disabled="${categoria.codigo!=null}" type="text" class="form-control" th:value="${categoria.codigo}" placeholder="Nombre de categoría">
+                                <input th:hidden="${categoria.codigo!=null && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
+                                <input  th:hidden="${categoria.codigo==null || #fields.hasErrors('codigo')}" th:disabled="${categoria.codigo!=null}" type="text" class="form-control" th:value="${categoria.codigo}" placeholder="Nombre de categoría">
                                 <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
                             </div>
                             <div class="form-group">
