@@ -19,8 +19,6 @@ $(document).on("click",".new-Categoria", function(){
 
 });
 $(document).on("click",".delete-Categoria", function(){
-    var id = $(this).data('id');
-    console.log(id);
-    $("#deleteModal #codigo").val(id);
+    $("#deleteModal #codigo").val($(this).data('id'));
 });
 
