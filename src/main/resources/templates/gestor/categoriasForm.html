@@ -104,39 +104,5 @@
 <script th:src="@{/js/gestor/categoria.js}"></script>
 
 
-<!-- Modal Edit-->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Editar Categoría</h5>
-                <a type="button" th:href="@{/gestor/categoria}" class="close"  aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
-            </div>
-            <div class="modal-body">
-                <form method="post" th:action="@{/gestor/categoria/edit}" th:object="${categoria}">
-                    <div class="form-group">
-                        <label class="col-form-label">Codigo:</label>
-                        <input disabled type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de categoría">
-                        <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
-                    </div>
-                    <div class="modal-footer">
-                        <a type="button" th:href="@{/gestor/categoria}"  class="btn btn-secondary" >Cancelar</a>
-                        <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Guardar cambios</a></button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-
 </body>
 </html>
