@@ -20,7 +20,7 @@ public class UploadObject {
         String bucketName = "test-bucket-sw2";
         String stringObjKeyName = "test_object";
         String fileObjKeyName = "test_key";
-        String fileName = "/Users/Gustavo_Meza/Desktop/aaa/test.txt ";
+        String fileName = "/home/ubuntu/test.txt ";
 
         try {
             //This code expects that you have AWS credentials set up per:
