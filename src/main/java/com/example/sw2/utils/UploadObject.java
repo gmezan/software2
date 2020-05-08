@@ -2,14 +2,14 @@ package com.example.sw2.utils;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.InstanceProfileCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.AccessControlList;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +19,8 @@ public class UploadObject {
     public static void main() throws IOException {
         Regions clientRegion = Regions.US_EAST_1;
         String bucketName = "test-bucket-sw2";
-        String stringObjKeyName = "test_object";
-        String fileObjKeyName = "test_key";
-        //String fileName = "/home/ubuntu/test.txt";
+        String stringObjKeyName = "test/test_object2";
+        String fileObjKeyName = "test/test.txt";
         String fileName = "/Users/Gustavo_Meza/Desktop/aaa/test.txt";
         try {
             //This code expects that you have AWS credentials set up per:
@@ -52,5 +51,31 @@ public class UploadObject {
             e.printStackTrace();
         }
     }
+
+    public static void uploadPhoto(String fileObjKeyName,  File file) throws Exception {
+        Regions clientRegion = Regions.US_EAST_1;
+        String bucketName = Credential.AWS_BUCKET_NAME;
+        fileObjKeyName = "photo/" + fileObjKeyName;
+        try {
+            AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(clientRegion).build();
+            PutObjectRequest request = new PutObjectRequest(bucketName, fileObjKeyName,  file);
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType("image/png");
+            s3Client.putObject(request
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+
+        } catch (AmazonServiceException e) {
+            // The call was transmitted successfully, but Amazon S3 couldn't process
+            // it, so it returned an error response.
+            e.printStackTrace();
+        } catch (SdkClientException e) {
+            // Amazon S3 couldn't be contacted for a response, or the client
+            // couldn't parse the response from Amazon S3.
+            e.printStackTrace();
+        }
+    }
+
+
+
 }
 

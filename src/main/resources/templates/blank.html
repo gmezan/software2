@@ -39,9 +39,23 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+          <h1 class="h3 mb-4 text-gray-800">File upload</h1>
+          <div>
+
+            <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
+              <img src="https://test-bucket-sw2-1.s3.amazonaws.com/photo/test.png" class="img-responsive" width="700" style="height: auto;">
+              <div class="form-group">
+                <label for="archivo">Archivo</label>
+                <input type="file" class="form-control" id="archivo" name="archivo">
+              </div>
+              <button type="submit" class="btn btn-primary">Registrar</button>
+
+            </form>
+
+
+          </div>
+
 
         </div>
         <!-- /.container-fluid -->
