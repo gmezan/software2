@@ -14,7 +14,7 @@ import java.io.IOException;
 public class DeleteObjectNonVersionedBucket {
     private static final Regions clientRegion = Regions.US_EAST_1;;
 
-    public static void main(String[] args) throws IOException {
+    public static void main() throws IOException {
         String bucketName = "*** Bucket name ***";
         String keyName = "*** Key name ****";
 
