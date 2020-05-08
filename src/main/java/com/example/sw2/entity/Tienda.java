@@ -13,6 +13,16 @@ public class Tienda {
     private int idtienda;
     @Column(nullable = false)
     private String nombre;
+    @Column(nullable = true)
+    private String direccion;
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
     public int getIdtienda() {
         return idtienda;

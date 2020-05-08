@@ -10,7 +10,7 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='ListaTiendas',param2='...')"></div>
+    <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='Tiendas',param2='Lista de tiendas')"></div>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -36,23 +36,15 @@
                                 <thead>
                                     <tr>
                                         <th>Tienda</th>
-                                        <th>Nombre del producto</th>
-                                        <th>Fecha de asignación</th>
-                                        <th>Fecha fin</th>
-                                        <th>Precio de venta (Dolar)</th>
-                                        <th>Cantidad</th>
-                                        <th>Editar</th>
+                                        <th>Direccion</th>
+                                        <th>Editar/Borrar</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Tienda</th>
-                                        <th>Nombre del producto</th>
-                                        <th>Fecha de asignación</th>
-                                        <th>Fecha fin</th>
-                                        <th>Precio de venta (Dolar)</th>
-                                        <th>Cantidad</th>
-                                        <th>Editar</th>
+                                        <th>Direccion</th>
+                                        <th>Editar/Borrar</th>
                                     </tr>
                                 </tfoot>
 
@@ -60,35 +52,12 @@
                                     <tr>
                                         <td>Comercial Rosita</td>
                                         <td>Lliclla</td>
-                                        <td>01/AUG/20</td>
-                                        <td>30/AUG/20</td>
-                                        <td>15</td>
-                                        <td>20</td>
                                         <td>
-                                            <button data-toggle="modal" data-target="#EditarTiendaModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                            <!--th:href="@{'/sede/tienda/edit?codigo='+${item.codigo}}"-->
+                                            <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#deleteModal" class="delete-Categoria btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                            <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#deleteModal" class="delete-Categoria btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>La tiendita de Don Pepe</td>
-                                        <td>Qamaña</td>
-                                        <td>01/MAY/20</td>
-                                        <td>30/MAY/20</td>
-                                        <td>20</td>
-                                        <td>15</td>
-                                        <td>
-                                            <button data-toggle="modal" data-target="#EditarTiendaModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Comercial Rosita</td>
-                                        <td>Yanapay</td>
-                                        <td>15/JAN/20</td>
-                                        <td>15/FEB/20</td>
-                                        <td>30</td>
-                                        <td>10</td>
-                                        <td>
-                                            <button data-toggle="modal" data-target="#EditarTiendaModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                        </td>
+
                                     </tr>
 
                                 </tbody>
@@ -133,28 +102,21 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="post" th:action="@{/sede/tienda/new}" th:object="${tienda}">
                     <div class="form-group">
-                        <label for="nombretienda" class="col-form-label">Nombre de la tienda</label>
-                        <input type="text" class="form-control" id="nombretienda">
+                        <label class="col-form-label">Codigo:</label>
+                        <input type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="producto">Producto</label>
-                        <select class="form-control" name="producto" id="producto">
-                            <option>
-                            </option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="fecha" class="col-form-label">Fecha en la que se deja el producto</label>
-                        <input type="text" class="form-control" id="fecha">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="cantidad" class="col-form-label">Cantidad</label>
-                        <input type="text" class="form-control" id="cantidad">
+                    <div class="modal-footer">
+                        <button type="button" th:href="@{/gestor/categoria}"  class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Guardar cambios</a></button>
                     </div>
                 </form>
             </div>
