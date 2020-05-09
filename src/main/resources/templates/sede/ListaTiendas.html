@@ -27,7 +27,14 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-900">Lista de Tiendas</h1>
+                    <button data-toggle="modal" data-target="#EditarTiendaModal" class="new-Tienda d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                        <i class="fas fa-download fa-sm text-white-50"></i> Nueva Tienda</button>
+
                 </div>
+
+                <div id="msgListaTiendas" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+
+
                 <div class="card shadow mb-4">
 
                     <div class="card-body">
@@ -49,13 +56,12 @@
                                 </tfoot>
 
                                 <tbody>
-                                    <tr>
-                                        <td>Comercial Rosita</td>
-                                        <td>Lliclla</td>
+                                    <tr th:each="item : ${lista}">
+                                        <td th:text="${item.nombre}" ></td>
+                                        <td th:text="${item.direccion}"></td>
                                         <td>
-                                            <!--th:href="@{'/sede/tienda/edit?codigo='+${item.codigo}}"-->
-                                            <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#deleteModal" class="delete-Categoria btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                            <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#deleteModal" class="delete-Categoria btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                            <button th:attr="data-id=${item.idtienda}" data-toggle="modal" data-target="#EditarTiendaModal" class="edit-Tienda btn  btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                            <button th:attr="data-id=${item.idtienda}" data-toggle="modal" data-target="#deleteTiendaModal" class="delete-Tienda btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                         </td>
 
                                     </tr>
@@ -96,34 +102,58 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="EditarTiendaModalLabel">Editar</h5>
+                <h5 class="modal-title" id="EditarTiendaModalLabel">Lista de Tiendas</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" th:action="@{/sede/tienda/new}" th:object="${tienda}">
-                    <div class="form-group">
-                        <label class="col-form-label">Codigo:</label>
-                        <input type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
-                        <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
+                <form method="post" th:action="@{/sede/tienda/save}" th:object="${tienda}">
+                    <div hidden class="form-group">
+                        <label  class="col-form-label">idtienda:</label>
+                        <input type="text" class="form-control" th:field="*{idtienda}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('idtienda')}" th:errors="*{idtienda}">Error</div>
                     </div>
+
                     <div class="form-group">
-                        <label  class="col-form-label">Nombre:</label>
+                        <label class="col-form-label">Nombre:</label>
                         <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de categoría">
                         <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
                     </div>
+                    <div class="form-group">
+                        <label  class="col-form-label">Direccion:</label>
+                        <input type="text" class="form-control" th:field="*{direccion}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}">Error</div>
+                    </div>
 
                     <div class="modal-footer">
-                        <button type="button" th:href="@{/gestor/categoria}"  class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" th:href="@{/sede/tienda}"  class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Guardar cambios</a></button>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar cambios</button>
+
+        </div>
+    </div>
+</div>
+
+<div id="deleteTiendaModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Borrar Tienda</h4>
+                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
+            <form method="get" th:action="@{/sede/tienda/delete}" th:object="${tienda}">
+                <div class="modal-body">
+                    <input hidden type="text" class="form-control" th:field="*{idtienda}" >
+                    <p>¿Seguro que desea borrar esta Tienda? Esta acción no se puede deshacer.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -147,6 +177,9 @@
 <script th:src="@{/js/demo/chart-area-demo.js}"></script>
 <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
 <script th:src="@{/js/demo/datatables-demo.js}"></script>
+
+<script th:src="@{/js/sede/listaTienda.js}"></script>
+<script th:src="@{/js/general.js}"></script>
 
 </body>
 

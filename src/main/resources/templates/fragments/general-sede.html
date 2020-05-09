@@ -206,17 +206,17 @@
     <!-- Nav Item - Ventas -->
     <li class="nav-item" th:classappend="${param1=='Tiendas'}? active : ''">
         <a class="nav-link" th:classappend="${param1=='Tiendas'}? '': collapsed" href="#"
-           data-toggle="collapse" data-target="#collapseInv2" aria-expanded="true" aria-controls="collapseInv">
+           data-toggle="collapse" data-target="#collapseInv3" aria-expanded="true" aria-controls="collapseInv">
             <i class="fas fa-list-ul"></i>
             <span>Tiendas</span>
         </a>
-        <div id="collapseInv2" class="collapse" th:classappend="${param1=='Tiendas'}?  show : ''"
+        <div id="collapseInv3" class="collapse" th:classappend="${param1=='Tiendas'}?  show : ''"
              aria-labelledby="headingInv" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" th:classappend="${param2=='Asignado a tienda'}?  active : ''"
                    href="ListaProductosVendidos.html">Asignado a tienda</a>
                 <a class="collapse-item" th:classappend="${param2=='Lista de tiendas'}?  active : ''"
-                   href="ListaOrdenes.html">Lista de tiendas</a>
+                  th:href="@{/sede/tienda}">Lista de tiendas</a>
 
             </div>
         </div>
