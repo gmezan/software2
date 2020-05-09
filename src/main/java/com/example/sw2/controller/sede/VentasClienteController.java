@@ -28,7 +28,7 @@ public class VentasClienteController {
     @GetMapping(value = {"", "ListaVentasCliente"})
     public String ListVentasCliente(Model model){
 
-        model.addAttribute("listaProductos", ventasRepository.obtenerNombreProducto());
+        model.addAttribute("listaProductos", ventasRepository.obtenerDatosProducto());
         model.addAttribute("listaUsuarios", usuariosRepository.findAll());
         model.addAttribute("listaVentas", ventasRepository.findAll());
         return "sede/ListaOrdenes";
