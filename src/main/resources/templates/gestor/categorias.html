@@ -25,7 +25,7 @@
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-900">Categorías</h1>
-                            <button data-toggle="modal" data-target="#editModal" class="new-Tienda d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            <button data-toggle="modal" data-target="#formModal" class="new-Tienda d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                 <i class="fas fa-download fa-sm text-white-50"></i> Nueva Categoria</button>
                         </div>
 
@@ -65,7 +65,7 @@
                                                 <td th:if="${item.fechamodificacion!=null}" th:text="${item.fechamodificacion.toLocalDate()}"></td>
                                                 <td th:if="${item.fechamodificacion==null}">-</td>
                                                 <td>
-                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#editModal" class="editar-Categoria btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#formModal" class="editar-Categoria btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
                                                     <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#deleteModal" class="delete-Categoria btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                                 </td>
                                             </tr>
@@ -127,8 +127,8 @@
         <script th:src="@{/js/gestor/categoria.js}"></script>
 
 
-        <!-- Modal Edit -->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Modal Form -->
+        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -141,7 +141,7 @@
                         <form method="post" th:action="@{/gestor/categoria/save}" th:object="${categoria}">
                             <div class="form-group">
                                 <label class="col-form-label">Codigo:</label>
-                                <input  th:readonly="${categoria.codigo!=null && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}"   placeholder="Nombre de categoría">
+                                <input  th:readonly="${categoria.codigo!=null && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
                                 <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
                             </div>
                             <div class="form-group">

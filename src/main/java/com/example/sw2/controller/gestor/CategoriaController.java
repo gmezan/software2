@@ -46,11 +46,11 @@ public class CategoriaController {
                 System.out.println(cat.getCodigo());
                 categorias.setFechamodificacion(LocalDateTime.now());
                 categorias.setFechacreacion(cat.getFechacreacion());
-                attr.addFlashAttribute("msg", "Producto actualizado exitosamente");
+                attr.addFlashAttribute("msg", "Categoría actualizada exitosamente");
             }
             else {
                 categorias.setFechacreacion(LocalDateTime.now());
-                attr.addFlashAttribute("msg", "Producto creado exitosamente");
+                attr.addFlashAttribute("msg", "Categoría creada exitosamente");
             }
             categoriasRepository.save(categorias);
             return "redirect:/gestor/categoria";
@@ -62,12 +62,10 @@ public class CategoriaController {
     public String deleteCat(Model model,
                                       @RequestParam("codigo") String id,
                                       RedirectAttributes attr) {
-
         Optional<Categorias> c = categoriasRepository.findById(id);
-
         if (c.isPresent()) {
             categoriasRepository.deleteById(id);
-            attr.addFlashAttribute("msg","Producto borrado exitosamente");
+            attr.addFlashAttribute("msg","Categoría borrada exitosamente");
         }
         return "redirect:/gestor/categoria";
     }

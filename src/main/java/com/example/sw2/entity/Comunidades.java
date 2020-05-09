@@ -5,6 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,7 +14,11 @@ import java.time.LocalDateTime;
 public class Comunidades {
 
     @Id
+    @NotBlank
+    @Size(max = 2, message = "El codigo debe contener 2 caracteres" )
     private String codigo;
+    @NotBlank
+    @Size(max = 45, message = "El codigo debe contener 45 caracteres" )
     @Column(nullable = false)
     private String nombre;
     @Column(name="fecha_modificacion")
