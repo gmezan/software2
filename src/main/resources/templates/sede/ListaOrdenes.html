@@ -69,71 +69,28 @@
                                                 <th>Color</th>
                                                 <th>Precio de venta (Dolar)</th>
                                                 <th>Cantidad</th>
-                                                <th>Precio total</th>
                                                 <th>Foto</th>
                                                 <th>Borrar</th>
                                             </tr>
                                         </tfoot>
 
                                         <tbody>
-                                            <tr>
-                                                <td>Juar Perez</td>
-                                                <td>factura</td>
-                                                <td>87651216</td>
-                                                <td>08/MAY/18</td>
-                                                <td>Av. Universitaria 1801</td>
-                                                <td>978456913</td>
-                                                <td>THLLIBLAOSHU</td>
-                                                <td>Qonpi</td>
-                                                <td>Small</td>
-                                                <td>Huaran</td>
-                                                <td>Rojo</td>
-                                                <td>20</td>
-                                                <td>2</td>
-                                                <td>40</td>
-                                                <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                                                         alt=""  height=100 width=100></td>
-                                                <td><button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                            </tr></td>
-
-                                            <tr>
-                                                <td>Pedro Jimenez</td>
-                                                <td>factura</td>
-                                                <td>132165465</td>
-                                                <td>08/JUL/20</td>
-                                                <td>Av. Simon Bolivar 461</td>
-                                                <td>897984561</td>
-                                                <td>MHQONRUGSHUASH</td>
-                                                <td>Punchu</td>
-                                                <td>Medium</td>
-                                                <td>Pitukiska</td>
-                                                <td>Marrón</td>
-                                                <td>30</td>
-                                                <td>3</td>
-                                                <td>90</td>
-                                                <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                                                         alt=""  height=100 width=100></td>
-                                                <td><button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Gustavo Montes</td>
-                                                <td>factura</td>
-                                                <td>146546798</td>
-                                                <td>01/AUG/18</td>
-                                                <td>Av. Brasil 1001</td>
-                                                <td>497989231</td>
-                                                <td>ALQONROGSHUASH</td>
-                                                <td>Chuspa</td>
-                                                <td>Small</td>
-                                                <td>Huaran</td>
-                                                <td>Rojo</td>
-                                                <td>57</td>
-                                                <td>1</td>
-                                                <td>57</td>
-                                                <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                                                         alt=""  height=100 width=100></td>
-                                                <td><button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                            <tr th:each="product : ${listaVentas}">
+                                                <td th:text="${product.nombrecliente}"></td>
+                                                <td th:text="${product.tipodocumento}"></td>
+                                                <td th:text="${product.numerodocumento}"></td>
+                                                <td th:text="${product.fechaventa}"></td>
+                                                <td th:text="${product.lugarVenta}"></td>
+                                                <td th:text="${product.rucdni}"></td>
+                                                <td th:text="${product.codigoinventario}"></td>
+                                                <td th:text="${product.nombreproducto}"></td>
+                                                <td th:text="${product.tamanhoproducto}"></td>
+                                                <td th:text="${product.comunidadproducto}"></td>
+                                                <td th:text="${product.colorproducto}"></td>
+                                                <td th:text="${product.precioventa}"></td>
+                                                <td th:text="${product.cantidadventa}"></td>
+                                                <th><img th:src="${product.fotoproducto}"></th>
+                                                <td><button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button></td>
                                             </tr>
                                         </tbody>
                                     </table>

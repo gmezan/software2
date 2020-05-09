@@ -26,8 +26,6 @@ public class VentasProductoController {
     public String ListaVentasCliente(Model model){
 
         model.addAttribute("listaProductos", ventasRepository.obtenerDatosProducto());
-        model.addAttribute("listaUsuarios", usuariosRepository.findAll());
-        model.addAttribute("listaVentas", ventasRepository.findAll());
         return "sede/ListaProductosVendidos";
     }
 

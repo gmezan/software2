@@ -1,6 +1,7 @@
 package com.example.sw2.repository;
 
 
+import com.example.sw2.dto.DatosAsignadosTiendaDto;
 import com.example.sw2.dto.DatosProductoVentaDto;
 import com.example.sw2.entity.AsignacionTiendas;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,15 +13,15 @@ import java.util.List;
 @Repository
 public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTiendas,Integer> {
 
-    @Query(value="select p.nombre as nombreprodcuto, a.precioventa as precioventa," +
-            "a_t.stock as stockasignadotienda, a_t.fecha_asignacion as fechaasignacionproducto, t.nombre as nombretienda\n"+
+    @Query(value="select p.nombre as nombreproducto, a.precioventa as precioventa," +
+            "att.stock as stockasignadotienda, att.fecha_asignacion as fechaasignacionproducto, t.nombre as nombretienda\n"+
             "FROM Productos p\n" +
             "inner join Inventario i on (p.codigonom = i.producto)\n" +
             "inner join Asignados_sedes a on (i.codigo_inventario = a.producto_inventario)"+
-            "inner join Asignacion_tiendas a_t on (a.idasignados = a_t.productoasignado)"+
-            "inner join Tienda t on (a_t.tienda =   t.idtienda)",
+            "inner join Asignacion_tiendas att on (a.idAsignados = att.productoasignado)"+
+            "inner join Tienda t on (att.tienda =  t.idtienda)",
             nativeQuery = true)
-    List<DatosProductoVentaDto> obtenerDatosAsignados();
+    List<DatosAsignadosTiendaDto> obtenerDatosAsignados();
 
 
 }
