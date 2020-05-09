@@ -103,9 +103,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="EditarTiendaModalLabel">Lista de Tiendas</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <a type="button" th:href="@{/sede/tienda}" class="close"  aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </a>
             </div>
             <div class="modal-body">
                 <form method="post" th:action="@{/sede/tienda/save}" th:object="${tienda}">
@@ -179,7 +179,6 @@
 <script th:src="@{/js/demo/datatables-demo.js}"></script>
 
 <script th:src="@{/js/sede/listaTienda.js}"></script>
-<script th:src="@{/js/general.js}"></script>
 
 </body>
 

@@ -1,6 +1,8 @@
 package com.example.sw2.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -8,9 +10,13 @@ import java.time.LocalDateTime;
 public class Artesanos {
 
     @Id
+    @NotBlank(message = "Este campo no puede estar vacío")
+    @Size(max = 4, min = 2, message = "El código debe contener 3 letras")
     private String codigo;
+    @NotBlank(message = "Este campo no puede estar vacío")
     @Column(nullable =false)
     private String nombre;
+    @NotBlank(message = "Este campo no puede estar vacío")
     @Column(nullable =false)
     private String apellidopaterno;
     private String apellidomaterno;
