@@ -14,7 +14,8 @@ public interface VentasRepository extends JpaRepository<Ventas,String> {
                 "i.tamanho as tamanhoproducto, i.color as colorproducto, i.foto as fotoproducto, c.nombre as comunidadproducto,"+
                 "a.stock as stocksede, t.stock as stockasignadotienda, t.fecha_asignacion as fechaasignacionproducto,"+
                 "v.ruc_dni as rucdni, v.nombrecliente as nombrecliente, v.lugarventa as lugarventa, v.fecha as fechaventa,"+
-                "v.cantidad as cantidadventa, v.precio_venta as precioventa, v.productoinventario as codigoproducto\n"+
+                "v.cantidad as cantidadventa, v.precio_venta as precioventa, v.productoinventario as codigoproducto,"+
+                "v.tipodocumento as tipodocumento, v.numerodocumento as numerodocumento\n"+
                 "FROM Productos p\n" +
                 "inner join Inventario i on (p.codigonom = i.producto)\n" +
                 "inner join Comunidades c on (i.comunidad = c.codigo)\n"+

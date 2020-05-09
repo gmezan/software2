@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.awt.*;
 import java.util.Optional;
 
 @Controller
@@ -25,7 +26,6 @@ public class VentasClienteController {
 
     @GetMapping(value = {"", "ListaVentasCliente"})
     public String ListVentasCliente(Model model){
-
 
         model.addAttribute("listaVentas", ventasRepository.obtenerDatosProducto());
         return "sede/ListaOrdenes";
