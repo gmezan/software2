@@ -25,13 +25,13 @@
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-900">Artesanos</h1>
-                            <button data-toggle="modal" data-target="#addModal" type="button"
-                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            <button data-toggle="modal" data-target="#editModal" type="button"
+                                    class="new-Artesano d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                     class="fas fa-user-plus fa-sm text-white-50"></i> Registrar Artesano
                             </button>
                         </div>
-                        
-                        
+
+                        <div id="msgArtesanos" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
                         <!-- Database Table -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -46,10 +46,10 @@
                                                 <th>#</th>
                                                 <th>Código</th>
                                                 <th>Nombre</th>
-                                                <th>Apellidos</th>
-                                                
+                                                <th>Apellido paterno</th>
+                                                <th>Apellido materno</th>
                                                 <th>Comunidad a la que pertenece</th>
-                                                <th>Delete</th>
+                                                <th>Editar/Borrar</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -57,28 +57,28 @@
                                                 <th>#</th>
                                                 <th>Código</th>
                                                 <th>Nombre</th>
-                                                <th>Apellidos</th>
+                                                <th>Apellido paterno</th>
+                                                <th>Apellido materno</th>
                                                 <th>Comunidad a la que pertenece</th>
-                                                <th>Delete</th>
+                                                <th>Editar/Borrar</th>
                                             </tr>
                                         </tfoot>
                                         
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>ACZ</td>
-                                                <td>Angela</td>
-                                                <td>Ccana Zamata</td>
-                                                
-                                                <td>Amaru</td>
+                                            <tr th:each="item, index: ${lista}">
+                                                <td th:text="${index.count}"></td>
+                                                <td th:text="${item.codigo}"></td>
+                                                <td th:text="${item.nombre}"></td>
+                                                <td th:text="${item.apellidopaterno}"></td>
+                                                <td th:text="${item.apellidomaterno==null}? '-': ${item.apellidomaterno}"></td>
+                                                <td th:text="${item.comunidades.nombre}"></td>
                                                 <td>
-                                                    <button data-toggle="modal" data-target="#editModal"
-                                                            class="btn btn-datatable btn-icon btn-primary mr-2"><i
+                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#editModal"
+                                                            class="edit-Artesano btn btn-datatable btn-icon btn-primary mr-2"><i
                                                             class="fa fa-edit"></i></button>
-                                                    
-                                                    
-                                                    <button data-toggle="modal" data-target="#deleteModal"
-                                                            class="btn btn-datatable btn-icon btn-danger"><i
+
+                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#deleteModal"
+                                                            class="delete-Artesano btn btn-datatable btn-icon btn-danger"><i
                                                             class="fas fa-trash-alt"></i></button>
                                                 </td>
                                             </tr>
@@ -113,53 +113,52 @@
         <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
         
         <!-- Modal Add-->
-        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Nuevo Artesano</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <h5 class="modal-title">Artesano</h5>
+                        <a type="button" th:href="@{/gestor/artesano}" class="close"  aria-label="Close">
                             <span aria-hidden="true">&times;</span>
-                        </button>
+                        </a>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form method="post" th:action="@{/gestor/artesano/save}" th:object="${artesano}">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Nombre:</label>
-                                <input type="text" class="form-control" id="nombre">
+                                <label id="codigo" class="col-form-label">Código: (debe ser entre 2 y 4 caracteres)</label>
+                                <input th:readonly="${artesano.codigo!=null && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
                             </div>
                             <div class="form-group">
-                                <label for="apPaterno" class="col-form-label">Apellido Paterno:</label>
-                                <input type="text" class="form-control" id="apPaterno">
+                                <label id="nombre" class="col-form-label">Nombre:</label>
+                                <input type="text" class="form-control" th:field="*{nombre}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
                             </div>
                             <div class="form-group">
-                                <label for="apMaterno" class="col-form-label">Apellido Materno:</label>
-                                <input type="text" class="form-control" id="apMaterno">
+                                <label id="apellidopaterno" class="col-form-label">Apellido Paterno:</label>
+                                <input type="text" class="form-control" th:field="*{apellidopaterno}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('apellidopaterno')}" th:errors="*{apellidopaterno}">Error</div>
                             </div>
                             <div class="form-group">
-                                <label for="cod" class="col-form-label">Código: (debe ser entre 2 y 4
-                                    caracteres)</label>
-                                <input type="text" class="form-control" id="cod">
+                                <label id="apellidomaterno" class="col-form-label">Apellido Materno: (Opcional)</label>
+                                <input type="text" class="form-control" th:field="*{apellidomaterno}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('apellidomaterno')}" th:errors="*{apellidomaterno}">Error</div>
                             </div>
+
                             <div class="form-group">
-                                <label for="comunidad" class="col-form-label">Comunidad a la que pertenece:</label>
-                                <select class="form-control" id="comunidad">
-                                    <option value="comu1">Amaru</option>
-                                    <option value="comu2">Huaran</option>
-                                    <option value="comu3">Cancha Cancha</option>
-                                    <option value="comu4">Parobamba</option>
-                                    <option value="comu5">Pitukiska</option>
+                                <label id="comunidades" class="col-form-label">Comunidad a la que pertenece:</label>
+                                <select class="form-control" th:field="*{comunidades}" >
+                                    <option th:each="i : ${comunidades}" th:value="${i.codigo}" th:text="${i.nombre}"></option>
                                 </select>
+                                <div class="text-danger" th:if="${#fields.hasErrors('comunidades')}" th:errors="*{comunidades}">Error</div>
                             
                             </div>
+                            <div class="modal-footer">
+                                <a type="button" th:href="@{/gestor/artesano}"  class="btn btn-secondary" >Cancelar</a>
+                                <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Guardar cambios</a></button>
+                            </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary"><a href="artesanos.html"
-                                                                         style="color:white;text-decoration:none">Agregar</a>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -171,58 +170,22 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Borrar Artesano</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <div class="modal-body">
-                        <p>¿Seguro que desea borrar este artesano? Esta acción no se puede deshacer.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger"><a href="artesanos.html"
-                                                                        style="color:white;text-decoration:none">Borrar</a>
-                        </button>
-                    </div>
+                    <form method="get" th:action="@{/gestor/artesano/delete}" th:object="${artesano}">
+                        <div class="modal-body">
+                            <input hidden type="text" class="form-control" th:field="*{codigo}" >
+                            <p>¿Seguro que desea borrar este Artesano? Esta acción no se puede deshacer.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        
-        <!-- Modal Edit -->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Editar Artesano</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label class="col-form-label">Nombre:</label>
-                                <input type="text" class="form-control" id="nombre" placeholder="Nombre">
-                                <label class="col-form-label">Apellido Paterno:</label>
-                                <input type="text" class="form-control" id="apellido1" placeholder="Apellido Paterno">
-                                <label class="col-form-label">Apellido Materno:</label>
-                                <input type="text" class="form-control" id="apellido2" placeholder="Apellido Materno">
-                                <label class="col-form-label">Comunidad:</label>
-                                <select type="text" class="form-control" id="select">
-                                    <option>Amaru</option>
-                                    <option>Huran</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary"><a href="artesanos.html"
-                                                                         style="color:white;text-decoration:none">Guardar
-                            cambios</a></button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         
         <!-- Bootstrap core JavaScript-->
         <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
@@ -246,6 +209,7 @@
         
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
+        <script th:src="@{/js/gestor/artesano.js}"></script>
     
     </body>
 </html>
