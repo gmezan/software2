@@ -28,7 +28,7 @@ public class Usuarios {
     private Roles roles;
     @Column(nullable = false)
     private Boolean cuentaactivada;
-    @Column(name="fecha_modifcacion")
+    @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;

@@ -194,9 +194,9 @@
              aria-labelledby="headingInv" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" th:classappend="${param2=='VentasPorProducto'}?  active : ''"
-                   href="ListaProductosVendidos.html">Ventas por producto</a>
+                   th:href="@{/sede/ventasProducto}">Ventas por producto</a>
                 <a class="collapse-item" th:classappend="${param2=='VentasPorCliente'}?  active : ''"
-                   href="ListaOrdenes.html">Ventas por cliente</a>
+                   th:href="@{/sede/ventasCliente}">Ventas por cliente</a>
 
             </div>
         </div>
@@ -214,7 +214,7 @@
              aria-labelledby="headingInv" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" th:classappend="${param2=='Asignado a tienda'}?  active : ''"
-                   href="asignadoTiendas.html">Asignado a tienda</a>
+                   th:href="@{/sede/AsignadoTienda}">Asignado a tienda</a>
                 <a class="collapse-item" th:classappend="${param2=='Lista de tiendas'}?  active : ''"
                   th:href="@{/sede/tienda}">Lista de tiendas</a>
 
