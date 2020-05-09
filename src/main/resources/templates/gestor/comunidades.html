@@ -30,7 +30,7 @@
                         </div>
 
                         <div id="msgComunidad" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
-                        <div id="msgError" th:if="${msg2 != null}" th:text="${msg2}" class="alert alert-danger py-1" role="alert"></div>
+                        <!--div id="msgError" th:if="${msg2 != null}" th:text="${msg2}" class="alert alert-danger py-1" role="alert"></div-->
                         <!-- Database Table -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -164,7 +164,7 @@
                         <h4 class="modal-title">Borrar Comunidad</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <form method="get" th:action="@{/gestor/categoria/delete}" th:object="${comunidad}">
+                    <form method="get" th:action="@{/gestor/comunidad/delete}" th:object="${comunidad}">
                         <div class="modal-body">
                             <input hidden type="text" class="form-control" th:field="*{codigo}" >
                             <p>¿Seguro que desea borrar esta categoría? Esta acción no se puede deshacer.</p>

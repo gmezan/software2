@@ -4,6 +4,9 @@ import com.example.sw2.entity.Categorias;
 import com.example.sw2.entity.Comunidades;
 import com.example.sw2.repository.ComunidadesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +35,7 @@ public class ComunidadController {
                           BindingResult bindingResult, RedirectAttributes attr, Model model) {
         if(bindingResult.hasErrors()){
             model.addAttribute("lista", comunidadesRepository.findAll());
-            model.addAttribute("msg2", "ERROR");
+            model.addAttribute("msg", "ERROR");
             return "gestor/comunidades";
         }
         else {
@@ -54,7 +57,7 @@ public class ComunidadController {
     }
 
     @GetMapping("/delete")
-    public String deleteCat(Model model,
+    public String deleteCom(Model model,
                             @RequestParam("codigo") String id,
                             RedirectAttributes attr) {
         Optional<Comunidades> c = comunidadesRepository.findById(id);
@@ -63,5 +66,12 @@ public class ComunidadController {
             attr.addFlashAttribute("msg","Comunidad borrada exitosamente");
         }
         return "redirect:/gestor/comunidad";
+    }
+
+    //Web service
+    @ResponseBody
+    @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<Comunidades>> getCom(@RequestParam(value = "id") String id){
+        return new ResponseEntity<>(comunidadesRepository.findById(id), HttpStatus.OK);
     }
 }
