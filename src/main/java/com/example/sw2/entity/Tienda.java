@@ -12,7 +12,7 @@ public class Tienda {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idTienda")
     private int idtienda;
-    @NotBlank
+    @NotBlank(message = "El campo no puede estar vacío")
     @Column(nullable = false)
     private String nombre;
     @Column(nullable = true)

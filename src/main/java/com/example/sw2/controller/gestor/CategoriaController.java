@@ -25,27 +25,9 @@ public class CategoriaController {
 
 
     @GetMapping(value = {"", "/"})
-    public String listCat(@ModelAttribute("categoria_modal") Categorias cat, Model model) {
+    public String listCat(@ModelAttribute("categoria") Categorias cat, Model model) {
         model.addAttribute("lista", categoriasRepository.findAll());
         return "gestor/categorias";
-    }
-
-
-    @GetMapping("/new")
-    public String newCat(@ModelAttribute("categoria") Categorias cat) {
-            return "gestor/categoriasForm";
-    }
-
-    @GetMapping("/edit")
-    public String formCat(@ModelAttribute("categoria") Categorias cat, @RequestParam(value = "codigo") String id,
-                          Model model) {
-        Optional<Categorias> c = categoriasRepository.findById(id);
-        if (c.isPresent()) {
-            cat =c.get();
-            model.addAttribute("categoria",cat);
-            return "gestor/categoriasForm";
-        }
-        return "redirect:/gestor/categoria";
     }
 
 
@@ -53,7 +35,9 @@ public class CategoriaController {
     public String editCat(@ModelAttribute("categoria") @Valid Categorias categorias,
                           BindingResult bindingResult, RedirectAttributes attr, Model model) {
         if(bindingResult.hasErrors()){
-            return "gestor/categoriasForm";
+            model.addAttribute("lista", categoriasRepository.findAll());
+            model.addAttribute("msg", "ERROR");
+            return "gestor/categorias";
         }
         else {
             Optional<Categorias> optionalCategorias = categoriasRepository.findById(categorias.getCodigo());
@@ -86,10 +70,7 @@ public class CategoriaController {
             attr.addFlashAttribute("msg","Producto borrado exitosamente");
         }
         return "redirect:/gestor/categoria";
-
     }
-
-
 
     //Web service
     @ResponseBody
