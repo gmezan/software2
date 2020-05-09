@@ -1,5 +1,7 @@
 package com.example.sw2.entity;
 
+import com.example.sw2.constantes.VentasId;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -7,17 +9,18 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Ventas")
+@IdClass(VentasId.class)
 public class Ventas {
 
     @Id
-    @Column(nullable = false)
+    private int tipodocumento;
+    @Id
     private String numerodocumento;
+
     @Column(name="ruc_dni")
     private String rucdni;
     @Column(nullable = false)
     private String nombrecliente;
-    @Column(nullable = false)
-    private int tipodocumento;
     @Column(nullable = false)
     private String lugarventa;
     @ManyToOne
