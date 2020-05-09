@@ -4,13 +4,21 @@ import java.util.Date;
 
 public interface DatosProductoVentaDto {
 
-    String getNombreproducto();
+    String getRucdni();
+    String getNombrecliente();
+    int getTipodocumento();
+    String getNumerodocumento();
+    String getLugarVenta();
+    Date getFechaventa();
+    int getCantidadventa();
+    Float getPrecioventa();
     String getCodigoinventario();
-    String getTamañoproducto();
-    String getComunidadproducto();
+    String getNombreproducto();
     String getColorproducto();
+    String getTamanhoproducto();
+    String getComunidadproducto ();
     int getStockasignadotienda();
-    int getStocksede();
-    byte[] getFotoproducto();
     Date getFechaasignacionproducto();
+    byte[] getFotoproducto();
+    int getStocksede();
 }

@@ -21,7 +21,6 @@ public class AsignadoTiendaController {
     public String ListaAsignacionTiendas(Model model){
 
         model.addAttribute("listaDatosAsignados", asignacionTiendasRepository.obtenerDatosAsignados());
-        model.addAttribute("listaAsignacionTiendas", asignacionTiendasRepository.findAll());
         return "sede/asignadoTiendas";
     }
 }

@@ -22,15 +22,12 @@ public class VentasClienteController {
 
     @Autowired
     VentasRepository ventasRepository;
-    @Autowired
-    UsuariosRepository usuariosRepository;
 
     @GetMapping(value = {"", "ListaVentasCliente"})
     public String ListVentasCliente(Model model){
 
-        model.addAttribute("listaProductos", ventasRepository.obtenerDatosProducto());
-        model.addAttribute("listaUsuarios", usuariosRepository.findAll());
-        model.addAttribute("listaVentas", ventasRepository.findAll());
+
+        model.addAttribute("listaVentas", ventasRepository.obtenerDatosProducto());
         return "sede/ListaOrdenes";
     }
 

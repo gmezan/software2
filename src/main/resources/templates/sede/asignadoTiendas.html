@@ -38,10 +38,8 @@
                                     <th>Tienda</th>
                                     <th>Nombre del producto</th>
                                     <th>Fecha de asignación</th>
-                                    <th>Fecha fin</th>
                                     <th>Precio de venta (Dolar)</th>
                                     <th>Cantidad</th>
-                                    <th>Editar</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
@@ -49,48 +47,19 @@
                                     <th>Tienda</th>
                                     <th>Nombre del producto</th>
                                     <th>Fecha de asignación</th>
-                                    <th>Fecha fin</th>
                                     <th>Precio de venta (Dolar)</th>
                                     <th>Cantidad</th>
-                                    <th>Editar</th>
                                 </tr>
                                 </tfoot>
 
                                 <tbody>
-                                <tr>
-                                    <td>Comercial Rosita</td>
-                                    <td>Lliclla</td>
-                                    <td>01/AUG/20</td>
-                                    <td>30/AUG/20</td>
-                                    <td>15</td>
-                                    <td>20</td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#EditarTiendaModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                    </td>
+                                <tr th:each="product: ${listaDatosAsignados}">
+                                    <td th:text="${product.getNombretienda()}"></td>
+                                    <td th:text="${product.getNombreproducto()}"></td>
+                                    <td th:text="${product.getFechaasignacionproducto()}"></td>
+                                    <td th:text="${product.getPrecioventa()}"></td>
+                                    <td th:text="${product.getStockasignadotienda()}"></td>
                                 </tr>
-                                <tr>
-                                    <td>La tiendita de Don Pepe</td>
-                                    <td>Qamaña</td>
-                                    <td>01/MAY/20</td>
-                                    <td>30/MAY/20</td>
-                                    <td>20</td>
-                                    <td>15</td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#EditarTiendaModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Comercial Rosita</td>
-                                    <td>Yanapay</td>
-                                    <td>15/JAN/20</td>
-                                    <td>15/FEB/20</td>
-                                    <td>30</td>
-                                    <td>10</td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#EditarTiendaModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                    </td>
-                                </tr>
-
                                 </tbody>
                             </table></div>
                     </div>
