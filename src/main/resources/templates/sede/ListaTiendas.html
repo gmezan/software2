@@ -10,7 +10,7 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='ListaTiendas',param2='...')"></div>
+    <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='Tiendas',param2='Lista de tiendas')"></div>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -27,7 +27,14 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-900">Lista de Tiendas</h1>
+                    <button data-toggle="modal" data-target="#EditarTiendaModal" class="new-Tienda d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                        <i class="fas fa-download fa-sm text-white-50"></i> Nueva Tienda</button>
+
                 </div>
+
+                <div id="msgListaTiendas" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+
+
                 <div class="card shadow mb-4">
 
                     <div class="card-body">
@@ -36,59 +43,27 @@
                                 <thead>
                                     <tr>
                                         <th>Tienda</th>
-                                        <th>Nombre del producto</th>
-                                        <th>Fecha de asignación</th>
-                                        <th>Fecha fin</th>
-                                        <th>Precio de venta (Dolar)</th>
-                                        <th>Cantidad</th>
-                                        <th>Editar</th>
+                                        <th>Direccion</th>
+                                        <th>Editar/Borrar</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Tienda</th>
-                                        <th>Nombre del producto</th>
-                                        <th>Fecha de asignación</th>
-                                        <th>Fecha fin</th>
-                                        <th>Precio de venta (Dolar)</th>
-                                        <th>Cantidad</th>
-                                        <th>Editar</th>
+                                        <th>Direccion</th>
+                                        <th>Editar/Borrar</th>
                                     </tr>
                                 </tfoot>
 
                                 <tbody>
-                                    <tr>
-                                        <td>Comercial Rosita</td>
-                                        <td>Lliclla</td>
-                                        <td>01/AUG/20</td>
-                                        <td>30/AUG/20</td>
-                                        <td>15</td>
-                                        <td>20</td>
+                                    <tr th:each="item : ${lista}">
+                                        <td th:text="${item.nombre}" ></td>
+                                        <td th:text="${item.direccion}"></td>
                                         <td>
-                                            <button data-toggle="modal" data-target="#EditarTiendaModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                            <button th:attr="data-id=${item.idtienda}" data-toggle="modal" data-target="#EditarTiendaModal" class="edit-Tienda btn  btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                            <button th:attr="data-id=${item.idtienda}" data-toggle="modal" data-target="#deleteTiendaModal" class="delete-Tienda btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>La tiendita de Don Pepe</td>
-                                        <td>Qamaña</td>
-                                        <td>01/MAY/20</td>
-                                        <td>30/MAY/20</td>
-                                        <td>20</td>
-                                        <td>15</td>
-                                        <td>
-                                            <button data-toggle="modal" data-target="#EditarTiendaModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Comercial Rosita</td>
-                                        <td>Yanapay</td>
-                                        <td>15/JAN/20</td>
-                                        <td>15/FEB/20</td>
-                                        <td>30</td>
-                                        <td>10</td>
-                                        <td>
-                                            <button data-toggle="modal" data-target="#EditarTiendaModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                        </td>
+
                                     </tr>
 
                                 </tbody>
@@ -127,41 +102,58 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="EditarTiendaModalLabel">Editar</h5>
+                <h5 class="modal-title" id="EditarTiendaModalLabel">Lista de Tiendas</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="nombretienda" class="col-form-label">Nombre de la tienda</label>
-                        <input type="text" class="form-control" id="nombretienda">
+                <form method="post" th:action="@{/sede/tienda/save}" th:object="${tienda}">
+                    <div hidden class="form-group">
+                        <label  class="col-form-label">idtienda:</label>
+                        <input type="text" class="form-control" th:field="*{idtienda}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('idtienda')}" th:errors="*{idtienda}">Error</div>
                     </div>
 
                     <div class="form-group">
-                        <label for="producto">Producto</label>
-                        <select class="form-control" name="producto" id="producto">
-                            <option>
-                            </option>
-                        </select>
+                        <label class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-form-label">Direccion:</label>
+                        <input type="text" class="form-control" th:field="*{direccion}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}">Error</div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="fecha" class="col-form-label">Fecha en la que se deja el producto</label>
-                        <input type="text" class="form-control" id="fecha">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="cantidad" class="col-form-label">Cantidad</label>
-                        <input type="text" class="form-control" id="cantidad">
+                    <div class="modal-footer">
+                        <button type="button" th:href="@{/sede/tienda}"  class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Guardar cambios</a></button>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar cambios</button>
+
+        </div>
+    </div>
+</div>
+
+<div id="deleteTiendaModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Borrar Tienda</h4>
+                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
+            <form method="get" th:action="@{/sede/tienda/delete}" th:object="${tienda}">
+                <div class="modal-body">
+                    <input hidden type="text" class="form-control" th:field="*{idtienda}" >
+                    <p>¿Seguro que desea borrar esta Tienda? Esta acción no se puede deshacer.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -185,6 +177,9 @@
 <script th:src="@{/js/demo/chart-area-demo.js}"></script>
 <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
 <script th:src="@{/js/demo/datatables-demo.js}"></script>
+
+<script th:src="@{/js/sede/listaTienda.js}"></script>
+<script th:src="@{/js/general.js}"></script>
 
 </body>
 
