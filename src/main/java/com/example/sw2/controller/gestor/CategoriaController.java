@@ -1,5 +1,6 @@
 package com.example.sw2.controller.gestor;
 
+import com.example.sw2.constantes.Tamanho;
 import com.example.sw2.entity.Categorias;
 import com.example.sw2.repository.CategoriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,9 +77,5 @@ public class CategoriaController {
     public ResponseEntity<Optional<Categorias>> getCat(@RequestParam(value = "id") String id){
         return new ResponseEntity<>(categoriasRepository.findById(id), HttpStatus.OK);
     }
-
-
-
-
 
 }
