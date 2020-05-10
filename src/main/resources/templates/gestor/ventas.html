@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/general-gestor.html ::gestor-head(title='Categorias')">
+    <head th:replace="fragments/general-gestor.html ::gestor-head(title='Mis Ventas')">
     </head>
     <body id="page-top">
         
@@ -51,7 +51,7 @@
                                                 <th>RUC/DNI</th>
                                                 <th>Cantidad vendida</th>
                                                 <th>Precio total</th>
-                                                <th>Fecha</th>
+                                                <th>Fecha de venta</th>
                                                 <th>Lugar de venta</th>
                                                 <th>Editar/Borrar</th>
                                             </tr>
@@ -65,31 +65,25 @@
                                                 <th>RUC/DNI</th>
                                                 <th>Cantidad vendida</th>
                                                 <th>Precio total</th>
-                                                <th>Fecha</th>
+                                                <th>Fecha de venta</th>
                                                 <th>Lugar de venta</th>
                                                 <th>Editar/Borrar</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr>
-                                                <td>###</td>
-                                                <td>Nombre 1
-                                                </td>
-                                                <td>Categoría 1
-                                                </td>
-                                                <td>Color 1</td>
-                                                <td>Tamaño</td>
-                                                <td>#</td>
-                                                <td>#</td>
-                                                <td>#</td>
-                                                <td>#</td>
+                                            <tr th:each="item : ${lista}">
+                                                <td th:text="${item.codigoproducto}"></td>
+                                                <td th:text="${item.nombreproducto}"></td>
+                                                <td th:text="${item.tipodocumento}"></td>
+                                                <td th:text="${item.nombrecliente}"></td>
+                                                <td th:text="${item.rucdni}"></td>
+                                                <td th:text="${item.cantidadventa}"></td>
+                                                <td th:text="${item.precioVenta*item.cantidadventa}"></td>
+                                                <td th:text="${item.fechaventa}"></td>
+                                                <td th:text="${item.lugarventa}"></td>
                                                 <td>
-                                                    <button data-toggle="modal" data-target="#editModal"
-                                                            class="btn btn-datatable btn-icon btn-primary mr-2"><i
-                                                            class="fa fa-edit"></i></button>
-                                                    <button data-toggle="modal" data-target="#deleteModal"
-                                                            class="btn btn-datatable btn-icon btn-danger"><i
-                                                            class="fas fa-trash-alt"></i></button>
+                                                    <button th:attr="data-id=${item.tipodocumento}" data-toggle="modal" data-target="#formModal" class="editar-Venta btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button th:attr="data-id=${item.tipodocumento}" data-toggle="modal" data-target="#deleteModal" class="delete-Venta btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                                 </td>
                                             </tr>
 
