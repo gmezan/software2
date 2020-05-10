@@ -89,7 +89,10 @@
                                                 <td th:text="${product.colorproducto}"></td>
                                                 <td th:text="${product.precioventa}"></td>
                                                 <td th:text="${product.cantidadventa}"></td>
-                                                <td></td>
+                                                <!--th:src="${product.fotoproducto}"-->
+                                                <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                         height=100 style="width: auto" >
+                                                </td>
                                                 <td></td>
                                                 <td><button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger" th:href="@{'/sede/ventasCliente/borrarVenta/' + '?id=' + ${product.numerodocumento}}">
                                                         <i class="fas fa-trash-alt"></i>
