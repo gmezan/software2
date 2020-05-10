@@ -27,7 +27,7 @@ public interface VentasRepository extends JpaRepository<Ventas,String> {
     List<DatosProductoVentaDto> obtenerDatosProducto();
 
     @Query(value="SELECT p.nombre as nombreproducto, p.codigonom as codigoproducto,\n" +
-            "v.tipodocumento as tipodocumento, v.nombrecliente as nombrecliente,\n" +
+            "v.numerodocumento as numerodocumento, v.nombrecliente as nombrecliente,\n" +
             "v.ruc_dni as rucdni, v.cantidad as cantidadventa,\n" +
             "v.precio_venta as precioventa, v.fecha as fechaventa,\n" +
             "v.lugarventa as lugarventa FROM Ventas v\n" +
