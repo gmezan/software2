@@ -1,6 +1,5 @@
 package com.example.sw2.controller.gestor;
 
-import com.example.sw2.entity.Categorias;
 import com.example.sw2.entity.Comunidades;
 import com.example.sw2.repository.ComunidadesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class ComunidadController {
     ComunidadesRepository comunidadesRepository;
 
     @GetMapping(value = {"", "/"})
-    public String listCom(@ModelAttribute("comunidad") Categorias cat, Model model) {
+    public String listCom(@ModelAttribute("comunidad") Comunidades com, Model model) {
         model.addAttribute("lista", comunidadesRepository.findAll());
         return "gestor/comunidades";
     }
