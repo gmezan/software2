@@ -66,8 +66,8 @@
                                                 <td th:if="${item.fechamodificacion!=null}" th:text="${item.fechamodificacion.toLocalDate()}"></td>
                                                 <td th:if="${item.fechamodificacion==null}">-</td>
                                                 <td>
-                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#formModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#formModal" class="editar-Comunidad btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#deleteModal" class="delete-Comunidad btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                                 </td>
                                             </tr>
 
@@ -123,6 +123,7 @@
     
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
+        <script th:src="@{/js/gestor/comunidad.js}"></script>
 
         <!-- Modal Form-->
         <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -167,7 +168,7 @@
                     <form method="get" th:action="@{/gestor/comunidad/delete}" th:object="${comunidad}">
                         <div class="modal-body">
                             <input hidden type="text" class="form-control" th:field="*{codigo}" >
-                            <p>¿Seguro que desea borrar esta categoría? Esta acción no se puede deshacer.</p>
+                            <p>¿Seguro que desea borrar esta comunidad? Esta acción no se puede deshacer.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
