@@ -32,8 +32,8 @@
                         <div class="card shadow mb-4">
 
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                <div class="table-responsive" >
+                                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0" >
                                         <thead>
                                             <tr>
                                                 <th>Nombre del cliente</th>
@@ -82,16 +82,19 @@
                                                 <td th:text="${product.fechaventa}"></td>
                                                 <td th:text="${product.lugarVenta}"></td>
                                                 <td th:text="${product.rucdni}"></td>
-                                                <td th:text="${product.codigoinventario}"></td>
+                                                <td th:text="${product.codigoproducto}"></td>
                                                 <td th:text="${product.nombreproducto}"></td>
                                                 <td th:text="${product.tamanhoproducto}"></td>
                                                 <td th:text="${product.comunidadproducto}"></td>
                                                 <td th:text="${product.colorproducto}"></td>
                                                 <td th:text="${product.precioventa}"></td>
                                                 <td th:text="${product.cantidadventa}"></td>
+                                                <td th:text="${product.cantidadventa * product.precioventa}"></td>
                                                 <td></td>
-                                                <td></td>
-                                                <td><button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger" th:href="@{'/sede/ventasCliente/borrarVenta/' + '?id=' + ${product.numerodocumento}}">
+                                                <td>
+                                                    <button th:attr="data-id1=${product.numerodocumento}, data-id2=${product.tipodocumento}"
+                                                            data-toggle="modal" data-target="#deleteModal"
+                                                            class="borrar-VentasCliente btn btn-datatable btn-icon btn-danger">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </td>
@@ -144,6 +147,7 @@
         <script th:src="@{/js/demo/chart-area-demo.js}"></script>
         <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
+        <script th:src="@{/js/sede/ventasCliente.js}"></script>
 
         <!-- Modal Delete -->
         <div id="deleteModal" class="modal fade">
@@ -153,14 +157,17 @@
                         <h4 class="modal-title">Eliminar venta</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <div class="modal-body">
-                        <p>¿Seguro que desea eliminar esta venta? Esta acción no se puede deshacer.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger"><a href="ListaOrdenes.html" style="color:white;text-decoration:none">Borrar</a>
-                        </button>
-                    </div>
+                    <form method="get" th:action="@{ventasCliente/borrar}">
+                        <div class="modal-body">
+                            <input type="text" class="form-control" id="id1" name="id1">
+                            <input type="text" class="form-control" id="id2" name="id2">
+                            <p>¿Seguro que desea eliminar esta venta? Esta acción no se puede deshacer.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -15,6 +15,9 @@ public class Tienda {
     @NotBlank(message = "El campo no puede estar vacío")
     @Column(nullable = false)
     private String nombre;
+    @NotBlank(message = "El campo no puede estar vacío")
+    @Column(nullable = false)
+    private String ruc;
     @Column(nullable = true)
     private String direccion;
 
@@ -40,5 +43,13 @@ public class Tienda {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getRuc() {
+        return ruc;
+    }
+
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
     }
 }

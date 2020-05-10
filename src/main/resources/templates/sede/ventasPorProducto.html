@@ -42,7 +42,6 @@
                                         <th>Color</th>
                                         <th>Tamaño</th>
                                         <th>Comunidad</th>
-                                        <th>Stock asignado</th>
                                         <th>Fecha de asignacion</th>
                                         <th>Foto</th>
                                         <th>Cantidad de ventas</th>
@@ -55,8 +54,7 @@
                                         <th>Color</th>
                                         <th>Tamaño</th>
                                         <th>Comunidad</th>
-                                        <th>Stock asignado</th>
-                                        <th>Fecha de asignacion</th>
+                                        <th>Fecha de venta</th>
                                         <th>Foto</th>
                                         <th>Cantidad de ventas</th>
                                     </tr>
@@ -64,13 +62,12 @@
 
                                 <tbody>
                                     <tr th:each="producto : ${listaProductos}">
-                                        <td th:text="${producto.codigoinventario}"></td>
+                                        <td th:text="${producto.codigoproducto}"></td>
                                         <td th:text="${producto.nombreproducto}"></td>
                                         <td th:text="${producto.colorproducto}"></td>
                                         <td th:text="${producto.tamanhoproducto}"></td>
                                         <td th:text="${producto.comunidadproducto}"></td>
-                                        <td th:text="${producto.stockasignadotienda}"></td>
-                                        <td th:text="${producto.fechaasignacionproducto}"></td>
+                                        <td th:text="${producto.fechaventa}"></td>
                                         <td></td>
                                         <td th:text="${producto.cantidadventa}"></td>
                                     </tr>

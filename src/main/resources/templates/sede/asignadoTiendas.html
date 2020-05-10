@@ -1,159 +1,179 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/general-sede.html ::sede-head(title='Lista de tiendas')">
+<head th:replace="fragments/general-sede.html ::sede-head(title='Productos Asignados a Tiendas ')">
 </head>
 
 <body id="page-top">
 
-<!-- Page Wrapper -->
-<div id="wrapper">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
-    <!-- Sidebar -->
-    <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='Tiendas',param2='Asignado a tienda')"></div>
-    <!-- End of Sidebar -->
+        <!-- Sidebar -->
+        <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='Tiendas',param2='Asignado a tienda')"></div>
+        <!-- End of Sidebar -->
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
 
-        <!-- Main Content -->
-        <div id="content">
+            <!-- Main Content -->
+            <div id="content">
 
-            <div th:replace="fragments/general-sede.html :: topbar"></div>
+                <div th:replace="fragments/general-sede.html :: topbar"></div>
 
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-900">Lista de Tiendas</h1>
-                </div>
-                <div class="card shadow mb-4">
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-900">Productos Asignados a Tiendas </h1>
+                    </div>
 
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>Tienda</th>
-                                    <th>Nombre del producto</th>
-                                    <th>Fecha de asignación</th>
-                                    <th>Precio de venta (Dolar)</th>
-                                    <th>Cantidad</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Tienda</th>
-                                    <th>Nombre del producto</th>
-                                    <th>Fecha de asignación</th>
-                                    <th>Precio de venta (Dolar)</th>
-                                    <th>Cantidad</th>
-                                </tr>
-                                </tfoot>
+                    <div class="card shadow mb-4">
 
-                                <tbody>
-                                <tr th:each="product: ${listaDatosAsignados}">
-                                    <td th:text="${product.getNombretienda()}"></td>
-                                    <td th:text="${product.getNombreproducto()}"></td>
-                                    <td th:text="${product.getFechaasignacionproducto()}"></td>
-                                    <td th:text="${product.getPrecioventa()}"></td>
-                                    <td th:text="${product.getStockasignadotienda()}"></td>
-                                </tr>
-                                </tbody>
-                            </table></div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>Tienda</th>
+                                        <th>Nombre del producto</th>
+                                        <th>Color</th>
+                                        <th>Tamaño</th>
+                                        <th>Fecha de asignación</th>
+                                        <th>Precio de venta (Dolar)</th>
+                                        <th>Cantidad</th>
+                                        <th>Registrar venta</th>
+                                        <th>Devolución</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Tienda</th>
+                                        <th>Nombre del producto</th>
+                                        <th>Color</th>
+                                        <th>Tamaño</th>
+                                        <th>Fecha de asignación</th>
+                                        <th>Precio de venta (Dolar)</th>
+                                        <th>Cantidad</th>
+                                        <th>Registrar venta</th>
+                                        <th>Devolución</th>
+                                    </tr>
+                                    </tfoot>
+
+                                    <tbody>
+                                    <tr th:each="product: ${listaDatosAsignados}">
+                                        <td th:text="${product.getNombretienda()}"></td>
+                                        <td th:text="${product.getNombreproducto()}"></td>
+                                        <td th:text="${product.colorproducto}"></td>
+                                        <td th:text="${product.tamanhoproducto}"></td>
+                                        <td th:text="${product.getFechaasignacionproducto()}"></td>
+                                        <td th:text="${product.getPrecioventa()}"></td>
+                                        <td th:text="${product.getStockasignadotienda()}"></td>
+                                        <td>
+                                            <button th:attr=""
+                                                    data-toggle="modal" data-target="#registrarModal"
+                                                    class="registar-Venta btn btn-datatable btn btn-success">
+                                                <i class="fas fa-dollar-sign"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button th:attr=""
+                                                    data-toggle="modal" data-target="#devolucionModal"
+                                                    class="retornar-Producto btn btn-datatable btn btn-danger">
+                                                <i class="fas fa-undo-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
-
-
-
-
+                <!-- /.container-fluid -->
             </div>
-            <!-- /.container-fluid -->
-
+            <!-- End of Main Content -->
+            <div th:replace="fragments/general-sede.html :: footer"></div>
         </div>
-        <!-- End of Main Content -->
-
-        <div th:replace="fragments/general-sede.html :: footer"></div>
-
+        <!-- End of Content Wrapper -->
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
 
-</div>
-<!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
+    <!-- Logout Modal-->
+    <div th:replace="fragments/general-sede.html :: logout-modal"></div>
 
-<!-- Logout Modal-->
-<div th:replace="fragments/general-sede.html :: logout-modal"></div>
-
-<div class="modal fade" id="EditarTiendaModal" tabindex="-1" role="dialog" aria-labelledby="EditarTiendaModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="EditarTiendaModalLabel">Editar</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="nombretienda" class="col-form-label">Nombre de la tienda</label>
-                        <input type="text" class="form-control" id="nombretienda">
+    <!-- Modal Registrar Venta -->
+    <div id="registrarModal" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Registrar venta</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <form method="get" th:action="@{}">
+                    <div hidden class="form-group">
+                        <label  for="cantVent" class="col-form-label">Cantidad de productos vendidos</label>
+                        <input type="text" class="form-control" id="cantVent" name="cantVent">
                     </div>
 
-                    <div class="form-group">
-                        <label for="producto">Producto</label>
-                        <select class="form-control" name="producto" id="producto">
-                            <option>
-                            </option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="fecha" class="col-form-label">Fecha en la que se deja el producto</label>
-                        <input type="text" class="form-control" id="fecha">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="cantidad" class="col-form-label">Cantidad</label>
-                        <input type="text" class="form-control" id="cantidad">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success"><a style="color:white;text-decoration:none">Registrar</a></button>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar cambios</button>
+        </div>
+    </div>
+
+    <!-- Modal Devolución -->
+    <div id="devolucionModal" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Retornar Producto</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <form method="get" th:action="@{}">
+                    <div hidden class="form-group">
+                        <label  for="cantRet" class="col-form-label">Cantidad de productos vendidos</label>
+                        <input type="text" class="form-control" id="cantRet" name="cantRet">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Retornar</a></button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Bootstrap core JavaScript-->
-<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
-<!-- Core plugin JavaScript-->
-<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
 
-<!-- Custom scripts for all pages-->
-<script th:src="@{/js/sb-admin-2.min.js}"></script>
+    <!-- Custom scripts for all pages-->
+    <script th:src="@{/js/sb-admin-2.min.js}"></script>
 
-<!-- Page level plugins -->
-<script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
-<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
-<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+    <!-- Page level plugins -->
+    <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+    <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
 
-<!-- Page level custom scripts -->
-<script th:src="@{/js/demo/chart-area-demo.js}"></script>
-<script th:src="@{/js/demo/chart-pie-demo.js}"></script>
-<script th:src="@{/js/demo/datatables-demo.js}"></script>
+    <!-- Page level custom scripts -->
+    <script th:src="@{/js/demo/chart-area-demo.js}"></script>
+    <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
+    <script th:src="@{/js/demo/datatables-demo.js}"></script>
+
+
 
 </body>
 

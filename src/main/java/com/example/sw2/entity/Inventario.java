@@ -21,7 +21,7 @@ public class Inventario {
     @JoinColumn(name="producto",nullable =false)
     private Productos productos;
     @Column(nullable =false)
-    private int tamanho;
+    private String tamanho;
     @ManyToOne
     @JoinColumn(name="comunidad",nullable =false)
     private Comunidades comunidades;
@@ -89,11 +89,11 @@ public class Inventario {
         this.productos = productos;
     }
 
-    public int getTamanho() {
+    public String getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(int tamanho) {
+    public void setTamanho(String tamanho) {
         this.tamanho = tamanho;
     }
 

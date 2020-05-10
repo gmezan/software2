@@ -9,13 +9,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Ventas")
-@IdClass(VentasId.class)
 public class Ventas {
 
-    @Id
-    private int tipodocumento;
-    @Id
-    private String numerodocumento;
+    @EmbeddedId
+    private VentasId id;
 
     @Column(name="ruc_dni")
     private String rucdni;
@@ -40,12 +37,12 @@ public class Ventas {
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 
-    public String getNumerodocumento() {
-        return numerodocumento;
+    public VentasId getId() {
+        return id;
     }
 
-    public void setNumerodocumento(String numerodocumento) {
-        this.numerodocumento = numerodocumento;
+    public void setId(VentasId id) {
+        this.id = id;
     }
 
     public String getRucdni() {
@@ -62,14 +59,6 @@ public class Ventas {
 
     public void setNombrecliente(String nombrecliente) {
         this.nombrecliente = nombrecliente;
-    }
-
-    public int getTipodocumento() {
-        return tipodocumento;
-    }
-
-    public void setTipodocumento(int tipodocumento) {
-        this.tipodocumento = tipodocumento;
     }
 
     public String getLugarventa() {

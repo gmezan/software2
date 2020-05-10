@@ -1,6 +1,5 @@
 package com.example.sw2.controller.sede;
 
-import com.example.sw2.entity.Categorias;
 import com.example.sw2.entity.Tienda;
 import com.example.sw2.repository.TiendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class TiendaController {
     @GetMapping(value = {"", "/"})
     public String listCat(@ModelAttribute("tienda") Tienda cat, Model model) {
         model.addAttribute("lista", tiendaRepository.findAll());
-        return "sede/ListaTiendas";
+        return "sede/tiendas";
     }
 
     @PostMapping("/save")
@@ -35,7 +34,7 @@ public class TiendaController {
         if(bindingResult.hasErrors()){
             model.addAttribute("lista", tiendaRepository.findAll());
             model.addAttribute("msg", "ERROR");
-            return "sede/ListaTiendas";
+            return "sede/tiendas";
         }
         else {
             Optional<Tienda> optionalTienda = tiendaRepository.findById(tienda.getIdtienda());
@@ -46,7 +45,7 @@ public class TiendaController {
                 attr.addFlashAttribute("msg", "Producto creado exitosamente");
             }
             tiendaRepository.save(tienda);
-            return "redirect:/sede/tienda/";
+            return "redirect:/sede/tienda";
         }
 
     }
@@ -62,7 +61,7 @@ public class TiendaController {
             tiendaRepository.deleteById(id);
             attr.addFlashAttribute("msg","Producto borrado exitosamente");
         }
-        return "redirect:/sede/tienda/";
+        return "redirect:/sede/tienda";
     }
 
     //Web service

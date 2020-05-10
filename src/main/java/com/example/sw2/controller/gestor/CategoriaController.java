@@ -77,8 +77,4 @@ public class CategoriaController {
         return new ResponseEntity<>(categoriasRepository.findById(id), HttpStatus.OK);
     }
 
-
-
-
-
 }

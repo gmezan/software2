@@ -14,12 +14,14 @@ import java.util.List;
 public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTiendas,Integer> {
 
     @Query(value="select p.nombre as nombreproducto, a.precioventa as precioventa," +
-            "att.stock as stockasignadotienda, att.fecha_asignacion as fechaasignacionproducto, t.nombre as nombretienda\n"+
+            "att.stock as stockasignadotienda, att.fecha_asignacion as fechaasignacionproducto, t.nombre as nombretienda,"+
+            "i.tamanho as tamanhoproducto, i.color as colorproducto\n"+
             "FROM Productos p\n" +
             "inner join Inventario i on (p.codigonom = i.producto)\n" +
             "inner join Asignados_sedes a on (i.codigo_inventario = a.producto_inventario)"+
             "inner join Asignacion_tiendas att on (a.idAsignados = att.productoasignado)"+
-            "inner join Tienda t on (att.tienda =  t.idtienda)",
+            "inner join Tienda t on (att.tienda =  t.idtienda)"+
+            "group by att.tienda",
             nativeQuery = true)
     List<DatosAsignadosTiendaDto> obtenerDatosAsignados();
 

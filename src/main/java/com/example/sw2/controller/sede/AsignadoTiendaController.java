@@ -23,4 +23,6 @@ public class AsignadoTiendaController {
         model.addAttribute("listaDatosAsignados", asignacionTiendasRepository.obtenerDatosAsignados());
         return "sede/asignadoTiendas";
     }
+
+
 }
