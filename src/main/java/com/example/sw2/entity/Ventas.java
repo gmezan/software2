@@ -3,6 +3,8 @@ package com.example.sw2.entity;
 import com.example.sw2.constantes.VentasId;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,8 +16,11 @@ public class Ventas {
     @EmbeddedId
     private VentasId id;
 
+    @Size(max = 11, message = "El Ruc/Dni debe contener 11 caracteres")
     @Column(name="ruc_dni")
     private String rucdni;
+    @NotBlank
+    @Size(max = 45, message = "El Ruc/Dni debe contener 45 caracteres")
     @Column(nullable = false)
     private String nombrecliente;
     @Column(nullable = false)

@@ -180,7 +180,7 @@
             
             <!-- Nav Item - Inventario -->
             <li class="nav-item" th:classappend="${param1=='Inventario'}? active : ''">
-                <a class="nav-link" href="inventarioGestor.html">
+                <a class="nav-link" th:href="@{/gestor/inventario}">
                     <i class="fas fa-fw fa-file"></i>
                     <span>Inventario</span></a>
             </li>
@@ -241,7 +241,7 @@
             
             <!-- Nav Item - Ventas -->
             <li class="nav-item" th:classappend="${param1=='Ventas'}? active : ''">
-                <a class="nav-link" href="ventas.html">
+                <a th:href="@{/gestor/venta}" class="nav-link" href="ventas.html">
                     <i class="fas fa-fw fa-dollar-sign"></i>
                     <span>Mis ventas</span></a>
             </li>

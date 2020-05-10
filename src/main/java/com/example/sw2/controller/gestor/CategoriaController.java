@@ -1,5 +1,6 @@
 package com.example.sw2.controller.gestor;
 
+import com.example.sw2.constantes.Tamanho;
 import com.example.sw2.entity.Categorias;
 import com.example.sw2.repository.CategoriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;

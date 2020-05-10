@@ -95,9 +95,11 @@
                                                     <button th:attr="data-id1=${product.numerodocumento}, data-id2=${product.tipodocumento}"
                                                             data-toggle="modal" data-target="#deleteModal"
                                                             class="borrar-VentasCliente btn btn-datatable btn-icon btn-danger">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
+                                                <!--th:src="${product.fotoproducto}"-->
+                                                <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                         height=100 style="width: auto" >
                                                 </td>
+                                                <td></td>
                                             </tr>
                                         </tbody>
                                     </table>

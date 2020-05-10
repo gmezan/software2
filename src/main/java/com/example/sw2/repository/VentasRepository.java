@@ -1,6 +1,7 @@
 package com.example.sw2.repository;
 import com.example.sw2.constantes.VentasId;
 import com.example.sw2.dto.DatosClientesVentaDto;
+import com.example.sw2.dto.DatosGestorVentasDto;
 import com.example.sw2.dto.DatosProductoVentaDto;
 import com.example.sw2.entity.Ventas;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,6 +37,17 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
             "inner join Productos p on (i.producto = p.codigonom)\n"+
             "group by v.productoinventario",
             nativeQuery = true)
+
     List<DatosProductoVentaDto> obtenerDatosPorProducto();
+
+    @Query(value="SELECT p.nombre as nombreproducto, p.codigonom as codigoproducto,\n" +
+            "v.numerodocumento as numerodocumento, v.nombrecliente as nombrecliente,\n" +
+            "v.ruc_dni as rucdni, v.cantidad as cantidadventa,\n" +
+            "v.precio_venta as precioventa, v.fecha as fechaventa,\n" +
+            "v.lugarventa as lugarventa FROM Ventas v\n" +
+            "INNER JOIN Inventario i ON (v.productoinventario = i.codigo_inventario)\n" +
+            "INNER JOIN Productos p ON (i.producto = p.codigonom)",
+            nativeQuery = true)
+    List<DatosGestorVentasDto> obtenerDatosGestorVentas();
 
 }

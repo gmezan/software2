@@ -20,11 +20,14 @@ public class Inventario {
     @ManyToOne
     @JoinColumn(name="producto",nullable =false)
     private Productos productos;
+
     @Column(nullable =false)
     private String tamanho;
+
     @ManyToOne
     @JoinColumn(name="comunidad",nullable =false)
     private Comunidades comunidades;
+
     @ManyToOne
     @JoinColumn(name="artesano")
     private Artesanos artesanos;
