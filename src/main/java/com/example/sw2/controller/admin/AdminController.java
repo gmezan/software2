@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @GetMapping("/{p}") public String dummyGet(@PathVariable("p") String page){ return "admin/"+ page;}
+    @GetMapping(value = {"/",""}) public String init(){
+        return "redirect:/";}
 
 }

@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/gestor/venta")
-public class VentasGestorController {
+public class VentasGestorController {/*
 
     @Autowired
     VentasRepository ventasRepository;
@@ -70,5 +70,5 @@ public class VentasGestorController {
     @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<Ventas>> getVen(@RequestParam(value = "id") String id){
         return new ResponseEntity<>(ventasRepository.findById(id), HttpStatus.OK);
-    }
+    }*/
 }
