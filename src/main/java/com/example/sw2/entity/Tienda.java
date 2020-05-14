@@ -3,6 +3,7 @@ package com.example.sw2.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Tienda")
@@ -20,6 +21,7 @@ public class Tienda {
     private String ruc;
     @Column(nullable = true)
     private String direccion;
+
 
     public String getDireccion() {
         return direccion;

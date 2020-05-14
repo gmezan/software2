@@ -31,6 +31,10 @@ public class Categorias {
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 
+    public Categorias(){
+        this.fechacreacion=LocalDateTime.now();
+    }
+
     public String getCodigo() {
         return codigo;
     }

@@ -36,6 +36,10 @@ public class Productos {
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 
+    public Productos(){
+        this.fechacreacion=LocalDateTime.now();
+    }
+
     public String getNombreLinea(){
         return CustomConstants.getLineas().get(this.linea);
     }
