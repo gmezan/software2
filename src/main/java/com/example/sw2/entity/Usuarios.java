@@ -1,6 +1,8 @@
 package com.example.sw2.entity;
 
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
@@ -30,8 +32,10 @@ public class Usuarios implements Serializable {
     private Roles roles;
     @Column(nullable = false)
     private Boolean cuentaactivada;
+    @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 

@@ -1,6 +1,8 @@
 package com.example.sw2.entity;
 
 import com.example.sw2.constantes.VentasId;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -37,8 +39,10 @@ public class Ventas {
     private int cantidad;
     @Column(name="precio_venta",nullable = false)
     private BigDecimal precioventa;
-    @Column(name="fecha_modifcacion")
+    @LastModifiedDate
+    @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 

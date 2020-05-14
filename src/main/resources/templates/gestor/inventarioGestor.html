@@ -132,7 +132,7 @@
                                                 <td th:text="${inv.facilitador}">Sam Sammie</td>
                                                 <td th:text="${inv.artesanos!=null? inv.artesanos.nombre +' ' + inv.artesanos.apellidopaterno : '---' }" >Angela Ccana</td>
                                                 <td><img
-                                                        src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                                        th:src="${inv.foto}"
                                                         alt="" height=100 width=100></td>
                                                 
                                                 <td th:text="${inv.fechacreacion}">Sam Sammie</td>

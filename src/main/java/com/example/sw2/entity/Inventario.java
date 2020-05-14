@@ -1,5 +1,8 @@
 package com.example.sw2.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -55,8 +58,10 @@ public class Inventario {
     private String facilitador;
     @Column(name="fecha_vencimiento_consignacion")
     private LocalDate fechavencimientoconsignacion;
+    @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 

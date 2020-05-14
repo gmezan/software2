@@ -1,5 +1,7 @@
 package com.example.sw2.entity;
 import org.apache.el.lang.ELSupport;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -33,8 +35,10 @@ public class AsignadosSedes {
     @ManyToOne
     @JoinColumn(name="estadoasignacion",nullable = false)
     private EstadoAsignacion estadoAsignacion;
+    @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
     private String mensaje;

@@ -1,9 +1,9 @@
-var contextPath = "http://localhost:8080";
+var contextPath  = window.location.href+"/get?id=";
 
 $(document).on("click",".editar-Categoria", function(){
     $("#formModal  #codigo").val(' ');$("#formModal  #nombre").val('');
     $.ajax({
-        method:"GET", url:contextPath + "/gestor/categoria/get?id=" + $(this).data('id')
+        method:"GET", url:contextPath + $(this).data('id')
     }).done(function(cat){
         if (cat!=null){
             $("#formModal  #codigo").val(cat.codigo).prop("readonly", true);

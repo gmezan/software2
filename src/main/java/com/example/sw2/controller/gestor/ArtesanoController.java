@@ -35,7 +35,7 @@ public class ArtesanoController {
     @Autowired
     UsuariosRepository usuariosRepository;
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {""})
     public String listCat(@ModelAttribute("artesano") Artesanos artesanos, Model model) {
         model.addAttribute("lista", artesanosRepository.findAll());
         model.addAttribute("comunidades", comunidadesRepository.findAll());

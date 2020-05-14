@@ -117,7 +117,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.usuario.nombre+' '+session.usuario.apellido}"></span>
-                        <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                        <img class="img-profile rounded-circle" th:src="${session.usuario.foto}">
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -158,7 +158,7 @@
             <li class="nav-item " th:classappend="${param1=='Perfil'}? active : ''">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="perfilGestor.html">
                 <i class="fas fa-hard-hat"></i>
-                <div class="sidebar-brand-text mx-3">Gestor Principal</sup></div>
+                <div class="sidebar-brand-text mx-3">Gestor Principal</div>
             </a>
             </li>
             <!-- Divider -->
@@ -196,7 +196,7 @@
                      aria-labelledby="headingInv" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" th:classappend="${param2=='Productos'}?  active : ''"
-                           href="productos.html">Productos</a>
+                           th:href="@{/gestor/producto}">Productos</a>
                         <a class="collapse-item" th:classappend="${param2=='Categorias'}?  active : ''"
                            th:href="@{/gestor/categoria}">Categorías</a>
                         <a class="collapse-item" th:classappend="${param2=='Artesanos'}?  active : ''"
@@ -208,7 +208,7 @@
             </li>
             <!-- Nav Item - Productos Disponibles -->
             <li class="nav-item" th:classappend="${param1=='ProductosDisponibles'}? active : ''">
-                <a class="nav-link" href="productosDisponibles.html">
+                <a class="nav-link" th:href="@{/gestor/productosDisponibles}">
                     <i class="fas fa-fw fa-boxes"></i>
                     <span>Productos Disponibles</span></a>
             </li>
@@ -221,14 +221,14 @@
             </div>
             <!-- Nav Item - Sedes -->
             <li class="nav-item" th:classappend="${param1=='Sedes'}? active : ''">
-                <a class="nav-link" href="sedes.html">
+                <a class="nav-link" th:href="@{/gestor/sede}">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Lista de Sedes</span></a>
             </li>
             
             <!-- Nav Item - Productos Asignados -->
             <li class="nav-item" th:classappend="${param1=='Asignados'}? active : ''">
-                <a class="nav-link" href="asignadosSedes.html">
+                <a class="nav-link" th:href="@{/gestor/asignado}">
                     <i class="fas fa-fw fa-shipping-fast"></i>
                     <span>Productos Asignados</span></a>
             </li>
@@ -241,7 +241,7 @@
             
             <!-- Nav Item - Ventas -->
             <li class="nav-item" th:classappend="${param1=='Ventas'}? active : ''">
-                <a th:href="@{/gestor/venta}" class="nav-link" href="ventas.html">
+                <a th:href="@{/gestor/venta}" class="nav-link" >
                     <i class="fas fa-fw fa-dollar-sign"></i>
                     <span>Mis ventas</span></a>
             </li>
@@ -254,7 +254,7 @@
             </div>
             <!-- Nav Item - Reportes -->
             <li class="nav-item" th:classappend="${param1=='Reportes'}? active : ''">
-                <a class="nav-link" href="#">
+                <a class="nav-link" th:href="@{/gestor/reportes}">
                     <i class="fas fa-fw fa-file-download"></i>
                     <span>Reportes</span></a>
             </li>

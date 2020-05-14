@@ -23,7 +23,7 @@ public class ComunidadController {
     @Autowired
     ComunidadesRepository comunidadesRepository;
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {""})
     public String listCom(@ModelAttribute("comunidad") Comunidades com, Model model) {
         model.addAttribute("lista", comunidadesRepository.findAll());
         return "gestor/comunidades";
@@ -42,12 +42,9 @@ public class ComunidadController {
             if (optionalComunidades.isPresent()) {
                 Comunidades com = optionalComunidades.get();
                 System.out.println(com.getCodigo());
-                comunidades.setFechamodificacion(LocalDateTime.now());
-                comunidades.setFechacreacion(com.getFechacreacion());
                 attr.addFlashAttribute("msg", "Comunidad actualizada exitosamente");
             }
             else {
-                comunidades.setFechacreacion(LocalDateTime.now());
                 attr.addFlashAttribute("msg", "Comunidad creada exitosamente");
             }
             comunidadesRepository.save(comunidades);
