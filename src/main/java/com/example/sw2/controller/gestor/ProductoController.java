@@ -46,10 +46,10 @@ public class ProductoController {
         else {
             Optional<Productos> optionalProductos = productosRepository.findById(productos.getCodigonom());
             if (optionalProductos.isPresent()) {
-                attr.addFlashAttribute("msg", "Categoría actualizada exitosamente");
+                attr.addFlashAttribute("msg", "Producto actualizado exitosamente");
             }
             else {
-                attr.addFlashAttribute("msg", "Categoría creada exitosamente");
+                attr.addFlashAttribute("msg", "Producto creado exitosamente");
             }
             productosRepository.save(productos);
             return "redirect:/gestor/producto";
@@ -63,7 +63,7 @@ public class ProductoController {
         Optional<Productos> c = productosRepository.findById(id);
         if (c.isPresent()) {
             productosRepository.deleteById(id);
-            attr.addFlashAttribute("msg","Categoría borrada exitosamente");
+            attr.addFlashAttribute("msg","Producto borrado exitosamente");
         }
         return "redirect:/gestor/producto";
     }
