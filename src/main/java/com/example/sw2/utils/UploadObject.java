@@ -9,10 +9,13 @@ import com.amazonaws.services.s3.model.AccessControlList;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.example.sw2.constantes.CustomConstants;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 public class UploadObject {
 
@@ -54,8 +57,8 @@ public class UploadObject {
 
     public static void uploadPhoto(String fileObjKeyName,  File file) throws Exception {
         Regions clientRegion = Regions.US_EAST_1;
-        String bucketName = Credential.AWS_BUCKET_NAME;
-        fileObjKeyName = "photo/" + fileObjKeyName;
+        String bucketName = CustomConstants.AWS_BUCKET_NAME;
+        fileObjKeyName = CustomConstants.INVENTARIO+"/" + fileObjKeyName;
         try {
             AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(clientRegion).build();
             PutObjectRequest request = new PutObjectRequest(bucketName, fileObjKeyName,  file);
@@ -73,6 +76,54 @@ public class UploadObject {
             // couldn't parse the response from Amazon S3.
             e.printStackTrace();
         }
+    }
+
+    public static String uploadPhoto(String fileObjKeyName,  MultipartFile multipartFile, String folder) throws Exception {
+
+        if(Objects.requireNonNull(multipartFile.getOriginalFilename()).contains("..")) {
+            System.out.println(".. file");
+            throw new IOException();
+        }
+        else {
+            System.out.println("Paso 1");
+            String var;
+            if (multipartFile.getOriginalFilename().contains(".jpg")){
+                var = ".jpg";
+            }
+            else if(multipartFile.getOriginalFilename().contains(".png")){
+                var = ".png";
+            }
+            else {var = "";}
+            fileObjKeyName = fileObjKeyName + var;
+            System.out.println("Paso 2");
+            File file = new File(fileObjKeyName);
+            file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
+            System.out.println("Paso 3");
+            fos.write(multipartFile.getBytes());
+            fos.close();
+            Regions clientRegion = Regions.US_EAST_1;
+            String bucketName = CustomConstants.AWS_BUCKET_NAME;
+            fileObjKeyName = folder + "/" + fileObjKeyName;
+            System.out.println(fileObjKeyName);
+            try {
+                AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(clientRegion).build();
+                PutObjectRequest request = new PutObjectRequest(bucketName, fileObjKeyName, file);
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentType(multipartFile.getContentType());
+                s3Client.putObject(request
+                        .withCannedAcl(CannedAccessControlList.PublicRead));
+                file.delete();
+                return "https://"+CustomConstants.AWS_BUCKET_NAME+".s3.amazonaws.com/"+fileObjKeyName;
+            } catch (SdkClientException e) {
+                // The call was transmitted successfully, but Amazon S3 couldn't process
+                // it, so it returned an error response.
+                file.delete();
+                e.printStackTrace();
+            }
+        }
+        return "";
+
     }
 
 

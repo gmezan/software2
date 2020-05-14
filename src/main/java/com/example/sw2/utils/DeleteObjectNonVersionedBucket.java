@@ -8,6 +8,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.example.sw2.constantes.CustomConstants;
 
 import java.io.IOException;
 
@@ -37,8 +38,8 @@ public class DeleteObjectNonVersionedBucket {
     }
 
     public static void deletePhoto(String filename) throws IOException {
-        Regions clientRegion = Regions.DEFAULT_REGION;
-        String bucketName = Credential.AWS_BUCKET_NAME;
+        Regions clientRegion = Regions.US_EAST_1;
+        String bucketName = CustomConstants.AWS_BUCKET_NAME;
         try {
             AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
                     .withCredentials(new ProfileCredentialsProvider())

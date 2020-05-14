@@ -24,15 +24,6 @@ public class MainController {
 
     private final String FILE_NAME = "test.png";
 
-    @GetMapping("/{p}")
-    public String cont(@PathVariable("p") String page){
-        return page;
-    }
-
-    @GetMapping("/")
-    public String login(){
-        return "login";
-    }
 
     @GetMapping("/file")
     public String blankPageFile(){

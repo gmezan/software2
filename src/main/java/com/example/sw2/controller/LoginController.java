@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping(value = {"/",""})
 public class LoginController {
 
     @Autowired
