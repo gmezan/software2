@@ -81,7 +81,6 @@ public class UploadObject {
     public static String uploadPhoto(String fileObjKeyName,  MultipartFile multipartFile, String folder) throws Exception {
 
         if(Objects.requireNonNull(multipartFile.getOriginalFilename()).contains("..")) {
-            System.out.println(".. file");
             throw new IOException();
         }
         else {
@@ -95,11 +94,9 @@ public class UploadObject {
             }
             else {var = "";}
             fileObjKeyName = fileObjKeyName + var;
-            System.out.println("Paso 2");
             File file = new File(fileObjKeyName);
             file.createNewFile();
             FileOutputStream fos = new FileOutputStream(file);
-            System.out.println("Paso 3");
             fos.write(multipartFile.getBytes());
             fos.close();
             Regions clientRegion = Regions.US_EAST_1;

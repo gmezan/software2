@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
     @GetMapping(value = {"/",""}) public String init(){
-        return "redirect:/";}
+        return "redirect:/admin/gestor";}
 
 }
