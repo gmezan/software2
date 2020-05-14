@@ -29,7 +29,7 @@ $(document).on("click",".delete-Producto", function(){
     $("#deleteModal #codigo").val($(this).data('id'));
 });
 $(document).ready(function() {
-    if ($("#msgArtesanos").text()==="ERROR"){
+    if ($("#msgProducto").text()==="ERROR"){
         $('#formModal ').modal('show');
     }
 });
