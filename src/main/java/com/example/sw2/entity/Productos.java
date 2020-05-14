@@ -1,5 +1,7 @@
 package com.example.sw2.entity;
 
+import com.example.sw2.constantes.CustomConstants;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,6 +26,11 @@ public class Productos {
     private LocalDateTime fechamodificacion;
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
+
+    public String getNombreLinea(){
+        return CustomConstants.getLineas().get(this.linea);
+    }
+
 
     public String getCodigonom() {
         return codigonom;
