@@ -1,6 +1,8 @@
 package com.example.sw2.entity;
 
 
+import org.springframework.stereotype.Controller;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,13 +13,12 @@ public class Usuarios implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "dni")
     private int idusuarios;
     @Column(nullable = false)
     private String nombre;
     @Column(nullable = false)
     private String apellido;
-    @Column(nullable = false)
-    private String dni;
     private String foto;
     @Column(nullable = false)
     private String correo;
@@ -58,13 +59,6 @@ public class Usuarios implements Serializable {
         this.apellido = apellido;
     }
 
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
 
     public String getFoto() {
         return foto;

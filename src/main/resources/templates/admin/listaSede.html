@@ -70,6 +70,7 @@
                                     <th>Nombre</th>
                                     <th>Apellido</th>
                                     <th>Email</th>
+                                    <th>Telefono</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
@@ -78,38 +79,16 @@
                                     <th>Nombre</th>
                                     <th>Apellido</th>
                                     <th>Email</th>
+                                    <th>Telefono</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                <tr>
-                                    <td>12345678</td>
-                                    <td>Abcd</td>
-                                    <td>Efgh</td>
-                                    <td>example@example.com</td>
-                                </tr>
-                                <tr>
-                                    <td>91234567</td>
-                                    <td>Ijkl</td>
-                                    <td>Mnop</td>
-                                    <td>example@example.com</td>
-                                </tr>
-                                <tr>
-                                    <td>89123456</td>
-                                    <td>Qrst</td>
-                                    <td>Uvwx</td>
-                                    <td>example@example.com</td>
-                                </tr>
-                                <tr>
-                                    <td>78912345</td>
-                                    <td>Yzab</td>
-                                    <td>Cdef</td>
-                                    <td>example@example.com</td>
-                                </tr>
-                                <tr>
-                                    <td>67891234</td>
-                                    <td>Ghij</td>
-                                    <td>Klmn</td>
-                                    <td>example@example.com</td>
+                                <tr th:each="l : ${lista}">
+                                    <td th:text="${l.idusuarios}"></td>
+                                    <td th:text="${l.nombre}" ></td>
+                                    <td th:text="${l.apellido}" ></td>
+                                    <td th:text="${l.correo}" ></td>
+                                    <td th:text="${l.telefono}" ></td>
                                 </tr>
                                 </tbody>
                             </table>
