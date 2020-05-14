@@ -58,7 +58,7 @@ public class ProductoController {
 
     @GetMapping("/delete")
     public String borrar(Model model,
-                            @RequestParam("codigo") String id,
+                            @RequestParam("codigonom") String id,
                             RedirectAttributes attr) {
         Optional<Productos> c = productosRepository.findById(id);
         if (c.isPresent()) {
