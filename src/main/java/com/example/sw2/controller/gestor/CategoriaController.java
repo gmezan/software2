@@ -1,5 +1,6 @@
 package com.example.sw2.controller.gestor;
 
+import com.example.sw2.constantes.Tamanho;
 import com.example.sw2.entity.Categorias;
 import com.example.sw2.repository.CategoriasRepository;
 import com.example.sw2.utils.UploadObject;
@@ -26,28 +27,10 @@ public class CategoriaController {
     CategoriasRepository categoriasRepository;
 
 
-    @GetMapping(value = {"", "/"})
-    public String listCat(@ModelAttribute("categoria_modal") Categorias cat, Model model) {
+    @GetMapping(value = {""})
+    public String listCat(@ModelAttribute("categoria") Categorias cat, Model model) {
         model.addAttribute("lista", categoriasRepository.findAll());
         return "gestor/categorias";
-    }
-
-
-    @GetMapping("/new")
-    public String newCat(@ModelAttribute("categoria") Categorias cat) {
-            return "gestor/categoriasForm";
-    }
-
-    @GetMapping("/edit")
-    public String formCat(@ModelAttribute("categoria") Categorias cat, @RequestParam(value = "codigo") String id,
-                          Model model) {
-        Optional<Categorias> c = categoriasRepository.findById(id);
-        if (c.isPresent()) {
-            cat =c.get();
-            model.addAttribute("categoria",cat);
-            return "gestor/categoriasForm";
-        }
-        return "redirect:/gestor/categoria";
     }
 
 
@@ -55,43 +38,34 @@ public class CategoriaController {
     public String editCat(@ModelAttribute("categoria") @Valid Categorias categorias,
                           BindingResult bindingResult, RedirectAttributes attr, Model model) {
         if(bindingResult.hasErrors()){
-            return "gestor/categoriasForm";
+            model.addAttribute("lista", categoriasRepository.findAll());
+            model.addAttribute("msg", "ERROR");
+            return "gestor/categorias";
         }
         else {
             Optional<Categorias> optionalCategorias = categoriasRepository.findById(categorias.getCodigo());
             if (optionalCategorias.isPresent()) {
-                Categorias cat = optionalCategorias.get();
-                System.out.println(cat.getCodigo());
-                categorias.setFechamodificacion(LocalDateTime.now());
-                categorias.setFechacreacion(cat.getFechacreacion());
-                attr.addFlashAttribute("msg", "Producto actualizado exitosamente");
+                attr.addFlashAttribute("msg", "Categoría actualizada exitosamente");
             }
             else {
-                categorias.setFechacreacion(LocalDateTime.now());
-                attr.addFlashAttribute("msg", "Producto creado exitosamente");
+                attr.addFlashAttribute("msg", "Categoría creada exitosamente");
             }
             categoriasRepository.save(categorias);
             return "redirect:/gestor/categoria";
         }
-
     }
 
     @GetMapping("/delete")
     public String deleteCat(Model model,
                                       @RequestParam("codigo") String id,
                                       RedirectAttributes attr) {
-
         Optional<Categorias> c = categoriasRepository.findById(id);
-
         if (c.isPresent()) {
             categoriasRepository.deleteById(id);
-            attr.addFlashAttribute("msg","Producto borrado exitosamente");
+            attr.addFlashAttribute("msg","Categoría borrada exitosamente");
         }
         return "redirect:/gestor/categoria";
-
     }
-
-
 
     //Web service
     @ResponseBody
@@ -112,8 +86,5 @@ public class CategoriaController {
             return new ResponseEntity<>(ex.toString(), HttpStatus.ACCEPTED);
         }
     }
-
-
-
 
 }

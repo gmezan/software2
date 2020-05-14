@@ -25,13 +25,12 @@
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-900">Comunidades</h1>
-                            <button data-toggle="modal" data-target="#addModal" type="button"
-                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-users fa-sm text-white-50"></i> Nueva Comunidad
-                            </button>
+                            <button data-toggle="modal" data-target="#formModal" type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <i class="fas fa-users fa-sm text-white-50"></i> Nueva Comunidad</button>
                         </div>
 
-
+                        <div id="msgComunidad" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+                        <!--div id="msgError" th:if="${msg2 != null}" th:text="${msg2}" class="alert alert-danger py-1" role="alert"></div-->
                         <!-- Database Table -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -42,35 +41,33 @@
                                     <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
                                                 <th>Código</th>
                                                 <th>Nombre</th>
-                                                
-                                                <th>Cantidad de artesanos</th>
+                                                <th>Fecha de creacion</th>
+                                                <th>Ultima modificacion</th>
                                                 <th>Edit/Delete</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>#</th>
                                                 <th>Código</th>
                                                 <th>Nombre</th>
-                                                
-                                                <th>Cantidad de artesanos</th>
+                                                <th>Fecha de creacion</th>
+                                                <th>Ultima modificacion</th>
                                                 <th>Edit/Delete</th>
                                             </tr>
                                         </tfoot>
 
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>AM</td>
-                                                <td>Amaru</th>
-                                                
-                                                <td>8</td>
+                                            <tr th:each="item : ${lista}">
+                                                <td th:text="${item.codigo}"></td>
+                                                <td th:text="${item.nombre}"></td>
+                                                <td th:text="${item.fechacreacion.toLocalDate()}"></th>
+                                                <td th:if="${item.fechamodificacion!=null}" th:text="${item.fechamodificacion.toLocalDate()}"></td>
+                                                <td th:if="${item.fechamodificacion==null}">-</td>
                                                 <td>
-                                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#formModal" class="editar-Comunidad btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#deleteModal" class="delete-Comunidad btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                                 </td>
                                             </tr>
 
@@ -126,57 +123,35 @@
     
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
+        <script th:src="@{/js/gestor/comunidad.js}"></script>
 
-        <!-- Modal Add-->
-        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Nueva Comunidad</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Nombre:</label>
-                                <input type="text" class="form-control" id="recipient-name">
-                                <label for="recipient-name" class="col-form-label">Codigo:</label>
-                                <input type="text" class="form-control" id="cod">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary"><a href="comunidades" style="color:white;text-decoration:none">Agregar</a></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Edit-->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Modal Form-->
+        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Editar Comunidad</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" th:href="@{/gestor/comunidad}" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form method="post" th:action="@{/gestor/comunidad/save}" th:object="${comunidad}">
                             <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Nombre:</label>
-                                <input type="text" class="form-control" id="recipient-name2" placeholder="Nombre de comunidad">
-                                
+                                <label class="col-form-label">Código:</label>
+                                <input th:readonly="${comunidad.codigo!=null && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Código de comunidad">
+                                <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-form-label">Nombre:</label>
+                                <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de comunidad">
+                                <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
+                            </div>
+                            <div class="modal-footer">
+                                <a type="button" th:href="@{/gestor/comunidad}"  class="btn btn-secondary" >Cancelar</a>
+                                <button type="submit" class="btn btn-primary"><a th:text="${comunidad.codigo==null?'Registrar':'Actualizar'}" style="color:white;text-decoration:none"></a></button>
                             </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary"><a href="comunidades.html" style="color:white;text-decoration:none">Guardar cambios</a></button>
                     </div>
                 </div>
             </div>
@@ -190,13 +165,16 @@
                         <h4 class="modal-title">Borrar Comunidad</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <div class="modal-body">
-                        <p>¿Seguro que desea borrar esta comunidad? Esta acción no se puede deshacer.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger"><a href="comunidades.html" style="color:white;text-decoration:none">Borrar</a></button>
-                    </div>
+                    <form method="get" th:action="@{/gestor/comunidad/delete}" th:object="${comunidad}">
+                        <div class="modal-body">
+                            <input hidden type="text" class="form-control" th:field="*{codigo}" >
+                            <p>¿Seguro que desea borrar esta comunidad? Esta acción no se puede deshacer.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

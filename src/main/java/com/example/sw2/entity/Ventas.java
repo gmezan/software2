@@ -1,6 +1,12 @@
 package com.example.sw2.entity;
 
+import com.example.sw2.constantes.VentasId;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,15 +15,16 @@ import java.time.LocalDateTime;
 @Table(name = "Ventas")
 public class Ventas {
 
-    @Id
-    @Column(nullable = false)
-    private String numerodocumento;
+    @EmbeddedId
+    private VentasId id;
+
+    @Size(max = 11, message = "El Ruc/Dni debe contener 11 caracteres")
     @Column(name="ruc_dni")
     private String rucdni;
+    @NotBlank
+    @Size(max = 45, message = "El Ruc/Dni debe contener 45 caracteres")
     @Column(nullable = false)
     private String nombrecliente;
-    @Column(nullable = false)
-    private int tipodocumento;
     @Column(nullable = false)
     private String lugarventa;
     @ManyToOne
@@ -32,17 +39,19 @@ public class Ventas {
     private int cantidad;
     @Column(name="precio_venta",nullable = false)
     private BigDecimal precioventa;
-    @Column(name="fecha_modifcacion")
+    @LastModifiedDate
+    @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 
-    public String getNumerodocumento() {
-        return numerodocumento;
+    public VentasId getId() {
+        return id;
     }
 
-    public void setNumerodocumento(String numerodocumento) {
-        this.numerodocumento = numerodocumento;
+    public void setId(VentasId id) {
+        this.id = id;
     }
 
     public String getRucdni() {
@@ -59,14 +68,6 @@ public class Ventas {
 
     public void setNombrecliente(String nombrecliente) {
         this.nombrecliente = nombrecliente;
-    }
-
-    public int getTipodocumento() {
-        return tipodocumento;
-    }
-
-    public void setTipodocumento(int tipodocumento) {
-        this.tipodocumento = tipodocumento;
     }
 
     public String getLugarventa() {

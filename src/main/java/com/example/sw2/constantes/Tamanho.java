@@ -1,5 +1,8 @@
 package com.example.sw2.constantes;
 
+import java.awt.*;
+import java.lang.reflect.Array;
+
 public enum Tamanho {
     OS("One-Size"),
     S("Small"),
@@ -15,4 +18,6 @@ public enum Tamanho {
     public String valor() {
         return valor;
     }
+
+
 }

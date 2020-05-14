@@ -42,7 +42,6 @@
                                         <th>Color</th>
                                         <th>Tamaño</th>
                                         <th>Comunidad</th>
-                                        <th>Stock asignado</th>
                                         <th>Fecha de asignacion</th>
                                         <th>Foto</th>
                                         <th>Cantidad de ventas</th>
@@ -55,49 +54,22 @@
                                         <th>Color</th>
                                         <th>Tamaño</th>
                                         <th>Comunidad</th>
-                                        <th>Stock asignado</th>
-                                        <th>Fecha de asignacion</th>
+                                        <th>Fecha de venta</th>
                                         <th>Foto</th>
                                         <th>Cantidad de ventas</th>
                                     </tr>
                                 </tfoot>
 
                                 <tbody>
-                                    <tr>
-                                        <td>THLLIBLAOSHU</td>
-                                        <td>Qata</td>
-                                        <td>Rojo</td>
-                                        <td>Small</td>
-                                        <td>Amaru</td>
-                                        <td>20</td>
-                                        <th>3/5/2020</th>
-                                        <th><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                                                 alt=""  height=100 width=100></th>
-                                        <td>10</td>
-                                    </tr>
-                                    <tr>
-                                        <td>MHQONRUGSHUASH19MAY</td>
-                                        <td>Suri</td>
-                                        <td>Marron</td>
-                                        <td>Medium</td>
-                                        <td>Huaran</td>
-                                        <td>15</td>
-                                        <th>3/5/2020</th>
-                                        <th><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                                                 alt=""  height=100 width=100></th>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>GSHUASH19MAY</td>
-                                        <td>Chunpi</td>
-                                        <td>Amarillo</td>
-                                        <td>Large</td>
-                                        <td>Parobamba</td>
-                                        <td>20</td>
-                                        <th>3/5/2020</th>
-                                        <th><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                                                 alt=""  height=100 width=100></th>
-                                        <td>2</td>
+                                    <tr th:each="producto : ${listaProductos}">
+                                        <td th:text="${producto.codigoproducto}"></td>
+                                        <td th:text="${producto.nombreproducto}"></td>
+                                        <td th:text="${producto.colorproducto}"></td>
+                                        <td th:text="${producto.tamanhoproducto}"></td>
+                                        <td th:text="${producto.comunidadproducto}"></td>
+                                        <td th:text="${producto.fechaventa}"></td>
+                                        <td></td>
+                                        <td th:text="${producto.cantidadventa}"></td>
                                     </tr>
                                 </tbody>
                             </table></div>

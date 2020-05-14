@@ -1,24 +1,30 @@
-$(document).on("click",".editar-Categoria", function(){
-    $("#editModal  #codigo").val('');
-    $("#editModal  #nombre").val('');
-    var url = "http://localhost:8080/gestor/categoria/get?id=" + $(this).data('id');
-    console.log("url");
+var contextPath  = window.location.href+"/get?id=";
 
+$(document).on("click",".editar-Categoria", function(){
+    $("#formModal  #codigo").val(' ');$("#formModal  #nombre").val('');
     $.ajax({
-        method:"GET",
-        url:url
+        method:"GET", url:contextPath + $(this).data('id')
     }).done(function(cat){
         if (cat!=null){
-            $("#editModal  #codigo").val(cat.codigo);
-            $("#editModal #nombre").val(cat.nombre);
+            $("#formModal  #codigo").val(cat.codigo).prop("readonly", true);
+            $("#formModal #nombre").val(cat.nombre);
         }
+    }).fail(function (err) {
+        console.log(err);
+        $('#formModal').modal('hide');
+        alert("Ocurrió un error");
     })
-
 });
 $(document).on("click",".new-Categoria", function(){
-
+    $("#formModal  #codigo").val('');
+    $("#formModal  #nombre").val('');
 });
 $(document).on("click",".delete-Categoria", function(){
     $("#deleteModal #codigo").val($(this).data('id'));
+});
+$(document).ready(function() {
+    if ($("#msgCategoria").text()==="ERROR"){
+        $('#formModal').modal('show');
+    }
 });
 

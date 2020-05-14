@@ -25,13 +25,11 @@
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-900">Categorías</h1>
-                            <a th:href="@{/gestor/categoria/new}"  type="button"
-                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-th-large fa-sm text-white-50"></i> Nueva Categoría
-                            </a>
+                            <button data-toggle="modal" data-target="#formModal" class="new-Categoria d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <i class="fas fa-download fa-sm text-white-50"></i> Nueva Categoria</button>
                         </div>
 
-                        <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+                        <div id="msgCategoria" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
                         <!-- Database Table -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -67,7 +65,7 @@
                                                 <td th:if="${item.fechamodificacion!=null}" th:text="${item.fechamodificacion.toLocalDate()}"></td>
                                                 <td th:if="${item.fechamodificacion==null}">-</td>
                                                 <td>
-                                                    <a th:href="@{'/gestor/categoria/edit?codigo='+${item.codigo}}" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></a>
+                                                    <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#formModal" class="editar-Categoria btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
                                                     <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#deleteModal" class="delete-Categoria btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                                 </td>
                                             </tr>
@@ -128,44 +126,9 @@
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
         <script th:src="@{/js/gestor/categoria.js}"></script>
 
-        <!-- Modal Add
-        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Nueva Categoría</h5>
-                        <button type="button" th:href="@{/gestor/categoria}"  class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="modal-body">
-                            <form method="post" th:action="@{/gestor/categoria/new}" th:object="${categoria}">
-                                <div class="form-group">
-                                    <label class="col-form-label">Codigo:</label>
-                                    <input type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
-                                    <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
-                                </div>
-                                <div class="form-group">
-                                    <label  class="col-form-label">Nombre:</label>
-                                    <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de categoría">
-                                    <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
-                                </div>
 
-                                <div class="modal-footer">
-                                    <button type="button" th:href="@{/gestor/categoria}"  class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Guardar cambios</a></button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>-->
-
-        <!-- Modal Edit
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Modal Form -->
+        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -175,10 +138,11 @@
                         </a>
                     </div>
                     <div class="modal-body">
-                        <form method="post" th:action="@{/gestor/categoria/edit}" th:object="${categoria}">
+                        <form method="post" th:action="@{/gestor/categoria/save}" th:object="${categoria}">
                             <div class="form-group">
                                 <label class="col-form-label">Codigo:</label>
-                                <input disabled type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
+                                <input  th:readonly="${categoria.codigo!=null && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
+                                <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
                             </div>
                             <div class="form-group">
                                 <label  class="col-form-label">Nombre:</label>
@@ -194,7 +158,7 @@
 
                 </div>
             </div>
-        </div>-->
+        </div>
 
         <!-- Modal Delete -->
         <div id="deleteModal" class="modal fade">
@@ -204,7 +168,7 @@
                             <h4 class="modal-title">Borrar Categoría</h4>
                             <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                    <form method="get" th:action="@{/gestor/categoria/delete}" th:object="${categoria_modal}">
+                    <form method="get" th:action="@{/gestor/categoria/delete}" th:object="${categoria}">
                         <div class="modal-body">
                             <input hidden type="text" class="form-control" th:field="*{codigo}" >
                             <p>¿Seguro que desea borrar esta categoría? Esta acción no se puede deshacer.</p>

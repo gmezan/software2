@@ -8,5 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/gestor")
 public class GestorController {
-    @GetMapping("/{p}") public String dummyGet(@PathVariable("p") String page){ return "gestor/"+ page;}
+    @GetMapping(value = {"/",""}) public String init(){
+        return "redirect:/gestor/comunidad";}
 }

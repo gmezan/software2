@@ -1,6 +1,11 @@
 package com.example.sw2.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -8,19 +13,29 @@ import java.time.LocalDateTime;
 public class Artesanos {
 
     @Id
+    @NotBlank(message = "Este campo no puede estar vacío")
+    @Size(max = 4, min = 2, message = "El código debe contener 3 letras")
     private String codigo;
+    @NotBlank(message = "Este campo no puede estar vacío")
     @Column(nullable =false)
     private String nombre;
+    @NotBlank(message = "Este campo no puede estar vacío")
     @Column(nullable =false)
     private String apellidopaterno;
     private String apellidomaterno;
     @ManyToOne
     @JoinColumn(name="comunidad",nullable =false)
     private Comunidades comunidades;
+    @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
+
+    public Artesanos(){
+        this.fechacreacion=LocalDateTime.now();
+    }
 
     public String getCodigo() {
         return codigo;

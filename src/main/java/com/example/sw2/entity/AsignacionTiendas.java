@@ -1,6 +1,9 @@
 package com.example.sw2.entity;
 
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,8 +25,10 @@ public class AsignacionTiendas {
     @ManyToOne
     @JoinColumn(name="tienda",nullable = false)
     private Tienda tienda;
+    @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 

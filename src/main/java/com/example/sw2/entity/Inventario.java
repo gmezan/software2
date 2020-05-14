@@ -1,5 +1,8 @@
 package com.example.sw2.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,11 +23,14 @@ public class Inventario {
     @ManyToOne
     @JoinColumn(name="producto",nullable =false)
     private Productos productos;
+
     @Column(nullable =false)
-    private int tamanho;
+    private String tamanho;
+
     @ManyToOne
     @JoinColumn(name="comunidad",nullable =false)
     private Comunidades comunidades;
+
     @ManyToOne
     @JoinColumn(name="artesano")
     private Artesanos artesanos;
@@ -52,10 +58,14 @@ public class Inventario {
     private String facilitador;
     @Column(name="fecha_vencimiento_consignacion")
     private LocalDate fechavencimientoconsignacion;
+    @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
+
+
 
     public String getCodigoinventario() {
         return codigoinventario;
@@ -89,11 +99,11 @@ public class Inventario {
         this.productos = productos;
     }
 
-    public int getTamanho() {
+    public String getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(int tamanho) {
+    public void setTamanho(String tamanho) {
         this.tamanho = tamanho;
     }
 
