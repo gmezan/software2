@@ -26,7 +26,7 @@ $(document).on("click",".new-Producto", function(){
     $("#formModal   #apellidopaterno").val('');$("#editModal  #apellidomaterno").val('');
 });
 $(document).on("click",".delete-Producto", function(){
-    $("#deleteModal #codigo").val($(this).data('id'));
+    $("#deleteModal #codigonom").val($(this).data('id'));
 });
 $(document).ready(function() {
     if ($("#msgProducto").text()==="ERROR"){
