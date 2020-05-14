@@ -52,7 +52,7 @@ public class ProductoController {
                 attr.addFlashAttribute("msg", "Categoría creada exitosamente");
             }
             productosRepository.save(productos);
-            return "redirect:/gestor/productos";
+            return "redirect:/gestor/producto";
         }
     }
 
@@ -65,7 +65,7 @@ public class ProductoController {
             productosRepository.deleteById(id);
             attr.addFlashAttribute("msg","Categoría borrada exitosamente");
         }
-        return "redirect:/gestor/productos";
+        return "redirect:/gestor/producto";
     }
 
     //Web service
