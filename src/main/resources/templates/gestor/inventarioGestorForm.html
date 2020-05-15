@@ -1,85 +1,197 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/general-gestor.html ::gestor-head(title='Inventario')">
-</head>
-<body id="page-top">
-
-<!-- Page Wrapper -->
-<div id="wrapper">
-
-    <!-- Sidebar -->
-    <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='Inventario',param2='...')"></div>
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-        <!-- Main Content -->
-        <div id="content">
-
-            <div th:replace="fragments/general-gestor.html :: topbar"></div>
-
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-900">Inventario</h1>
-                </div>
-                <p class="mb-4">Aquí puedes ver los productos registrados en el inventario. Para gestionar una
-                    venta o asignar productos a una sede, revisa la lista de <a
-                            href="productosDisponibles.html">productos disponibles</a>.
-                </p>
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Nuevo producto de inventario</h6>
+    <head th:replace="fragments/general-gestor.html ::gestor-head(title='Inventario')">
+    </head>
+    <body id="page-top">
+        
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+            
+            <!-- Sidebar -->
+            <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='Inventario',param2='...')"></div>
+            <!-- End of Sidebar -->
+            
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+                
+                <!-- Main Content -->
+                <div id="content">
+                    
+                    <div th:replace="fragments/general-gestor.html :: topbar"></div>
+                    
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+                        
+                        <!-- Page Heading -->
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-900">Inventario</h1>
+                        
+                        </div>
+                        <p class="mb-4">Aquí puedes administrar los productos del inventario. Para gestionar una
+                            venta o asignar productos a una sede, revisa la lista de <a
+                                    href="productosDisponibles.html">productos disponibles</a>.
+                        </p>
+                        
+                        
+                        <!-- DataTales Example -->
+                        <div class="card shadow mb-4">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Registro de nuevo producto del inventario</h5>
+                                    <a th:href="@{/gestor/inventario}" type="button" class="close">
+                                        X
+                                    </a>
+                                </div>
+                                
+                                <div class="modal-body">
+                                    <form id="addForm" method="post" action="inventarioGestor.html">
+                                        <div class="form-group">
+                                            <label for="linea1" class="col-form-label">Línea:</label>
+                                            <select class="form-control" id="linea1">
+                                                <option th:each="item : ${lineas}" th:text="${item.value}"
+                                                        th:value="${item.key}"></option>
+                                            
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="categoria1" class="col-form-label">Categoría:</label>
+                                            <select class="form-control" id="categoria1">
+                                                <option th:each="item : ${listCat}" th:text="${item.getNombre()}"
+                                                        th:value="${item.getCodigo()}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nombre1" class="col-form-label">Producto:</label>
+                                            <select class="form-control" id="nombre1">
+                                                <option value="nombre">Lliklla</option>
+                                                <option value="nombre">Chusi tinisca</option>
+                                                <option value="nombre">Killanku</option>
+                                                <option value="nombre">Chuspa</option>
+                                                <option value="nombre">Punchu</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tamanho1" class="col-form-label">Tamaño:</label>
+                                            <select class="form-control" id="tamanho1">
+                                                <option th:each="t : ${taman}" th:text="${t.value}"
+                                                        th:value="${t.key}"></option>
+                                            
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="adquisicion" class="col-form-label">Modo de adquisición:</label>
+                                            <select class="form-control" id="adquisicion">
+                                                <option th:each="t : ${tipoAdqui}" th:text="${t.value}"
+                                                        th:value="${t.key}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="comunidad1" class="col-form-label">Comunidad o Artesano:</label>
+                                            <select class="form-control" id="comunidad1">
+                                            
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cantidad1" class="col-form-label">Cantidad:</label>
+                                            <input type="number" class="form-control" id="cantidad1">
+                                        </div>
+                                        <div class="form-row">
+                                            
+                                            
+                                            <div class="form-group col ">
+                                                <label class="col-form-label">Día:</label>
+                                                <input type="number" class="form-control" id="dia" placeholder="Día">
+                                            </div>
+                                            
+                                            <div class="form-group col ">
+                                                <label  class="col-form-label">Mes:</label>
+                                                <select class="form-control" id="mes1" name="mes1">
+                                                    <option th:each="mes : ${Meses}" th:text="${mes.value.get(1)}"
+                                                            th:value="${mes.key}"></option>
+                                                
+                                                </select>
+                                            </div>
+                                            <div class="form-group col">
+                                                <label  class="col-form-label">Año:</label>
+                                                <input type="number" class="form-control" id="anho" placeholder="Año">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="color1" class="col-form-label">Color:</label>
+                                            <input type="text" class="form-control" id="color1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="foto1" class="col-form-label">Foto:</label>
+                                            <input type="file" class="form-control" id="foto1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="costotejedor" class="col-form-label">Costo del Tejedor:</label>
+                                            <input type="text" class="form-control" id="costotejedor">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="costomosqoy" class="col-form-label">Costo Mosqoy:</label>
+                                            <input type="text" class="form-control" id="costomosqoy">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="facilitador1" class="col-form-label">Facilitador:</label>
+                                            <input type="text" class="form-control" id="facilitador1">
+                                        </div>
+                                    </form>
+                                
+                                
+                                </div>
+                                
+                                
+                                <div class="modal-footer">
+                                    <a  class="btn btn-secondary " th:href="@{/gestor/inventario}">Cancelar
+                                    </a>
+                                    <input form="addForm" type="submit" class="btn btn-primary" value="Agregar">
+                                
+                                </div>
+                            
+                            </div>
+                        </div>
+                    
+                    
                     </div>
-                    <div class="card-body">
-                        <!-- Form -->
-                    </div>
+                    <!-- /.container-fluid -->
+                
                 </div>
-
-
+                <!-- End of Main Content -->
+                
+                <div th:replace="fragments/general-gestor.html :: footer"></div>
+            
             </div>
-            <!-- /.container-fluid -->
-
+            <!-- End of Content Wrapper -->
+        
         </div>
-        <!-- End of Main Content -->
-
-        <div th:replace="fragments/general-gestor.html :: footer"></div>
-
-    </div>
-    <!-- End of Content Wrapper -->
-
-</div>
-<!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<!-- Logout Modal-->
-<div th:replace="fragments/general-gestor.html :: logout-modal"></div>
-
-
-<!-- Bootstrap core JavaScript-->
-<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
-<!-- Core plugin JavaScript-->
-<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
-
-<!-- Custom scripts for all pages-->
-<script th:src="@{/js/sb-admin-2.min.js}"></script>
-
-<!-- Page level plugins -->
-<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
-<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
-
-<!-- Page level custom scripts -->
-<script th:src="@{/js/demo/datatables-demo.js}"></script>
-
-</body>
+        <!-- End of Page Wrapper -->
+        
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        
+        <!-- Logout Modal-->
+        <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
+        
+        
+        <!-- Bootstrap core JavaScript-->
+        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        
+        <!-- Core plugin JavaScript-->
+        <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+        
+        <!-- Custom scripts for all pages-->
+        <script th:src="@{/js/sb-admin-2.min.js}"></script>
+        
+        <!-- Page level plugins -->
+        <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+        
+        <!-- Page level custom scripts -->
+        <script th:src="@{/js/demo/datatables-demo.js}"></script>
+    
+    </body>
 </html>
