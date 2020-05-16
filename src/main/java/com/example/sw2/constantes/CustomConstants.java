@@ -7,7 +7,7 @@ import java.util.List;
 
 public final class CustomConstants {
 
-    private static final HashMap<String, String> lineas = new HashMap<>();
+    private static final LinkedHashMap<String, String> lineas = new LinkedHashMap<>();
     private static final LinkedHashMap<String, String> meses = new LinkedHashMap<>();
     private static final HashMap<Integer, String> tiposAdquisicion = new HashMap<>();
     private static final HashMap<Integer, String> tiposDocumento = new HashMap<>();
@@ -46,7 +46,7 @@ public final class CustomConstants {
 
     }
 
-    public static HashMap<String, String> getLineas() {
+    public static LinkedHashMap<String, String> getLineas() {
         return lineas;
     }
 
