@@ -31,8 +31,9 @@
                             venta o asignar productos a una sede, revisa la lista de <a
                                     href="productosDisponibles.html">productos disponibles</a>.
                         </p>
-                        
-                        
+    
+                        <div class="container">
+                        <div class="container">
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="modal-content">
@@ -88,7 +89,8 @@
                                         <div class="form-group">
                                             <label for="comunidad1" class="col-form-label">Comunidad o Artesano:</label>
                                             <select class="form-control" id="comunidad1">
-                                            
+                                                <option th:each="item : ${listCom}" th:text="${item.getNombre()}"
+                                                        th:value="${item.getCodigo()}"></option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -106,7 +108,7 @@
                                             <div class="form-group col ">
                                                 <label  class="col-form-label">Mes:</label>
                                                 <select class="form-control" id="mes1" name="mes1">
-                                                    <option th:each="mes : ${Meses}" th:text="${mes.value.get(1)}"
+                                                    <option th:each="mes : ${Meses}" th:text="${mes.value}"
                                                             th:value="${mes.key}"></option>
                                                 
                                                 </select>
@@ -151,7 +153,8 @@
                             
                             </div>
                         </div>
-                    
+                        </div>
+                        </div>
                     
                     </div>
                     <!-- /.container-fluid -->

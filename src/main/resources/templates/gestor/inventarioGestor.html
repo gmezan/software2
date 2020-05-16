@@ -56,7 +56,7 @@
                                                 
                                                 <th rowspan="2">Cantidad Total</th>
                                                 
-                                                <th rowspan="2">Tipo</th>
+                                                <th rowspan="2">Tipo de Adquisición</th>
                                                 <th rowspan="2">Fecha de inicio (consignación)</th>
                                                 <th rowspan="2">Fecha de vencimiento (consignación)</th>
                                                 <th rowspan="2">Facilitador</th>
@@ -99,7 +99,7 @@
                                                 
                                                 <th>Cantidad Total</th>
                                                 
-                                                <th>Tipo</th>
+                                                <th>Tipo de Adquisición</th>
                                                 <th>Fecha de inicio (consignación)</th>
                                                 <th>Fecha de vencimiento (consignación)</th>
                                                 <th>Facilitador</th>
@@ -127,7 +127,7 @@
                                                 
                                                 <td th:text="${inv.cantidadtotal}">25</td>
                                                 
-                                                <td th:text="${inv.tipoadquisicion}">Consignado</td>
+                                                <td th:text="${inv.getTipoAdquisicion()}">Consignado</td>
                                                 <td th:text="${inv.fechainicioconsignacion!=null? inv.fechainicioconsignacion : '---'}">
                                                     FEB, 20
                                                 </td>
