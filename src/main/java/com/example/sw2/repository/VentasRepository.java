@@ -41,10 +41,10 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
     List<DatosProductoVentaDto> obtenerDatosPorProducto();
 
     @Query(value="SELECT p.nombre as nombreproducto, p.codigonom as codigoproducto,\n" +
-            "v.numerodocumento as numerodocumento, v.nombrecliente as nombrecliente,\n" +
-            "v.ruc_dni as rucdni, v.cantidad as cantidadventa,\n" +
-            "v.precio_venta as precioventa, v.fecha as fechaventa,\n" +
-            "v.lugarventa as lugarventa FROM Ventas v\n" +
+            "v.tipodocumento as tipodocumento , v.numerodocumento as numerodocumento, \n" +
+            "v.nombrecliente as nombrecliente, v.ruc_dni as rucdni, \n" +
+            "v.cantidad as cantidadventa, v.precio_venta as precioventa, \n" +
+            "v.fecha as fechaventa, v.lugarventa as lugarventa FROM Ventas v \n" +
             "INNER JOIN Inventario i ON (v.productoinventario = i.codigo_inventario)\n" +
             "INNER JOIN Productos p ON (i.producto = p.codigonom)",
             nativeQuery = true)
