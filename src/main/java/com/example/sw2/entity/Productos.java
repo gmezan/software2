@@ -27,8 +27,8 @@ public class Productos {
     @Column(nullable = false)
     private String codigodesc;
     @Range(max = 3, min = 1)
-    @Column(nullable = false)
-    private int linea;
+    @Column(name="linea",nullable = false)
+    private String codigolinea;
     @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
@@ -41,7 +41,7 @@ public class Productos {
     }
 
     public String getNombreLinea(){
-        return CustomConstants.getLineas().get(this.linea);
+        return CustomConstants.getLineas().get(this.codigolinea);
     }
 
 
@@ -77,12 +77,12 @@ public class Productos {
         this.codigodesc = codigodesc;
     }
 
-    public int getLinea() {
-        return linea;
+    public void setCodigolinea(String codigolinea) {
+        this.codigolinea = codigolinea;
     }
 
-    public void setLinea(int linea) {
-        this.linea = linea;
+    public String getCodigolinea() {
+        return codigolinea;
     }
 
     public LocalDateTime getFechamodificacion() {

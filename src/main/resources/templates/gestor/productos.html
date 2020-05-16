@@ -163,10 +163,10 @@
                     </div>
                     <div class="form-group">
                         <label  class="col-form-label">Linea:</label>
-                        <select class="form-control" th:field="*{linea}">
+                        <select class="form-control" th:field="*{codigolinea}">
                             <option th:each="item : ${lineas}" th:value="${item.key}" th:text="${item.value}"  ></option>
                         </select>
-                        <div class="text-danger" th:if="${#fields.hasErrors('linea')}" th:errors="*{linea}">Error</div>
+                        <div class="text-danger" th:if="${#fields.hasErrors('codigolinea')}" th:errors="*{codigolinea}">Error</div>
                     </div>
                     <div class="modal-footer">
                         <a type="button" th:href="@{/gestor/producto}"  class="btn btn-secondary" >Cancelar</a>

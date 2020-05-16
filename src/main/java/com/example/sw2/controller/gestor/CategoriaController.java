@@ -1,6 +1,5 @@
 package com.example.sw2.controller.gestor;
 
-import com.example.sw2.constantes.Tamanho;
 import com.example.sw2.entity.Categorias;
 import com.example.sw2.repository.CategoriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
