@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/general-gestor.html ::gestor-head(title='Inventario')">
+    <head th:replace="fragments/general-gestor.html ::gestor-head(title='Productos Disponibles')">
     </head>
     <body id="page-top">
         
@@ -30,7 +30,7 @@
                         
                         <p class="mb-4">Aquí puedes ver los productos que se pueden vender o asignar a sedes. Para ver
                             el historial de productos vendidos, revisa la lista de <a href="ventas.html">ventas</a>.
-                            Para ver el estado de las asignaciones a sedes, revisa la lista de <a href="asignadosSedes.html">productos
+                            Para ver el estado de las asignaciones a sedes, revisa la lista de <a href="/gestor/asignado">productos
                                 asignados</a>
                         </p>
                         
@@ -73,20 +73,18 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Lliklla</td>
-                                                <td>Blanket/Manta</td>
-                                                <td>One-Size</td>
-                                                <td>Amaru</td>
-                                                <td>10</td>
-                                                <td>Rojo</td>
-                                                <td>35</td>
+                                            <tr th:each="inv:${listainventario}">
+                                                <td th:text="${inv.numpedido}">1</td>
+                                                <td th:text="${inv.productos.nombre}">Lliklla</td>
+                                                <td th:text="${inv.productos.descripcion}">Blanket/Manta</td>
+                                                <td th:text="${inv.tamanho}">One-Size</td>
+                                                <td th:text="${inv.comunidades.nombre}">Amaru</td>
+                                                <td th:text="${inv.cantidadgestor}">10</td>
+                                                <td th:text="${inv.color}">Rojo</td>
+                                                <td th:text="${inv.costomosqoy}">35</td>
                                                 
                                                 <td>
-                                                    <button type="button" class="btn btn-warning" data-toggle="modal"
-                                                            data-target="#AsignarProductoModal" data-whatever="@mdo"><i
-                                                            class="fas fa-store"></i></button>
+                                                    <button  type="button" class="btn btn-warning" data-toggle="modal" data-target="#AsignarProductoModal" data-whatever="@mdo"><i class="fas fa-store"></i></button>
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-success" data-toggle="modal"

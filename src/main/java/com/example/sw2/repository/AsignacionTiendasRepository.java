@@ -2,7 +2,6 @@ package com.example.sw2.repository;
 
 
 import com.example.sw2.dto.DatosAsignadosTiendaDto;
-import com.example.sw2.dto.DatosProductoVentaDto;
 import com.example.sw2.entity.AsignacionTiendas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +14,7 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
 
     @Query(value="select p.nombre as nombreproducto, a.precioventa as precioventa," +
             "att.stock as stockasignadotienda, att.fecha_asignacion as fechaasignacionproducto, t.nombre as nombretienda,"+
-            "i.tamanho as tamanhoproducto, i.color as colorproducto\n"+
+            "i.tamanho as tamanhoproducto, i.color as colorproducto, att.idAsignados as idasignados\n"+
             "FROM Productos p\n" +
             "inner join Inventario i on (p.codigonom = i.producto)\n" +
             "inner join Asignados_sedes a on (i.codigo_inventario = a.producto_inventario)"+
@@ -24,6 +23,16 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
             "group by att.tienda",
             nativeQuery = true)
     List<DatosAsignadosTiendaDto> obtenerDatosAsignados();
+
+    @Query(value="update Inventario i set i.cantidad_total =  i.cantidad_total - ?2 " +
+            " where i.codigo_inventario =?1\n",
+            nativeQuery = true)
+    void stockInventarioActualizado(String codigo, int cantVent);
+
+    @Query(value="update Asignados_sedes a set a.cantidadactual =  a.cantidadactual - ?2 " +
+            " where a.producto_inventario =?1\n",
+            nativeQuery = true) 
+    void stockAsignadoSedeActualizado(String codigo, int cantVent);
 
 
 }

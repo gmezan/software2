@@ -27,7 +27,7 @@
                             <h1 class="h3 mb-0 text-gray-900">Productos asignados a Sedes</h1>
                         </div>
                         <p class="mb-4">Aquí puedes ver el estado de los productos asignados a sedes. Para asignar un producto, revisa la lista de <a
-                                href="productosDisponibles.html">productos disponibles</a>.
+                                href="/gestor/productosDisponibles">productos disponibles</a>.
                         </p>
                         
                         <div class="card shadow mb-4">
@@ -61,15 +61,13 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Codigo 1
-                                                </th>
-                                                <td>Sede 1</td>
-                                                <td>20</td>
-                                                <td>Recibido por sede</td>
-                                                <td>20</td>
-
+                                            <tr th:each="asig,i:${listaAsignados}">
+                                                <td th:text="${i.index+1}">1</td>
+                                                <td th:text="${asig.inventario.codigoinventario}">Codigo 1</td>
+                                                <td th:text="${asig.sede.nombre}">Sede 1</td>
+                                                <td th:text="${asig.stock}">20</td>
+                                                <td th:text="${asig.estadoAsignacion.estado}">Recibido por sede</td>
+                                                <td th:text="${asig.stock - asig.cantidadactual}">20</td>
                                             </tr>
                                         </tbody>
                                     </table>
