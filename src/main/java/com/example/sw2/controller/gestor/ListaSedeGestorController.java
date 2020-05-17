@@ -67,7 +67,7 @@ public class ListaSedeGestorController {
             }
             else {
                 attr.addFlashAttribute("msg", "Sede creada exitosamente");
-                Roles roles = new Roles(); roles.setIdroles(2);
+                Roles roles = new Roles(); roles.setIdroles(ROL_CRUD);
                 usuarios.setRoles(roles);
             }
             if (multipartFile!=null && !multipartFile.isEmpty()){
