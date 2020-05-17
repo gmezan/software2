@@ -90,16 +90,14 @@
                                                 <td th:text="${product.precioventa}"></td>
                                                 <td th:text="${product.cantidadventa}"></td>
                                                 <td th:text="${product.cantidadventa * product.precioventa}"></td>
-                                                <td></td>
-                                                <td>
-                                                    <button th:attr="data-id1=${product.numerodocumento}, data-id2=${product.tipodocumento}"
-                                                            data-toggle="modal" data-target="#deleteModal"
-                                                            class="borrar-VentasCliente btn btn-datatable btn-icon btn-danger">
-                                                <!--th:src="${product.fotoproducto}"-->
                                                 <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
                                                          height=100 style="width: auto" >
                                                 </td>
-                                                <td></td>
+                                                <td>
+                                                    <button th:attr="data-id1=${product.numerodocumento}, data-id2=${product.tipodocumento}"
+                                                            data-toggle="modal" data-target="#deleteModal"
+                                                            class="borrar-VentasCliente btn btn-datatable btn-icon btn-danger">Borrar</button></td>
+                                                <!--th:src="${product.fotoproducto}"-->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -161,8 +159,8 @@
                     </div>
                     <form method="get" th:action="@{ventasCliente/borrar}">
                         <div class="modal-body">
-                            <input type="text" class="form-control" id="id1" name="id1">
-                            <input type="text" class="form-control" id="id2" name="id2">
+                            <input hidden type="text" class="form-control" id="id1" name="id1">
+                            <input hidden type="text" class="form-control" id="id2" name="id2">
                             <p>¿Seguro que desea eliminar esta venta? Esta acción no se puede deshacer.</p>
                         </div>
                         <div class="modal-footer">
