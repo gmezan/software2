@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/gestor/sede")
-public class ListaSedeController {
+public class ListaSedeGestorController {
 
     private final int ROL_CRUD = 3;
 
