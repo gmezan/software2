@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class Usuarios implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dni")
     private int idusuarios;
     @Column(nullable = false)
