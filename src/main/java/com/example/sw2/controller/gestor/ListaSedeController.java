@@ -1,4 +1,5 @@
-package com.example.sw2.controller.admin;
+package com.example.sw2.controller.gestor;
+
 
 import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.entity.Roles;
@@ -21,23 +22,23 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin/gestor")
-public class GestoresController {
+@RequestMapping("/gestor/sede")
+public class ListaSedeController {
 
-    private final int ROL_CRUD = 2;
+    private final int ROL_CRUD = 3;
 
     @Autowired
     UsuariosRepository usuariosRepository;
 
     @GetMapping(value = {""})
-    public String listaSede(@ModelAttribute("gestor")  Usuarios usuarios, Model model){
+    public String listaSede(@ModelAttribute("sede") Usuarios usuarios, Model model){
         model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
-        return "admin/listaGestor";
+        return "gestor/sedes";
     }
 
 
     @PostMapping("/save")
-    public String editCat(@ModelAttribute("gestor") @Valid Usuarios usuarios,
+    public String editCat(@ModelAttribute("sede") @Valid Usuarios usuarios,
                           BindingResult bindingResult,
                           @RequestParam(name = "photo", required = false) MultipartFile multipartFile,
                           RedirectAttributes attr, Model model) {
@@ -49,7 +50,7 @@ public class GestoresController {
             }
             model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
             model.addAttribute("msg", "ERROR");
-            return "admin/listaGestor";
+            return "gestor/sedes";
         }
         else {
             Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,usuarios.getIdusuarios());
@@ -62,17 +63,17 @@ public class GestoresController {
                 u.setCorreo(usuarios.getCorreo());
                 usuarios.setFoto(u.getFoto());
                 usuarios = u;
-                attr.addFlashAttribute("msg", "Gestor actualizado exitosamente");
+                attr.addFlashAttribute("msg", "Sede actualizada exitosamente");
             }
             else {
-                attr.addFlashAttribute("msg", "Gestor creado exitosamente");
+                attr.addFlashAttribute("msg", "Sede creada exitosamente");
                 Roles roles = new Roles(); roles.setIdroles(2);
                 usuarios.setRoles(roles);
             }
             if (multipartFile!=null && !multipartFile.isEmpty()){
                 try {
                     //pseudo random number
-                    String name = Integer.toString(usuarios.getIdusuarios()*CustomConstants.BIGNUMBER).hashCode()+Integer.toString(usuarios.getIdusuarios());
+                    String name = Integer.toString(usuarios.getIdusuarios()* CustomConstants.BIGNUMBER).hashCode()+Integer.toString(usuarios.getIdusuarios());
                     System.out.println(name);
                     url = UploadObject.uploadPhoto(name,
                             multipartFile, CustomConstants.PERFIL);
@@ -84,7 +85,7 @@ public class GestoresController {
             }
 
             usuariosRepository.save(usuarios);
-            return "redirect:/admin/gestor";
+            return "redirect:/gestor/sede";
         }
     }
 
@@ -94,10 +95,9 @@ public class GestoresController {
                             RedirectAttributes attr) {
         Optional<Usuarios> c = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id);
         if (c.isPresent()) {
-            usuariosRepository.deleteById(id);
-            attr.addFlashAttribute("msg","Gestor borrado exitosamente");
+                attr.addFlashAttribute("msg", "Gestor borrado exitosamente");
         }
-        return "redirect:/admin/gestor";
+        return "redirect:/gestor/sede";
     }
 
     //Web service
@@ -108,7 +108,4 @@ public class GestoresController {
         return new ResponseEntity<>(usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id), HttpStatus.OK);
     }
 
-
 }
-
-
