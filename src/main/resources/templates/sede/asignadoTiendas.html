@@ -62,7 +62,7 @@
                                     </tfoot>
 
                                     <tbody>
-                                    <tr th:each="a : ${asignadosTienda}">
+                                    <tr th:each="a : ${asignados}">
                                         <td th:text="${a.tienda.nombre}"></td>
                                         <td th:text="${a.asignadosSedes.inventario.productos.nombre}"></td>
                                         <td th:text="${a.asignadosSedes.inventario.color}"></td>
@@ -138,6 +138,11 @@
                 </div>
                 <div class="modal-body">
                     <form method="post" th:action="@{sede/AsignadoTienda/registrar}" th:object="${venta}">
+
+                        <div class="form-group">
+                            <label  for="ruc_dni" class="col-form-label">Fecha</label>
+                            <input type="text" class="form-control" id="ruc_dni" name="ruc_dni" th:text="${asignados.tienda.ruc}">
+                        </div>
 
                         <div class="form-group">
                             <label  for="fecha" class="col-form-label">Fecha</label>

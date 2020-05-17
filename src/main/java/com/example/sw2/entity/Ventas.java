@@ -46,21 +46,6 @@ public class Ventas {
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 
-    public Ventas(){}
-
-    public Ventas(String ruc_dni, String nombre, String tipo, String nro,
-                  String lugarventa, String cod, BigDecimal precioventa){
-        this.setRucdni(ruc_dni);
-        this.setNombrecliente(nombre);
-        VentasId
-
-        this.setId(tiponro);
-        this.setLugarventa(lugarventa);
-        this.setInventario();
-        this.setPrecioventa(precioventa);
-
-    }
-
     public VentasId getId() {
         return id;
     }

@@ -36,7 +36,7 @@ public class AsignadoTiendaController {
     public String ListaAsignacionTiendas(@ModelAttribute("venta") Ventas venta,
                                          @ModelAttribute("asignados") AsignacionTiendas asignados,
                                          Model model){
-        model.addAttribute("asignadosTienda", asignacionTiendasRepository.findAll());
+        model.addAttribute("asignados", asignacionTiendasRepository.findAll());
         model.addAttribute("listaDatosAsignados", asignacionTiendasRepository.obtenerDatosAsignados());
         return "sede/asignadoTiendas";
     }
@@ -46,9 +46,6 @@ public class AsignadoTiendaController {
                                   @RequestParam("id") int id,
                                   Model model, RedirectAttributes attr){
 
-        AsignacionTiendas ast = new AsignacionTiendas();
-        venta.setRucdni(ast.getTienda().getRuc());
-        venta.setNombrecliente(ast.getTienda().getNombre());
         int cantVent = venta.getCantidad();
         String codigo = venta.getInventario().getCodigoinventario();
         asignacionTiendasRepository.stockAsignadoSedeActualizado(codigo, cantVent);
