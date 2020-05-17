@@ -73,61 +73,23 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>THLLIBLAOSHU</td>
-                                                <td>Awana</td>
-                                                <td>Rojo</td>
-                                                <td>Small</td>
-                                                <td>Amaru</td>
-                                                <th>25</th>
-                                                <td>200</td>
-                                                <td>3/5/2020</td>
+                                            <tr th:each="prodPorConfirm, i : ${listaProductosPorConfirmar}">
+                                                <td th:text="${i.index + 1}">1</td>
+                                                <td th:text="${prodPorConfirm.inventario.codigoinventario}"></td>
+                                                <td th:text="${prodPorConfirm.inventario.productos.nombre}"></td>
+                                                <td th:text="${prodPorConfirm.inventario.color}"></td>
+                                                <td th:text="${prodPorConfirm.inventario.tamanho}"></td>
+                                                <td th:text="${prodPorConfirm.inventario.comunidades.nombre}"></td>
+                                                <td th:text="${prodPorConfirm.precioventa}"></td>
+                                                <td th:text="${prodPorConfirm.stock}"></td>
+                                                <td th:text="${prodPorConfirm.fechaenvio}"></td>
                                                 <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
                                                          alt=""  height=100 width=100></td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success " data-toggle="modal" data-target="#confirmarRecepcionModal" data-whatever="@mdo"><i class="fas fa-check-circle"></i></button>
+                                                    <button th:attr="data-id=${prodPorConfirm.idasignados}"  type="button" class="btn btn-success " data-toggle="modal" data-target="#confirmarRecepcionModal"><i class="fas fa-check-circle"></i></button>
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#problemaModal" data-whatever="@mdo"><i class="fas fa-times"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>2</th>
-                                                <td>MHQONRUGSHUASH19MAY</td>
-                                                <td>Qespe</td>
-                                                <td>Amarillo</td>
-                                                <td>One Size</td>
-                                                <td>Amaru</td>
-                                                <th>30</th>
-                                                <td>300</td>
-                                                <td>3/5/2020</td>
-                                                <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                                                         alt=""  height=100 width=100></td>
-                                                <td>
-                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmarRecepcionModal" data-whatever="@mdo"><i class="fas fa-check-circle"></i></button>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#problemaModal" data-whatever="@mdo"><i class="fas fa-times"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>3</th>
-                                                <td>ALQONROGSHUASH19AUG</td>
-                                                <td>Lama</td>
-                                                <td>Rojo</td>
-                                                <td>Large</td>
-                                                <td>Amaru</td>
-                                                <th>57</th>
-                                                <td>190</td>
-                                                <td>3/5/2020</td>
-                                                <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                                                         alt=""  height=100 width=100></td>
-                                                <td>
-                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmarRecepcionModal" data-whatever="@mdo"><i class="fas fa-check-circle"></i></button>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#problemaModal" data-whatever="@mdo"><i class="fas fa-times"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -158,41 +120,37 @@
         <!-- Logout Modal-->
         <div th:replace="fragments/general-sede.html :: logout-modal"></div>
 
-        <div class="modal fade" id="confirmarRecepcionModal" tabindex="-1"
-             role="dialog" aria-labelledby="confirmarRecepcionModal"
+        <div class="modal fade" id="confirmarRecepcionModal" tabindex="-1" role="dialog" aria-labelledby="confirmarRecepcionModal"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLabel">¿Esta
-                            seguro que desea confirmar la recepcion del
-                            producto?</h4>
-                        <button type="button" class="close"
-                                data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <h4 class="modal-title" id="confirmarRecepcionModalLabel">¿Esta seguro que desea confirmar la recepcion del producto?</h4>
+                        <a type="button"  th:href="@{/sede/productosPorConfirmar}" class="close" aria-label="Close">
+                            <span aria-hidden="true">x</span>
+                        </a>
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <h6><b>Antes de confirmar, se recomienda
-                                verificar
-                                todos los datos del producto</b></h6></br>
-                            <h6>Codigo: THLLIBLAOSHU</h6>
-                            <h6>Nombre: Awana</h6>
-                            <h6>Color: Rojo</h6>
-                            <h6>Tamaño: Small</h6>
-                            <h6>Comunidad: Amaru</h6>
-                            <h6>Stock asignado: 200</h6>
-                            <h6>Foto: </h6>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger"
-                                data-dismiss="modal">Cancelar
-                        </button>
-                        <a type="button" class="btn btn-primary"
-                           href="ListaProductosPorConfirmar">Confirmar</a>
-                    </div>
+                    <form method="get" th:action="@{/sede/productosConfirmados}" th:object="${productosPorConfirmar}">
+                        <div class="modal-body">
+                            <input hidden type="text" class="form-control" th:field="*{idasignados}" >
+                            <h6><b>Antes de confirmar, se recomienda verificar todos los datos del producto</b></h6></br>
+                            <h6 th:text="${productosPorConfirmar.inventario.codigoinventario}"></h6>
+                            <h6 th:text="${productosPorConfirmar.inventario.productos.nombre}"></h6>
+                            <h6 th:text="${productosPorConfirmar.inventario.color}"></h6>
+                            <h6 th:text="${productosPorConfirmar.inventario.tamanho}"></h6>
+                            <h6 th:text="${productosPorConfirmar.inventario.comunidades.nombre}"></h6>
+                            <h6 th:text="${productosPorConfirmar.precioventa}"></h6>
+                            <h6 th:text="${productosPorConfirmar.stock}"></h6>
+                            <h6 th:text="${productosPorConfirmar.fechaenvio}"></h6>
+                            <h6>Foto:</h6>
+                            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                     alt=""  height=100 width=100>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-btn-primaryr"><a style="color:white;text-decoration:none">Confirmar</a></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
