@@ -30,12 +30,14 @@
                             class="fas fa-user-plus fa-sm text-white-50"></i> Nueva sede
                     </button>
                 </div>
-    
+
                 <p class="mb-4">Aquí puedes ver las sedes registradas. Para asignar productos a una sede, revisa la lista de <a
-                            href="productosDisponibles.html">productos disponibles</a>. </br>Para ver el estado de las asignaciones a sedes, revisa la lista de <a
+                        href="productosDisponibles.html">productos disponibles</a>. </br>Para ver el estado de las asignaciones a sedes, revisa la lista de <a
                         href="asignadosSedes.html.html">productos asignados</a>.
                 </p>
-                
+
+                <div id="msgSede" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+
                 <!-- Database Table -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -64,20 +66,18 @@
                                 </tr>
                                 </tfoot>
 
-
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Sede 1</th>
-                                    <td>sede1@hotmail.com</td>
-                                    <td>975654123</td>
+                                <tr th:each="sede, vEstado : ${listaSedes}">
+                                    <td th:text="${vEstado.index + 1}">1</td>
+                                    <td th:text="${sede.nombre} + ' ' + ${sede.apellido}">Sede 1</th>
+                                    <td th:text="${sede.correo}">sede1@hotmail.com</td>
+                                    <td th:text="${sede.telefono}">975654123</td>
 
                                     <td>
-                                        <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                        <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                        <button th:attr="data-id=${sede.idusuarios}" data-toggle="modal" data-target="#formModal" class="editar-sede btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                        <button th:attr="data-id=${sede.idusuarios}" data-toggle="modal" data-target="#deleteModal" class="delete-sede btn btn-datatable btn-icon btn-danger mr-2"><i class="fas fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
-
 
                                 </tbody>
                             </table>
@@ -132,6 +132,7 @@
 
 <!-- Page level custom scripts -->
 <script th:src="@{/js/demo/datatables-demo.js}"></script>
+<script th:src="@{/js/gestor/sedegestor.js}"></script>
 
 <!-- Modal Add-->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -198,34 +199,48 @@
 </div>
 
 <!-- Modal Edit-->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Editar Sede</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <a type="button" th:href="@{/gestor/sede}" class="close"  aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </a>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="post" th:action="@{/gestor/sede/save}" th:object="${sede}">
+
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="Nombre de sede">
-                        <label for="dni" class="col-form-label">DNI:</label>
-                        <input type="text" class="form-control" id="dni" placeholder="DNI">
-                        <label for="correo" class="col-form-label">Correo:</label>
-                        <input type="text" class="form-control" id="correo" placeholder="Correo de sede">
-                        <label for="telefono" class="col-form-label">Telefono:</label>
-                        <input type="text" class="form-control" id="telefono" placeholder="Telefono">
-                        <br>
-                        <button class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-camera"></i> Actualizar Foto</i></button>
+                        <label id="nombre" class="col-form-label">Nombre:</label>
+                        <input class="form-control" th:field="*{nombre}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <label id="apellido" class="col-form-label">Apellido:</label>
+                        <input type="text" class="form-control" th:field="*{apellido}" >
+                        <div class="text-danger" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <label id="dni" class="col-form-label">DNI:</label>
+                        <input type="text" class="form-control" th:field="*{idusuarios}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('idusuarios')}" th:errors="*{idusuarios}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <label id="correo" class="col-form-label">Correo:</label>
+                        <input type="text" class="form-control" th:field="*{correo}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <label id="telefono" class="col-form-label">Telefono:</label>
+                        <input type="text" class="form-control" th:field="*{telefono}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Error</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" th:href="@{/gestor/sede}" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Guardar cambios</a></button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary"><a href="sedes.html" style="color:white;text-decoration:none">Guardar cambios</a></button>
             </div>
         </div>
     </div>
