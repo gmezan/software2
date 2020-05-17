@@ -4,6 +4,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +16,8 @@ public class AsignadosSedes {
 
     @Id
     @Column(name="idAsignados")
+    @Positive
+    @Digits(integer = 10, fraction = 0)
     private int idasignados;
     @ManyToOne
     @JoinColumn(name="gestor",nullable = false)

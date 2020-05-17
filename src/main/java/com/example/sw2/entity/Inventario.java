@@ -1,5 +1,6 @@
 package com.example.sw2.entity;
 
+import com.example.sw2.constantes.CustomConstants;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -24,8 +25,8 @@ public class Inventario {
     @JoinColumn(name="producto",nullable =false)
     private Productos productos;
 
-    @Column(nullable =false)
-    private String tamanho;
+    @Column(name="tamanho",nullable =false)
+    private String codtamanho;
 
     @ManyToOne
     @JoinColumn(name="comunidad",nullable =false)
@@ -38,13 +39,13 @@ public class Inventario {
     private int cantidadtotal;
     @Column(name="cantidad_gestor",nullable =false)
     private int cantidadgestor;
-    @Column(nullable =false)
-    private int tipoadquisicion;
+    @Column(name="tipoadquisicion", nullable =false)
+    private int codAdquisicion;
     @Column(name="fecha_inicio_consignacion")
     private LocalDate fechainicioconsignacion;
     private int dia;
-    @Column(nullable =false)
-    private int mes;
+    @Column(name="mes",nullable =false)
+    private String codmes;
     @Column(nullable =false)
     private int anho;
     private String color;
@@ -65,7 +66,11 @@ public class Inventario {
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 
+    public Inventario(){}
 
+    public Inventario(String ci){
+        this.setCodigoinventario(ci);
+    }
 
     public String getCodigoinventario() {
         return codigoinventario;
@@ -99,12 +104,16 @@ public class Inventario {
         this.productos = productos;
     }
 
-    public String getTamanho() {
-        return tamanho;
+    public String getCodtamanho() {
+        return codtamanho;
     }
 
-    public void setTamanho(String tamanho) {
-        this.tamanho = tamanho;
+    public void setCodtamanho(String codtamanho) {
+        this.codtamanho = codtamanho;
+    }
+
+    public String getTamanho() {
+        return CustomConstants.getTamanhos().get(this.codtamanho);
     }
 
     public Comunidades getComunidades() {
@@ -139,12 +148,14 @@ public class Inventario {
         this.cantidadgestor = cantidadgestor;
     }
 
-    public int getTipoadquisicion() {
-        return tipoadquisicion;
+    public int getCodAdquisicion() {
+        return codAdquisicion;
     }
-
-    public void setTipoadquisicion(int tipoadquisicion) {
-        this.tipoadquisicion = tipoadquisicion;
+    public String getTipoAdquisicion() {
+        return CustomConstants.getTiposAdquisicion().get(this.codAdquisicion);
+    }
+    public void setCodAdquisicion(int codAdquisicion) {
+        this.codAdquisicion = codAdquisicion;
     }
 
     public LocalDate getFechainicioconsignacion() {
@@ -163,12 +174,15 @@ public class Inventario {
         this.dia = dia;
     }
 
-    public int getMes() {
-        return mes;
+    public String getCodmes() {
+        return codmes;
     }
 
-    public void setMes(int mes) {
-        this.mes = mes;
+    public void setCodmes(String codmes) {
+        this.codmes = codmes;
+    }
+    public String getMes() {
+        return CustomConstants.getMeses().get(this.codmes);
     }
 
     public int getAnho() {

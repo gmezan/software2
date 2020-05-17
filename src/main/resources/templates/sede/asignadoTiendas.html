@@ -62,23 +62,23 @@
                                     </tfoot>
 
                                     <tbody>
-                                    <tr th:each="product: ${listaDatosAsignados}">
-                                        <td th:text="${product.getNombretienda()}"></td>
-                                        <td th:text="${product.getNombreproducto()}"></td>
-                                        <td th:text="${product.colorproducto}"></td>
-                                        <td th:text="${product.tamanhoproducto}"></td>
-                                        <td th:text="${product.getFechaasignacionproducto()}"></td>
-                                        <td th:text="${product.getPrecioventa()}"></td>
-                                        <td th:text="${product.getStockasignadotienda()}"></td>
+                                    <tr th:each="a : ${asignados}">
+                                        <td th:text="${a.tienda.nombre}"></td>
+                                        <td th:text="${a.asignadosSedes.inventario.productos.nombre}"></td>
+                                        <td th:text="${a.asignadosSedes.inventario.color}"></td>
+                                        <td th:text="${a.asignadosSedes.inventario.tamanho}"></td>
+                                        <td th:text="${a.fechaasignacion}"></td>
+                                        <td th:text="${a.asignadosSedes.precioventa}"></td>
+                                        <td th:text="${a.stock}"></td>
                                         <td>
-                                            <button th:attr=""
+                                            <button th:attr="data_id= ${a.idtiendas}"
                                                     data-toggle="modal" data-target="#registrarModal"
                                                     class="registar-Venta btn btn-datatable btn btn-success">
                                                 <i class="fas fa-dollar-sign"></i>
                                             </button>
                                         </td>
                                         <td>
-                                            <button th:attr=""
+                                            <button
                                                     data-toggle="modal" data-target="#devolucionModal"
                                                     class="retornar-Producto btn btn-datatable btn btn-danger">
                                                 <i class="fas fa-undo-alt"></i>
@@ -107,52 +107,6 @@
 
     <!-- Logout Modal-->
     <div th:replace="fragments/general-sede.html :: logout-modal"></div>
-
-    <!-- Modal Registrar Venta -->
-    <div id="registrarModal" class="modal fade">
-        <div class="modal-dialog modal-confirm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Registrar venta</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <form method="get" th:action="@{}">
-                    <div hidden class="form-group">
-                        <label  for="cantVent" class="col-form-label">Cantidad de productos vendidos</label>
-                        <input type="text" class="form-control" id="cantVent" name="cantVent">
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success"><a style="color:white;text-decoration:none">Registrar</a></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Devolución -->
-    <div id="devolucionModal" class="modal fade">
-        <div class="modal-dialog modal-confirm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Retornar Producto</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <form method="get" th:action="@{}">
-                    <div hidden class="form-group">
-                        <label  for="cantRet" class="col-form-label">Cantidad de productos vendidos</label>
-                        <input type="text" class="form-control" id="cantRet" name="cantRet">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Retornar</a></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <!-- Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
@@ -172,8 +126,46 @@
     <script th:src="@{/js/demo/chart-area-demo.js}"></script>
     <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
     <script th:src="@{/js/demo/datatables-demo.js}"></script>
+    <script th:src="@{/js/sede/asignadoTiendas.js}"></script>
 
+    <!-- Modal Registrar Venta -->
+    <div id="registrarModal" class="modal fade" role="dialog" aria-labelledby="registrarModal">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Registrar venta</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" th:action="@{sede/AsignadoTienda/registrar}" th:object="${venta}">
 
+                        <div class="form-group">
+                            <label  for="ruc_dni" class="col-form-label">Fecha</label>
+                            <input type="text" class="form-control" id="ruc_dni" name="ruc_dni" th:text="${asignados.tienda.ruc}">
+                        </div>
+
+                        <div class="form-group">
+                            <label  for="fecha" class="col-form-label">Fecha</label>
+                            <input type="text" class="form-control" th:field="*{fecha}">
+                        </div>
+                        <div class="form-group">
+                            <label  for="vendedor" class="col-form-label">Vendedor</label>
+                            <input type="text" class="form-control" th:field="*{vendedor.nombre}">
+                        </div>
+                        <div class="form-group">
+                            <label  for="cantidad" class="col-form-label">Cantidad</label>
+                            <input type="text" class="form-control" th:field="*{cantidad}">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success"><a style="color:white;text-decoration:none">Registrar</a></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 

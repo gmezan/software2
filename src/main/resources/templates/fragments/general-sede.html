@@ -175,9 +175,9 @@
              aria-labelledby="headingInv" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" th:classappend="${param2=='ListaProductosConfirmados'}?  active : ''"
-                       href="ListaProductosConfirmados.html">Productos confirmados</a>
+                       th:href="@{/sede/productosConfirmados}">Productos confirmados</a>
                     <a class="collapse-item" th:classappend="${param2=='ListaProductosPorConfirmar'}?  active : ''"
-                       href="ListaProductosPorConfirmar.html">Productos por confirmar</a>
+                       th:href="@{/sede/productosPorConfirmar}">Productos por confirmar</a>
                 </div>
             </div>
     </li>

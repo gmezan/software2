@@ -22,7 +22,7 @@ public class Ventas {
     @Column(name="ruc_dni")
     private String rucdni;
     @NotBlank
-    @Size(max = 45, message = "El Ruc/Dni debe contener 45 caracteres")
+    @Size(max = 45, message = "El nombre debe contener 45 caracteres")
     @Column(nullable = false)
     private String nombrecliente;
     @Column(nullable = false)
