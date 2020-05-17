@@ -1,5 +1,6 @@
 package com.example.sw2.controller.sede;
 
+import com.example.sw2.dto.DatosAsignadosTiendaDto;
 import com.example.sw2.entity.AsignacionTiendas;
 import com.example.sw2.entity.Inventario;
 import com.example.sw2.entity.Tienda;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -41,16 +43,19 @@ public class AsignadoTiendaController {
 
     @PostMapping("/registrar")
     public String RegistrarVentas(@ModelAttribute("venta") Ventas venta,
-                                  @ModelAttribute("asignados") AsignacionTiendas asignados,
+                                  @RequestParam("id") int id,
                                   Model model, RedirectAttributes attr){
 
+        AsignacionTiendas ast = new AsignacionTiendas();
+        venta.setRucdni(ast.getTienda().getRuc());
+        venta.setNombrecliente(ast.getTienda().getNombre());
         int cantVent = venta.getCantidad();
         String codigo = venta.getInventario().getCodigoinventario();
         asignacionTiendasRepository.stockAsignadoSedeActualizado(codigo, cantVent);
         asignacionTiendasRepository.stockInventarioActualizado(codigo, cantVent);
         attr.addFlashAttribute("msg", "Venta registrada exitosamente");
         ventasRepository.save(venta);
-        return "redirect:/sede/tienda";
+        return "redirect:/sede/AsignadoTienda";
     }
 
     //Web service

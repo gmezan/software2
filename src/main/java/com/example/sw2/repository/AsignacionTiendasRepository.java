@@ -14,7 +14,7 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
 
     @Query(value="select p.nombre as nombreproducto, a.precioventa as precioventa," +
             "att.stock as stockasignadotienda, att.fecha_asignacion as fechaasignacionproducto, t.nombre as nombretienda,"+
-            "i.tamanho as tamanhoproducto, i.color as colorproducto, att.idAsignados as idasignados\n"+
+            "i.tamanho as tamanhoproducto, i.color as colorproducto, att.idtiendas as idasignados\n"+
             "FROM Productos p\n" +
             "inner join Inventario i on (p.codigonom = i.producto)\n" +
             "inner join Asignados_sedes a on (i.codigo_inventario = a.producto_inventario)"+
