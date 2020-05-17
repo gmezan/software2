@@ -75,17 +75,8 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr th:each="prodConfirm, i : ${listaAsignadosSedes}">
-                                                <th th:text="${i.index + 1}">1</th>
-                                                <td th:text="${prodConfirm.inventario.codigoinventario}"></td>
-                                                <td th:text="${prodConfirm.inventario.productos.nombre}"></td>
-                                                <td th:text="${prodConfirm.inventario.color}"></td>
-                                                <td th:text="${prodConfirm.inventario.tamanho}"></td>
-                                                <td th:text="${prodConfirm.inventario.comunidades.nombre}"></td>
-                                                <td th:text="${prodConfirm.precioventa}"></td>
-                                                <td th:text="${prodConfirm.stock}"></td>
-                                                <td th:text="${prodConfirm.cantidadactual}"></td>
-                                                <td th:text="${prodConfirm.fechaenvio}"></td>
+                                            <tr th:each="prodConfirm, i : ${listaProductosPorConfirmar}">
+
                                                 <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
                                                          alt=""  height=100 style="width: auto;"></td>
                                                 <td>
