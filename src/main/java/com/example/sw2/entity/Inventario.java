@@ -60,6 +60,12 @@ public class Inventario {
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 
+    public Inventario(){}
+
+    public Inventario(String ci){
+        this.setCodigoinventario(ci);
+    }
+
     public String getCodigoinventario() {
         return codigoinventario;
     }

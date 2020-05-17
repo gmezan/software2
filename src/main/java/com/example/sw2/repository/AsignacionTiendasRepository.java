@@ -2,9 +2,6 @@ package com.example.sw2.repository;
 
 
 import com.example.sw2.dto.DatosAsignadosTiendaDto;
-import com.example.sw2.dto.DatosProductoVentaDto;
-import com.example.sw2.dto.ProductoAsignadoSedeVentaDto;
-import com.example.sw2.dto.ProductoInventarioVentaDto;
 import com.example.sw2.entity.AsignacionTiendas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +14,7 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
 
     @Query(value="select p.nombre as nombreproducto, a.precioventa as precioventa," +
             "att.stock as stockasignadotienda, att.fecha_asignacion as fechaasignacionproducto, t.nombre as nombretienda,"+
-            "i.tamanho as tamanhoproducto, i.color as colorproducto\n"+
+            "i.tamanho as tamanhoproducto, i.color as colorproducto, att.idAsignados as idasignados\n"+
             "FROM Productos p\n" +
             "inner join Inventario i on (p.codigonom = i.producto)\n" +
             "inner join Asignados_sedes a on (i.codigo_inventario = a.producto_inventario)"+
@@ -27,21 +24,15 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
             nativeQuery = true)
     List<DatosAsignadosTiendaDto> obtenerDatosAsignados();
 
-    @Query(value="select i.cantidad_total as cantidadtotal\n"+
-            "FROM Ventas v\n"+
-            "where v.productoinventario = ?1,"+
-            "inner join Inventario i on (v.productoinventario = i.codigo_inventario)\n" +
-            "group by v.productoinventario",
+    @Query(value="update Inventario i set i.cantidad_total =  i.cantidad_total - ?2 " +
+            " where i.codigo_inventario =?1\n",
             nativeQuery = true)
-    List<ProductoAsignadoSedeVentaDto> productoInventarioVendido(String codigo);
+    void stockInventarioActualizado(String codigo, int cantVent);
 
-    @Query(value="select a.cantidadactual as cantidadactual\n"+
-            "FROM Ventas v\n"+
-            "where v.productoinventario = ?1,"+
-            "inner join Asignados_sedes a on (v.productoinventario = a.producto_inventario)"+
-            "group by v.productoinventario",
+    @Query(value="update Asignados_sedes a set a.cantidadactual =  a.cantidadactual - ?2 " +
+            " where a.producto_inventario =?1\n",
             nativeQuery = true) 
-    List<ProductoInventarioVentaDto> productoAsignadoSedeVendido(String codigo);
+    void stockAsignadoSedeActualizado(String codigo, int cantVent);
 
 
 }
