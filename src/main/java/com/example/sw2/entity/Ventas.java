@@ -1,6 +1,8 @@
 package com.example.sw2.entity;
 
 import com.example.sw2.constantes.VentasId;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,7 +22,7 @@ public class Ventas {
     @Column(name="ruc_dni")
     private String rucdni;
     @NotBlank
-    @Size(max = 45, message = "El Ruc/Dni debe contener 45 caracteres")
+    @Size(max = 45, message = "El nombre debe contener 45 caracteres")
     @Column(nullable = false)
     private String nombrecliente;
     @Column(nullable = false)
@@ -37,8 +39,10 @@ public class Ventas {
     private int cantidad;
     @Column(name="precio_venta",nullable = false)
     private BigDecimal precioventa;
+    @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 

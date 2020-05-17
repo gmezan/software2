@@ -49,7 +49,8 @@
                                                 <th>Código del Producto</th>
                                                 <th>Nombre del producto</th>
                                                 <th>Nombre del cliente</th>
-                                                <th>Nº Documento</th>
+                                                <th>Tipo de documento</th>
+                                                <th>N° de documento</th>
                                                 <th>RUC/DNI</th>
                                                 <th>Cantidad vendida</th>
                                                 <th>Precio total</th>
@@ -63,7 +64,8 @@
                                                 <th>Código del Producto</th>
                                                 <th>Nombre del producto</th>
                                                 <th>Nombre del cliente</th>
-                                                <th>Nº Documento</th>
+                                                <th>Tipo de documento</th>
+                                                <th>N° de documento</th>
                                                 <th>RUC/DNI</th>
                                                 <th>Cantidad vendida</th>
                                                 <th>Precio total</th>
@@ -74,18 +76,23 @@
                                         </tfoot>
                                         <tbody>
                                             <tr th:each="item : ${lista}">
-                                                <td th:text="${item.codigoproducto}"></td>
-                                                <td th:text="${item.nombreproducto}"></td>
+                                                <td th:text="${item.inventario.codigoinventario}"></td>
+                                                <td th:text="${item.inventario.productos.nombre}"></td>
                                                 <td th:text="${item.nombrecliente}"></td>
-                                                <td th:text="${item.numerodocumento}"></td>
+                                                <td th:text="${item.id.tipodocumento}"></td>
+                                                <td th:text="${item.id.numerodocumento}"></td>
                                                 <td th:text="${item.rucdni}"></td>
-                                                <td th:text="${item.cantidadventa}"></td>
-                                                <td th:text="${item.precioVenta*item.cantidadventa}"></td>
-                                                <td th:text="${item.fechaventa}"></td>
+                                                <td th:text="${item.cantidad}"></td>
+                                                <td th:text="${item.precioventa*item.cantidad}"></td>
+                                                <td th:text="${item.fecha}"></td>
                                                 <td th:text="${item.lugarventa}"></td>
                                                 <td>
-                                                    <button th:attr="data-id=${item.numerodocumento}" data-toggle="modal" data-target="#formModal" class="editar-Venta btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                                    <button th:attr="data-id=${item.numerodocumento}" data-toggle="modal" data-target="#deleteModal" class="delete-Venta btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                    <button th:attr="data-id1=${item.id.numerodocumento}, data-id2=${item.id.tipodocumento}"
+                                                            data-toggle="modal" data-target="#formModal"
+                                                            class="editar-Venta btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                                    <button th:attr="data-id1=${item.id.numerodocumento}, data-id2=${item.id.tipodocumento}"
+                                                            data-toggle="modal" data-target="#deleteModal"
+                                                            class="delete-Venta btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                                 </td>
                                             </tr>
 
@@ -155,11 +162,10 @@
                     </div>
                     <div class="modal-body">
                         <form method="post" th:action="@{/gestor/venta/save}" th:object="${venta}">
-                            <div class="form-group">
-                                <label class="col-form-label">Código:</label>
-                                <input th:readonly="${venta.numerodocumento!=null && !#fields.hasErrors('numerodocumento')}" type="text" class="form-control" th:field="*{numerodocumento}" placeholder="Código de comunidad">
-                                <div class="text-danger" th:if="${#fields.hasErrors('numerodocumento')}" th:errors="*{numerodocumento}">Error</div>
-                            </div>
+
+                                <input type="hidden" class="form-control" id="id12" name="id1" >
+                                <input type="hidden" class="form-control" id="id21" name="id2" >
+
                             <div class="form-group">
                                 <label  class="col-form-label">Ruc/Dni:</label>
                                 <input type="text" class="form-control" th:field="*{rucdni}" placeholder="Ruc o Dni">
@@ -190,7 +196,8 @@
                     </div>
                     <form method="get" th:action="@{/gestor/venta/delete}" th:object="${venta}">
                         <div class="modal-body">
-                            <input hidden type="text" class="form-control" th:field="*{numerodocumento}" >
+                            <input type="hidden" class="form-control" id="id1" name="id1">
+                            <input type="hidden" class="form-control" id="id2" name="id2">
                             <p>¿Seguro que desea borrar esta venta? Esta acción no se puede deshacer.</p>
                         </div>
                         <div class="modal-footer">

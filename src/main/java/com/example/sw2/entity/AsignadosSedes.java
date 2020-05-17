@@ -1,7 +1,11 @@
 package com.example.sw2.entity;
 import org.apache.el.lang.ELSupport;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,6 +16,8 @@ public class AsignadosSedes {
 
     @Id
     @Column(name="idAsignados")
+    @Positive
+    @Digits(integer = 10, fraction = 0)
     private int idasignados;
     @ManyToOne
     @JoinColumn(name="gestor",nullable = false)
@@ -33,8 +39,10 @@ public class AsignadosSedes {
     @ManyToOne
     @JoinColumn(name="estadoasignacion",nullable = false)
     private EstadoAsignacion estadoAsignacion;
+    @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
     private String mensaje;

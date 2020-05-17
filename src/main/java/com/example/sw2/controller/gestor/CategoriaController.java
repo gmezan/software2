@@ -1,6 +1,5 @@
 package com.example.sw2.controller.gestor;
 
-import com.example.sw2.constantes.Tamanho;
 import com.example.sw2.entity.Categorias;
 import com.example.sw2.repository.CategoriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
@@ -25,7 +23,7 @@ public class CategoriaController {
     CategoriasRepository categoriasRepository;
 
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {""})
     public String listCat(@ModelAttribute("categoria") Categorias cat, Model model) {
         model.addAttribute("lista", categoriasRepository.findAll());
         return "gestor/categorias";
@@ -43,20 +41,14 @@ public class CategoriaController {
         else {
             Optional<Categorias> optionalCategorias = categoriasRepository.findById(categorias.getCodigo());
             if (optionalCategorias.isPresent()) {
-                Categorias cat = optionalCategorias.get();
-                System.out.println(cat.getCodigo());
-                categorias.setFechamodificacion(LocalDateTime.now());
-                categorias.setFechacreacion(cat.getFechacreacion());
                 attr.addFlashAttribute("msg", "Categoría actualizada exitosamente");
             }
             else {
-                categorias.setFechacreacion(LocalDateTime.now());
                 attr.addFlashAttribute("msg", "Categoría creada exitosamente");
             }
             categoriasRepository.save(categorias);
             return "redirect:/gestor/categoria";
         }
-
     }
 
     @GetMapping("/delete")

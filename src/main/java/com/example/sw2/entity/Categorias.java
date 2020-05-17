@@ -1,6 +1,9 @@
 package com.example.sw2.entity;
 
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,10 +24,16 @@ public class Categorias {
     @Size(max = 45, message = "El codigo debe contener 45 caracteres" )
     @Column(nullable = false)
     private String nombre;
+    @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
+
+    public Categorias(){
+        this.fechacreacion=LocalDateTime.now();
+    }
 
     public String getCodigo() {
         return codigo;

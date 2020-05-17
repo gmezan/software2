@@ -1,5 +1,8 @@
 package com.example.sw2.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -23,10 +26,16 @@ public class Artesanos {
     @ManyToOne
     @JoinColumn(name="comunidad",nullable =false)
     private Comunidades comunidades;
+    @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
+
+    public Artesanos(){
+        this.fechacreacion=LocalDateTime.now();
+    }
 
     public String getCodigo() {
         return codigo;

@@ -1,22 +1,26 @@
 package com.example.sw2.entity;
 
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.stereotype.Controller;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Usuarios")
-public class Usuarios {
+public class Usuarios implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "dni")
     private int idusuarios;
     @Column(nullable = false)
     private String nombre;
     @Column(nullable = false)
     private String apellido;
-    @Column(nullable = false)
-    private String dni;
     private String foto;
     @Column(nullable = false)
     private String correo;
@@ -28,8 +32,10 @@ public class Usuarios {
     private Roles roles;
     @Column(nullable = false)
     private Boolean cuentaactivada;
+    @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 
@@ -57,13 +63,6 @@ public class Usuarios {
         this.apellido = apellido;
     }
 
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
 
     public String getFoto() {
         return foto;

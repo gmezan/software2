@@ -1,9 +1,9 @@
-var contextPath = "http://localhost:8080";
+var contextPath  = window.location.href+"/get?id=";
 
 $(document).on("click",".editar-Comunidad", function(){
     $("#formModal  #codigo").val(' ');$("#formModal  #nombre").val('');
     $.ajax({
-        method:"GET", url:contextPath + "/gestor/comunidad/get?id=" + $(this).data('id')
+        method:"GET", url:contextPath+ $(this).data('id')
     }).done(function(com){
         if (com!=null){
             $("#formModal  #codigo").val(com.codigo).prop("readonly", true);

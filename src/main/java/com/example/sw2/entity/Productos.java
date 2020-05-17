@@ -1,29 +1,49 @@
 package com.example.sw2.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.example.sw2.constantes.CustomConstants;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
+@EnableJpaAuditing
 @Table(name = "Productos")
 public class Productos {
 
     @Id
+    @NotBlank
     private String codigonom;
     @Column(nullable = false)
+    @NotBlank
     private String nombre;
     @Column(nullable = false)
     private String descripcion;
+    @NotBlank
     @Column(nullable = false)
     private String codigodesc;
-    @Column(nullable = false)
-    private int linea;
+    @Range(max = 3, min = 1)
+    @Column(name="linea",nullable = false)
+    private String codigolinea;
+    @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
+    @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
+
+    public Productos(){
+        this.fechacreacion=LocalDateTime.now();
+    }
+
+    public String getNombreLinea(){
+        return CustomConstants.getLineas().get(this.codigolinea);
+    }
+
 
     public String getCodigonom() {
         return codigonom;
@@ -57,12 +77,12 @@ public class Productos {
         this.codigodesc = codigodesc;
     }
 
-    public int getLinea() {
-        return linea;
+    public void setCodigolinea(String codigolinea) {
+        this.codigolinea = codigolinea;
     }
 
-    public void setLinea(int linea) {
-        this.linea = linea;
+    public String getCodigolinea() {
+        return codigolinea;
     }
 
     public LocalDateTime getFechamodificacion() {

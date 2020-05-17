@@ -1,6 +1,6 @@
 package com.example.sw2.controller.gestor;
 
-import com.example.sw2.entity.Comunidades;
+import com.example.sw2.constantes.VentasId;
 import com.example.sw2.entity.Ventas;
 import com.example.sw2.repository.VentasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,23 +27,25 @@ public class VentasGestorController {
 
     @GetMapping(value = {"", "/"})
     public String listVen(@ModelAttribute("venta") Ventas ven, Model model) {
-        model.addAttribute("lista", ventasRepository.obtenerDatosGestorVentas());
+        model.addAttribute("lista", ventasRepository.findAll());
         return "gestor/ventas";
     }
 
     @PostMapping("/save")
     public String editVen(@ModelAttribute("venta") @Valid Ventas ventas,
-                          BindingResult bindingResult, RedirectAttributes attr, Model model) {
+                          BindingResult bindingResult, RedirectAttributes attr, Model model,
+                          @RequestParam("id1") String id1,
+                          @RequestParam("id2") int id2) {
         if(bindingResult.hasErrors()){
             model.addAttribute("lista", ventasRepository.findAll());
             model.addAttribute("msg", "ERROR");
             return "gestor/ventas";
         }
         else {
-            Optional<Ventas> optionalVentas = ventasRepository.findById(ventas.getNumerodocumento());
+            Optional<Ventas> optionalVentas = ventasRepository.findById(new VentasId(id2,id1));
             if (optionalVentas.isPresent()) {
                 Ventas ven = optionalVentas.get();
-                System.out.println(ven.getNumerodocumento());
+                System.out.println(new VentasId(id2,id1));
                 ventas.setFechamodificacion(LocalDateTime.now());
                 ventas.setFechacreacion(ven.getFechacreacion());
                 attr.addFlashAttribute("msg", "Venta actualizada exitosamente");
@@ -54,21 +56,21 @@ public class VentasGestorController {
     }
 
     @GetMapping("/delete")
-    public String deleteCom(Model model,
-                            @RequestParam("numerodocumento") String id,
+    public String deleteVen(@RequestParam("id1") String id1,
+                            @RequestParam("id2") int id2,
                             RedirectAttributes attr) {
-        Optional<Ventas> c = ventasRepository.findById(id);
+        Optional<Ventas> c = ventasRepository.findById(new VentasId(id2,id1));
         if (c.isPresent()) {
-            ventasRepository.deleteById(id);
+            ventasRepository.deleteById(new VentasId(id2,id1));
             attr.addFlashAttribute("msg","Venta borrada exitosamente");
         }
-        return "redirect:/gestor/comunidad";
+        return "redirect:/gestor/venta";
     }
 
     //Web service
     @ResponseBody
     @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<Ventas>> getVen(@RequestParam(value = "id") String id){
-        return new ResponseEntity<>(ventasRepository.findById(id), HttpStatus.OK);
+    public ResponseEntity<Optional<Ventas>> getVen(@RequestParam(value = "id1") String id1, @RequestParam(value = "id2")int id2){
+        return new ResponseEntity<>(ventasRepository.findById(new VentasId(id2,id1)), HttpStatus.OK);
     }
 }

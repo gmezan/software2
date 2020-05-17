@@ -40,25 +40,17 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Bienvenido!</h1>
                   </div>
-                  <form class="user">
+                  <form th:action="@{/processLogin}" method="post" class="user">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Ingresa tu email...">
+                      <input type="email" class="form-control form-control-user" name="username" id="username" aria-describedby="emailHelp" placeholder="Ingresa tu email...">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña">
+                      <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Contraseña">
                     </div>
-                    <a href="admin/index.html" class="btn btn-primary btn-user btn-block">
+                    <button type="submit" class="btn btn-primary btn-user btn-block">
                       Iniciar Sesión
-                    </a>
-                    <!--                    <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                          <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                          <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a> -->
+                    </button>
                   </form>
-                  <!--                  <hr> -->
                   <br>
                   <div class="text-center">
                     <a class="small" href="forgot-password.html">¿Olvidaste tu contraseña?</a>

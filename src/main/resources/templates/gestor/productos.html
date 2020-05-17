@@ -25,12 +25,11 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-900">Productos</h1>
-                    <button data-toggle="modal" data-target="#addModal" type="button"
-                            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-tshirt fa-sm text-white-50"></i> Nuevo Producto
-                    </button>
+                    <button data-toggle="modal" data-target="#formModal" class="new-Producto d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                        <i class="fas fa-download fa-sm text-white-50"></i>Nuevo Producto</button>
                 </div>
 
+                <div id="msgProducto" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
 
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -47,10 +46,6 @@
                                     <th>Código de descripción</th>
                                     <th>Descripcion</th>
                                     <th>Línea</th>
-                                    <!--
-                                    <th>Telefono</th>
-                                    <th>Asignar Productos</th>
-                                    -->
                                     <th>Editar/Eliminar Producto</th>
                                 </tr>
                                 </thead>
@@ -62,34 +57,21 @@
                                         <th>Código de descripción</th>
                                         <th>Descripcion</th>
                                         <th>Línea</th>
-                                        <!--
-                                        <th>Telefono</th>
-                                        <th>Asignar Productos</th>
-                                        -->
                                         <th>Editar/Eliminar Producto</th>
                                     </tr>
                                 </tfoot>
 
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>ABC</td>
-                                    <td>Producto 1</td>
-                                    <td>DEF</td>
-                                    <td>Descripcion 1</td>
-                                    <td>Tradicional</td>
-
-                                    <!--
-                                    <td>Sede 1</th>
-                                    <td>sede1@hotmail.com</td>
-                                    <td>975654123</td>
+                                <tr th:each="l,item : ${lista}">
+                                    <td th:text="${item.count}"></td>
+                                    <td th:text="${l.codigonom}"></td>
+                                    <td th:text="${l.nombre}"></td>
+                                    <td th:text="${l.codigodesc}"></td>
+                                    <td th:text="${l.descripcion}"></td>
+                                    <td th:text="${l.getNombreLinea()}"></td>
                                     <td>
-                                        <button data-toggle="modal" data-target="#addProductModal" class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-plus"></i></button>
-                                    </td>
-                                    -->
-                                    <td>
-                                        <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                        <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                        <button th:attr="data-id=${l.codigonom}" data-toggle="modal" data-target="#formModal" class="edit-Producto btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                        <button th:attr="data-id=${l.codigonom}" data-toggle="modal" data-target="#deleteModal" class="delete-Producto btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -98,17 +80,6 @@
                     </div>
                 </div>
 
-
-
-
-
-
-
-
-
-                <!-- -->
-                <!-- -->
-                <!-- -->
 
             </div>
             <!-- /.container-fluid -->
@@ -155,128 +126,56 @@
 
 <!-- Page level custom scripts -->
 <script th:src="@{/js/demo/datatables-demo.js}"></script>
+<script th:src="@{/js/gestor/producto.js}"></script>
 
-
-<!-- Modal Add-->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Nuevo Producto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="nombre" class="col-form-label">Nombre :</label>
-                        <input type="text" class="form-control" id="nombre">
-                        <label for="nombre" class="col-form-label">Codigo del nombre :</label>
-                        <input type="text" class="form-control" id="codnom">
-                        <label for="descripcion" class="col-form-label">Descripcion :</label>
-                        <input type="text" class="form-control" id="descripcion"></input>
-                        <label for="nombre" class="col-form-label">Codigo de la descripción :</label>
-                        <input type="text" class="form-control" id="coddesc">
-                        <div class="form-group">
-                            <label for="linea" class="col-form-label">Línea:</label>
-                            <select class="form-control" id="linea">
-                                <option value="nombre">Tradicional</option>
-                                <option value="nombre">Mosqoy</option>
-                                <option value="nombre">Fibras</option>
-                            </select>
-                        </div>
-                        <!--
-
-                        <label for="dni" class="col-form-label">DNI:</label>
-                        <input type="text" class="form-control" id="dni">
-                        <label for="correo" class="col-form-label">Correo:</label>
-                        <input type="text" class="form-control" id="correo">
-                        <label for="telefono" class="col-form-label">Telefono:</label>
-                        <input type="text" class="form-control" id="telefono">
-                        <br>
-
-                        <button class="btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-camera"></i> Subir Foto</i></button>
-
-                        -->
-
-                    </div>
-                </form>
-
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary"><a href="productos.html" style="color:white;text-decoration:none">Agregar</a></button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Add Product-->
-<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Asignar Productos</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="producto" class="col-form-label">Producto:</label>
-                        <input type="text" class="form-control" id="producto">
-                        <label for="precioVenta" class="col-form-label">Precio de venta:</label>
-                        <input type="text" class="form-control" id="precioVenta">
-                        <label for="cantidad" class="col-form-label">Cantidad:</label>
-                        <input type="text" class="form-control" id="cantidad">
-                        <label for="fechaEnvio" class="col-form-label">Fecha de envio:</label>
-                        <input type="text" class="form-control" id="fechaEnvio">
-                    </div>
-                </form>
-
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary"><a href="productos.html" style="color:white;text-decoration:none">Agregar</a></button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Modal Edit-->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Editar Producto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <a type="button" th:href="@{/gestor/producto}" class="close"  aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </a>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="post" th:action="@{/gestor/producto/save}" th:object="${producto}">
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Nombre :</label>
-                        <input type="text" class="form-control" id="nombre1" placeholder="Nombre">
-
-                        <label for="descripcion" class="col-form-label">Descripcion :</label>
-                        <input type="text" class="form-control" id="descripcion1" placeholder="Descripcion"></input>
-                        <label for="nombre" class="col-form-label">Codigo de la descripción :</label>
-                        <input type="text" class="form-control" id="coddesc1"placeholder="DEF">
-                        <div class="form-group">
-                            <label for="linea1" class="col-form-label">Línea:</label>
-                            <select class="form-control" id="linea1">
-                                <option value="nombre">Tradicional</option>
-                                <option value="nombre">Mosqoy</option>
-                                <option value="nombre">Fibras</option>
-                            </select>
-                        </div>
-
+                        <label class="col-form-label">Codigo:</label>
+                        <input  th:readonly="${producto.codigonom!=null && !#fields.hasErrors('codigonom')}" type="text" class="form-control" th:field="*{codigonom}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('codigonom')}" th:errors="*{codigonom}">Error</div>
                     </div>
+                    <div class="form-group">
+                        <label  class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-form-label">Codigo Descripcion:</label>
+                        <input type="text" class="form-control" th:field="*{codigodesc}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('codigodesc')}" th:errors="*{codigodesc}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-form-label">Descripcion:</label>
+                        <input type="text" class="form-control" th:field="*{descripcion}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-form-label">Linea:</label>
+                        <select class="form-control" th:field="*{codigolinea}">
+                            <option th:each="item : ${lineas}" th:value="${item.key}" th:text="${item.value}"  ></option>
+                        </select>
+                        <div class="text-danger" th:if="${#fields.hasErrors('codigolinea')}" th:errors="*{codigolinea}">Error</div>
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" th:href="@{/gestor/producto}"  class="btn btn-secondary" >Cancelar</a>
+                        <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Guardar cambios</a></button>
+                    </div>
+
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary"><a href="productos.html" style="color:white;text-decoration:none">Guardar cambios</a></button>
-            </div>
+
         </div>
     </div>
 </div>
@@ -287,15 +186,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Borrar Producto</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
-            <div class="modal-body">
-                <p>¿Seguro que desea borrar esta producto? Esta acción no se puede deshacer.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger"><a href="productos.html" style="color:white;text-decoration:none">Borrar</a></button>
-            </div>
+            <form method="get" th:action="@{/gestor/producto/delete}" th:object="${producto}">
+                <div class="modal-body">
+                    <input hidden type="text" class="form-control" th:field="*{codigonom}" >
+                    <p>¿Seguro que desea borrar esta categoría? Esta acción no se puede deshacer.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

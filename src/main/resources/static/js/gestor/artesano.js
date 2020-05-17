@@ -1,10 +1,10 @@
-var contextPath = "http://localhost:8080";
+var contextPath  = window.location.href+"/get?id=";
 
 $(document).on("click",".edit-Artesano", function(){
     $("#editModal  #codigo").val(' ');$("#editModal  #nombre").val('');
     $("#editModal  #apellidopaterno").val('');$("#editModal  #apellidomaterno").val('');
     $.ajax({
-        method:"GET", url:contextPath + "/gestor/artesano/get?id=" + $(this).data('id')
+        method:"GET", url:contextPath  + $(this).data('id')
     }).done(function(artesano){
         if (artesano!=null){
             $("#editModal  #codigo").val(artesano.codigo).prop("readonly", true);
