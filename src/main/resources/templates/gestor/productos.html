@@ -26,7 +26,7 @@
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-900">Productos</h1>
                     <button data-toggle="modal" data-target="#formModal" class="new-Producto d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                        <i class="fas fa-download fa-sm text-white-50"></i>Nuevo Producto</button>
+                        <i class="fas fa-download fa-sm text-white-50"></i>  Nuevo Producto</button>
                 </div>
 
                 <div id="msgProducto" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
@@ -134,7 +134,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Editar Producto</h5>
+                <h5 id="formTitle" class="modal-title">Editar Producto</h5>
                 <a type="button" th:href="@{/gestor/producto}" class="close"  aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
@@ -143,23 +143,23 @@
                 <form method="post" th:action="@{/gestor/producto/save}" th:object="${producto}">
                     <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                     <div class="form-group">
-                        <label class="col-form-label">Codigo:</label>
-                        <input  th:readonly="${producto.codigonom!=null && !#fields.hasErrors('codigonom')}" type="text" class="form-control" th:field="*{codigonom}" placeholder="Nombre de categoría">
+                        <label class="col-form-label">Codigo Nombre:</label>
+                        <input  th:readonly="${producto.codigonom!=null && !#fields.hasErrors('codigonom')}" type="text" class="form-control" th:field="*{codigonom}" placeholder="Código del nombre">
                         <div class="text-danger" th:if="${#fields.hasErrors('codigonom')}" th:errors="*{codigonom}">Error</div>
                     </div>
                     <div class="form-group">
                         <label  class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de categoría">
+                        <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre del producto">
                         <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-form-label">Codigo Descripcion:</label>
-                        <input type="text" class="form-control" th:field="*{codigodesc}" placeholder="Nombre de categoría">
+                        <label  class="col-form-label">Codigo Descripción:</label>
+                        <input type="text" class="form-control" th:field="*{codigodesc}" placeholder="Código de descripción">
                         <div class="text-danger" th:if="${#fields.hasErrors('codigodesc')}" th:errors="*{codigodesc}">Error</div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-form-label">Descripcion:</label>
-                        <input type="text" class="form-control" th:field="*{descripcion}" placeholder="Nombre de categoría">
+                        <label  class="col-form-label">Descripción:</label>
+                        <input type="text" class="form-control" th:field="*{descripcion}" placeholder="Descripción del producto">
                         <div class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Error</div>
                     </div>
                     <div class="form-group">

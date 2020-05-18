@@ -9,6 +9,7 @@ $(document).on("click",".editar-Categoria", function(){
         if (cat!=null){
             $("#formModal  #codigo").val(cat.codigo).prop("readonly", true);
             $("#formModal #nombre").val(cat.nombre);
+            $("#formModal  #formTitle").text('Editar Categoría');
         }
     }).fail(function (err) {
         console.log(err);
@@ -20,6 +21,7 @@ $(document).on("click",".new-Categoria", function(){
     $("#formModal  #codigo").val('').prop("readonly", false);
     $("#formModal  #nombre").val('');
     $("#formModal  #type").val('1');
+    $("#formModal  #formTitle").text('Nueva Categoría');
 });
 $(document).on("click",".delete-Categoria", function(){
     $("#deleteModal #codigo").val($(this).data('id'));

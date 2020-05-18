@@ -12,8 +12,8 @@ $(document).on("click",".edit-Artesano", function(){
             $("#editModal #nombre").val(artesano.nombre);
             $("#editModal  #apellidopaterno").val(artesano.apellidopaterno);
             $("#editModal  #apellidomaterno").val(artesano.apellidomaterno);
-            $("#editModal  #comunidades").val(artesano.comunidades.codigo)
-
+            $("#editModal  #comunidades").val(artesano.comunidades.codigo);
+            $("#editModal  #formTitle").text('Editar Artesano');
         }
     }).fail(function (err) {
         console.log(err);
@@ -25,6 +25,7 @@ $(document).on("click",".new-Artesano", function(){
     $("#editModal  #codigo").val('').prop("readonly", false);$("#editModal  #nombre").val('');
     $("#editModal  #apellidopaterno").val('');$("#editModal  #apellidomaterno").val('');
     $("#editModal  #type").val('1');
+    $("#editModal  #formTitle").text('Nuevo Artesano');
 });
 $(document).on("click",".delete-Artesano", function(){
     $("#deleteModal #codigo").val($(this).data('id'));

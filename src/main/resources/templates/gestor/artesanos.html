@@ -118,7 +118,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Artesano</h5>
+                        <h5 id="formTitle" class="modal-title">Editar Artesano</h5>
                         <a type="button" th:href="@{/gestor/artesano}" class="close"  aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </a>
@@ -128,29 +128,29 @@
                             <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                             <div class="form-group">
                                 <label id="codigo" class="col-form-label">Código: (debe ser entre 2 y 4 caracteres)</label>
-                                <input th:readonly="${artesano.codigo!=null && artesano.codigo!='' && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}">
+                                <input th:readonly="${artesano.codigo!=null && artesano.codigo!='' && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Código de artesano">
                                 <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
                             </div>
                             <div class="form-group">
                                 <label id="nombre" class="col-form-label">Nombre:</label>
-                                <input type="text" class="form-control" th:field="*{nombre}">
+                                <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre del artesano">
                                 <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
                             </div>
                             <div class="form-group">
                                 <label id="apellidopaterno" class="col-form-label">Apellido Paterno:</label>
                                 <input type="text" class="form-control" th:field="*{apellidopaterno}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('apellidopaterno')}" th:errors="*{apellidopaterno}">Error</div>
+                                <div class="text-danger" th:if="${#fields.hasErrors('apellidopaterno')}" th:errors="*{apellidopaterno}" placeholder="Apellido paterno del artesano">Error</div>
                             </div>
                             <div class="form-group">
                                 <label id="apellidomaterno" class="col-form-label">Apellido Materno: (Opcional)</label>
                                 <input type="text" class="form-control" th:field="*{apellidomaterno}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('apellidomaterno')}" th:errors="*{apellidomaterno}">Error</div>
+                                <div class="text-danger" th:if="${#fields.hasErrors('apellidomaterno')}" th:errors="*{apellidomaterno}" placeholder="Apellido materno del artesano">Error</div>
                             </div>
 
                             <div class="form-group">
-                                <label id="comunidades" class="col-form-label">Comunidad a la que pertenece:</label>
+                                <label class="col-form-label">Comunidad a la que pertenece:</label>
                                 <select class="form-control" th:field="*{comunidades}" >
-                                    <option th:each="i : ${comunidades}" th:value="${i.codigo}" th:text="${i.nombre}"></option>
+                                    <option  th:each="i : ${comunidades}" th:value="${i.codigo}" th:text="${i.nombre}"></option>
                                 </select>
                                 <div class="text-danger" th:if="${#fields.hasErrors('comunidades')}" th:errors="*{comunidades}">Error</div>
                             

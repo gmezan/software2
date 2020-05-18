@@ -14,7 +14,8 @@ $(document).on("click",".edit-Producto", function(){
             $("#formModal #nombre").val(producto.nombre);
             $("#formModal #codigodesc").val(producto.codigodesc);
             $("#formModal #descripcion").val(producto.descripcion);
-            $("#formModal #linea").val(producto.linea)
+            $("#formModal #codigolinea").val(producto.codigolinea);
+            $("#formModal  #formTitle").text('Editar Producto');
         }
     }).fail(function (err) {
         console.log(err);
@@ -26,6 +27,7 @@ $(document).on("click",".new-Producto", function(){
     $("#formModal #codigonom").val('').prop("readonly", false);$("#formModal  #codigodesc").val('');
     $("#formModal   #nombre").val('');$("#formModal  #descripcion").val('');
     $("#formModal  #type").val('1');
+    $("#formModal  #formTitle").text('Nuevo Producto');
 });
 $(document).on("click",".delete-Producto", function(){
     $("#deleteModal #codigonom").val($(this).data('id'));
