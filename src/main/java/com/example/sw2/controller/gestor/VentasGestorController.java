@@ -45,7 +45,7 @@ public class VentasGestorController {
             Optional<Ventas> optionalVentas = ventasRepository.findById(new VentasId(id2,id1));
             if (optionalVentas.isPresent()) {
                 Ventas ven = optionalVentas.get();
-                System.out.println(new VentasId(id2,id1));
+                ventas.setId(new VentasId(id2,id1));
                 ventas.setFechamodificacion(LocalDateTime.now());
                 ventas.setFechacreacion(ven.getFechacreacion());
                 ventas.setLugarventa(ven.getLugarventa());
