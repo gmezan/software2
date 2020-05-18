@@ -2,6 +2,7 @@ var contextPath  = window.location.href+"/get?id=";
 
 $(document).on("click",".editar-Categoria", function(){
     $("#formModal  #codigo").val(' ');$("#formModal  #nombre").val('');
+    $("#formModal  #type").val('0');
     $.ajax({
         method:"GET", url:contextPath + $(this).data('id')
     }).done(function(cat){
@@ -18,6 +19,7 @@ $(document).on("click",".editar-Categoria", function(){
 $(document).on("click",".new-Categoria", function(){
     $("#formModal  #codigo").val('').prop("readonly", false);
     $("#formModal  #nombre").val('');
+    $("#formModal  #type").val('1');
 });
 $(document).on("click",".delete-Categoria", function(){
     $("#deleteModal #codigo").val($(this).data('id'));

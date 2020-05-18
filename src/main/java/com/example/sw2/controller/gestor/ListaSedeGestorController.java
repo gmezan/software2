@@ -41,8 +41,14 @@ public class ListaSedeGestorController {
     public String editCat(@ModelAttribute("sede") @Valid Usuarios usuarios,
                           BindingResult bindingResult,
                           @RequestParam(name = "photo", required = false) MultipartFile multipartFile,
+                          @RequestParam("type") int type,
                           RedirectAttributes attr, Model model) {
         String url;
+
+        if(type==1 && usuariosRepository.findById(usuarios.getIdusuarios()).isPresent()){ //if new
+            bindingResult.rejectValue("idusuarios","error.user","Este dni ya existe");
+        }
+
         if(bindingResult.hasErrors()){
 
             for( ObjectError e : bindingResult.getAllErrors()){
@@ -91,7 +97,7 @@ public class ListaSedeGestorController {
 
     @GetMapping("/delete")
     public String deleteCat(Model model,
-                            @RequestParam("idusuario") int id,
+                            @RequestParam("idusuarios") int id,
                             RedirectAttributes attr) {
         Optional<Usuarios> c = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id);
         if (c.isPresent()) {

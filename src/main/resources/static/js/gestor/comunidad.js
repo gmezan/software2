@@ -2,6 +2,7 @@ var contextPath  = window.location.href+"/get?id=";
 
 $(document).on("click",".editar-Comunidad", function(){
     $("#formModal  #codigo").val(' ');$("#formModal  #nombre").val('');
+    $("#formModal  #type").val('0');
     $.ajax({
         method:"GET", url:contextPath+ $(this).data('id')
     }).done(function(com){
@@ -17,7 +18,7 @@ $(document).on("click",".editar-Comunidad", function(){
 });
 $(document).on("click",".new-Comunidad", function(){
     $("#formModal  #codigo").val('').prop("readonly", false);
-    $("#formModal  #nombre").val('');
+    $("#formModal  #nombre").val('');$("#formModal  #type").val('1');
 });
 $(document).on("click",".delete-Comunidad", function(){
     $("#deleteModal #codigo").val($(this).data('id'));

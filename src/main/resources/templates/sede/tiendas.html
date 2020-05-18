@@ -106,6 +106,7 @@
             </div>
             <div class="modal-body">
                 <form method="post" th:action="@{/sede/tienda/save}" th:object="${tienda}">
+                    <input type="text" hidden id="type" name="type">
                     <div hidden class="form-group">
                         <label  class="col-form-label">idtienda:</label>
                         <input type="text" class="form-control" th:field="*{idtienda}" placeholder="Nombre de categoría">

@@ -35,7 +35,14 @@ public class CategoriaController {
 
     @PostMapping("/save")
     public String editCat(@ModelAttribute("categoria") @Valid Categorias categorias,
-                          BindingResult bindingResult, RedirectAttributes attr, Model model) {
+                          BindingResult bindingResult, @RequestParam("type") int type,
+                          RedirectAttributes attr, Model model) {
+
+        if(type==1 && categoriasRepository.findById(categorias.getCodigo()).isPresent()){ //if new
+            bindingResult.rejectValue("codigo","error.user","Este codigo ya existe");
+        }
+
+
         if(bindingResult.hasErrors()){
             model.addAttribute("lista", categoriasRepository.findAll());
             model.addAttribute("msg", "ERROR");

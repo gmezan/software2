@@ -137,6 +137,7 @@
                     </div>
                     <div class="modal-body">
                         <form method="post" th:action="@{/gestor/comunidad/save}" th:object="${comunidad}">
+                            <input type="text" hidden id="type" name="type">
                             <div class="form-group">
                                 <label class="col-form-label">Código:</label>
                                 <input th:readonly="${comunidad.codigo!=null && comunidad.codigo!='' && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Código de comunidad">

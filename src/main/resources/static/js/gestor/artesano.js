@@ -3,6 +3,7 @@ var contextPath  = window.location.href+"/get?id=";
 $(document).on("click",".edit-Artesano", function(){
     $("#editModal  #codigo").val(' ');$("#editModal  #nombre").val('');
     $("#editModal  #apellidopaterno").val('');$("#editModal  #apellidomaterno").val('');
+    $("#editModal  #type").val('0');
     $.ajax({
         method:"GET", url:contextPath  + $(this).data('id')
     }).done(function(artesano){
@@ -23,6 +24,7 @@ $(document).on("click",".edit-Artesano", function(){
 $(document).on("click",".new-Artesano", function(){
     $("#editModal  #codigo").val('').prop("readonly", false);$("#editModal  #nombre").val('');
     $("#editModal  #apellidopaterno").val('');$("#editModal  #apellidomaterno").val('');
+    $("#editModal  #type").val('1');
 });
 $(document).on("click",".delete-Artesano", function(){
     $("#deleteModal #codigo").val($(this).data('id'));

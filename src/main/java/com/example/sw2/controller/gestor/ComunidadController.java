@@ -31,7 +31,13 @@ public class ComunidadController {
 
     @PostMapping("/save")
     public String editCom(@ModelAttribute("comunidad") @Valid Comunidades comunidades,
-                          BindingResult bindingResult, RedirectAttributes attr, Model model) {
+                          BindingResult bindingResult, @RequestParam("type") int type,
+                          RedirectAttributes attr, Model model) {
+
+        if(type==1 && comunidadesRepository.findById(comunidades.getCodigo()).isPresent()){ //if new
+            bindingResult.rejectValue("codigo","error.user","Este codigo ya existe");
+        }
+
         if(bindingResult.hasErrors()){
             model.addAttribute("lista", comunidadesRepository.findAll());
             model.addAttribute("msg", "ERROR");

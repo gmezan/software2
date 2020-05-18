@@ -158,6 +158,7 @@
             </div>
             <div class="modal-body">
                 <form method="post" th:action="@{/admin/gestor/save}" th:object="${gestor}" enctype="multipart/form-data">
+                    <input type="text" hidden id="type" name="type">
                     <div class="form-group">
                         <label class="col-form-label">DNI:</label>
                         <input  th:readonly="${gestor.idusuarios!=0 && !#fields.hasErrors('idusuarios')}" type="text" class="form-control" th:field="*{idusuarios}" placeholder="DNI">

@@ -4,6 +4,7 @@ $(document).on("click",".edit-Tienda", function(){
     $("#EditarTiendaModal  #idtienda").val('');
     $("#EditarTiendaModal  #nombre").val('');
     $("#EditarTiendaModal  #direccion").val('');
+    $("#EditarTiendaModal  #type").val('0');
     $.ajax({
         method:"GET", url:contextPath +$(this).data('id')
     }).done(function(tienda){
@@ -22,6 +23,7 @@ $(document).on("click",".new-Tienda", function(){
     $("#EditarTiendaModal  #idtienda").val('0');
     $("#EditarTiendaModal  #nombre").val('');
     $("#EditarTiendaModal  #direccion").val('');
+    $("#EditarTiendaModal  #type").val('1');
 });
 $(document).on("click",".delete-Tienda", function(){
     $("#deleteTiendaModal #idtienda").val($(this).data('id'));
