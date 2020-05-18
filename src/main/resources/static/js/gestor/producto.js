@@ -32,8 +32,8 @@ $(document).on("click",".delete-Producto", function(){
 });
 $(document).ready(function() {
     if ($("#msgProducto").text()==="ERROR"){
-        $('#formModal').modal('show');
-        $('#formModal').modal({ backdrop: 'static', keyboard: true });
+        //$('#formModal').modal('show');
+        $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
     }
 });
 
