@@ -245,6 +245,15 @@
                     <i class="fas fa-fw fa-dollar-sign"></i>
                     <span>Mis ventas</span></a>
             </li>
+
+
+            <!-- Nav Item - Ventas -->
+            <li class="nav-item" th:classappend="${param1=='Devoluciones'}? active : ''">
+                <a th:href="@{/gestor/devoluciones}" class="nav-link" >
+                    <i class="fas fa-fw fa-dollar-sign"></i>
+                    <span>Devoluciones</span></a>
+            </li>
+
             
             <!-- Divider -->
             <hr class="sidebar-divider ">
