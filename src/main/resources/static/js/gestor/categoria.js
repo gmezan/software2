@@ -26,7 +26,7 @@ $(document).on("click",".delete-Categoria", function(){
 });
 $(document).ready(function() {
     if ($("#msgCategoria").text()==="ERROR"){
-        $('#formModal').modal('show');
+        $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
     }
 });
 

@@ -40,6 +40,6 @@ $(document).on("click",".delete-Gestor", function(){
 });
 $(document).ready(function() {
     if ($("#msgSedes").text()==="ERROR"){
-        $('#formModal ').modal('show');
+        $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
     }
 });

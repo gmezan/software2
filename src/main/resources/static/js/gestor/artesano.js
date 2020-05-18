@@ -31,7 +31,7 @@ $(document).on("click",".delete-Artesano", function(){
 });
 $(document).ready(function() {
     if ($("#msgArtesanos").text()==="ERROR"){
-        $('#editModal').modal('show');
+        $('#editModal').modal({show: true, backdrop: 'static', keyboard: false });
     }
 });
 

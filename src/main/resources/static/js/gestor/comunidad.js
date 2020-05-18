@@ -25,6 +25,6 @@ $(document).on("click",".delete-Comunidad", function(){
 });
 $(document).ready(function() {
     if ($("#msgComunidad").text()==="ERROR"){
-        $('#formModal').modal('show');
+        $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
     }
 });
