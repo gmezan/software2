@@ -26,7 +26,7 @@ public class Productos {
     @NotBlank
     @Column(nullable = false)
     private String codigodesc;
-    @Range(max = 3, min = 1)
+    @NotBlank
     @Column(name="linea",nullable = false)
     private String codigolinea;
     @LastModifiedDate
