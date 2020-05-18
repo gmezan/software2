@@ -1,5 +1,6 @@
 package com.example.sw2.controller.gestor;
 
+import com.example.sw2.entity.Roles;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.repository.RolesRepository;
 import com.example.sw2.repository.UsuariosRepository;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -31,36 +33,47 @@ public class SedeGestorController {/* :(
     @GetMapping(value = {""})
     public String listar(@ModelAttribute("sede") Usuarios sede, Model model) {
 
-        model.addAttribute("listaSedes",usuariosRepository.buscarSedes());
-        //model.addAttribute("lista", productosRepository.findAll());
-        //model.addAttribute("lineas", CustomConstants.getLineas());
-        model.addAttribute("listaRoles",rolesRepository.findAll());
+        model.addAttribute("listaSedes", usuariosRepository.buscarSedes());
+        model.addAttribute("listaRoles", rolesRepository.findAll());
         return "gestor/sedes";
     }
 
-    @PostMapping("/save")
-    public String editCat(@ModelAttribute("sede") @Valid Usuarios sede,
-                          BindingResult bindingResult, RedirectAttributes attr, Model model) {
-        if(bindingResult.hasErrors()){
+    @GetMapping(value = {"/form"})
+    public String form(@ModelAttribute("sede") Usuarios sede, Model model) {
+        model.addAttribute("listRol", rolesRepository.findAll());
+        return "gestor/sedesForm";
+    }
 
-            model.addAttribute("listaSedes",usuariosRepository.buscarSedes());
-            //model.addAttribute("lista", artesanosRepository.findAll());
-            //model.addAttribute("comunidades", comunidadesRepository.findAll());
-            model.addAttribute("msg", "ERROR");
-            return "gestor/sedes";
-        }
-        else {
+    @PostMapping("/save")
+    public String saveEdit(@ModelAttribute("sede") @Valid Usuarios sede,
+                           BindingResult bindingResult, RedirectAttributes attr, Model model) {
+        if (bindingResult.hasErrors()) {
+            Optional<Usuarios> optionalSedes = usuariosRepository.findById(sede.getIdusuarios());
+            if (optionalSedes.isPresent()) {
+                model.addAttribute("listaSedes", usuariosRepository.buscarSedes());
+                model.addAttribute("msg", "ERROR");
+                return "gestor/sedes";
+            } else {
+                model.addAttribute("msg", "ERROR");
+                return "gestor/sedesForm";
+            }
+        } else {
             Optional<Usuarios> optionalSedes = usuariosRepository.findById(sede.getIdusuarios());
             if (optionalSedes.isPresent()) {
                 Usuarios sed = optionalSedes.get();
                 //System.out.println(cat.getCodigo());
                 sede.setFechamodificacion(LocalDateTime.now());
                 sede.setFechacreacion(sed.getFechacreacion());
-                attr.addFlashAttribute("msg", "Artesano actualizado exitosamente");
-            }
-            else {
+                sede.setPassword(sed.getPassword());
+                sede.setCuentaactivada(sed.getCuentaactivada());
+                sede.setRoles(sed.getRoles());
+                attr.addFlashAttribute("msg", "Sede actualizada exitosamente");
+            } else {
                 sede.setFechacreacion(LocalDateTime.now());
-                attr.addFlashAttribute("msg", "Artesano creado exitosamente");
+                List<Roles> listaRol = rolesRepository.findAll();
+                Roles idrol = listaRol.get(2);
+                sede.setRoles(idrol);
+                attr.addFlashAttribute("msg", "Sede creada exitosamente");
             }
             usuariosRepository.save(sede);
             return "redirect:/gestor/sede";
@@ -76,14 +89,14 @@ public class SedeGestorController {/* :(
 
         if (s.isPresent()) {
             usuariosRepository.deleteById(id);
-            attr.addFlashAttribute("msg","Sede borrada exitosamente");
+            attr.addFlashAttribute("msg", "Sede borrada exitosamente");
         }
         return "redirect:/gestor/sede";
     }
 
     @ResponseBody
-    @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<Usuarios>> getCat(@RequestParam(value = "id") int id){
+    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<Usuarios>> getCat(@RequestParam(value = "id") int id) {
 
         return new ResponseEntity<>(usuariosRepository.findById(id), HttpStatus.OK);
     }
