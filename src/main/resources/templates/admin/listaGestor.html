@@ -48,9 +48,11 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-900">Gestores principales</h1>
-                    <button data-toggle="modal" data-target="#addModal" type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-box-open fa-sm text-white-50"></i>Crear un nuevo Gestor</button>
+                    <button data-toggle="modal" data-target="#formModal" type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class="new-Gestor fas fa-box-open fa-sm text-white-50"></i>Crear un nuevo Gestor</button>
                 </div>
+                <div id="msgGestores" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
@@ -92,10 +94,10 @@
                                     <td>
                                         <img
                                             th:src="${l.foto}"
-                                            alt="" height=100 style="width: auto;"/></td>
+                                            alt="" width=100 style="height: auto;"/></td>
                                     <td>
-                                        <button data-toggle="modal" data-target="#editModal" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
-                                        <button data-toggle="modal" data-target="#deleteModal" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                        <button th:attr="data-id=${l.idusuarios}" data-toggle="modal" data-target="#formModal" class="edit-Gestor btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
+                                        <button th:attr="data-id=${l.idusuarios}"  data-toggle="modal" data-target="#deleteModal" class="delete-Gestor btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -142,119 +144,65 @@
 
 <!-- Page level custom scripts -->
 <script th:src="@{/js/demo/datatables-demo.js}"></script>
+<script th:src="@{/js/admin/gestor.js}"></script>
 
-<!-- Modal Add-->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal Add Edit-->
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Nuevo Gestor</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title">Editar Categoría</h5>
+                <a type="button" th:href="@{/admin/gestor}" class="close"  aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </a>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="post" th:action="@{/admin/gestor/save}" th:object="${gestor}" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre">
+                        <label class="col-form-label">DNI:</label>
+                        <input  th:readonly="${gestor.idusuarios!=0 && !#fields.hasErrors('idusuarios')}" type="text" class="form-control" th:field="*{idusuarios}" placeholder="DNI">
+                        <div class="text-danger" th:if="${#fields.hasErrors('idusuarios')}" th:errors="*{idusuarios}">Error</div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-body">
-                <form>
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Apellido</label>
-                        <input type="text" class="form-control" id="apellido">
+                        <label  class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-body">
-                <form>
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">DNI</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <label  class="col-form-label">Apellido:</label>
+                        <input type="text" class="form-control" th:field="*{apellido}" placeholder="Apellido">
+                        <div class="text-danger" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error</div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-body">
-                <form>
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Correo</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <label  class="col-form-label">Correo:</label>
+                        <input type="text" class="form-control" th:field="*{correo}" placeholder="Correo">
+                        <div class="text-danger" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Error</div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-body">
-                <form>
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label"></label>
-                        <button type="button" class="btn btn-outline-primary">Foto (Hasta 2MB)</button>
+                        <label  class="col-form-label">Telefono:</label>
+                        <input type="text" class="form-control" th:field="*{telefono}" placeholder="Telefono">
+                        <div class="text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Error</div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary"><a href="listaGestor.html" style="color:white;text-decoration:none">Agregar</a></button>
-            </div>
-        </div>
-    </div>
-</div>
+                    <div class="form-group">
+                        <label  class="col-form-label">Contraseña:</label>
+                        <input type="text" class="form-control" th:field="*{password}" placeholder="Nombre de categoría">
+                        <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <img id="foto" class="rounded-pill"  width="100" style="height: auto;">
+                    </div>
+                    <div class="form-group">
+                        <label for="photo"  class="col-form-label">Foto</label>
+                        <input type="file"  id="photo" name="photo">
 
-<!-- Modal Edit-->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Editar Gestor</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="Nombre de Gestor">
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" th:href="@{/admin/gestor}"  class="btn btn-secondary" >Cancelar</a>
+                        <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Guardar cambios</a></button>
                     </div>
                 </form>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" placeholder="Apellido de Gestor">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">DNI</label>
-                        <input type="text" class="form-control" id="dni" placeholder="DNI de Gestor">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Correo</label>
-                        <input type="text" class="form-control" id="correo" placeholder="Correo de Gestor">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label"></label>
-                        <button type="button" class="btn btn-outline-primary">Foto (Hasta 2MB)</button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary"><a href="listaGestor.html" style="color:white;text-decoration:none">Guardar cambios</a></button>
-            </div>
+
         </div>
     </div>
 </div>
@@ -264,16 +212,19 @@
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Borrar Gestor</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Borrar Categoría</h4>
+                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
-            <div class="modal-body">
-                <p>¿Seguro que desea borrar este gestor? Esta acción no se puede deshacer.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger"><a href="listaGestor.html" style="color:white;text-decoration:none">Borrar</a></button>
-            </div>
+            <form method="get" th:action="@{/admin/gestor/delete}" th:object="${gestor}">
+                <div class="modal-body">
+                    <input hidden type="text" class="form-control" th:field="*{idusuarios}" >
+                    <p>¿Seguro que desea borrar este Gestor? Esta acción no se puede deshacer.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

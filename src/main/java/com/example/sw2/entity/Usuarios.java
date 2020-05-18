@@ -3,6 +3,7 @@ package com.example.sw2.entity;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
@@ -47,13 +48,13 @@ public class Usuarios implements Serializable {
     //@Digits(integer = 4, fraction = 0)
     //@NotBlank
     @Column(nullable = false)
-    private Boolean cuentaactivada;
+    private Boolean cuentaactivada=false;
     @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
     @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
-    private LocalDateTime fechacreacion;
+    private LocalDateTime fechacreacion=LocalDateTime.now();
 
 
     public String getNombre() {
@@ -94,8 +95,10 @@ public class Usuarios implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password;//new BCryptPasswordEncoder().encode(password);
     }
+
+    public void setRawPassword(String ps){this.password = ps ;}
 
     public String getTelefono() {
         return telefono;
@@ -145,4 +148,9 @@ public class Usuarios implements Serializable {
     public void setIdusuarios(int idusuarios) {
         this.idusuarios = idusuarios;
     }
+
+    public String getFullname(){
+        return this.nombre + " " + this.apellido;
+    }
+
 }
