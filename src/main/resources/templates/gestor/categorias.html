@@ -139,7 +139,7 @@
                     </div>
                     <div class="modal-body">
                         <form method="post" th:action="@{/gestor/categoria/save}" th:object="${categoria}">
-                            <input type="text" hidden id="type" name="type">
+                            <input hidden type="text" id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                             <div class="form-group">
                                 <label class="col-form-label">Codigo:</label>
                                 <input  th:readonly="${categoria.codigo!=null && categoria.codigo!='' && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Código de categoría">

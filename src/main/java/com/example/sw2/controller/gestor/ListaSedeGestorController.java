@@ -54,6 +54,7 @@ public class ListaSedeGestorController {
             for( ObjectError e : bindingResult.getAllErrors()){
                 System.out.println(e.toString());
             }
+            model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
             model.addAttribute("msg", "ERROR");
             return "gestor/sedes";

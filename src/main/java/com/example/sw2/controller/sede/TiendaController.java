@@ -34,6 +34,7 @@ public class TiendaController {
                           @RequestParam("type") int type,
                           RedirectAttributes attr, Model model) {
         if(bindingResult.hasErrors()){
+            model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", tiendaRepository.findAll());
             model.addAttribute("msg", "ERROR");
             return "sede/tiendas";

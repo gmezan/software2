@@ -44,6 +44,7 @@ public class ProductoController {
         }
 
         if(bindingResult.hasErrors()){
+            model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", productosRepository.findAll());
             model.addAttribute("msg", "ERROR");
             model.addAttribute("lineas", CustomConstants.getLineas());

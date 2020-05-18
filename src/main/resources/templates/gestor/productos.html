@@ -141,7 +141,7 @@
             </div>
             <div class="modal-body">
                 <form method="post" th:action="@{/gestor/producto/save}" th:object="${producto}">
-                    <input type="text" hidden id="type" name="type">
+                    <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                     <div class="form-group">
                         <label class="col-form-label">Codigo:</label>
                         <input  th:readonly="${producto.codigonom!=null && !#fields.hasErrors('codigonom')}" type="text" class="form-control" th:field="*{codigonom}" placeholder="Nombre de categoría">

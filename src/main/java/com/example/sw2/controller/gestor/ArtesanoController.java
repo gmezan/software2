@@ -51,6 +51,7 @@ public class ArtesanoController {
         }
 
         if(bindingResult.hasErrors()){
+            model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", artesanosRepository.findAll());
             model.addAttribute("comunidades", comunidadesRepository.findAll());
             model.addAttribute("msg", "ERROR");

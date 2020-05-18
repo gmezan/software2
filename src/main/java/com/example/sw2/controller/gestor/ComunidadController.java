@@ -39,6 +39,7 @@ public class ComunidadController {
         }
 
         if(bindingResult.hasErrors()){
+            model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", comunidadesRepository.findAll());
             model.addAttribute("msg", "ERROR");
             return "gestor/comunidades";

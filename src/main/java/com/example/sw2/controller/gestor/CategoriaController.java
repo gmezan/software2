@@ -44,6 +44,7 @@ public class CategoriaController {
 
 
         if(bindingResult.hasErrors()){
+            model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", categoriasRepository.findAll());
             model.addAttribute("msg", "ERROR");
             return "gestor/categorias";
