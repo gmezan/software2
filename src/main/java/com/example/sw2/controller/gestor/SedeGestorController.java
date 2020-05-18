@@ -19,8 +19,8 @@ import java.util.Optional;
 
 
 @Controller
-@RequestMapping("/gestor/sede")
-public class SedeGestorController {
+//@RequestMapping("/gestor/sede")
+public class SedeGestorController {/* :(
 
 
     @Autowired
@@ -89,7 +89,7 @@ public class SedeGestorController {
     }
 
 
-
+*/
 
 
 }
