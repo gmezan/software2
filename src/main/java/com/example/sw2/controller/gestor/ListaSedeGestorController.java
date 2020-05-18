@@ -102,6 +102,7 @@ public class ListaSedeGestorController {
                             RedirectAttributes attr) {
         Optional<Usuarios> c = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id);
         if (c.isPresent()) {
+            usuariosRepository.delete(c.get());
                 attr.addFlashAttribute("msg", "Gestor borrado exitosamente");
         }
         return "redirect:/gestor/sede";
