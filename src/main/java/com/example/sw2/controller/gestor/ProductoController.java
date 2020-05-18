@@ -36,7 +36,13 @@ public class ProductoController {
 
     @PostMapping("/save")
     public String editar(@ModelAttribute("producto") @Valid Productos productos,
-                          BindingResult bindingResult, RedirectAttributes attr, Model model) {
+                          BindingResult bindingResult, @RequestParam("type") int type,
+                         RedirectAttributes attr, Model model) {
+
+        if(type==1 && productosRepository.findById(productos.getCodigonom()).isPresent()){ //if new
+            bindingResult.rejectValue("codigonom","error.user","Este codigo ya existe");
+        }
+
         if(bindingResult.hasErrors()){
             model.addAttribute("lista", productosRepository.findAll());
             model.addAttribute("msg", "ERROR");
