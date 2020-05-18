@@ -1,4 +1,4 @@
-var contextPath = "http://localhost:8080";
+var contextPath  = window.location.href+"/get?id=";
 
 $(document).on("click",".registrar-Venta", function(){
     $("#registrarModal  #ruc_dni").val('');
@@ -11,7 +11,7 @@ $(document).on("click",".registrar-Venta", function(){
     $("#registrarModal  #cantidad").val('');
     $("#registrarModal  #precio_venta").val('');
     $.ajax({
-        method:"GET", url:contextPath + "/sede/AsignadoTienda/get?id=" +$(this).data('id')
+        method:"GET", url:contextPath  +$(this).data('id')
     }).done(function(venta){
         if (venta!=null){
             $("#registrarModal  #ruc_dni").val(venta.ruc_dni);

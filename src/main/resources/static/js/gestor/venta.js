@@ -1,9 +1,9 @@
-var contextPath = "http://localhost:8080";
+var contextPath  = window.location.href;
 
 $(document).on("click",".editar-Venta", function(){
     $("#formModal  #rucdni").val('');$("#formModal  #nombrecliente").val('');
     $.ajax({
-        method:"GET", url:contextPath + "/gestor/venta/get?id1=" + $(this).data('id1') + "&id2=" + $(this).data('id2')
+        method:"GET", url:contextPath + "/get?id1=" + $(this).data('id1') + "&id2=" + $(this).data('id2')
     }).done(function(ven){
         if (ven!=null){
             $("#formModal #rucdni").val(ven.rucdni);

@@ -147,9 +147,9 @@
                                                     Sam Sammie
                                                 </td>
                                                 <td>
-                                                    <button data-toggle="modal" data-target="#editModal"
+                                                    <a type="button" th:href="@{'/gestor/inventario/edit?id='+${inv.codigoinventario}}"
                                                             class="btn btn-datatable btn-icon btn-primary mr-2"><i
-                                                            class="fa fa-edit"></i></button>
+                                                            class="fa fa-edit"></i></a>
                                                     <button data-toggle="modal" data-target="#deleteModal"
                                                             class="btn btn-datatable btn-icon btn-danger"><i
                                                             class="fas fa-trash-alt"></i></button>

@@ -1,11 +1,11 @@
-var contextPath = "http://localhost:8080";
+var contextPath  = window.location.href+"/get?id=";
 
 $(document).on("click",".edit-Tienda", function(){
     $("#EditarTiendaModal  #idtienda").val('');
     $("#EditarTiendaModal  #nombre").val('');
     $("#EditarTiendaModal  #direccion").val('');
     $.ajax({
-        method:"GET", url:contextPath + "/sede/tienda/get?id=" +$(this).data('id')
+        method:"GET", url:contextPath +$(this).data('id')
     }).done(function(tienda){
         if (tienda!=null){
             $("#EditarTiendaModal  #idtienda").val(tienda.idtienda);

@@ -71,6 +71,7 @@
                                     <th>Apellido</th>
                                     <th>Email</th>
                                     <th>Telefono</th>
+                                    <th>Foto</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
@@ -80,6 +81,7 @@
                                     <th>Apellido</th>
                                     <th>Email</th>
                                     <th>Telefono</th>
+                                    <th>Foto</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
@@ -89,6 +91,11 @@
                                     <td th:text="${l.apellido}" ></td>
                                     <td th:text="${l.correo}" ></td>
                                     <td th:text="${l.telefono}" ></td>
+                                    <td>
+                                        <img
+                                                th:src="${l.foto}"
+                                                alt="" width=100 style="height: auto;"/></td>
+                                    <td>
                                 </tr>
                                 </tbody>
                             </table>
