@@ -28,7 +28,7 @@
                         </div>
     
                         <p class="mb-4">Aquí puedes ver los productos vendidos. Para registrar una venta, revisa la lista de <a
-                                    href="productosDisponibles.html">productos disponibles</a>.
+                                th:href="@{/gestor/productosDisponibles}">productos disponibles</a>.
                         </p>
 
                         <div id="msgVenta" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>

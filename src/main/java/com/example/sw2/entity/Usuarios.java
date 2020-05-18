@@ -30,15 +30,15 @@ public class Usuarios implements Serializable {
     @Column(nullable = false)
     @NotBlank
     private String apellido;
-    //@Size(max = 100, message = "Debe contener 100 caracteres como maximo")
+
     private String foto;
     @Column(nullable = false)
     @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
     @NotBlank
     private String correo;
     @Column(nullable = false)
-    //@Size(max = 256, message = "Debe contener 256 caracteres como maximo")
-    //@NotBlank
+    @Size(max = 256, message = "Debe contener 256 caracteres como maximo")
+    @NotBlank
     private String password;
     @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
     private String telefono;
