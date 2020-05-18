@@ -139,7 +139,7 @@
                         <form method="post" th:action="@{/gestor/comunidad/save}" th:object="${comunidad}">
                             <div class="form-group">
                                 <label class="col-form-label">Código:</label>
-                                <input th:readonly="${comunidad.codigo!=null && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Código de comunidad">
+                                <input th:readonly="${comunidad.codigo!=null && comunidad.codigo!='' && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Código de comunidad">
                                 <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
                             </div>
                             <div class="form-group">

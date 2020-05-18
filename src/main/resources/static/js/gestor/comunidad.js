@@ -16,7 +16,7 @@ $(document).on("click",".editar-Comunidad", function(){
     })
 });
 $(document).on("click",".new-Comunidad", function(){
-    $("#formModal  #codigo").val('');
+    $("#formModal  #codigo").val('').prop("readonly", false);
     $("#formModal  #nombre").val('');
 });
 $(document).on("click",".delete-Comunidad", function(){

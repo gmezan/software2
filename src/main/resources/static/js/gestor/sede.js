@@ -30,7 +30,7 @@ $(document).on("click",".edit-Gestor", function(){
     })
 });
 $(document).on("click",".new-Gestor", function(){
-    $("#formModal #idusuarios").val('');
+    $("#formModal #idusuarios").val('').prop("readonly", false);
     $("#formModal #nombre").val('');
     $("#formModal #apellido").val('');
     $("#formModal #correo").val('');

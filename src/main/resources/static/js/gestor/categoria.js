@@ -16,7 +16,7 @@ $(document).on("click",".editar-Categoria", function(){
     })
 });
 $(document).on("click",".new-Categoria", function(){
-    $("#formModal  #codigo").val('');
+    $("#formModal  #codigo").val('').prop("readonly", false);
     $("#formModal  #nombre").val('');
 });
 $(document).on("click",".delete-Categoria", function(){

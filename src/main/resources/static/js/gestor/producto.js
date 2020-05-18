@@ -22,8 +22,8 @@ $(document).on("click",".edit-Producto", function(){
     })
 });
 $(document).on("click",".new-Producto", function(){
-    $("#formModal #codigo").val('');$("#editModal  #nombre").val('');
-    $("#formModal   #apellidopaterno").val('');$("#editModal  #apellidomaterno").val('');
+    $("#formModal #codigonom").val('');$("#formModal  #codigodesc").val('');
+    $("#formModal   #nombre").val('');$("#formModal  #descripcion").val('');
 });
 $(document).on("click",".delete-Producto", function(){
     $("#deleteModal #codigonom").val($(this).data('id'));

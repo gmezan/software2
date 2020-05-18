@@ -141,7 +141,7 @@
                         <form method="post" th:action="@{/gestor/categoria/save}" th:object="${categoria}">
                             <div class="form-group">
                                 <label class="col-form-label">Codigo:</label>
-                                <input  th:readonly="${categoria.codigo!=null && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
+                                <input  th:readonly="${categoria.codigo!=null && categoria.codigo!='' && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Nombre de categoría">
                                 <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
                             </div>
                             <div class="form-group">

@@ -21,7 +21,7 @@ $(document).on("click",".edit-Artesano", function(){
     })
 });
 $(document).on("click",".new-Artesano", function(){
-    $("#editModal  #codigo").val('');$("#editModal  #nombre").val('');
+    $("#editModal  #codigo").val('').prop("readonly", false);$("#editModal  #nombre").val('');
     $("#editModal  #apellidopaterno").val('');$("#editModal  #apellidomaterno").val('');
 });
 $(document).on("click",".delete-Artesano", function(){
