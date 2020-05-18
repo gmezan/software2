@@ -19,6 +19,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+//REPLANTEAR inventario entity
+
 @Controller
 @RequestMapping("/gestor/inventario")
 public class InventarioController {
@@ -70,7 +72,20 @@ public class InventarioController {
             return "gestor/inventarioGestorForm";
         }
         else {
-
+            //se necesita checar si hay un inventario idéntico para sumar
+            Optional<Inventario> optionalInventario =
+                    inventarioRepository.findById(inventario.getCodigoinventario());
+            if(optionalInventario.isPresent()){
+                Inventario inv = optionalInventario.get();
+                inv.setCantidadtotal(inv.getCantidadtotal()+inventario.getCantidadtotal());
+                inv.setCantidadgestor(inv.getCantidadgestor()+inventario.getCantidadtotal());
+                inventario = inv;
+            }
+            else {
+                inventario.setCantidadgestor(inventario.getCantidadtotal());
+            }
+            inventarioRepository.save(inventario);
+            attributes.addFlashAttribute("msg", "Inventario agregado correctamente");
 
             return "redirect:/gestor/inventario";
         }

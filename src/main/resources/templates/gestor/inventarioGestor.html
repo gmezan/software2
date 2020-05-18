@@ -36,6 +36,10 @@
                             venta o asignar productos a una sede, revisa la lista de <a
                                     href="productosDisponibles.html">productos disponibles</a>.
                         </p>
+
+                        <div id="msgInventario" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+
+
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
