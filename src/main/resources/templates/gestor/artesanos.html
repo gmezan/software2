@@ -127,24 +127,24 @@
                         <form method="post" th:action="@{/gestor/artesano/save}" th:object="${artesano}">
                             <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                             <div class="form-group">
-                                <label id="codigo" class="col-form-label">Código: (debe ser entre 2 y 4 caracteres)</label>
-                                <input th:readonly="${artesano.codigo!=null && artesano.codigo!='' && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Código de artesano">
+                                <label id="codigo" class="col-form-label">Código del artesano: (entre 2 y 4 caracteres)</label>
+                                <input th:readonly="${artesano.codigo!=null && artesano.codigo!='' && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" >
                                 <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
                             </div>
                             <div class="form-group">
-                                <label id="nombre" class="col-form-label">Nombre:</label>
-                                <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre del artesano">
+                                <label id="nombre" class="col-form-label">Nombre del artesano:</label>
+                                <input type="text" class="form-control" th:field="*{nombre}" >
                                 <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
                             </div>
                             <div class="form-group">
                                 <label id="apellidopaterno" class="col-form-label">Apellido Paterno:</label>
                                 <input type="text" class="form-control" th:field="*{apellidopaterno}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('apellidopaterno')}" th:errors="*{apellidopaterno}" placeholder="Apellido paterno del artesano">Error</div>
+                                <div class="text-danger" th:if="${#fields.hasErrors('apellidopaterno')}" th:errors="*{apellidopaterno}" >Error</div>
                             </div>
                             <div class="form-group">
                                 <label id="apellidomaterno" class="col-form-label">Apellido Materno: (Opcional)</label>
                                 <input type="text" class="form-control" th:field="*{apellidomaterno}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('apellidomaterno')}" th:errors="*{apellidomaterno}" placeholder="Apellido materno del artesano">Error</div>
+                                <div class="text-danger" th:if="${#fields.hasErrors('apellidomaterno')}" th:errors="*{apellidomaterno}" >Error</div>
                             </div>
 
                             <div class="form-group">
