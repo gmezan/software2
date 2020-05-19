@@ -65,8 +65,15 @@ public class ComunidadController {
                             RedirectAttributes attr) {
         Optional<Comunidades> c = comunidadesRepository.findById(id);
         if (c.isPresent()) {
-            comunidadesRepository.deleteById(id);
-            attr.addFlashAttribute("msg","Comunidad borrada exitosamente");
+            try{
+                comunidadesRepository.deleteById(id);
+                attr.addFlashAttribute("msg","Comunidad borrada exitosamente");
+            }
+            catch (Exception e){
+                attr.addFlashAttribute("msg", "Esta comunidad no se puede borrar, se está usando");
+            }
+
+
         }
         return "redirect:/gestor/comunidad";
     }
