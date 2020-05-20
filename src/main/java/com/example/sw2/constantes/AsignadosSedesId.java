@@ -1,16 +1,9 @@
 package com.example.sw2.constantes;
 
-import com.example.sw2.entity.Inventario;
-import com.example.sw2.entity.Usuarios;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Embeddable
 public class AsignadosSedesId implements Serializable {
@@ -21,8 +14,8 @@ public class AsignadosSedesId implements Serializable {
     private int sede;
     @Column(name= "producto_inventario")
     private String productoinventario;
-    @Column(name = "fecha_inventario")
-    private LocalDate fechainventario;
+    @Column(name = "fecha_envio")
+    private LocalDate fechaenvio;
 
     public AsignadosSedesId(){}
 
@@ -30,7 +23,7 @@ public class AsignadosSedesId implements Serializable {
         this.setGestor(a);
         this.setSede(b);
         this.setProductoinventario(c);
-        this.setFechainventario(d);
+        this.setFechaenvio(d);
     }
 
     public int getGestor() {
@@ -57,11 +50,11 @@ public class AsignadosSedesId implements Serializable {
         this.productoinventario = productoinventario;
     }
 
-    public LocalDate getFechainventario() {
-        return fechainventario;
+    public LocalDate getFechaenvio() {
+        return fechaenvio;
     }
 
-    public void setFechainventario(LocalDate fechainventario) {
-        this.fechainventario = fechainventario;
+    public void setFechaenvio(LocalDate fechaenvio) {
+        this.fechaenvio = fechaenvio;
     }
 }
