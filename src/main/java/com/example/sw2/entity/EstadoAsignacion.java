@@ -3,10 +3,11 @@ package com.example.sw2.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name="Estado_asignacion")
-public class EstadoAsignacion {
+public class EstadoAsignacion implements Serializable {
 
     @Id
     private int idestado;

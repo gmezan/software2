@@ -5,12 +5,13 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name="Asignacion_tienda")
-public class AsignacionTiendas {
+public class AsignacionTiendas implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,11 +3,12 @@ package com.example.sw2.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Tienda")
-public class Tienda {
+public class Tienda implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

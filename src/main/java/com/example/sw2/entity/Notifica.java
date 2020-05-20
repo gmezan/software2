@@ -1,11 +1,12 @@
 package com.example.sw2.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Notificaciones")
-public class Notifica {
+public class Notifica implements Serializable {
 
     @Id
     private int idnotificaciones;

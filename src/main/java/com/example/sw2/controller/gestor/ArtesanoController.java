@@ -1,15 +1,15 @@
 package com.example.sw2.controller.gestor;
 
 import com.example.sw2.entity.Artesanos;
-import com.example.sw2.entity.Usuarios;
+import com.example.sw2.entity.Inventario;
 import com.example.sw2.repository.ArtesanosRepository;
 import com.example.sw2.repository.ComunidadesRepository;
+import com.example.sw2.repository.InventarioRepository;
 import com.example.sw2.repository.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,9 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/gestor/artesano")
@@ -34,6 +32,9 @@ public class ArtesanoController {
 
     @Autowired
     UsuariosRepository usuariosRepository;
+
+    @Autowired
+    InventarioRepository inventarioRepository;
 
     @GetMapping(value = {""})
     public String listCat(@ModelAttribute("artesano") Artesanos artesanos, Model model) {
@@ -99,5 +100,12 @@ public class ArtesanoController {
 
     }
 
+    //Has items
+    @ResponseBody
+    @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Inventario>> hasItems(@RequestParam(value = "id") String id){
+
+        return new ResponseEntity<>(inventarioRepository.findInventariosByArtesanos_Codigo(id),HttpStatus.OK);
+    }
 
 }

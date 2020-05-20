@@ -1,16 +1,22 @@
 package com.example.sw2.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="Artesanos")
-public class Artesanos {
+public class Artesanos implements Serializable {
 
     @Id
     @NotBlank(message = "Este campo no puede estar vacío")
@@ -32,6 +38,19 @@ public class Artesanos {
     @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
+
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "artesanos")
+    private List<Inventario> inventario;
+
+    public List<Inventario> getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(List<Inventario> inventario) {
+        this.inventario = inventario;
+    }
 
     public Artesanos(){
         this.fechacreacion=LocalDateTime.now();

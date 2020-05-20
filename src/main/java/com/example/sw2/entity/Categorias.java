@@ -10,11 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name="Categorias")
-public class Categorias {
+public class Categorias implements Serializable {
 
     @Id
     @NotBlank

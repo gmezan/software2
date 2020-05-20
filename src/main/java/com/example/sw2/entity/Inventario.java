@@ -1,17 +1,19 @@
 package com.example.sw2.entity;
 
 import com.example.sw2.constantes.CustomConstants;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name="Inventario")
-public class Inventario {
+public class Inventario implements Serializable {
 
     @Id
     @Column(name="codigo_inventario")
@@ -21,17 +23,18 @@ public class Inventario {
     @ManyToOne
     @JoinColumn(name="categoria",nullable =false)
     private Categorias categorias;
+
     @ManyToOne
     @JoinColumn(name="producto",nullable =false)
     private Productos productos;
 
     @Column(name="tamanho",nullable =false)
     private String codtamanho;
-
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="comunidad",nullable =false)
     private Comunidades comunidades;
-
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="artesano")
     private Artesanos artesanos;

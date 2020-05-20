@@ -7,13 +7,14 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Positive;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name="Asignados_sedes")
-public class AsignadosSedes {
+public class AsignadosSedes implements Serializable {
 
     @EmbeddedId
     private AsignadosSedesId id;

@@ -9,12 +9,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @EnableJpaAuditing
 @Table(name = "Productos")
-public class Productos {
+public class Productos implements Serializable {
 
     @Id
     @NotBlank
