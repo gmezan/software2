@@ -1,52 +1,59 @@
 package com.example.sw2.constantes;
 
+import com.example.sw2.entity.Inventario;
+import com.example.sw2.entity.Usuarios;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @Embeddable
 public class AsignadosSedesId implements Serializable {
-
-    @Column(name= "gestor")
-    private int gestor;
-    @Column(name= "sede")
-    private int sede;
-    @Column(name= "producto_inventario")
-    private String productoinventario;
+    @ManyToOne
+    @JoinColumn(name = "gestor")
+    private Usuarios gestor;
+    @ManyToOne
+    @JoinColumn(name= "sede")
+    private Usuarios sede;
+    @ManyToOne
+    @JoinColumn(name= "producto_inventario")
+    private Inventario productoinventario;
     @Column(name = "fecha_envio")
     private LocalDate fechaenvio;
 
     public AsignadosSedesId(){}
 
-    public AsignadosSedesId(int a, int b, String c, LocalDate d){
-        this.setGestor(a);
-        this.setSede(b);
-        this.setProductoinventario(c);
+    public AsignadosSedesId(Usuarios gestor, Usuarios sede, Inventario inventario, LocalDate d){
+        this.setGestor(gestor);
+        this.setSede(sede);
+        this.setProductoinventario(inventario);
         this.setFechaenvio(d);
     }
 
-    public int getGestor() {
+    public Usuarios getGestor() {
         return gestor;
     }
 
-    public void setGestor(int gestor) {
+    public void setGestor(Usuarios gestor) {
         this.gestor = gestor;
     }
 
-    public int getSede() {
+    public Usuarios getSede() {
         return sede;
     }
 
-    public void setSede(int sede) {
+    public void setSede(Usuarios sede) {
         this.sede = sede;
     }
 
-    public String getProductoinventario() {
+    public Inventario getProductoinventario() {
         return productoinventario;
     }
 
-    public void setProductoinventario(String productoinventario) {
+    public void setProductoinventario(Inventario productoinventario) {
         this.productoinventario = productoinventario;
     }
 

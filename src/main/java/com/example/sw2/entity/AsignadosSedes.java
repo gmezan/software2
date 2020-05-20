@@ -17,15 +17,6 @@ public class AsignadosSedes {
 
     @EmbeddedId
     private AsignadosSedesId id;
-    @ManyToOne
-    @JoinColumn(name="gestor",nullable = false)
-    private Usuarios gestor;
-    @ManyToOne
-    @JoinColumn(name="sede",nullable = false)
-    private Usuarios sede;
-    @ManyToOne
-    @JoinColumn(name="producto_inventario",nullable = false)
-    private Inventario inventario;
     @Column(nullable = false)
     private int stock;
     @Column(nullable = false)

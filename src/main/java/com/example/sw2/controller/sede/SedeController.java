@@ -33,7 +33,7 @@ public class SedeController {
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
 
-        model.addAttribute("listaProductosPorConfirmar",asignadosSedesRepository.findBySede(sede));
+        //model.addAttribute("listaProductosPorConfirmar",asignadosSedesRepository.findBySede(sede));
         return "sede/ListaProductosPorConfirmar";
 
     }
@@ -43,12 +43,12 @@ public class SedeController {
         return "";
     }
 
-    //Web service
+    /*Web service
     @ResponseBody
     @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<AsignadosSedes>> getAsignadosSede(@RequestParam(value = "id") int id){
         return new ResponseEntity<>(asignadosSedesRepository.findById(id), HttpStatus.OK);
-    }
+    }*/
 
 
 }
