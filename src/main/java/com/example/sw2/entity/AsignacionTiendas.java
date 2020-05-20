@@ -31,6 +31,50 @@ public class AsignacionTiendas {
     @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
+    @ManyToOne
+    @JoinColumn(name = "asignado_sede_gestor")
+    private AsignadosSedes gestor;
+    @ManyToOne
+    @JoinColumn(name = "asignado_sede_inventario")
+    private AsignadosSedes inventario;
+    @ManyToOne
+    @JoinColumn(name = "asignado_sede_sede")
+    private AsignadosSedes sede;
+    @ManyToOne
+    @JoinColumn(name = "asignado_sede_fecha")
+    private AsignadosSedes fecha;
+
+    public AsignadosSedes getGestor() {
+        return gestor;
+    }
+
+    public void setGestor(AsignadosSedes gestor) {
+        this.gestor = gestor;
+    }
+
+    public AsignadosSedes getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(AsignadosSedes inventario) {
+        this.inventario = inventario;
+    }
+
+    public AsignadosSedes getSede() {
+        return sede;
+    }
+
+    public void setSede(AsignadosSedes sede) {
+        this.sede = sede;
+    }
+
+    public AsignadosSedes getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(AsignadosSedes fecha) {
+        this.fecha = fecha;
+    }
 
     public int getIdtiendas() {
         return idtiendas;

@@ -20,17 +20,17 @@ public class AsignadosSedesId implements Serializable {
     @Column(name= "sede")
     private int sede;
     @Column(name= "producto_inventario")
-    private String producto_inventario;
+    private String productoinventario;
     @Column(name = "fecha_inventario")
-    private LocalDate fecha_inventario;
+    private LocalDate fechainventario;
 
     public AsignadosSedesId(){}
 
     public AsignadosSedesId(int a, int b, String c, LocalDate d){
         this.setGestor(a);
         this.setSede(b);
-        this.setProducto_inventario(c);
-        this.setFecha_inventario(d);
+        this.setProductoinventario(c);
+        this.setFechainventario(d);
     }
 
     public int getGestor() {
@@ -49,19 +49,19 @@ public class AsignadosSedesId implements Serializable {
         this.sede = sede;
     }
 
-    public String getProducto_inventario() {
-        return producto_inventario;
+    public String getProductoinventario() {
+        return productoinventario;
     }
 
-    public void setProducto_inventario(String producto_inventario) {
-        this.producto_inventario = producto_inventario;
+    public void setProductoinventario(String productoinventario) {
+        this.productoinventario = productoinventario;
     }
 
-    public LocalDate getFecha_inventario() {
-        return fecha_inventario;
+    public LocalDate getFechainventario() {
+        return fechainventario;
     }
 
-    public void setFecha_inventario(LocalDate fecha_inventario) {
-        this.fecha_inventario = fecha_inventario;
+    public void setFechainventario(LocalDate fechainventario) {
+        this.fechainventario = fechainventario;
     }
 }
