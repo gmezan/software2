@@ -3,9 +3,13 @@ package com.example.sw2.entity;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -14,38 +18,44 @@ import java.time.LocalDateTime;
 public class Usuarios implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@NotBlank
+    @Digits(integer = 11, fraction = 0)
     @Column(name = "dni")
     private int idusuarios;
     @Column(nullable = false)
+    @NotBlank
+    @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
     private String nombre;
+    @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
     @Column(nullable = false)
+    @NotBlank
     private String apellido;
+
     private String foto;
     @Column(nullable = false)
+    @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
+    @NotBlank
     private String correo;
     @Column(nullable = false)
+    @Size(max = 256, message = "Debe contener 256 caracteres como maximo")
+    @NotBlank
     private String password;
+    @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
     private String telefono;
     @ManyToOne
     @JoinColumn(name = "rol",nullable = false)
     private Roles roles;
+    //@Digits(integer = 4, fraction = 0)
+    //@NotBlank
     @Column(nullable = false)
-    private Boolean cuentaactivada;
+    private Boolean cuentaactivada=false;
     @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
     @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
-    private LocalDateTime fechacreacion;
+    private LocalDateTime fechacreacion=LocalDateTime.now();
 
-    public int getIdusuarios() {
-        return idusuarios;
-    }
-
-    public void setIdusuarios(int idusuarios) {
-        this.idusuarios = idusuarios;
-    }
 
     public String getNombre() {
         return nombre;
@@ -85,8 +95,10 @@ public class Usuarios implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password;//new BCryptPasswordEncoder().encode(password);
     }
+
+    public void setRawPassword(String ps){this.password = ps ;}
 
     public String getTelefono() {
         return telefono;
@@ -127,4 +139,18 @@ public class Usuarios implements Serializable {
     public void setFechacreacion(LocalDateTime fechacreacion) {
         this.fechacreacion = fechacreacion;
     }
+
+
+    public int getIdusuarios() {
+        return idusuarios;
+    }
+
+    public void setIdusuarios(int idusuarios) {
+        this.idusuarios = idusuarios;
+    }
+
+    public String getFullname(){
+        return this.nombre + " " + this.apellido;
+    }
+
 }

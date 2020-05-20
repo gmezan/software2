@@ -36,20 +36,27 @@ public class ProductoController {
 
     @PostMapping("/save")
     public String editar(@ModelAttribute("producto") @Valid Productos productos,
-                          BindingResult bindingResult, RedirectAttributes attr, Model model) {
+                          BindingResult bindingResult, @RequestParam("type") int type,
+                         RedirectAttributes attr, Model model) {
+
+        if(type==1 && productosRepository.findById(productos.getCodigonom()).isPresent()){ //if new
+            bindingResult.rejectValue("codigonom","error.user","Este codigo ya existe");
+        }
+
         if(bindingResult.hasErrors()){
+            model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", productosRepository.findAll());
-            model.addAttribute("msg", "ERROR");
+            model.addAttribute("msgError", "ERROR");
             model.addAttribute("lineas", CustomConstants.getLineas());
             return "gestor/productos";
         }
         else {
             Optional<Productos> optionalProductos = productosRepository.findById(productos.getCodigonom());
             if (optionalProductos.isPresent()) {
-                attr.addFlashAttribute("msg", "Categoría actualizada exitosamente");
+                attr.addFlashAttribute("msg", "Producto actualizado exitosamente");
             }
             else {
-                attr.addFlashAttribute("msg", "Categoría creada exitosamente");
+                attr.addFlashAttribute("msg", "Producto creado exitosamente");
             }
             productosRepository.save(productos);
             return "redirect:/gestor/producto";
@@ -63,7 +70,7 @@ public class ProductoController {
         Optional<Productos> c = productosRepository.findById(id);
         if (c.isPresent()) {
             productosRepository.deleteById(id);
-            attr.addFlashAttribute("msg","Categoría borrada exitosamente");
+            attr.addFlashAttribute("msg","Producto borrado exitosamente");
         }
         return "redirect:/gestor/producto";
     }

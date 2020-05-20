@@ -25,7 +25,7 @@
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-900">Comunidades</h1>
-                            <button data-toggle="modal" data-target="#formModal" type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            <button data-toggle="modal" data-target="#formModal" type="button" class="new-Comunidad d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                 <i class="fas fa-users fa-sm text-white-50"></i> Nueva Comunidad</button>
                         </div>
 
@@ -130,21 +130,22 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Editar Comunidad</h5>
+                        <h5 id="formTitle" class="modal-title">Comunidad</h5>
                         <button type="button" th:href="@{/gestor/comunidad}" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <form method="post" th:action="@{/gestor/comunidad/save}" th:object="${comunidad}">
+                            <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                             <div class="form-group">
-                                <label class="col-form-label">Código:</label>
-                                <input th:readonly="${comunidad.codigo!=null && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" placeholder="Código de comunidad">
+                                <label class="col-form-label">Código de comunidad: (máximo 2 caracteres)</label>
+                                <input th:readonly="${comunidad.codigo!=null && comunidad.codigo!='' && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" >
                                 <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
                             </div>
                             <div class="form-group">
-                                <label  class="col-form-label">Nombre:</label>
-                                <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de comunidad">
+                                <label  class="col-form-label">Nombre de comunidad:</label>
+                                <input type="text" class="form-control" th:field="*{nombre}" >
                                 <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
                             </div>
                             <div class="modal-footer">

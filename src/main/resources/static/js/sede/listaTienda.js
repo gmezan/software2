@@ -1,11 +1,12 @@
-var contextPath = "http://localhost:8080";
+var contextPath  = window.location.href+"/get?id=";
 
 $(document).on("click",".edit-Tienda", function(){
     $("#EditarTiendaModal  #idtienda").val('');
     $("#EditarTiendaModal  #nombre").val('');
     $("#EditarTiendaModal  #direccion").val('');
+    $("#EditarTiendaModal  #type").val('0');
     $.ajax({
-        method:"GET", url:contextPath + "/sede/tienda/get?id=" +$(this).data('id')
+        method:"GET", url:contextPath +$(this).data('id')
     }).done(function(tienda){
         if (tienda!=null){
             $("#EditarTiendaModal  #idtienda").val(tienda.idtienda);
@@ -22,6 +23,7 @@ $(document).on("click",".new-Tienda", function(){
     $("#EditarTiendaModal  #idtienda").val('0');
     $("#EditarTiendaModal  #nombre").val('');
     $("#EditarTiendaModal  #direccion").val('');
+    $("#  #type").val('1');
 });
 $(document).on("click",".delete-Tienda", function(){
     $("#deleteTiendaModal #idtienda").val($(this).data('id'));
@@ -29,7 +31,7 @@ $(document).on("click",".delete-Tienda", function(){
 $(document).ready(function() {
     console.log("Hi");
     if ($("#msgListaTiendas").text()==="ERROR"){
-        $('#EditarTiendaModal').modal('show');
+        $('#EditarTiendaModal').modal({show: true, backdrop: 'static', keyboard: false });
     }
 });
 

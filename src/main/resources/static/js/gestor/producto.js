@@ -5,6 +5,7 @@ $(document).on("click",".edit-Producto", function(){
     $("#formModal #nombre").val('');
     $("#formModal #codigodesc").val('');
     $("#formModal #descripcion").val('');
+    $("#formModal  #type").val('0');
     $.ajax({
         method:"GET", url:contextPath + $(this).data('id')
     }).done(function(producto){
@@ -13,7 +14,8 @@ $(document).on("click",".edit-Producto", function(){
             $("#formModal #nombre").val(producto.nombre);
             $("#formModal #codigodesc").val(producto.codigodesc);
             $("#formModal #descripcion").val(producto.descripcion);
-            $("#formModal #linea").val(producto.linea)
+            $("#formModal #codigolinea").val(producto.codigolinea);
+            $("#formModal  #formTitle").text('Editar Producto');
         }
     }).fail(function (err) {
         console.log(err);
@@ -22,15 +24,18 @@ $(document).on("click",".edit-Producto", function(){
     })
 });
 $(document).on("click",".new-Producto", function(){
-    $("#formModal #codigo").val('');$("#editModal  #nombre").val('');
-    $("#formModal   #apellidopaterno").val('');$("#editModal  #apellidomaterno").val('');
+    $("#formModal #codigonom").val('').prop("readonly", false);$("#formModal  #codigodesc").val('');
+    $("#formModal   #nombre").val('');$("#formModal  #descripcion").val('');
+    $("#formModal  #type").val('1');
+    $("#formModal  #formTitle").text('Nuevo Producto');
 });
 $(document).on("click",".delete-Producto", function(){
     $("#deleteModal #codigonom").val($(this).data('id'));
 });
 $(document).ready(function() {
     if ($("#msgProducto").text()==="ERROR"){
-        $('#formModal ').modal('show');
+        //$('#formModal').modal('show');
+        $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
     }
 });
 

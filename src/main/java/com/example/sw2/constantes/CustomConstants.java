@@ -6,6 +6,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public final class CustomConstants {
+    public final static String AWS_BUCKET_NAME="test-bucket-sw2-1";
+    public final static String INVENTARIO = "inventario";
+    public final static String PERFIL = "profile";
+    public final static int BIGNUMBER = 1749183;
+
+
+/*
+    public String generateS3Link(String  objectName, String folder){
+        return "https://"+AWS_BUCKET_NAME+".s3.amazonaws.com/"+FOLDER1+"/"+objectName+".png";
+    }*/
 
     private static final LinkedHashMap<String, String> lineas = new LinkedHashMap<>();
     private static final LinkedHashMap<String, String> meses = new LinkedHashMap<>();

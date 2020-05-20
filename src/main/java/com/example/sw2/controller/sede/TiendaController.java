@@ -30,8 +30,11 @@ public class TiendaController {
 
     @PostMapping("/save")
     public String editCat(@ModelAttribute("tienda") @Valid Tienda tienda,
-                          BindingResult bindingResult, RedirectAttributes attr, Model model) {
+                          BindingResult bindingResult,
+                          @RequestParam("type") int type,
+                          RedirectAttributes attr, Model model) {
         if(bindingResult.hasErrors()){
+            model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", tiendaRepository.findAll());
             model.addAttribute("msg", "ERROR");
             return "sede/tiendas";

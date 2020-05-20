@@ -14,7 +14,7 @@ public class Artesanos {
 
     @Id
     @NotBlank(message = "Este campo no puede estar vacío")
-    @Size(max = 4, min = 2, message = "El código debe contener 3 letras")
+    @Size(max = 4, min = 2, message = "El código debe contener entre 2 y 4 letras")
     private String codigo;
     @NotBlank(message = "Este campo no puede estar vacío")
     @Column(nullable =false)

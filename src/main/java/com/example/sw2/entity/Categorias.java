@@ -18,7 +18,7 @@ public class Categorias {
 
     @Id
     @NotBlank
-    @Size(max = 1, message = "El codigo debe contener 1 caracter" )
+    @Size(max = 1, message = "El codigo debe contener máximo 1 caracter" )
     private String codigo;
     @NotBlank
     @Size(max = 45, message = "El codigo debe contener 45 caracteres" )

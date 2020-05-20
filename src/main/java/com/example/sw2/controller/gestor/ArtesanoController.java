@@ -44,8 +44,14 @@ public class ArtesanoController {
 
     @PostMapping("/save")
     public String editCat(@ModelAttribute("artesano") @Valid Artesanos artesanos,
-                          BindingResult bindingResult, RedirectAttributes attr, Model model) {
+                          BindingResult bindingResult, @RequestParam("type") int type,
+                          RedirectAttributes attr, Model model) {
+        if(type==1 && artesanosRepository.findById(artesanos.getCodigo()).isPresent()){ //if new
+            bindingResult.rejectValue("codigo","error.user","Este codigo ya existe");
+        }
+
         if(bindingResult.hasErrors()){
+            model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", artesanosRepository.findAll());
             model.addAttribute("comunidades", comunidadesRepository.findAll());
             model.addAttribute("msg", "ERROR");

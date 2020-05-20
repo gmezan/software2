@@ -27,12 +27,8 @@
                             <h1 class="h3 mb-0 text-gray-900">Inventario</h1>
                         
                         </div>
-                        <p class="mb-4">Aquí puedes administrar los productos del inventario. Para gestionar una
-                            venta o asignar productos a una sede, revisa la lista de <a
-                                    href="productosDisponibles.html">productos disponibles</a>.
-                        </p>
+
     
-                        <div class="container">
                         <div class="container">
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
@@ -45,60 +41,58 @@
                                 </div>
                                 
                                 <div class="modal-body">
-                                    <form id="addForm" method="post" action="inventarioGestor.html">
+                                    <form id="addForm" method="post" th:action="@{/gestor/inventario/save}" enctype="multipart/form-data" th:object="${inventario}">
                                         <div class="form-group">
-                                            <label for="linea1" class="col-form-label">Línea:</label>
-                                            <select class="form-control" id="linea1">
-                                                <option th:each="item : ${lineas}" th:text="${item.value}"
-                                                        th:value="${item.key}"></option>
-                                            
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="categoria1" class="col-form-label">Categoría:</label>
-                                            <select class="form-control" id="categoria1">
+                                            <label for="categorias" class="col-form-label">Categoría:</label>
+                                            <select th:field="*{categorias}"class="form-control" >
                                                 <option th:each="item : ${listCat}" th:text="${item.getNombre()}"
                                                         th:value="${item.getCodigo()}"></option>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="nombre1" class="col-form-label">Producto:</label>
-                                            <select class="form-control" id="nombre1">
-                                                <option value="nombre">Lliklla</option>
-                                                <option value="nombre">Chusi tinisca</option>
-                                                <option value="nombre">Killanku</option>
-                                                <option value="nombre">Chuspa</option>
-                                                <option value="nombre">Punchu</option>
+                                            <label for="linea" class="col-form-label">Línea:</label>
+                                            <select id="linea" class="form-control">
+                                                <option selected value="no" >--- Seleccionar ---</option>
+                                                <option th:each="item : ${lineas}" th:text="${item.value}"
+                                                        th:value="${item.key}"></option>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="tamanho1" class="col-form-label">Tamaño:</label>
-                                            <select class="form-control" id="tamanho1">
+                                            <label for="productos" class="col-form-label">Producto:</label>
+                                            <select th:field="*{productos}" class="form-control" >
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tamanho" class="col-form-label">Tamaño:</label>
+                                            <select th:field="*{tamanho}" class="form-control" >
                                                 <option th:each="t : ${taman}" th:text="${t.value}"
                                                         th:value="${t.key}"></option>
-                                            
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="adquisicion" class="col-form-label">Modo de adquisición:</label>
-                                            <select class="form-control" id="adquisicion">
+                                            <select th:field="*{codAdquisicion}" class="form-control" >
                                                 <option th:each="t : ${tipoAdqui}" th:text="${t.value}"
                                                         th:value="${t.key}"></option>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="comunidad1" class="col-form-label">Comunidad o Artesano:</label>
-                                            <select class="form-control" id="comunidad1">
+                                            <label for="comunidades" class="col-form-label">Comunidad:</label>
+                                            <select th:field="*{comunidades}" class="form-control" >
                                                 <option th:each="item : ${listCom}" th:text="${item.getNombre()}"
                                                         th:value="${item.getCodigo()}"></option>
                                             </select>
                                         </div>
+                                        <div hidden id="artesanoConsignacion" class="form-group">
+                                            <label for="artesanos" class="col-form-label">Artesano(Consignacion):</label>
+                                            <select th:field="*{artesanos}" class="form-control" ></select>
+                                        </div>
+
                                         <div class="form-group">
-                                            <label for="cantidad1" class="col-form-label">Cantidad:</label>
-                                            <input type="number" class="form-control" id="cantidad1">
+                                            <label for="cantidadtotal" class="col-form-label">Cantidad:</label>
+                                            <input th:field="*{cantidadtotal}" type="number" class="form-control" >
                                         </div>
                                         <div class="form-row">
-                                            
                                             
                                             <div class="form-group col ">
                                                 <label class="col-form-label">Día:</label>
@@ -119,24 +113,24 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="color1" class="col-form-label">Color:</label>
-                                            <input type="text" class="form-control" id="color1">
+                                            <label for="color" class="col-form-label">Color:</label>
+                                            <input th:field="*{color}" type="text" class="form-control" >
                                         </div>
                                         <div class="form-group">
-                                            <label for="foto1" class="col-form-label">Foto:</label>
-                                            <input type="file" class="form-control" id="foto1">
+                                            <label for="foto1"  class="col-form-label">Foto</label>
+                                            <input type="file"  id="foto1" name="foto1">
                                         </div>
                                         <div class="form-group">
                                             <label for="costotejedor" class="col-form-label">Costo del Tejedor:</label>
-                                            <input type="text" class="form-control" id="costotejedor">
+                                            <input  th:field="*{costotejedor}"  type="text" class="form-control" >
                                         </div>
                                         <div class="form-group">
                                             <label for="costomosqoy" class="col-form-label">Costo Mosqoy:</label>
-                                            <input type="text" class="form-control" id="costomosqoy">
+                                            <input th:field="*{costomosqoy}"  type="text" class="form-control" >
                                         </div>
                                         <div class="form-group">
-                                            <label for="facilitador1" class="col-form-label">Facilitador:</label>
-                                            <input type="text" class="form-control" id="facilitador1">
+                                            <label for="facilitador" class="col-form-label">Facilitador:</label>
+                                            <input th:field="*{facilitador}" type="text" class="form-control" >
                                         </div>
                                     </form>
                                 
@@ -154,8 +148,7 @@
                             </div>
                         </div>
                         </div>
-                        </div>
-                    
+
                     </div>
                     <!-- /.container-fluid -->
                 
@@ -195,6 +188,8 @@
         
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
-    
+
+        <script th:src="@{/js/gestor/inventario.js}"></script>
+
     </body>
 </html>

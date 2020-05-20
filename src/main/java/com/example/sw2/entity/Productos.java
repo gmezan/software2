@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,6 +18,7 @@ public class Productos {
 
     @Id
     @NotBlank
+    @Size(max = 3, message = "El codigo debe contener máximo 3 caracteres")
     private String codigonom;
     @Column(nullable = false)
     @NotBlank
@@ -25,8 +27,9 @@ public class Productos {
     private String descripcion;
     @NotBlank
     @Column(nullable = false)
+    @Size(max = 3, message = "El codigo debe contener máximo 3 caracteres")
     private String codigodesc;
-    @Range(max = 3, min = 1)
+    @NotBlank
     @Column(name="linea",nullable = false)
     private String codigolinea;
     @LastModifiedDate
