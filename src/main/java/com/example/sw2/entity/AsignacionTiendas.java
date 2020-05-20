@@ -16,7 +16,12 @@ public class AsignacionTiendas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idtiendas;
     @ManyToOne
-    @JoinColumn(name="productoasignado",nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "gestor", referencedColumnName = "gestor"),
+            @JoinColumn(name = "sede", referencedColumnName = "sede"),
+            @JoinColumn(name = "producto_inventario", referencedColumnName = "producto_inventario"),
+            @JoinColumn(name = "fecha_envio",referencedColumnName = "fecha_envio")
+    })
     private AsignadosSedes asignadosSedes;
     @Column(nullable = false)
     private int stock;
