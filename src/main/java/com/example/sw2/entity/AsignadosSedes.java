@@ -1,4 +1,5 @@
 package com.example.sw2.entity;
+import com.example.sw2.constantes.AsignadosSedesId;
 import org.apache.el.lang.ELSupport;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,11 +15,8 @@ import java.time.LocalDateTime;
 @Table(name="Asignados_sedes")
 public class AsignadosSedes {
 
-    @Id
-    @Column(name="idAsignados")
-    @Positive
-    @Digits(integer = 10, fraction = 0)
-    private int idasignados;
+    @EmbeddedId
+    private AsignadosSedesId id;
     @ManyToOne
     @JoinColumn(name="gestor",nullable = false)
     private Usuarios gestor;
@@ -34,8 +32,6 @@ public class AsignadosSedes {
     private int cantidadactual;
     @Column(nullable = false)
     private BigDecimal precioventa;
-    @Column(name="fecha_envio",nullable = false)
-    private LocalDate fechaenvio;
     @ManyToOne
     @JoinColumn(name="estadoasignacion",nullable = false)
     private EstadoAsignacion estadoAsignacion;
@@ -46,38 +42,6 @@ public class AsignadosSedes {
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
     private String mensaje;
-
-    public int getIdasignados() {
-        return idasignados;
-    }
-
-    public void setIdasignados(int idasignados) {
-        this.idasignados = idasignados;
-    }
-
-    public Usuarios getGestor() {
-        return gestor;
-    }
-
-    public void setGestor(Usuarios gestor) {
-        this.gestor = gestor;
-    }
-
-    public Usuarios getSede() {
-        return sede;
-    }
-
-    public void setSede(Usuarios sede) {
-        this.sede = sede;
-    }
-
-    public Inventario getInventario() {
-        return inventario;
-    }
-
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
-    }
 
     public int getStock() {
         return stock;
@@ -101,14 +65,6 @@ public class AsignadosSedes {
 
     public void setPrecioventa(BigDecimal precioventa) {
         this.precioventa = precioventa;
-    }
-
-    public LocalDate getFechaenvio() {
-        return fechaenvio;
-    }
-
-    public void setFechaenvio(LocalDate fechaenvio) {
-        this.fechaenvio = fechaenvio;
     }
 
     public EstadoAsignacion getEstadoAsignacion() {
