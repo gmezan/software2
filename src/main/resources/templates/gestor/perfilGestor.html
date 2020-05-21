@@ -33,16 +33,17 @@
 
                                 <!-- Profile widget -->
                                 <div class="bg-white shadow rounded overflow-hidden">
-                                    <div class="px-4 pt-0 pb-4 bg-gradient-dark">
+                                    <div class="px-4 pt-0 pb-4 bg-gray-600">
                                         <div class="media align-items-end profile-header">
-                                            <div class="profile mr-3 mt-3"><img
-                                                    src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-4.jpg"
+                                            <div class="profile mr-3 mt-3">
+                                                <img th:if="session.usuario.foto!=''" th:src="${session.usuario.foto}"
                                                     alt="..." width="130" class="rounded mb-2 img-thumbnail">
                                                 <a data-toggle="modal" data-target="#editModal" style="color: white" class="btn btn-dark btn-sm btn-block">Editar perfil</a></div>
                                             <div class="media-body mb-5 text-white">
-                                                <h4 class="mt-0 mb-0">Katherine Vargas</h4>
-                                                <p class="small mb-4"><i class="fa fa-map-marker mr-2"></i>Lima</p>
-                                                <p class="small mb-4"><i class="fa fa-mail-bulk mr-2"></i>a20160555@pucp.edu.pe</p>
+                                                <h4 class="mt-0 mb-4" th:text="${session.usuario.getFullname()}"></h4>
+                                                <p class="small mb-2"><i class="fa fa-user-circle mr-2"></i><span th:text="${session.usuario.idusuarios}"></span></p>
+                                                <p class="small mb-2"><i class="fa fa-mail-bulk mr-2"></i><span th:text="${session.usuario.correo}"></span></p>
+                                                <p class="small mb-2"><i class="fa fa-phone mr-2"></i><span th:text="${session.usuario.telefono}"></span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -62,7 +63,7 @@
 
                                     <div class="py-4 px-4">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <h5 class="mb-0">Fotos</h5>
+                                            <h5 class="mb-0">Estadísticas</h5>
                                             <!--a href="#" class="btn btn-link text-muted">Mostrar todas</a-->
                                         </div>
                                         <div class="row">
@@ -81,8 +82,8 @@
                                         </div>
                                         <div class="py-4">
                                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                                <h5 class="mb-1">Notas</h5>
-                                                <button data-toggle="modal" data-target="#noteModal" class="btn btn-link text-muted">Modificar</button>
+                                                <h5 class="mb-1">Quotes</h5>
+                                                <!--button data-toggle="modal" data-target="#noteModal" class="btn btn-link text-muted">Modificar</button-->
                                             </div>
                                             <div class="p-4 bg-light rounded shadow-sm">
                                                 <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur

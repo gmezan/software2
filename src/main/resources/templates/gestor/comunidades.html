@@ -29,8 +29,9 @@
                                 <i class="fas fa-users fa-sm text-white-50"></i> Nueva Comunidad</button>
                         </div>
 
-                        <div id="msgComunidad" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
-                        <!--div id="msgError" th:if="${msg2 != null}" th:text="${msg2}" class="alert alert-danger py-1" role="alert"></div-->
+                        <div id="msg" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+                        <div id="msgComunidad" th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
+
                         <!-- Database Table -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -45,7 +46,7 @@
                                                 <th>Nombre</th>
                                                 <th>Fecha de creacion</th>
                                                 <th>Ultima modificacion</th>
-                                                <th>Edit/Delete</th>
+                                                <th>Editar/Borrar</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -54,7 +55,7 @@
                                                 <th>Nombre</th>
                                                 <th>Fecha de creacion</th>
                                                 <th>Ultima modificacion</th>
-                                                <th>Edit/Delete</th>
+                                                <th>Editar/Borrar</th>
                                             </tr>
                                         </tfoot>
 
@@ -130,7 +131,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 id="formTitle" class="modal-title">Comunidad</h5>
+                        <h5 id="formTitle" class="modal-title">Nueva Comunidad</h5>
                         <button type="button" th:href="@{/gestor/comunidad}" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -150,7 +151,7 @@
                             </div>
                             <div class="modal-footer">
                                 <a type="button" th:href="@{/gestor/comunidad}"  class="btn btn-secondary" >Cancelar</a>
-                                <button type="submit" class="btn btn-primary"><a th:text="${comunidad.codigo==null?'Registrar':'Actualizar'}" style="color:white;text-decoration:none"></a></button>
+                                <button type="submit" class="btn btn-primary"><a id="formSavebtn" style="color:white;text-decoration:none">Registrar</a></button>
                             </div>
                         </form>
                     </div>

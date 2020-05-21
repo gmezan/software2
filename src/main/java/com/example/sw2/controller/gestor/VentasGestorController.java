@@ -38,7 +38,7 @@ public class VentasGestorController {
                           @RequestParam("id2") int id2) {
         if(bindingResult.hasErrors()){
             model.addAttribute("lista", ventasRepository.findAll());
-            model.addAttribute("msg", "ERROR");
+            model.addAttribute("msgError", "ERROR");
             return "gestor/ventas";
         }
         else {

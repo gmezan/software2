@@ -19,10 +19,10 @@ public class Comunidades implements Serializable {
 
     @Id
     @NotBlank
-    @Size(max = 2, message = "El codigo debe contener 2 caracteres" )
+    @Size(max = 2, message = "El codigo debe contener 2-4 caracteres" )
     private String codigo;
     @NotBlank
-    @Size(max = 45, message = "El codigo debe contener 45 caracteres" )
+    @Size(max = 45, message = "El nombre debe contener 45 caracteres" )
     @Column(nullable = false)
     private String nombre;
     @LastModifiedDate

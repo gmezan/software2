@@ -122,7 +122,7 @@
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                          aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="perfilGestor.html">
+                        <a class="dropdown-item" th:href="@{/gestor/perfil}">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Perfil
                         </a>
@@ -144,7 +144,7 @@
         <footer th:fragment="footer" class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <em><small><span>@crashitos &copy; sw2</span></small></em>
+                    <em><small><span>@Software para telecomunicaciones 2 &copy; Mosqoy - 2020</span></small></em>
                 </div>
             </div>
         </footer>
@@ -156,7 +156,7 @@
             class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
             
             <li class="nav-item " th:classappend="${param1=='Perfil'}? active : ''">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="perfilGestor.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/gestor/perfil}">
                 <i class="fas fa-hard-hat"></i>
                 <div class="sidebar-brand-text mx-3">Gestor Principal</div>
             </a>
@@ -288,15 +288,15 @@
                 <div class="modal-content">
                     <form th:action="@{/logout}" method="post">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Cerrar Sesión</h5>
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <div class="modal-body">Seleccione "Cerrar sesión" si está listo para cerrar su sesión actual.</div>
                         <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" >Logout</button>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" >Cerrar sesión</button>
                         </div>
 
                     </form>
