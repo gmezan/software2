@@ -31,7 +31,10 @@
                             </button>
                         </div>
 
-                        <div id="msgArtesanos" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+                        <div  th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+                        <div id="msgArtesanos" th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
+
+
                         <!-- Database Table -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -174,13 +177,25 @@
                         <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <form method="get" th:action="@{/gestor/artesano/delete}" th:object="${artesano}">
-                        <div class="modal-body">
+                        <div id="deleteModalBody" class="modal-body">
                             <input hidden type="text" class="form-control" th:field="*{codigo}" >
-                            <p>¿Seguro que desea borrar este Artesano? Esta acción no se puede deshacer.</p>
+                            <p id="deleteModalBodyP"></p>
+                            <table hidden class="table" id="tableModal">
+                                <thead>
+                                    <tr>
+                                        <th>Codigo</th>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+
+                                </tbody>
+                            </table>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                            <button hidden id="buttonDelete" type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
                         </div>
                     </form>
                 </div>

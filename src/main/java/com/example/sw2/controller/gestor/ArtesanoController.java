@@ -55,7 +55,7 @@ public class ArtesanoController {
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", artesanosRepository.findAll());
             model.addAttribute("comunidades", comunidadesRepository.findAll());
-            model.addAttribute("msg", "ERROR");
+            model.addAttribute("msgError", "ERROR");
             return "gestor/artesanos";
         }
         else {
@@ -97,15 +97,24 @@ public class ArtesanoController {
     public ResponseEntity<Optional<Artesanos>> getCat(@RequestParam(value = "id") String id){
 
         return new ResponseEntity<>(artesanosRepository.findById(id), HttpStatus.OK);
-
     }
 
     //Has items
     @ResponseBody
     @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Inventario>> hasItems(@RequestParam(value = "id") String id){
-
-        return new ResponseEntity<>(inventarioRepository.findInventariosByArtesanos_Codigo(id),HttpStatus.OK);
+    public ResponseEntity<List<HashMap<String,String>>> hasItems(@RequestParam(value = "id") String id){
+        return new ResponseEntity<>(new ArrayList<HashMap<String,String>>() {{
+            Objects.requireNonNull(artesanosRepository.findById(id).orElse(null)).getInventario().forEach((i)->
+            {
+                add(new HashMap<String, String>() {
+                    {
+                        put("codigo", i.getCodigoinventario());
+                        put("producto", i.getProductos().getNombre());
+                        put("cantidad", Integer.toString(i.getCantidadtotal()));
+                    }
+                });
+            });
+        }},
+                HttpStatus.OK);
     }
-
 }
