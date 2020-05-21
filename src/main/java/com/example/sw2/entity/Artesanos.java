@@ -111,4 +111,9 @@ public class Artesanos implements Serializable {
     public void setFechacreacion(LocalDateTime fechacreacion) {
         this.fechacreacion = fechacreacion;
     }
+
+    public String getPartialFullname(){
+        return this.nombre + " " + this.apellidopaterno;
+    }
+
 }
