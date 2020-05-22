@@ -1,17 +1,16 @@
 package com.example.sw2.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name="Categorias")
@@ -31,6 +30,18 @@ public class Categorias implements Serializable {
     @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categorias")
+    private List<Inventario> inventario;
+
+    public List<Inventario> getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(List<Inventario> inventario) {
+        this.inventario = inventario;
+    }
 
     public Categorias(){
         this.fechacreacion=LocalDateTime.now();

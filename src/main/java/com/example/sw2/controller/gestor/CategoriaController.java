@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/gestor/categoria")
@@ -92,6 +92,25 @@ public class CategoriaController {
         catch (IOException ex){
             return new ResponseEntity<>(ex.toString(), HttpStatus.ACCEPTED);
         }
+    }
+
+    //Has items
+    @ResponseBody
+    @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<HashMap<String,String>>> hasItem(@RequestParam(value = "id") String id){
+        return new ResponseEntity<>(new ArrayList<HashMap<String,String>>() {{
+            Objects.requireNonNull(categoriasRepository.findById(id).orElse(null)).getInventario().forEach((i)->
+            {
+                add(new HashMap<String, String>() {
+                    {
+                        put("codigo", i.getCodigoinventario());
+                        put("producto", i.getProductos().getNombre());
+                        put("cantidad", Integer.toString(i.getCantidadtotal()));
+                    }
+                });
+            });
+        }},
+                HttpStatus.OK);
     }
 
 }
