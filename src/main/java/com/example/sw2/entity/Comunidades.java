@@ -1,17 +1,16 @@
 package com.example.sw2.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name="Comunidades")
@@ -19,7 +18,7 @@ public class Comunidades implements Serializable {
 
     @Id
     @NotBlank
-    @Size(max = 2, message = "El codigo debe contener 2-4 caracteres" )
+    @Size(max = 2, message = "El codigo debe contener 2 caracteres" )
     private String codigo;
     @NotBlank
     @Size(max = 45, message = "El nombre debe contener 45 caracteres" )
@@ -32,10 +31,24 @@ public class Comunidades implements Serializable {
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comunidades")
+    private List<Artesanos> artesanos;
+
+
+
+
+    public List<Artesanos> getArtesanos() {
+        return artesanos;
+    }
+
+    public void setArtesanos(List<Artesanos> artesanos) {
+        this.artesanos = artesanos;
+    }
+
     public Comunidades(){
         this.fechacreacion=LocalDateTime.now();
     }
-
 
     public String getCodigo() {
         return codigo;

@@ -48,46 +48,50 @@
                                            cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Código del Producto</th>
-                                                <th>Nombre del producto</th>
+                                                <th>#</th>
                                                 <th>Nombre del cliente</th>
                                                 <th>Tipo de documento</th>
                                                 <th>N° de documento</th>
-                                                <th>RUC/DNI</th>
-                                                <th>Cantidad vendida</th>
-                                                <th>Precio total</th>
                                                 <th>Fecha de venta</th>
                                                 <th>Lugar de venta</th>
+                                                <th>RUC/DNI</th>
+                                                <th>Código del Producto</th>
+                                                <th>Nombre del producto</th>
+                                                <th>Cantidad vendida</th>
+                                                <th>Precio total</th>
                                                 <th>Editar/Borrar</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>Código del Producto</th>
-                                                <th>Nombre del producto</th>
+                                                <th>#</th>
                                                 <th>Nombre del cliente</th>
                                                 <th>Tipo de documento</th>
                                                 <th>N° de documento</th>
-                                                <th>RUC/DNI</th>
-                                                <th>Cantidad vendida</th>
-                                                <th>Precio total</th>
                                                 <th>Fecha de venta</th>
                                                 <th>Lugar de venta</th>
+                                                <th>RUC/DNI</th>
+                                                <th>Código del Producto</th>
+                                                <th>Nombre del producto</th>
+                                                <th>Cantidad vendida</th>
+                                                <th>Precio total</th>
                                                 <th>Editar/Borrar</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr th:each="item : ${lista}">
-                                                <td th:text="${item.inventario.codigoinventario}"></td>
-                                                <td th:text="${item.inventario.productos.nombre}"></td>
+                                            <tr th:each="item, index : ${lista}">
+                                                <td th:text="${index.count}"></td>
                                                 <td th:text="${item.nombrecliente}"></td>
                                                 <td th:text="${item.id.tipodocumento}"></td>
                                                 <td th:text="${item.id.numerodocumento}"></td>
-                                                <td th:text="${item.rucdni}"></td>
-                                                <td th:text="${item.cantidad}"></td>
-                                                <td th:text="${item.precioventa*item.cantidad}"></td>
                                                 <td th:text="${item.fecha}"></td>
                                                 <td th:text="${item.lugarventa}"></td>
+                                                <td th:text="${item.rucdni}"></td>
+                                                <td th:text="${item.inventario.codigoinventario}"></td>
+                                                <td th:text="${item.inventario.productos.nombre}"></td>
+                                                <td th:text="${item.cantidad}"></td>
+                                                <td th:text="${item.precioventa*item.cantidad}"></td>
+
                                                 <td>
                                                     <button th:attr="data-id1=${item.id.numerodocumento}, data-id2=${item.id.tipodocumento}"
                                                             data-toggle="modal" data-target="#formModal"

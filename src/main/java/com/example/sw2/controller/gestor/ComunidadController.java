@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/gestor/comunidad")
@@ -65,14 +65,15 @@ public class ComunidadController {
                             RedirectAttributes attr) {
         Optional<Comunidades> c = comunidadesRepository.findById(id);
         if (c.isPresent()) {
-            try{
+            /* :(try{
                 comunidadesRepository.deleteById(id);
                 attr.addFlashAttribute("msg","Comunidad borrada exitosamente");
             }
             catch (Exception e){
                 attr.addFlashAttribute("msg", "Esta comunidad no se puede borrar, se está usando");
-            }
-
+            }*/
+            comunidadesRepository.deleteById(id);
+            attr.addFlashAttribute("msg","Comunidad borrada exitosamente");
 
         }
         return "redirect:/gestor/comunidad";
@@ -83,5 +84,24 @@ public class ComunidadController {
     @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<Comunidades>> getCom(@RequestParam(value = "id") String id){
         return new ResponseEntity<>(comunidadesRepository.findById(id), HttpStatus.OK);
+    }
+
+    //Has items
+    @ResponseBody
+    @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<HashMap<String,String>>> hasItems(@RequestParam(value = "id") String id){
+        return new ResponseEntity<>(new ArrayList<HashMap<String,String>>() {{
+            Objects.requireNonNull(comunidadesRepository.findById(id).orElse(null)).getArtesanos().forEach((i)->
+            {
+                add(new HashMap<String, String>() {
+                    {
+                        put("codigo", i.getCodigo());
+                        put("nombre", i.getNombre());
+                        put("apellido", i.getApellidopaterno());
+                    }
+                });
+            });
+        }},
+                HttpStatus.OK);
     }
 }
