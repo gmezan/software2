@@ -1,6 +1,7 @@
 package com.example.sw2.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,6 +39,7 @@ public class Usuarios implements Serializable {
     private String correo;
     @Column(nullable = false)
     @Size(max = 256, message = "Debe contener 256 caracteres como maximo")
+    @JsonIgnore
     @NotBlank
     private String password;
     @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
@@ -95,10 +97,8 @@ public class Usuarios implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;//new BCryptPasswordEncoder().encode(password);
+        this.password = new BCryptPasswordEncoder().encode(password);
     }
-
-    public void setRawPassword(String ps){this.password = ps ;}
 
     public String getTelefono() {
         return telefono;
@@ -152,5 +152,15 @@ public class Usuarios implements Serializable {
     public String getFullname(){
         return this.nombre + " " + this.apellido;
     }
+
+
+    public Usuarios updateFields(Usuarios u2){
+        nombre = u2.getNombre();
+        apellido = u2.getApellido();
+        correo = u2.getCorreo();
+        telefono = u2.getTelefono();
+        return this;
+    }
+
 
 }

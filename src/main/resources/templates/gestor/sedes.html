@@ -179,9 +179,9 @@
                         <input type="text" class="form-control" th:field="*{telefono}" placeholder="Telefono">
                         <div class="text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Error</div>
                     </div>
-                    <div class="form-group">
+                    <div hidden id="passwordField" class="form-group">
                         <label  class="col-form-label">Contraseña:</label>
-                        <input type="text" class="form-control" th:field="*{password}" placeholder="Contraseña">
+                        <input type="password" class="form-control" th:field="*{password}" placeholder="Contraseña">
                         <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</div>
                     </div>
                     <div class="form-group">

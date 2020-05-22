@@ -6,8 +6,8 @@ $(document).on("click",".edit-Gestor", function(){
     $("#formModal #apellido").val('');
     $("#formModal #correo").val('');
     $("#formModal #telefono").val('');
-    $("#formModal #password").val('');
     $("#formModal  #type").val('0');
+    $("#formModal  #passwordField").prop("hidden",true).prop("disabled",true);
     $.ajax({
         method:"GET", url:contextPath + $(this).data('id')
     }).done(function(gestor){
@@ -17,7 +17,6 @@ $(document).on("click",".edit-Gestor", function(){
             $("#formModal #apellido").val(gestor.apellido);
             $("#formModal #correo").val(gestor.correo);
             $("#formModal #telefono").val(gestor.telefono);
-            $("#formModal #password").val(gestor.password);
             $("#formModal #foto").attr("src",gestor.foto).attr("hidden",gestor.foto==="");
         }
     }).fail(function (err) {
@@ -32,8 +31,9 @@ $(document).on("click",".new-Gestor", function(){
     $("#formModal #apellido").val('');
     $("#formModal #correo").val('');
     $("#formModal #telefono").val('');
-    $("#formModal #password").val('');
     $("#formModal  #type").val('1');
+    $("#formModal  #passwordField").prop("hidden",false).prop("disabled",false);
+    $("#formModal #password").val('');
 });
 $(document).on("click",".delete-Gestor", function(){
     $("#deleteModal #idusuarios").val($(this).data('id'));

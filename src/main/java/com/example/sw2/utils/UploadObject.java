@@ -10,6 +10,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.sw2.constantes.CustomConstants;
+import com.example.sw2.entity.Usuarios;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -119,9 +120,22 @@ public class UploadObject {
                 e.printStackTrace();
             }
         }
-        return "";
+        return null;
 
     }
+
+    public static void uploadProfilePhoto(Usuarios u, MultipartFile multipartFile){
+        if (multipartFile!=null && !multipartFile.isEmpty()){
+            try {
+                String name = Integer.toString(u.getIdusuarios()* CustomConstants.BIGNUMBER).hashCode()+Integer.toString(u.getIdusuarios());
+                u.setFoto(UploadObject.uploadPhoto(name,multipartFile, CustomConstants.PERFIL));
+            }
+            catch (Exception ex){
+                ex.fillInStackTrace();
+            }
+        }
+    }
+
 
 
 

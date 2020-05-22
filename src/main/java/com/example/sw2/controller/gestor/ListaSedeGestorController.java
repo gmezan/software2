@@ -43,7 +43,6 @@ public class ListaSedeGestorController {
                           @RequestParam(name = "photo", required = false) MultipartFile multipartFile,
                           @RequestParam("type") int type,
                           RedirectAttributes attr, Model model) {
-        String url;
 
         if(type==1 && usuariosRepository.findById(usuarios.getIdusuarios()).isPresent()){ //if new
             bindingResult.rejectValue("idusuarios","error.user","Este dni ya existe");
@@ -60,37 +59,17 @@ public class ListaSedeGestorController {
             return "gestor/sedes";
         }
         else {
-            Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,usuarios.getIdusuarios());
+            Optional<Usuarios> optionalUsuarios = usuariosRepository.findById(usuarios.getIdusuarios());
             if (optionalUsuarios.isPresent()) {
-                Usuarios u = optionalUsuarios.get();
-                u.setRawPassword(usuarios.getPassword());
-                u.setNombre(usuarios.getNombre());
-                u.setApellido(usuarios.getApellido());
-                u.setTelefono(usuarios.getTelefono());
-                u.setCorreo(usuarios.getCorreo());
-                usuarios.setFoto(u.getFoto());
-                usuarios = u;
+                usuarios = optionalUsuarios.get().updateFields(usuarios); // actualizar
+                if (usuarios.getRoles().getIdroles()!=ROL_CRUD) return "redirect:/gestor/sede";
                 attr.addFlashAttribute("msg", "Sede actualizada exitosamente");
             }
             else {
                 attr.addFlashAttribute("msg", "Sede creada exitosamente");
-                Roles roles = new Roles(); roles.setIdroles(ROL_CRUD);
-                usuarios.setRoles(roles);
+                usuarios.setRoles(new Roles(){{setIdroles(ROL_CRUD);}});
             }
-            if (multipartFile!=null && !multipartFile.isEmpty()){
-                try {
-                    //pseudo random number
-                    String name = Integer.toString(usuarios.getIdusuarios()* CustomConstants.BIGNUMBER).hashCode()+Integer.toString(usuarios.getIdusuarios());
-                    System.out.println(name);
-                    url = UploadObject.uploadPhoto(name,
-                            multipartFile, CustomConstants.PERFIL);
-                    usuarios.setFoto(url);
-                }
-                catch (Exception ex){
-                    ex.fillInStackTrace();
-                }
-            }
-
+            UploadObject.uploadProfilePhoto(usuarios,multipartFile);
             usuariosRepository.save(usuarios);
             return "redirect:/gestor/sede";
         }
@@ -112,7 +91,6 @@ public class ListaSedeGestorController {
     @ResponseBody
     @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<Usuarios>> getCat(@RequestParam(value = "id") int id){
-
         return new ResponseEntity<>(usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id), HttpStatus.OK);
     }
 

@@ -62,7 +62,6 @@ public class GestoresController {
             Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,usuarios.getIdusuarios());
             if (optionalUsuarios.isPresent()) {
                 Usuarios u = optionalUsuarios.get();
-                u.setRawPassword(usuarios.getPassword());
                 u.setNombre(usuarios.getNombre());
                 u.setApellido(usuarios.getApellido());
                 u.setTelefono(usuarios.getTelefono());
