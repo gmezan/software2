@@ -9,6 +9,7 @@ import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.InventarioRepository;
 import com.example.sw2.repository.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -54,11 +55,11 @@ public class SedeController {
 
     //Web service
     @ResponseBody
-    @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/productosPorConfirmar/get",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<AsignadosSedes>> getAsignsede(@RequestParam(value = "idgestor") int idgestor,
                                                                  @RequestParam(value = "idsede") int idsede,
                                                                  @RequestParam(value = "idproductoinv") String idproductoinv,
-                                                                 @RequestParam(value = "idfechaenvio") LocalDate idfechaenvio){
+                                                                 @RequestParam(value = "idfechaenvio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate idfechaenvio){
 
 
         return new ResponseEntity<>(asignadosSedesRepository.findById(new AsignadosSedesId(usuariosRepository.findById(idgestor).get(),

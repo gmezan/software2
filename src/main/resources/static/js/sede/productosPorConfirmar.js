@@ -17,9 +17,12 @@ $(document).on("click",".conf-Produc", function(){
     $("#confirmarRecepcionModal  #fechaenvio").text('');
     $("#confirmarRecepcionModal  #foto").text('');
 
+
+    let url = contextPath + "/get?idgestor=" + $(this).data('id1') + "&idsede=" + $(this).data('id2')
+        + "&idproductoinv=" + $(this).data('id3') + "&idfechaenvio=" + $(this).data('id4');
+
     $.ajax({
-        method:"GET", url:contextPath + "/get?idgestor=" + $(this).data('idgestor') + "&idsede=" + $(this).data('idsede')
-            + "&idproductoinv=" + $(this).data('idproductoinv') + "&idfechaenvio=" + $(this).data('idfechaenvio')
+        method:"GET", url:url
     }).done(function(asignsede){
         if (asignsede!=null){
             $("#confirmarRecepcionModal  #idtienda").val(asignsede.idgestor);
