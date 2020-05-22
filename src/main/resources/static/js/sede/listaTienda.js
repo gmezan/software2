@@ -23,7 +23,7 @@ $(document).on("click",".new-Tienda", function(){
     $("#EditarTiendaModal  #idtienda").val('0');
     $("#EditarTiendaModal  #nombre").val('');
     $("#EditarTiendaModal  #direccion").val('');
-    $("#  #type").val('1');
+    $("#EditarTiendaModal  #type").val('1');
 });
 $(document).on("click",".delete-Tienda", function(){
     $("#deleteTiendaModal #idtienda").val($(this).data('id'));

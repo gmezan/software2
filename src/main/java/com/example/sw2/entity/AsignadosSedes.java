@@ -35,6 +35,10 @@ public class AsignadosSedes implements Serializable {
     private LocalDateTime fechacreacion;
     private String mensaje;
 
+    public AsignadosSedesId getId() { return id; }
+
+    public void setId(AsignadosSedesId id) { this.id = id; }
+
     public int getStock() {
         return stock;
     }

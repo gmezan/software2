@@ -75,7 +75,7 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr th:each="prodConfirm, i : ${listaProductosPorConfirmar}">
+
 
                                                 <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
                                                          alt=""  height=100 style="width: auto;"></td>
@@ -86,9 +86,9 @@
                                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#registrarVentaModal" data-whatever="@mdo"><i class="fas fa-dollar-sign"></i></button>
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-external-link-alt"></i></button>
+                                                    <button type="button" class="btn btn-danger"><i class="fas fa-undo-alt"></i></button>
                                                 </td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -171,7 +171,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="AsignarProductoModal" tabindex="-1" role="dialog" aria-labelledby="AsignarProductoModal" aria-hidden="true">
+        <!--div class="modal fade" id="AsignarProductoModal" tabindex="-1" role="dialog" aria-labelledby="AsignarProductoModal" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -204,7 +204,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div-->
 
         <!-- Bootstrap core JavaScript-->
         <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
