@@ -39,7 +39,7 @@ $(document).on("click",".delete-Comunidad", function(){
             $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
         }
         else {
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La comunidad no se puede borrar, está asociada a los siguientes artesanos:")
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La comunidad no se puede borrar, está asociada a " + data.length + " artesanos:")
             $("#deleteModal #deleteModalBody #tableModal").prop("hidden",false);
             $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
             let r = [], j = -1;
