@@ -49,8 +49,8 @@ public class SedeController {
 
     }
 
-    @GetMapping("listaProductosConfirmados")
-    public String listaProductosConfirmados( HttpSession session, Model model){
+    @GetMapping("productosConfirmados")
+    public String productosConfirmados( HttpSession session, Model model){
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
 
@@ -59,8 +59,8 @@ public class SedeController {
 
     }
 
-    @PostMapping("productosConfirmados")
-    public String productosConfirmados(@RequestParam(value = "idgestor") int idgestor,
+    @PostMapping("confirmarRecepcion")
+    public String confirmarRecepcion(@RequestParam(value = "idgestor") int idgestor,
                                        @RequestParam(value = "idsede") int idsede,
                                        @RequestParam(value = "idproductoinv") String idproductoinv,
                                        @RequestParam(value = "idfechaenvio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate idfechaenvio){
@@ -77,9 +77,29 @@ public class SedeController {
 
     }
 
+    @PostMapping("registrarProblema")
+    public String registrarProblema(@RequestParam(value = "mensaje") String mensaje,
+                                    @RequestParam(value = "idgestor") int idgestor,
+                                    @RequestParam(value = "idsede") int idsede,
+                                    @RequestParam(value = "idproductoinv") String idproductoinv,
+                                    @RequestParam(value = "idfechaenvio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate idfechaenvio){
+
+        Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById( new AsignadosSedesId(usuariosRepository.findById(idgestor).get(), usuariosRepository.findById(idsede).get(),
+                inventarioRepository.findById(idproductoinv).get(),
+                idfechaenvio));
+
+        if (asignadosSedesOptional!=null){
+            AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
+            asignadosSedes.setCodEstadoAsignacion(3);
+            asignadosSedes.setMensaje(mensaje);
+        }
+        return "redirect:/sede/productosPorConfirmar";
+
+    }
+
     //Web service
     @ResponseBody
-    @GetMapping(value = "/productosPorConfirmar/get",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/productosPorConfirmar/get","registrarProblema/get"},produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<AsignadosSedes>> getAsignsede(@RequestParam(value = "idgestor") int idgestor,
                                                                  @RequestParam(value = "idsede") int idsede,
                                                                  @RequestParam(value = "idproductoinv") String idproductoinv,

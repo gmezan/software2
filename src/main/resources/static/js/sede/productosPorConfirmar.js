@@ -42,7 +42,7 @@ $(document).on("click",".conf-Produc", function(){
         }
     }).fail(function (err) {
         console.log(err);
-        $('#EditarTiendaModal').modal('hide');
+        $('#confirmarRecepcionModal').modal('hide');
         alert("Ocurrió un error");
     })
 });

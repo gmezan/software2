@@ -48,7 +48,7 @@
                                                 <th>Comunidad</th>
                                                 <th>Precio de venta (Dolar)</th>
                                                 <th>Stock total</th>
-                                                <th>Stock (productos no asignados)</th>
+                                                <th>Stock (productos no asignados a una tienda)</th>
                                                 <th>Fecha de asignacion</th>
                                                 <th>Foto</th>
                                                 <th>Asignar a una tienda</th>
@@ -66,7 +66,7 @@
                                                 <th>Comunidad</th>
                                                 <th>Precio de venta (Dolar)</th>
                                                 <th>Stock total</th>
-                                                <th>Stock (productos no asignados)</th>
+                                                <th>Stock (productos no asignados a una tienda)</th>
                                                 <th>Fecha de asignacion</th>
                                                 <th>Foto</th>
                                                 <th>Asignar a una tienda</th>
@@ -85,7 +85,7 @@
                                                 <td th:text="${prodConfirm.id.productoinventario.comunidades.nombre}"></td>
                                                 <td th:text="${prodConfirm.precioventa}"></td>
                                                 <td th:text="${prodConfirm.stock}"></td>
-
+                                                <td th:text="${prodConfirm.cantidadactual}"></td>
                                                 <td th:text="${prodConfirm.id.fechaenvio}"></td>
                                                 <td>
                                                     <div class="progress mx-auto" style="height: 100px;width: 100px;">
@@ -243,6 +243,7 @@
 
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
+
 
     </body>
 
