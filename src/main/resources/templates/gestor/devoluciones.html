@@ -66,9 +66,9 @@
                                 <tr th:each="d, index : ${devueltos}">
                                     <td th:text="${index.count}"></td>
                                     <td th:text=""></td>
-                                    <td th:text="${d.id.productoinventario.productos.nombre}"></td>
-                                    <td th:text="${d.stock}"></td>
-                                    <td th:text="${d.id.gestor.nombre} + ' ' ${d.id.gestor.apellido}"></td>
+                                    <td th:text="${d.nombreproducto}"></td>
+                                    <td th:text="${d.cantidad}"></td>
+                                    <td th:text="${d.nombre} + ' ' ${d.apellido}"></td>
                                     <td>
                                         <button
                                                 data-toggle="modal" data-target="#formModal"
@@ -131,66 +131,6 @@
 
 <!-- Page level custom scripts -->
 <script th:src="@{/js/demo/datatables-demo.js}"></script>
-<script th:src="@{/js/gestor/venta.js}"></script>
-
-<!-- Modal Form-->
-<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Editar Venta</h5>
-                <button type="button" th:href="@{/gestor/venta}" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post" th:action="@{/gestor/venta/save}" th:object="${venta}">
-
-                    <input type="hidden" class="form-control" id="id12" name="id1" >
-                    <input type="hidden" class="form-control" id="id21" name="id2" >
-
-                    <div class="form-group">
-                        <label  class="col-form-label">Ruc/Dni:</label>
-                        <input type="text" class="form-control" th:field="*{rucdni}">
-                        <div class="text-danger" th:if="${#fields.hasErrors('rucdni')}" th:errors="*{rucdni}">Error</div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-form-label">Nombre del cliente:</label>
-                        <input type="text" class="form-control" th:field="*{nombrecliente}">
-                        <div class="text-danger" th:if="${#fields.hasErrors('nombrecliente')}" th:errors="*{nombrecliente}">Error</div>
-                    </div>
-                    <div class="modal-footer">
-                        <a type="button" th:href="@{/gestor/venta}"  class="btn btn-secondary" >Cancelar</a>
-                        <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Actualizar</a></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Delete -->
-<div id="deleteModal" class="modal fade">
-    <div class="modal-dialog modal-confirm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Borrar Venta</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <form method="get" th:action="@{/gestor/venta/delete}" th:object="${venta}">
-                <div class="modal-body">
-                    <input type="hidden" class="form-control" id="id1" name="id1">
-                    <input type="hidden" class="form-control" id="id2" name="id2">
-                    <p>¿Seguro que desea borrar esta venta? Esta acción no se puede deshacer.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 
 </body>
