@@ -1,16 +1,12 @@
 package com.example.sw2.entity;
 import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.CustomConstants;
-import org.apache.el.lang.ELSupport;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -67,7 +63,7 @@ public class AsignadosSedes implements Serializable {
         return codEstadoAsignacion;
     }
     public String getnombreEstadoAsignacion() {
-        return CustomConstants.getEstadoAsignación().get(this.codEstadoAsignacion);
+        return CustomConstants.getEstadoAsignacion().get(this.codEstadoAsignacion);
     }
     public void setCodEstadoAsignacion(int codEstadoAsignacion) {
         this.codEstadoAsignacion = codEstadoAsignacion;
