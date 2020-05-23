@@ -22,7 +22,7 @@ public class DevolucionesController {
     public String ListaDevoluciones(Model model){
 
         model.addAttribute("devueltos", asignadosSedesRepository.findAll());
-        return "/gestor/devoluciones";
+        return "gestor/devoluciones";
     }
 
     @PostMapping("/confirmar")
