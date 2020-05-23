@@ -12,6 +12,7 @@ $("#addForm #linea").on('change', function() {
             if (lista!=null){
                 let len = lista.length;
                 $("#addForm #productos").empty();
+                $("#addForm #productos").append("<option value=''>--- Seleccionar ---</option>");
                 for( let i = 0; i<len; i++){
                     $("#addForm #productos").append("<option value='"+lista[i].codigonom+"'>"+lista[i].nombre+"</option>");
                 }
@@ -27,7 +28,25 @@ $("#addForm #linea").on('change', function() {
 $("#addForm #codAdquisicion").on('change', function() {
     let cond = this.value==='0';
         $("#addForm #artesanoConsignacion").prop("hidden",cond).prop("disabled",cond);
-        if (cond)$("#addForm #artesanos").empty();
+        if (cond){
+            $("#addForm #artesanos").empty();
+        }else {
+            let option = $("#addForm #comunidades").val();
+            $.ajax({
+                method:"GET", url:contextPath+ "/getArtesanos?comunidad=" + option
+            }).done(function(lista){
+                if (lista!=null){
+                    let len = lista.length;
+                    $("#addForm #artesanos").empty();
+                    $("#addForm #artesanos").append("<option value=''>--- Seleccionar ---</option>");
+                    for( let i = 0; i<len; i++){
+                        $("#addForm #artesanos").append("<option value='"+lista[i].codigo+"'>"+lista[i].nombre+" "+lista[i].apellidopaterno+"</option>");
+                    }
+                }
+            }).fail(function (err) {
+                alert("Ocurrió un error");
+            })
+        }
 });
 
 
@@ -40,6 +59,7 @@ $("#addForm #comunidades").on('change', function() {
             if (lista!=null){
                 let len = lista.length;
                 $("#addForm #artesanos").empty();
+                $("#addForm #artesanos").append("<option value=''>--- Seleccionar ---</option>");
                 for( let i = 0; i<len; i++){
                     $("#addForm #artesanos").append("<option value='"+lista[i].codigo+"'>"+lista[i].nombre+" "+lista[i].apellidopaterno+"</option>");
                 }

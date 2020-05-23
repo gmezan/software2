@@ -58,7 +58,7 @@ public class InventarioController {
         return "gestor/inventarioGestorForm";
     }
 
-    @GetMapping(value = {"/save"})
+    @PostMapping(value = {"/save"})
     public String save(@ModelAttribute("inventario") @Valid Inventario inventario,
                        BindingResult bindingResult, Model m, RedirectAttributes attributes) {
 
@@ -69,9 +69,12 @@ public class InventarioController {
             m.addAttribute("lineas", CustomConstants.getLineas());
             m.addAttribute("listCat", categoriasRepository.findAll());
             m.addAttribute("listCom", comunidadesRepository.findAll());
+            m.addAttribute("listArt", artesanosRepository.findAll());
+            m.addAttribute("listProd", productosRepository.findAll());
+
             return "gestor/inventarioGestorForm";
         }
-        else {
+        else {/*
             //se necesita checar si hay un inventario idéntico para sumar
             Optional<Inventario> optionalInventario =
                     inventarioRepository.findById(inventario.getCodigoinventario());
@@ -84,8 +87,8 @@ public class InventarioController {
             else {
                 inventario.setCantidadgestor(inventario.getCantidadtotal());
             }
-            inventarioRepository.save(inventario);
-            attributes.addFlashAttribute("msg", "Inventario agregado correctamente");
+            inventarioRepository.save(inventario);*/
+            attributes.addFlashAttribute("msg", "LA VALIDACION PERFECTA");
 
             return "redirect:/gestor/inventario";
         }
@@ -93,14 +96,14 @@ public class InventarioController {
 
     //Web service
     @ResponseBody
-    @GetMapping(value = "/form/getLinea",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/form/getLinea","/save/getLinea"},produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Productos>> getCom(@RequestParam(value = "linea") String linea){
         return new ResponseEntity<>(productosRepository.findProductosByCodigolinea(linea), HttpStatus.OK);
     }
 
     //Web service
     @ResponseBody
-    @GetMapping(value = "/form/getArtesanos",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/form/getArtesanos","/save/getArtesanos"},produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Artesanos>> getArtesanos(@RequestParam(value = "comunidad") String comunidad){
         return new ResponseEntity<>(artesanosRepository.findArtesanosByComunidades_Codigo(comunidad), HttpStatus.OK);
     }
