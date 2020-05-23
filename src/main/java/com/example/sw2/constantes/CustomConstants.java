@@ -2,6 +2,8 @@ package com.example.sw2.constantes;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.*;
+
 
 public final class CustomConstants {
     public final static String AWS_BUCKET_NAME = "test-bucket-sw2-1";
@@ -21,7 +23,7 @@ public final class CustomConstants {
     private static final HashMap<Integer, String> tiposDocumento = new HashMap<>();
     private static final HashMap<Integer, String> estadoAsignacion = new HashMap<>();
     private static final LinkedHashMap<String, String> tamanhos = new LinkedHashMap<>();
-
+    public static final Calendar calendar = Calendar.getInstance();
     static {
         lineas.put("T", "Tradicional");
         lineas.put("M", "Mosqoy");
