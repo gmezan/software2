@@ -24,18 +24,18 @@ public class Usuarios implements Serializable {
     @Column(name = "dni")
     private int idusuarios;
     @Column(nullable = false)
-    @NotBlank
-    @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
+    @NotBlank(message = "Este campo no puede estar vacío")
+    @Size(max = 20, message = "Debe contener 20 caracteres como maximo")
     private String nombre;
-    @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
+    @Size(max = 20, message = "Debe contener 20 caracteres como maximo")
     @Column(nullable = false)
-    @NotBlank
+    @NotBlank(message = "Este campo no puede estar vacío")
     private String apellido;
 
     private String foto;
     @Column(nullable = false)
     @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
-    @NotBlank
+    @NotBlank(message = "Este campo no puede estar vacío")
     private String correo;
     @Column(nullable = false)
     @Size(max = 256, message = "Debe contener 256 caracteres como maximo")
