@@ -30,7 +30,6 @@ public class Inventario implements Serializable {
 
     @Column(name="tamanho",nullable =false)
     private String codtamanho;
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="comunidad",nullable =false)
     private Comunidades comunidades;

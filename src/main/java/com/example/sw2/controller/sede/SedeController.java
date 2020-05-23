@@ -3,6 +3,7 @@ package com.example.sw2.controller.sede;
 import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.VentasId;
 import com.example.sw2.entity.AsignadosSedes;
+import com.example.sw2.entity.EstadoAsignacion;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
 import com.example.sw2.repository.AsignadosSedesRepository;
@@ -48,9 +49,32 @@ public class SedeController {
 
     }
 
-    @GetMapping("productosConfirmados")
-    public String productosConfirmados(){
-        return "";
+    @GetMapping("listaProductosConfirmados")
+    public String listaProductosConfirmados( HttpSession session, Model model){
+
+        Usuarios sede = (Usuarios) session.getAttribute("usuario");
+
+        model.addAttribute("listaProductosConfirmados",asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
+        return "sede/ListaProductosConfirmados";
+
+    }
+
+    @PostMapping("productosConfirmados")
+    public String productosConfirmados(@RequestParam(value = "idgestor") int idgestor,
+                                       @RequestParam(value = "idsede") int idsede,
+                                       @RequestParam(value = "idproductoinv") String idproductoinv,
+                                       @RequestParam(value = "idfechaenvio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate idfechaenvio){
+
+        Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById( new AsignadosSedesId(usuariosRepository.findById(idgestor).get(), usuariosRepository.findById(idsede).get(),
+                inventarioRepository.findById(idproductoinv).get(),
+                idfechaenvio));
+
+        if (asignadosSedesOptional!=null){
+            AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
+            asignadosSedes.setCodEstadoAsignacion(2);
+        }
+            return "redirect:/sede/productosPorConfirmar";
+
     }
 
     //Web service
@@ -65,7 +89,7 @@ public class SedeController {
         return new ResponseEntity<>(asignadosSedesRepository.findById(new AsignadosSedesId(usuariosRepository.findById(idgestor).get(),
                                                                         usuariosRepository.findById(idsede).get(),
                                                                         inventarioRepository.findById(idproductoinv).get(),
-                idfechaenvio)), HttpStatus.OK);
+                                                                        idfechaenvio)), HttpStatus.OK);
     }
 
 }

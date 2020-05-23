@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public final class CustomConstants {
-    public final static String AWS_BUCKET_NAME="test-bucket-sw2-1";
+    public final static String AWS_BUCKET_NAME = "test-bucket-sw2-1";
     public final static String INVENTARIO = "inventario";
     public final static String PERFIL = "profile";
     public final static int BIGNUMBER = 1749183;
@@ -21,6 +21,7 @@ public final class CustomConstants {
     private static final LinkedHashMap<String, String> meses = new LinkedHashMap<>();
     private static final HashMap<Integer, String> tiposAdquisicion = new HashMap<>();
     private static final HashMap<Integer, String> tiposDocumento = new HashMap<>();
+    private static final HashMap<Integer, String> estadoAsignación = new HashMap<>();
     private static final LinkedHashMap<String, String> tamanhos = new LinkedHashMap<>();
 
     static {
@@ -54,6 +55,16 @@ public final class CustomConstants {
         tiposDocumento.put(3, "Recibo");
         tiposDocumento.put(4, "Transacción");
 
+        estadoAsignación.put(1, "Enviado a Sede");
+        estadoAsignación.put(2, "Recibido por Sede");
+        estadoAsignación.put(3, "Recibido con Problemas");
+        estadoAsignación.put(4, "Devuelto por Sede");
+
+
+    }
+
+    public static HashMap<Integer, String> getEstadoAsignación() {
+        return estadoAsignación;
     }
 
     public static LinkedHashMap<String, String> getLineas() {
