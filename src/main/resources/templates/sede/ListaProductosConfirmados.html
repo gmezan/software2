@@ -48,7 +48,7 @@
                                                 <th>Comunidad</th>
                                                 <th>Precio de venta (Dolar)</th>
                                                 <th>Stock total</th>
-                                                <th>Stock (productos no asignados)</th>
+                                                <th>Stock (productos no asignados a una tienda)</th>
                                                 <th>Fecha de asignacion</th>
                                                 <th>Foto</th>
                                                 <th>Asignar a una tienda</th>
@@ -66,7 +66,7 @@
                                                 <th>Comunidad</th>
                                                 <th>Precio de venta (Dolar)</th>
                                                 <th>Stock total</th>
-                                                <th>Stock (productos no asignados)</th>
+                                                <th>Stock (productos no asignados a una tienda)</th>
                                                 <th>Fecha de asignacion</th>
                                                 <th>Foto</th>
                                                 <th>Asignar a una tienda</th>
@@ -76,9 +76,30 @@
                                         </tfoot>
                                         <tbody>
 
-
-                                                <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                                                         alt=""  height=100 style="width: auto;"></td>
+                                            <tr th:if="${prodConfirm.codEstadoAsignacion==2}" th:each="prodConfirm, i : ${listaProductosConfirmados}">
+                                                <td th:text="${i.index + 1}">1</td>
+                                                <td th:text="${prodConfirm.id.productoinventario.codigoinventario}"></td>
+                                                <td th:text="${prodConfirm.id.productoinventario.productos.nombre}"></td>
+                                                <td th:text="${prodConfirm.id.productoinventario.color}"></td>
+                                                <td th:text="${prodConfirm.id.productoinventario.tamanho}"></td>
+                                                <td th:text="${prodConfirm.id.productoinventario.comunidades.nombre}"></td>
+                                                <td th:text="${prodConfirm.precioventa}"></td>
+                                                <td th:text="${prodConfirm.stock}"></td>
+                                                <td th:text="${prodConfirm.cantidadactual}"></td>
+                                                <td th:text="${prodConfirm.id.fechaenvio}"></td>
+                                                <td>
+                                                    <div class="progress mx-auto" style="height: 100px;width: 100px;">
+                                                        <img class="mx-auto my-auto mh-100 img-fluid"
+                                                             th:src="${prodConfirm.id.productoinventario.foto}"
+                                                             alt="">
+                                                    </div>
+                                                </td>
+                                                <!--td>
+                                                    <button th:attr="data-id1=${prodConfirm.id.gestor.idusuarios}, data-id2=${prodConfirm.id.sede.idusuarios}, data-id3=${prodConfirm.id.productoinventario.codigoinventario}, data-id4=${prodConfirm.id.fechaenvio}"
+                                                            type="button" class="conf-Produc btn btn-success "
+                                                            data-toggle="modal" data-target="#confirmarRecepcionModal">
+                                                        <i class="fas fa-check-circle"></i></button>
+                                                </td-->
                                                 <td>
                                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#AsignarProductoModal" data-whatever="@mdo"><i class="fas fa-store"></i></button>
                                                 </td>
@@ -88,7 +109,7 @@
                                                 <td>
                                                     <button type="button" class="btn btn-danger"><i class="fas fa-undo-alt"></i></button>
                                                 </td>
-
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -222,6 +243,7 @@
 
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
+
 
     </body>
 

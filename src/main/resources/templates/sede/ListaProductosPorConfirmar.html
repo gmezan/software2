@@ -73,7 +73,8 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr th:each="prodPorConfirm, i : ${listaProductosPorConfirmar}">
+                                            <tr th:if="${prodPorConfirm.codEstadoAsignacion==1}"
+                                                th:each="prodPorConfirm, i : ${listaProductosPorConfirmar}">
                                                 <td th:text="${i.index + 1}">1</td>
                                                 <td th:text="${prodPorConfirm.id.productoinventario.codigoinventario}"></td>
                                                 <td th:text="${prodPorConfirm.id.productoinventario.productos.nombre}"></td>
@@ -97,8 +98,10 @@
                                                         <i class="fas fa-check-circle"></i></button>
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-danger " data-toggle="modal"
-                                                            data-target="#problemaModal" data-whatever="@mdo"><i
+                                                    <button th:attr="data-id12=${prodPorConfirm.id.gestor.idusuarios}, data-id22=${prodPorConfirm.id.sede.idusuarios}, data-id32=${prodPorConfirm.id.productoinventario.codigoinventario}, data-id42=${prodPorConfirm.id.fechaenvio}"
+                                                            type="button" class="problem-Produc btn btn-danger "
+                                                            data-toggle="modal"
+                                                            data-target="#problemaModal"><i
                                                             class="fas fa-times"></i></button>
                                                 </td>
                                             </tr>
@@ -143,7 +146,8 @@
                         </a>
                     </div>
                     <div class="modal-body">
-                        <form method="get" th:action="@{/sede/productosConfirmados}">
+                        <form method="post" th:action="@{/sede/confirmarRecepcion}">
+
                             <input type="hidden" class="form-control" id="idgestor" name="idgestor">
                             <input type="hidden" class="form-control" id="idsede" name="idsede">
                             <input type="hidden" class="form-control" id="idproductoinv" name="idproductoinv">
@@ -151,23 +155,22 @@
 
                             <h6><b>Antes de confirmar, se recomienda verificar todos los datos del producto</b>
                             </h6></br>
-                            <h6 id="codinv"></h6>
-                            <h6 id="producto"></h6>
-                            <h6 id="color"></h6>
-                            <h6 id="tamanho"></h6>
-                            <h6 id="comunidad"></h6>
-                            <h6 id="precioventa"></h6>
-                            <h6 id="stock"></h6>
-                            <h6 id="fechaenvio"></h6>
-                            <h6>Foto:</h6></br>
+                            <h6><b>Codigo del inventario:</b></h6> <h6 id="codinv"></h6>
+                            <h6><b>Nombre:</b></h6> <h6 id="producto"></h6>
+                            <h6><b>Color:</b></h6> <h6 id="color"></h6>
+                            <h6><b>Tamaño:</b></h6> <h6 id="tamanho"></h6>
+                            <h6><b>Comunidad:</b></h6> <h6 id="comunidades"></h6>
+                            <h6><b>Precio de venta:</b></h6> <h6 id="precioventa"></h6>
+                            <h6><b>Stock:</b></h6> <h6 id="stock"></h6>
+                            <h6><b>Fecha de recepcion:</b></h6> <h6 id="fechaenvio"></h6>
+                            <h6><b>Foto:</b></h6></br>
                             <div class="form-group">
                                 <img id="foto" class="rounded-pill" width="100" style="height: auto;">
                             </div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-btn-primary"><a
-                                        style="color:white;text-decoration:none">Confirmar</a></button>
+                                <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Confirmar</a></button>
                             </div>
                         </form>
                     </div>
@@ -175,30 +178,37 @@
             </div>
         </div>
 
-        <div class="modal-body">
-            <div class="modal fade" id="problemaModal" tabindex="-1"
-                 role="dialog" aria-labelledby="problemaModal"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="exampleModalLabel2">
-                                <b>Descripcion del problema:</b></h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <textarea type="text" class="form-control"></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <a type="button" class="btn btn-primary" href="ListaProductosPorConfirmar">Confirmar</a>
-                        </div>
+        <div class="modal fade" id="problemaModal" tabindex="-1"
+             role="dialog" aria-labelledby="problemaModal"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel2">
+                            <b>Descripcion del problema:</b></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
+                    <div class="modal-body">
+                        <form method="post" th:action="@{/sede/registrarProblema}">
+                            <input type="hidden" class="form-control" id="idgestor12" name="idgestor">
+                            <input type="hidden" class="form-control" id="idsede22" name="idsede">
+                            <input type="hidden" class="form-control" id="idproductoinv32" name="idproductoinv">
+                            <input type="hidden" class="form-control" id="idfechaenvio42" name="idfechaenvio">
+
+                            <textarea type="text" class="form-control" id="mensaje" name="mensaje"></textarea>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Confirmar</a></button>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
             </div>
         </div>
+
 
         <!-- Bootstrap core JavaScript-->
         <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
@@ -217,7 +227,7 @@
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
         <script th:src="@{/js/sede/productosPorConfirmar.js}"></script>
-
+        <script th:src="@{/js/sede/registrarProblema.js}"></script>
 
     </body>
 

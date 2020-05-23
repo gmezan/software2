@@ -146,8 +146,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Editar Sede</h5>
-                <a type="button" th:href="@{/gestor/sede}" class="close"  aria-label="Close">
+                <h5 th:text="${formtype!=null && formtype.equals('1')}? 'Nueva Sede':'Editar Sede'" id="formTitle" class="modal-title"></h5>                <a type="button" th:href="@{/gestor/sede}" class="close"  aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
             </div>
@@ -156,32 +155,32 @@
                     <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                     <div class="form-group">
                         <label class="col-form-label">DNI:</label>
-                        <input  th:readonly="${sede.idusuarios!=0 && sede.idusuarios!=null && !#fields.hasErrors('idusuarios')}" type="text" class="form-control" th:field="*{idusuarios}" placeholder="DNI">
+                        <input  th:readonly="${sede.idusuarios!=0 && sede.idusuarios!=null && !#fields.hasErrors('idusuarios')}" type="text" class="form-control" th:field="*{idusuarios}">
                         <div class="text-danger" th:if="${#fields.hasErrors('idusuarios')}" th:errors="*{idusuarios}">Error</div>
                     </div>
                     <div class="form-group">
                         <label  class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre">
+                        <input type="text" class="form-control" th:field="*{nombre}">
                         <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
                     </div>
                     <div class="form-group">
                         <label  class="col-form-label">Apellido:</label>
-                        <input type="text" class="form-control" th:field="*{apellido}" placeholder="Apellido">
+                        <input type="text" class="form-control" th:field="*{apellido}">
                         <div class="text-danger" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error</div>
                     </div>
                     <div class="form-group">
                         <label  class="col-form-label">Correo:</label>
-                        <input type="text" class="form-control" th:field="*{correo}" placeholder="Correo">
+                        <input type="text" class="form-control" th:field="*{correo}">
                         <div class="text-danger" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Error</div>
                     </div>
                     <div class="form-group">
                         <label  class="col-form-label">Telefono:</label>
-                        <input type="text" class="form-control" th:field="*{telefono}" placeholder="Telefono">
+                        <input type="text" class="form-control" th:field="*{telefono}">
                         <div class="text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Error</div>
                     </div>
                     <div hidden id="passwordField" class="form-group">
                         <label  class="col-form-label">Contraseña:</label>
-                        <input type="password" class="form-control" th:field="*{password}" placeholder="Contraseña">
+                        <input type="password" class="form-control" th:field="*{password}">
                         <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</div>
                     </div>
                     <div class="form-group">

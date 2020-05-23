@@ -8,6 +8,7 @@ $(document).on("click",".edit-Gestor", function(){
     $("#formModal #telefono").val('');
     $("#formModal  #type").val('0');
     $("#formModal  #passwordField").prop("hidden",true).prop("disabled",true);
+    $("#formModal  #formTitle").text('Editar Sede');
     $.ajax({
         method:"GET", url:contextPath + $(this).data('id')
     }).done(function(gestor){
@@ -26,6 +27,7 @@ $(document).on("click",".edit-Gestor", function(){
     })
 });
 $(document).on("click",".new-Gestor", function(){
+    $("#formModal  #formTitle").text('Nueva Sede');
     $("#formModal #idusuarios").val('').prop("readonly", false);
     $("#formModal #nombre").val('');
     $("#formModal #apellido").val('');
@@ -34,6 +36,7 @@ $(document).on("click",".new-Gestor", function(){
     $("#formModal  #type").val('1');
     $("#formModal  #passwordField").prop("hidden",false).prop("disabled",false);
     $("#formModal #password").val('');
+    $("#formModal #foto").attr("hidden",true);
 });
 $(document).on("click",".delete-Gestor", function(){
     $("#deleteModal #idusuarios").val($(this).data('id'));
