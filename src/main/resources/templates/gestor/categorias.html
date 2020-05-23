@@ -26,7 +26,7 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-900">Categorías</h1>
                             <button data-toggle="modal" data-target="#formModal" class="new-Categoria d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                                <i class="fas fa-download fa-sm text-white-50"></i> Nueva Categoria</button>
+                                <i class="fas fa-plus-circle fa-sm text-white-50"></i> Nueva Categoria</button>
                         </div>
 
                         <div id="msgCategoria" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
@@ -44,7 +44,7 @@
                                                 <th>Nombre</th>
                                                 <th>Fecha de creacion</th>
                                                 <th>Ultima modificacion</th>
-                                                <th>Edit/Delete</th>
+                                                <th>Editar/Borrar</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -53,7 +53,7 @@
                                                 <th>Nombre</th>
                                                 <th>Fecha de creacion</th>
                                                 <th>Ultima modificacion</th>
-                                                <th>Edit/Delete</th>
+                                                <th>Editar/Borrar</th>
                                             </tr>
                                         </tfoot>
 
@@ -132,7 +132,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 id="formTitle" class="modal-title">Categoría</h5>
+                        <h5 th:text="${formtype!=null && formtype.equals('1')}? 'Nueva Categoria':'Editar Categoria'" id="formTitle" class="modal-title"></h5>
                         <a type="button" th:href="@{/gestor/categoria}" class="close"  aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </a>
@@ -170,13 +170,26 @@
                             <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                     <form method="get" th:action="@{/gestor/categoria/delete}" th:object="${categoria}">
-                        <div class="modal-body">
+                        <div id="deleteModalBody"  class="modal-body">
                             <input hidden type="text" class="form-control" th:field="*{codigo}" >
-                            <p>¿Seguro que desea borrar esta categoría? Esta acción no se puede deshacer.</p>
+                            <p id="deleteModalBodyP"></p>
+                            <table hidden class="table" id="tableModal">
+                                <thead>
+                                <tr>
+                                    <th>Codigo</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbody">
+
+                                </tbody>
+                            </table>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                            <button hidden id="buttonDelete" type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
                         </div>
                     </form>
                 </div>

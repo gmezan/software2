@@ -34,6 +34,7 @@ $(document).on("click",".new-Gestor", function(){
     $("#formModal  #type").val('1');
     $("#formModal  #passwordField").prop("hidden",false).prop("disabled",false);
     $("#formModal #password").val('');
+    $("#formModal #foto").attr("hidden",true);
 });
 $(document).on("click",".delete-Gestor", function(){
     $("#deleteModal #idusuarios").val($(this).data('id'));
