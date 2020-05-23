@@ -45,7 +45,6 @@
                                                 <th>Código del producto</th>
                                                 <th>Nombre del producto</th>
                                                 <th>Tamaño</th>
-                                                <th>Comunidad</th>
                                                 <th>Color</th>
                                                 <th>Precio de venta (Dolar)</th>
                                                 <th>Cantidad</th>
@@ -65,7 +64,6 @@
                                                 <th>Código del producto</th>
                                                 <th>Nombre del producto</th>
                                                 <th>Tamaño</th>
-                                                <th>Comunidad</th>
                                                 <th>Color</th>
                                                 <th>Precio de venta (Dolar)</th>
                                                 <th>Cantidad</th>
@@ -77,24 +75,23 @@
                                         <tbody>
                                             <tr th:each="product : ${listaVentas}">
                                                 <td th:text="${product.nombrecliente}"></td>
-                                                <td th:text="${product.tipodocumento}"></td>
-                                                <td th:text="${product.numerodocumento}"></td>
-                                                <td th:text="${product.fechaventa}"></td>
-                                                <td th:text="${product.lugarVenta}"></td>
+                                                <td th:text="${product.id.tipodocumento}"></td>
+                                                <td th:text="${product.id.numerodocumento}"></td>
+                                                <td th:text="${product.fecha}"></td>
+                                                <td th:text="${product.lugarventa}"></td>
                                                 <td th:text="${product.rucdni}"></td>
-                                                <td th:text="${product.codigoproducto}"></td>
-                                                <td th:text="${product.nombreproducto}"></td>
-                                                <td th:text="${product.tamanhoproducto}"></td>
-                                                <td th:text="${product.comunidadproducto}"></td>
-                                                <td th:text="${product.colorproducto}"></td>
+                                                <td th:text="${product.inventario.codigoinventario}"></td>
+                                                <td th:text="${product.inventario.productos.nombre}"></td>
+                                                <td th:text="${product.inventario.tamanho}"></td>
+                                                <td th:text="${product.inventario.color}"></td>
                                                 <td th:text="${product.precioventa}"></td>
-                                                <td th:text="${product.cantidadventa}"></td>
-                                                <td th:text="${product.cantidadventa * product.precioventa}"></td>
+                                                <td th:text="${product.cantidad}"></td>
+                                                <td th:text="${product.cantidad * product.precioventa}"></td>
                                                 <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
                                                          height=100 style="width: auto" >
                                                 </td>
                                                 <td>
-                                                    <button th:attr="data-id1=${product.numerodocumento}, data-id2=${product.tipodocumento}"
+                                                    <button th:attr="data-id1=${product.id.numerodocumento}, data-id2=${product.id.tipodocumento}"
                                                             data-toggle="modal" data-target="#deleteModal"
                                                             class="borrar-VentasCliente btn btn-datatable btn-icon btn-danger">Borrar</button></td>
                                                 <!--th:src="${product.fotoproducto}"-->

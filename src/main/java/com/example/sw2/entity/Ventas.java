@@ -51,7 +51,7 @@ public class Ventas implements Serializable {
         return id;
     }
 
-    public void setId(VentasId id) {
+    public void setId(VentasId   id) {
         this.id = id;
     }
 

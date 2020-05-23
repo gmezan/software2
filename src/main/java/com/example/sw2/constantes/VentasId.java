@@ -1,6 +1,6 @@
 package com.example.sw2.constantes;
 
-
+import com.example.sw2.constantes.CustomConstants;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
@@ -14,8 +14,8 @@ public class VentasId implements Serializable {
     @Column(name = "numerodocumento")
     private String numerodocumento;
 
-    public int getTipodocumento() {
-        return tipodocumento;
+    public String getTipodocumento() {
+        return CustomConstants.getTiposDocumento().get(this.tipodocumento);
     }
 
     public VentasId(){

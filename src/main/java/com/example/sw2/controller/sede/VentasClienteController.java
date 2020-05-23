@@ -23,7 +23,7 @@ public class VentasClienteController {
     public String ListVentasCliente(@ModelAttribute("ventas") Ventas ventas,
                                     Model model){
 
-        model.addAttribute("listaVentas", ventasRepository.obtenerDatosPorCliente());
+        model.addAttribute("listaVentas", ventasRepository.findAll());
         return "sede/ventasPorCliente";
     }
 
