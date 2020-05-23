@@ -37,11 +37,11 @@ $(document).on("click",".delete-Artesano", function(){
     }).done(function(data){
         if (data==null || data.length === 0){
             $("#deleteModal #codigo").val(id);
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar este Artesano? Esta acción no se puede deshacer.")
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar este Artesano? Esta acción no se puede deshacer.");
             $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
         }
         else {
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("El/La Artesana(o) no se puede borrar, esta asociada(o) a lo siguiente:")
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("El/La Artesana(o) no se puede borrar, esta asociada(o) a estos productos de inventario:")
             $("#deleteModal #deleteModalBody #tableModal").prop("hidden",false);
             $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
             let r = [], j = -1;
