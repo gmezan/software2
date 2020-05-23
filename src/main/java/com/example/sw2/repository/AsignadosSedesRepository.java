@@ -27,7 +27,7 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
             "FROM Asignados_sedes a\n"+
             "inner join Inventario i on (a.producto_inventario = i.codigo_inventario)\n" +
             "inner join Productos p on (i.producto = p.codigonom)\n"+
-            "inner join Usuarios u on (a.gsetor = u.dni)\n"+
+            "inner join Usuarios u on (a.gestor = u.dni)\n"+
             "group by a.estadoasignacion = 4",
             nativeQuery = true)
     List<DevolucionDto> DatosDevolucion();
