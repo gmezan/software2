@@ -1,5 +1,6 @@
 package com.example.sw2.entity;
 import com.example.sw2.constantes.AsignadosSedesId;
+import com.example.sw2.constantes.CustomConstants;
 import org.apache.el.lang.ELSupport;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -24,9 +25,8 @@ public class AsignadosSedes implements Serializable {
     private int cantidadactual;
     @Column(nullable = false)
     private BigDecimal precioventa;
-    @ManyToOne
-    @JoinColumn(name="estadoasignacion",nullable = false)
-    private EstadoAsignacion estadoAsignacion;
+    @Column(name="estadoasignacion",nullable = false)
+    private int codEstadoAsignacion;
     @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
@@ -63,12 +63,14 @@ public class AsignadosSedes implements Serializable {
         this.precioventa = precioventa;
     }
 
-    public EstadoAsignacion getEstadoAsignacion() {
-        return estadoAsignacion;
+    public int getCodEstadoAsignacion() {
+        return codEstadoAsignacion;
     }
-
-    public void setEstadoAsignacion(EstadoAsignacion estadoAsignacion) {
-        this.estadoAsignacion = estadoAsignacion;
+    public String getnombreEstadoAsignacion() {
+        return CustomConstants.getEstadoAsignación().get(this.codEstadoAsignacion);
+    }
+    public void setCodEstadoAsignacion(int codEstadoAsignacion) {
+        this.codEstadoAsignacion = codEstadoAsignacion;
     }
 
     public LocalDateTime getFechamodificacion() {
