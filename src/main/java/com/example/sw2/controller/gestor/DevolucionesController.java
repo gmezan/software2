@@ -21,7 +21,7 @@ public class DevolucionesController {
     @GetMapping(value = {"", "/"})
     public String ListaDevoluciones(Model model){
 
-        model.addAttribute("devueltos", asignadosSedesRepository.DatosDevolucion());
+        model.addAttribute("devueltos", asignadosSedesRepository.DatosDevolucion(4));
         return "gestor/devoluciones";
     }
 
