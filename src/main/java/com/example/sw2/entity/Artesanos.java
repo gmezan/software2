@@ -23,11 +23,14 @@ public class Artesanos implements Serializable {
     @Size(max = 4, min = 2, message = "El código debe contener entre 2 y 4 letras")
     private String codigo;
     @NotBlank(message = "Este campo no puede estar vacío")
+    @Size(max = 20, message = "El nombre debe tener menos de 20 caracteres")
     @Column(nullable =false)
     private String nombre;
+    @Size(max = 20, message = "El apellido debe tener menos de 20 caracteres")
     @NotBlank(message = "Este campo no puede estar vacío")
     @Column(nullable =false)
     private String apellidopaterno;
+    @Size(max = 20, message = "El nombre debe tener menos de 20 caracteres")
     private String apellidomaterno;
     @ManyToOne
     @JoinColumn(name="comunidad",nullable =false)

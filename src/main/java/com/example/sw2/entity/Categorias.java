@@ -21,7 +21,7 @@ public class Categorias implements Serializable {
     @Size(max = 1, message = "El codigo debe contener máximo 1 caracter" )
     private String codigo;
     @NotBlank
-    @Size(max = 20, message = "El codigo debe contener como máximo 20 caracteres" )
+    @Size(max = 10, message = "El nombre debe contener como máximo 10 caracteres" )
     @Column(nullable = false)
     private String nombre;
     @LastModifiedDate
