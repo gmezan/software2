@@ -48,7 +48,7 @@ public class ArtesanoController {
                           BindingResult bindingResult, @RequestParam("type") int type,
                           RedirectAttributes attr, Model model) {
         if(type==1 && artesanosRepository.findById(artesanos.getCodigo()).isPresent()){ //if new
-            bindingResult.rejectValue("codigo","error.user","Este codigo ya existe");
+            bindingResult.rejectValue("codigo","error.user","Este código ya existe");
         }
 
         if(bindingResult.hasErrors()){

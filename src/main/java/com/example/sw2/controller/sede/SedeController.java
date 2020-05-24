@@ -1,11 +1,8 @@
 package com.example.sw2.controller.sede;
 
 import com.example.sw2.constantes.AsignadosSedesId;
-import com.example.sw2.constantes.VentasId;
 import com.example.sw2.entity.AsignadosSedes;
-import com.example.sw2.entity.EstadoAsignacion;
 import com.example.sw2.entity.Usuarios;
-import com.example.sw2.entity.Ventas;
 import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.InventarioRepository;
 import com.example.sw2.repository.UsuariosRepository;
