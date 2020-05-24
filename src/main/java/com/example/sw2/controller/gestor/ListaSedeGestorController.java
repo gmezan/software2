@@ -29,8 +29,6 @@ import java.util.Optional;
 public class ListaSedeGestorController {
 
     private final int ROL_CRUD = 3;
-    //public int estaenVentas = 0;
-    //public int estaenAsignados=0;
 
     @Autowired
     UsuariosRepository usuariosRepository;
@@ -85,30 +83,6 @@ public class ListaSedeGestorController {
                             @RequestParam("idusuarios") int id,
                             RedirectAttributes attr) {
         Optional<Usuarios> c = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id);
-
-        //List<Ventas> v = usuariosRepository.buscarSedesenVentas(id);
-
-        //List<AsignadosSedes> asigsed = usuariosRepository.buscarSedesAsignadosSedes(id,id);
-
-        /*
-        if(v.isEmpty()){
-        }else{
-            estaenVentas=1;
-            attr.addFlashAttribute("msgErrorVent", "Esta sede no se puede borrar");
-        }
-        if(asigsed.isEmpty()){
-        }else{
-            estaenAsignados=1;
-            attr.addFlashAttribute("msgErrorAsig", "Esta sede no se puede borrar");
-        }
-
-        if(estaenVentas==0 & estaenAsignados==0){
-            if (c.isPresent()) {
-                usuariosRepository.delete(c.get());
-                attr.addFlashAttribute("msg", "Sede borrada exitosamente");
-            }
-        }
-        */
 
         if (c.isPresent()) {
             usuariosRepository.delete(c.get());
