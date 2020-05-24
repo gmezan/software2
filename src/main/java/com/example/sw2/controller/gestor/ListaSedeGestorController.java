@@ -2,8 +2,10 @@ package com.example.sw2.controller.gestor;
 
 
 import com.example.sw2.constantes.CustomConstants;
+import com.example.sw2.entity.AsignadosSedes;
 import com.example.sw2.entity.Roles;
 import com.example.sw2.entity.Usuarios;
+import com.example.sw2.entity.Ventas;
 import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.utils.UploadObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -26,6 +29,8 @@ import java.util.Optional;
 public class ListaSedeGestorController {
 
     private final int ROL_CRUD = 3;
+    //public int estaenVentas = 0;
+    //public int estaenAsignados=0;
 
     @Autowired
     UsuariosRepository usuariosRepository;
@@ -55,7 +60,7 @@ public class ListaSedeGestorController {
             }
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
-            model.addAttribute("msg", "ERROR");
+            model.addAttribute("msgYaExiste", "ERROR");
             return "gestor/sedes";
         }
         else {
@@ -80,10 +85,36 @@ public class ListaSedeGestorController {
                             @RequestParam("idusuarios") int id,
                             RedirectAttributes attr) {
         Optional<Usuarios> c = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id);
+
+        //List<Ventas> v = usuariosRepository.buscarSedesenVentas(id);
+
+        //List<AsignadosSedes> asigsed = usuariosRepository.buscarSedesAsignadosSedes(id,id);
+
+        /*
+        if(v.isEmpty()){
+        }else{
+            estaenVentas=1;
+            attr.addFlashAttribute("msgErrorVent", "Esta sede no se puede borrar");
+        }
+        if(asigsed.isEmpty()){
+        }else{
+            estaenAsignados=1;
+            attr.addFlashAttribute("msgErrorAsig", "Esta sede no se puede borrar");
+        }
+
+        if(estaenVentas==0 & estaenAsignados==0){
+            if (c.isPresent()) {
+                usuariosRepository.delete(c.get());
+                attr.addFlashAttribute("msg", "Sede borrada exitosamente");
+            }
+        }
+        */
+
         if (c.isPresent()) {
             usuariosRepository.delete(c.get());
-                attr.addFlashAttribute("msg", "Gestor borrado exitosamente");
+            attr.addFlashAttribute("msg", "Sede borrada exitosamente");
         }
+
         return "redirect:/gestor/sede";
     }
 
