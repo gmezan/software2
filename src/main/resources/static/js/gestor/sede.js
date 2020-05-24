@@ -14,7 +14,7 @@ $(document).on("click",".edit-Gestor", function(){
     }).done(function(gestor){
         if (gestor!=null){
             $("#formModal #idusuarios").val(gestor.idusuarios).prop("readonly", true);
-            $("#formModal #nombre").val(gestor.nombre).prop("readonly", true);
+            $("#formModal #nombre").val(gestor.nombre);
             $("#formModal #apellido").val(gestor.apellido);
             $("#formModal #correo").val(gestor.correo);
             $("#formModal #telefono").val(gestor.telefono);
