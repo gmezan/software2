@@ -1,5 +1,7 @@
 package com.example.sw2.dto;
 
+import java.time.LocalDate;
+
 public interface DevolucionDto {
 
     String getNombreproducto();
@@ -10,4 +12,7 @@ public interface DevolucionDto {
     int getCantidad();
     byte[] getFoto();
     int getDni();
+    int getEstado();
+    String getCodigo();
+    LocalDate getFecha();
 }

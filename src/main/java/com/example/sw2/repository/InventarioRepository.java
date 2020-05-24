@@ -11,5 +11,6 @@ import java.util.List;
 public interface InventarioRepository extends JpaRepository<Inventario,String> {
 
     List<Inventario> findInventariosByArtesanos_Codigo(String codigo);
+    Inventario findByCodigoinventario(String cod);
 
 }
