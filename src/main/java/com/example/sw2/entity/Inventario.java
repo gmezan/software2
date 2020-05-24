@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 
 @Entity
-@EnableJpaAuditing
 @Table(name = "Inventario")
 public class Inventario implements Serializable {
 
@@ -50,7 +49,6 @@ public class Inventario implements Serializable {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "artesano")
-    @NotNull(message = "Seleccione un artesano.")
     private Artesanos artesanos;
 
     @Digits(integer = 11, fraction = 0, message = "Ingrese un número entero.")
