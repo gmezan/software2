@@ -13,6 +13,8 @@ public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
 
     Usuarios findByCorreo(String correo);
 
+    Usuarios findByIdusuarios(int dni);
+
     List<Usuarios> findUsuariosByRoles_Nombrerol(String rol);
 
     @Query(value = "SELECT * FROM mosqoy.Usuarios WHERE rol=3;",nativeQuery = true)

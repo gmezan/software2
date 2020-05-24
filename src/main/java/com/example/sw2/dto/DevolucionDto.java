@@ -9,4 +9,5 @@ public interface DevolucionDto {
     String getCorreo();
     int getCantidad();
     byte[] getFoto();
+    int getDni();
 }

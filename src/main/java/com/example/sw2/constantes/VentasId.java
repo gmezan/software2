@@ -18,6 +18,7 @@ public class VentasId implements Serializable {
         return CustomConstants.getTiposDocumento().get(this.tipodocumento);
     }
 
+    public int getTipodocumento2(){return tipodocumento; }
     public VentasId(){
 
     }
