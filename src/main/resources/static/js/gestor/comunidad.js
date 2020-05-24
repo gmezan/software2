@@ -44,6 +44,7 @@ $(document).on("click",".delete-Comunidad", function(){
             $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
             let r = [], j = -1;
             for (let key=0, size=data.length; key<size; key++){
+
                 r[++j] ='<tr><td>';
                 r[++j] = data[key].codigo;
                 r[++j] = '</td><td>';
@@ -60,6 +61,9 @@ $(document).on("click",".delete-Comunidad", function(){
         alert("Ocurrió un error");
     })
 });
+
+
+
 
 $(document).ready(function() {
     if ($("#msgComunidad").text()==="ERROR"){

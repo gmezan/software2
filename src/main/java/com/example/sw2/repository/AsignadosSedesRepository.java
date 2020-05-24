@@ -36,4 +36,7 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
     Optional<AsignadosSedes> findByIdAndCodEstadoAsignacion(AsignadosSedesId id, int estado);
     Optional<AsignadosSedes> deleteByIdAndCodEstadoAsignacion(AsignadosSedesId id, int estado);
 
+    List<AsignadosSedes> findAsignadosSedesById_Sede_idusuarios(int id);
+
+
 }

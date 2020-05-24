@@ -13,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Usuarios")
@@ -58,6 +59,22 @@ public class Usuarios implements Serializable {
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion=LocalDateTime.now();
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vendedor")
+    private List<Ventas> ventas;
+
+
+    //@JsonIgnore
+    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "sede")
+    //private List<AsignadosSedes> asignadosSedes;
+
+    public List<Ventas> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Ventas> ventas) {
+        this.ventas = ventas;
+    }
 
     public String getNombre() {
         return nombre;

@@ -2,8 +2,11 @@ package com.example.sw2.controller.gestor;
 
 
 import com.example.sw2.constantes.CustomConstants;
+import com.example.sw2.entity.AsignadosSedes;
 import com.example.sw2.entity.Roles;
 import com.example.sw2.entity.Usuarios;
+import com.example.sw2.entity.Ventas;
+import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.utils.UploadObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/gestor/sede")
@@ -30,12 +33,14 @@ public class ListaSedeGestorController {
     @Autowired
     UsuariosRepository usuariosRepository;
 
+    @Autowired
+    AsignadosSedesRepository asignadosSedesRepository;
+
     @GetMapping(value = {""})
     public String listaSede(@ModelAttribute("sede") Usuarios usuarios, Model model){
         model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
         return "gestor/sedes";
     }
-
 
     @PostMapping("/save")
     public String editCat(@ModelAttribute("sede") @Valid Usuarios usuarios,
@@ -55,7 +60,7 @@ public class ListaSedeGestorController {
             }
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
-            model.addAttribute("msg", "ERROR");
+            model.addAttribute("msgYaExiste", "ERROR");
             return "gestor/sedes";
         }
         else {
@@ -80,10 +85,12 @@ public class ListaSedeGestorController {
                             @RequestParam("idusuarios") int id,
                             RedirectAttributes attr) {
         Optional<Usuarios> c = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id);
+
         if (c.isPresent()) {
             usuariosRepository.delete(c.get());
-                attr.addFlashAttribute("msg", "Gestor borrado exitosamente");
+            attr.addFlashAttribute("msg", "Sede borrada exitosamente");
         }
+
         return "redirect:/gestor/sede";
     }
 
@@ -93,5 +100,47 @@ public class ListaSedeGestorController {
     public ResponseEntity<Optional<Usuarios>> getCat(@RequestParam(value = "id") int id){
         return new ResponseEntity<>(usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id), HttpStatus.OK);
     }
+
+
+    @ResponseBody
+    @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<List<HashMap<String,String>>>> hasItems(@RequestParam(value = "id") int id){
+        return new ResponseEntity<>(new ArrayList<List<HashMap<String, String>>>() {
+            {
+                add(
+                        new ArrayList<HashMap<String,String>>() {{
+                            Objects.requireNonNull(usuariosRepository.findById(id).orElse(null)).getVentas().forEach((i)->
+                            {
+                                add(new HashMap<String, String>() {
+                                    {
+                                        put("rucdni", i.getRucdni());
+                                        put("cliente", i.getNombrecliente());
+                                        put("vendedor", i.getVendedor().getNombre());
+                                    }
+                                });
+                            });
+                        }}
+                );
+                add(
+                        new ArrayList<HashMap<String,String>>() {{
+                            asignadosSedesRepository.findAsignadosSedesById_Sede_idusuarios(id).forEach((a)->
+                            {
+                                add(new HashMap<String, String>() {
+                                    {
+                                        put("sede", a.getId().getSede().getFullname());
+                                        put("stock", Integer.toString(a.getStock()));
+                                        put("vendedor", Integer.toString(a.getCantidadactual()));
+                                    }
+                                });
+                            });
+
+                        }}
+                );
+            }
+        },
+                HttpStatus.OK);
+    }
+
+
 
 }
