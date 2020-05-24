@@ -1,6 +1,6 @@
 var contextPath  = window.location.href+"/get?id=";
 
-$(document).on("click",".edit-Gestor", function(){
+$(document).on("click",".edit-Sede", function(){
     $("#formModal #idusuarios").val('');
     $("#formModal #nombre").val('');
     $("#formModal #apellido").val('');
@@ -38,7 +38,7 @@ $(document).on("click",".new-Gestor", function(){
     $("#formModal #password").val('');
     $("#formModal #foto").attr("hidden",true);
 });
-$(document).on("click",".delete-Gestor", function(){
+$(document).on("click",".delete-Sede", function(){
     $("#deleteModal #idusuarios").val($(this).data('id'));
 });
 $(document).ready(function() {
