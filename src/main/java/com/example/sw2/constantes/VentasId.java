@@ -14,10 +14,6 @@ public class VentasId implements Serializable {
     @Column(name = "numerodocumento")
     private String numerodocumento;
 
-    public String getTipodocumento() {
-        return CustomConstants.getTiposDocumento().get(this.tipodocumento);
-    }
-
     public VentasId(){
 
     }
@@ -27,6 +23,13 @@ public class VentasId implements Serializable {
         this.setNumerodocumento(y);
     }
 
+    public int getTipodocumento() {
+        return tipodocumento;
+    }
+
+    public String getNombreTipodocumento() {
+        return CustomConstants.getTiposDocumento().get(this.tipodocumento);
+    }
 
     public void setTipodocumento(int tipodocumento) {
         this.tipodocumento = tipodocumento;
