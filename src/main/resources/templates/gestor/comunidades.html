@@ -131,7 +131,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 id="formTitle" class="modal-title">Nueva Comunidad</h5>
+                        <h5 th:text="${formtype!=null && formtype.equals('1')}? 'Nueva Comunidad':'Editar Comunidad'" id="formTitle" class="modal-title"></h5>
                         <button type="button" th:href="@{/gestor/comunidad}" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -151,7 +151,7 @@
                             </div>
                             <div class="modal-footer">
                                 <a type="button" th:href="@{/gestor/comunidad}"  class="btn btn-secondary" >Cancelar</a>
-                                <button type="submit" class="btn btn-primary"><a id="formSavebtn" style="color:white;text-decoration:none">Registrar</a></button>
+                                <button type="submit" class="btn btn-primary"><a th:text="${formtype!=null && formtype.equals('1')}? 'Registrar':'Actualizar'" id="formSavebtn" style="color:white;text-decoration:none"></a></button>
                             </div>
                         </form>
                     </div>
