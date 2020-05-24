@@ -6,6 +6,7 @@ import com.example.sw2.entity.AsignadosSedes;
 import com.example.sw2.entity.Roles;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
+import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.utils.UploadObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class ListaSedeGestorController {
 
     @Autowired
     UsuariosRepository usuariosRepository;
+
+    @Autowired
+    AsignadosSedesRepository asignadosSedesRepository;
 
     @GetMapping(value = {""})
     public String listaSede(@ModelAttribute("sede") Usuarios usuarios, Model model){
@@ -100,19 +104,40 @@ public class ListaSedeGestorController {
 
     @ResponseBody
     @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<HashMap<String,String>>> hasItems(@RequestParam(value = "id") int id){
-        return new ResponseEntity<>(new ArrayList<HashMap<String,String>>() {{
-            Objects.requireNonNull(usuariosRepository.findById(id).orElse(null)).getVentas().forEach((i)->
+    public ResponseEntity<List<List<HashMap<String,String>>>> hasItems(@RequestParam(value = "id") int id){
+        return new ResponseEntity<>(new ArrayList<List<HashMap<String, String>>>() {
             {
-                add(new HashMap<String, String>() {
-                    {
-                        put("rucdni", i.getRucdni());
-                        put("cliente", i.getNombrecliente());
-                        put("vendedor", i.getVendedor().getNombre());
-                    }
-                });
-            });
-        }},
+                add(
+                        new ArrayList<HashMap<String,String>>() {{
+                            Objects.requireNonNull(usuariosRepository.findById(id).orElse(null)).getVentas().forEach((i)->
+                            {
+                                add(new HashMap<String, String>() {
+                                    {
+                                        put("rucdni", i.getRucdni());
+                                        put("cliente", i.getNombrecliente());
+                                        put("vendedor", i.getVendedor().getNombre());
+                                    }
+                                });
+                            });
+                        }}
+                );
+                add(
+                        new ArrayList<HashMap<String,String>>() {{
+                            asignadosSedesRepository.findAsignadosSedesById_Sede_idusuarios(id).forEach((a)->
+                            {
+                                add(new HashMap<String, String>() {
+                                    {
+                                        put("sede", a.getId().getSede().getFullname());
+                                        put("stock", Integer.toString(a.getStock()));
+                                        put("vendedor", Integer.toString(a.getCantidadactual()));
+                                    }
+                                });
+                            });
+
+                        }}
+                );
+            }
+        },
                 HttpStatus.OK);
     }
 
