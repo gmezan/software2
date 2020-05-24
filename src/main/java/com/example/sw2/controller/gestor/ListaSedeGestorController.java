@@ -21,8 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/gestor/sede")
@@ -38,7 +37,6 @@ public class ListaSedeGestorController {
         model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
         return "gestor/sedes";
     }
-
 
     @PostMapping("/save")
     public String editCat(@ModelAttribute("sede") @Valid Usuarios usuarios,
@@ -98,5 +96,25 @@ public class ListaSedeGestorController {
     public ResponseEntity<Optional<Usuarios>> getCat(@RequestParam(value = "id") int id){
         return new ResponseEntity<>(usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id), HttpStatus.OK);
     }
+
+
+    @ResponseBody
+    @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<HashMap<String,String>>> hasItems(@RequestParam(value = "id") int id){
+        return new ResponseEntity<>(new ArrayList<HashMap<String,String>>() {{
+            Objects.requireNonNull(usuariosRepository.findById(id).orElse(null)).getVentas().forEach((i)->
+            {
+                add(new HashMap<String, String>() {
+                    {
+                        put("rucdni", i.getRucdni());
+                        put("cliente", i.getNombrecliente());
+                        put("vendedor", i.getVendedor().getNombre());
+                    }
+                });
+            });
+        }},
+                HttpStatus.OK);
+    }
+
 
 }

@@ -168,6 +168,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <form method="get" th:action="@{/gestor/comunidad/delete}" th:object="${comunidad}">
+                        <!-- -->
                         <div id="deleteModalBody" class="modal-body">
                             <input hidden type="text" class="form-control" th:field="*{codigo}" >
                             <p id="deleteModalBodyP"></p>
@@ -184,6 +185,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        <!-- -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button hidden id="buttonDelete" type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
