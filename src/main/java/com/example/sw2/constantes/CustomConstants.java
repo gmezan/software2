@@ -1,9 +1,9 @@
 package com.example.sw2.constantes;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
+
 
 public final class CustomConstants {
     public final static String AWS_BUCKET_NAME = "test-bucket-sw2-1";
@@ -21,9 +21,9 @@ public final class CustomConstants {
     private static final LinkedHashMap<String, String> meses = new LinkedHashMap<>();
     private static final HashMap<Integer, String> tiposAdquisicion = new HashMap<>();
     private static final HashMap<Integer, String> tiposDocumento = new HashMap<>();
-    private static final HashMap<Integer, String> estadoAsignación = new HashMap<>();
+    private static final HashMap<Integer, String> estadoAsignacion = new HashMap<>();
     private static final LinkedHashMap<String, String> tamanhos = new LinkedHashMap<>();
-
+    public static final Calendar calendar = Calendar.getInstance();
     static {
         lineas.put("T", "Tradicional");
         lineas.put("M", "Mosqoy");
@@ -55,16 +55,16 @@ public final class CustomConstants {
         tiposDocumento.put(3, "Recibo");
         tiposDocumento.put(4, "Transacción");
 
-        estadoAsignación.put(1, "Enviado a Sede");
-        estadoAsignación.put(2, "Recibido por Sede");
-        estadoAsignación.put(3, "Recibido con Problemas");
-        estadoAsignación.put(4, "Devuelto por Sede");
+        estadoAsignacion.put(1, "Enviado a Sede");
+        estadoAsignacion.put(2, "Recibido por Sede");
+        estadoAsignacion.put(3, "Recibido con Problemas");
+        estadoAsignacion.put(4, "Devuelto por Sede");
 
 
     }
 
-    public static HashMap<Integer, String> getEstadoAsignación() {
-        return estadoAsignación;
+    public static HashMap<Integer, String> getEstadoAsignacion() {
+        return estadoAsignacion;
     }
 
     public static LinkedHashMap<String, String> getLineas() {

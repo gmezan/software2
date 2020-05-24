@@ -2,75 +2,111 @@ package com.example.sw2.entity;
 
 import com.example.sw2.constantes.CustomConstants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 
 @Entity
-@Table(name="Inventario")
+@Table(name = "Inventario")
 public class Inventario implements Serializable {
 
     @Id
-    @Column(name="codigo_inventario")
+    @Column(name = "codigo_inventario")
     private String codigoinventario;
-    @Column(nullable =false)
+    @NotNull(message = "Ingrese el N° de pedido.")
+    @Min(value = 1,message = "Ingrese un número válido.")
+    @Column(nullable = false)
     private int numpedido;
     @ManyToOne
-    @JoinColumn(name="categoria",nullable =false)
+    @JoinColumn(name = "categoria", nullable = false)
+    @NotNull(message = "Seleccione una categoría.")
     private Categorias categorias;
 
     @ManyToOne
-    @JoinColumn(name="producto",nullable =false)
+    @JoinColumn(name = "producto", nullable = false)
+    @NotNull(message = "Seleccione un producto.")
     private Productos productos;
 
-    @Column(name="tamanho",nullable =false)
+    @Column(name = "tamanho", nullable = false)
+
+    @NotEmpty(message = "Seleccione un tamaño.")
+    @Size(max = 1, message = "Tamaño no válido")
     private String codtamanho;
+
     @ManyToOne
-    @JoinColumn(name="comunidad",nullable =false)
+    @JoinColumn(name = "comunidad", nullable = false)
+    @NotNull(message = "Seleccione una comunidad.")
     private Comunidades comunidades;
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="artesano")
+    @JoinColumn(name = "artesano")
     private Artesanos artesanos;
-    @Column(name="cantidad_total",nullable =false)
+
+    @Digits(integer = 11, fraction = 0, message = "Ingrese un número entero.")
+    @Positive(message = "Ingrese una cantidad válida.")
+    @NotNull(message = "Ingrese una cantidad.")
+    @Column(name = "cantidad_total", nullable = false)
     private int cantidadtotal;
-    @Column(name="cantidad_gestor",nullable =false)
+    @Column(name = "cantidad_gestor", nullable = false)
     private int cantidadgestor;
-    @Column(name="tipoadquisicion", nullable =false)
+
+    @NotNull(message = "Seleccione un tipo de adquisición.")
+    @Range(min = 0, max = 1, message = "Seleccione un tipo de adquisición.")
+    @Column(name = "tipoadquisicion", nullable = false)
     private int codAdquisicion;
-    @Column(name="fecha_inicio_consignacion")
+    @Column(name = "fecha_inicio_consignacion")
     private LocalDate fechainicioconsignacion;
+
+    @Range(min = 1, max = 31, message = "Ingrese un día válido.")
     private int dia;
-    @Column(name="mes",nullable =false)
+    @Size(max = 3, message = "Mes no válido.")
+    @NotBlank(message = "Seleccione un mes.")
+    @Column(name = "mes", nullable = false)
     private String codmes;
-    @Column(nullable =false)
+    //Falta validar años
+    @Column(nullable = false)
+    @NotNull(message = "Seleccione un mes")
     private int anho;
+    @Size(max = 45, message = "Máximo 45 caracteres.")
     private String color;
-    @Column(nullable =false)
+    @Column(nullable = false)
     private String foto;
-    @Column(nullable =false)
+    @Column(nullable = false)
+    @Digits(integer = 9, fraction = 2, message = "Costo no válido.")
+    @NotNull(message = "Ingrese un costo.")
     private BigDecimal costotejedor;
-    @Column(nullable =false)
+    @Column(nullable = false)
+    @Digits(integer = 9, fraction = 2, message = "Costo no válido.")
+    @NotNull(message = "Ingrese un costo.")
     private BigDecimal costomosqoy;
-    @Column(nullable =false)
+    @Column(nullable = false)
+    @Size(max = 45, message = "Máximo 45 caracteres.")
+    @NotBlank(message = "Ingrese un facilitador.")
     private String facilitador;
-    @Column(name="fecha_vencimiento_consignacion")
+
+    @Column(name = "fecha_vencimiento_consignacion")
     private LocalDate fechavencimientoconsignacion;
+
     @LastModifiedDate
-    @Column(name="fecha_modificacion")
+    @Column(name = "fecha_modificacion")
     private LocalDateTime fechamodificacion;
     @CreatedDate
-    @Column(name="fecha_creacion",nullable =false)
+    @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fechacreacion;
 
-    public Inventario(){}
+    public Inventario() {
+    }
 
-    public Inventario(String ci){
+    public Inventario(String ci) {
         this.setCodigoinventario(ci);
     }
 
@@ -153,9 +189,11 @@ public class Inventario implements Serializable {
     public int getCodAdquisicion() {
         return codAdquisicion;
     }
+
     public String getTipoAdquisicion() {
         return CustomConstants.getTiposAdquisicion().get(this.codAdquisicion);
     }
+
     public void setCodAdquisicion(int codAdquisicion) {
         this.codAdquisicion = codAdquisicion;
     }
@@ -183,6 +221,7 @@ public class Inventario implements Serializable {
     public void setCodmes(String codmes) {
         this.codmes = codmes;
     }
+
     public String getMes() {
         return CustomConstants.getMeses().get(this.codmes);
     }
