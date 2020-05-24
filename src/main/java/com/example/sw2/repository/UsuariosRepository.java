@@ -28,7 +28,7 @@ public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
     //@Query(value = "SELECT * FROM mosqoy2.Ventas v WHERE v.vendedor=?1;",nativeQuery = true)
     //List<Ventas> buscarSedesenVentas(int idUsuario);
 
-    //@Query(value = "SELECT * FROM mosqoy2.Asignados_sedes asigse WHERE asigse.gestor=?1 OR asigse.gestor=?2;",nativeQuery = true)
-    //List<AsignadosSedes> buscarSedesAsignadosSedes(int idUsuario1, int idUsuario2);
+    //@Query(value = "SELECT * FROM mosqoy2.Asignados_sedes asigse WHERE asigse.gestor=?1;",nativeQuery = true)
+    //List<AsignadosSedes> (int idUsuario);
 
 }

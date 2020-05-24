@@ -32,4 +32,7 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
             nativeQuery = true)
     List<DevolucionDto> DatosDevolucion(int estado, int dni);
 
+
+    List<AsignadosSedes> findAsignadosSedesById_Sede_idusuarios(int id);
+
 }
