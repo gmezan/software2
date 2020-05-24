@@ -7,14 +7,22 @@ $(document).on("click",".info-Sede", function(){
         method:"GET", url:contextPath +$(this).data('id')
     }).done(function(sede){
         if (sede!=null){
-            $("#infoModal  #nombre").val(sede.nombre);
-            $("#infoModal  #apellido").val(sede.apellido);
-            $("#infoModal  #telefono").val(sede.telefono);
-            $("#infoModal  #correo").val(sede.correo);
+            $("#infoModal  #nombre").text(sede.nombre);
+            $("#infoModal  #apellido").text(sede.apellido);
+            $("#infoModal  #telefono").text(sede.telefono);
+            $("#infoModal  #correo").text(sede.correo);
         }
     }).fail(function (err) {
         console.log(err);
         $('#infoModal').modal('hide');
         alert("Ocurrió un error");
     })
+});
+
+$(document).on("click",".confirmar", function(){
+    $("#confirmarModal #id1").val($(this).data('id1'));
+    $("#confirmarModal #id2").val($(this).data('id2'));
+    $("#confirmarModal #id3").val($(this).data('id3'));
+    $("#confirmarModal #id4").val($(this).data('id4'));
+
 });
