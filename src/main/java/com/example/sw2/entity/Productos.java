@@ -1,6 +1,7 @@
 package com.example.sw2.entity;
 
 import com.example.sw2.constantes.CustomConstants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @EnableJpaAuditing
@@ -39,6 +41,21 @@ public class Productos implements Serializable {
     @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
+
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productos")
+    private List<Inventario> inventario;
+
+
+    public List<Inventario> getInventario() {
+        return inventario;
+    }
+    public void setInventario(List<Inventario> inventario) {
+        this.inventario = inventario;
+    }
+
+
 
     public Productos(){
         this.fechacreacion=LocalDateTime.now();

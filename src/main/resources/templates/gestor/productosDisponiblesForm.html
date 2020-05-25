@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/general-gestor.html ::gestor-head(title='Inventario')">
+<head th:replace="fragments/general-gestor.html ::gestor-head(title='Venta de Producto')">
 </head>
 <body id="page-top">
 
@@ -8,7 +8,7 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='ProductosDisponibles',param2='...')"></div>
+    <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='Venta de Producto',param2='...')"></div>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -24,81 +24,68 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-900">Productos Disponibles</h1>
+                    <h1 class="h3 mb-0 text-gray-900">Venta</h1>
 
                 </div>
-
-                <p class="mb-4">Aquí puedes ver los productos que se pueden vender o asignar a sedes. Para ver
-                    el historial de productos vendidos, revisa la lista de <a href="ventas.html">ventas</a>.
-                    Para ver el estado de las asignaciones a sedes, revisa la lista de <a href="asignadosSedes.html">productos
-                        asignados</a>
-                </p>
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Lista de productos disponibles</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Resgistrar Venta</h6>
                     </div>
 
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="dataTable" width="100%"
-                                   cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th># de Pedido</th>
-                                    <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Tamaño</th>
-                                    <th>Comunidad</th>
-                                    <th>Cantidad Actual</th>
-                                    <th>Color</th>
-                                    <th>Costo Unitario(S/.)</th>
-                                    <th>Asignar a una sede</th>
-                                    <th>Registrar venta</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th># de Pedido</th>
-                                    <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Tamaño</th>
-                                    <th>Comunidad</th>
-                                    <th>Cantidad Actual</th>
-                                    <th>Color</th>
-                                    <th>Costo Unitario(S/.)</th>
-                                    <th>Asignar a una sede</th>
-                                    <th>Registrar venta</th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Lliklla</td>
-                                    <td>Blanket/Manta</td>
-                                    <td>One-Size</td>
-                                    <td>Amaru</td>
-                                    <td>10</td>
-                                    <td>Rojo</td>
-                                    <td>35</td>
-
-                                    <td>
-                                        <button type="button" class="btn btn-warning" data-toggle="modal"
-                                                data-target="#AsignarProductoModal" data-whatever="@mdo"><i
-                                                class="fas fa-store"></i></button>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-success" data-toggle="modal"
-                                                data-target="#registrarVentaModal" data-whatever="@mdo"><i
-                                                class="fas fa-dollar-sign"></i></button>
-                                    </td>
-                                </tr>
-
-                                </tbody>
-
-                            </table>
-                        </div>
+                        <form method="post" th:action="@{'/gestor/productosDisponibles/registrarventa'}" th:object="${ventas}">
+                            <div class="form-group">
+                                <label for="inventario" class="col-form-label">Código de producto:</label>
+                                <input type="text" class="form-control" id="inventario" name="inventario" th:value="${inv.codigoinventario}">
+                            </div>
+                            <div class="form-group">
+                                <label for="rucdni" class="col-form-label">Número RUC o DNI (opcional)</label>
+                                <input type="text" class="form-control" th:field="*{rucdni}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('rucdni')}" th:errors="*{rucdni}" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombrecliente" class="col-form-label">Nombre del cliente:</label>
+                                <input type="text" class="form-control" th:field="*{nombrecliente}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('nombrecliente')}" th:errors="*{nombrecliente}" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tipodocumento">Tipo de Documento</label>
+                                <select class="form-control" name="tipodocumento" id="tipodocumento">
+                                    <option value="1">Factura</option>
+                                    <option value="2">Boleta</option>
+                                    <option value="3">Recibo</option>
+                                    <option value="4">Transacción</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="documento" class="col-form-label">Número de Documento Físico:</label>
+                                <input type="text" class="form-control" id="documento" name="documento">
+                            </div>
+                            <div class="form-group">
+                                <label for="lugarventa" class="col-form-label">Lugar de venta:</label>
+                                <input type="text" class="form-control" th:field="*{lugarventa}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('lugarventa')}" th:errors="*{lugarventa}" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cantidad" class="col-form-label">Cantidad:</label>
+                                <input type="number" class="form-control" th:field="*{cantidad}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="precioventa" class="col-form-label">Precio de venta: S/.</label>
+                                <input type="text" class="form-control" th:field="*{precioventa}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('precioventa')}" th:errors="*{precioventa}" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha" class="col-form-label">Fecha:</label>
+                                <input type="date" class="form-control" th:field="*{fecha}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}" ></div>
+                            </div>
+                            <a th:href="@{'/gestor/productosDisponibles'}" class="btn btn-danger">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                        </form>
                     </div>
                 </div>
 

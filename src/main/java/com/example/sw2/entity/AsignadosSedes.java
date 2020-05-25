@@ -5,9 +5,12 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name="Asignados_sedes")
@@ -15,6 +18,7 @@ public class AsignadosSedes implements Serializable {
 
     @EmbeddedId
     private AsignadosSedesId id;
+    @Positive
     @Column(nullable = false)
     private int stock;
     @Column(nullable = false)
@@ -30,6 +34,17 @@ public class AsignadosSedes implements Serializable {
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
     private String mensaje;
+
+    @OneToMany(mappedBy = "asignadosSedes", cascade = CascadeType.ALL)
+    private Set<AsignacionTiendas> sed;
+
+    public Set<AsignacionTiendas> getSed() {
+        return sed;
+    }
+
+    public void setSed(Set<AsignacionTiendas> sed) {
+        this.sed = sed;
+    }
 
     public AsignadosSedesId getId() { return id; }
 

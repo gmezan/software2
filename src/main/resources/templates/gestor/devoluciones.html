@@ -70,6 +70,8 @@
                                                 <td th:text="${d.cantidad}"></td>
                                                 <td th:text="${d.nombre} + ' ' + ${d.apellido}"></td>
                                                 <td>
+                                                    <button th:attr="data-id1=${d.dni},data-id2=${d.codigo},data-id3=${d.estado}, data-id4=${d.fecha}" data-toggle="modal"
+                                                            data-target="#confirmarModal" class="confirmar btn btn-datatable btn-icon btn-success"><i class="fas fa-check"></i></button>
                                                     <button th:attr="data-id=${d.dni}" data-toggle="modal" data-target="#infoModal"
                                                             class="info-Sede btn btn-datatable btn-icon btn-danger"><i class="fas fa-phone"></i></button>
                                                 </td>
@@ -135,14 +137,38 @@
                         <h4 class="modal-title">Información de la Sede</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <form method="get" th:action="@{gestor/devoluciones/info}" th:object="${sede}">
+
+                    <form method="get" th:object="${sede}">
+                        <ul>
+                            <span></span>
+                            <li id="nombre" th:text="${sede.nombre}+ ' ' + ${sede.apellido}"></li>
+                            <li id="correo" th:text="${sede.correo}"></li>
+                            <li id="telefono" th:text="${sede.telefono}"></li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Confrimar -->
+        <div id="confirmarModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Confirmar devolución</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <form method="get" th:action="@{confirmar}">
                         <div class="modal-body">
-                            <input  type="text" class="form-control" th:field="*{nombre}" >
-                            <input  type="text" class="form-control" th:field="*{correo}" >
-                            <input  type="text" class="form-control" th:field="*{telefono}" >
+                            <input hidden type="text" class="form-control" id="id1" name="id1">
+                            <input hidden type="text" class="form-control" id="id2" name="id2">
+                            <input hidden type="text" class="form-control" id="id3" name="id3">
+                            <input hidden type="text" class="form-control" id="id4" name="id4">
+                            <p>¿Seguro que desea confirmar la cantidad devuelta? Esta acción no se puede deshacer.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Confirmar</a></button>
                         </div>
                     </form>
                 </div>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/general-gestor.html ::gestor-head(title='Asignar Producto')">
+</head>
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='Asignar Producto',param2='...')"></div>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <div th:replace="fragments/general-gestor.html :: topbar"></div>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-900">Asignar a Sede</h1>
+
+                </div>
+
+
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Asignar Producto a una Sede</h6>
+                    </div>
+
+                    <div class="card-body">
+                        <form method="post" th:action="@{'/gestor/productosDisponibles/resgistrarasignacion'}" th:object="${asignadosSedes}">
+                            <div class="form-group">
+                                <label for="inventario" class="col-form-label">Código de producto:</label>
+                                <input type="text" class="form-control" id="inventario" name="inventario" th:value="${inv.codigoinventario}">
+                            </div>
+                            <div class="form-group">
+                                <label for="sede">Sede</label>
+                                <select class="form-control" name="sede" id="sede">
+                                    <option th:each="sede:${listasedes}" th:value="${sede.idusuarios}" th:text="${sede.nombre}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="precioventa" class="col-form-label">Precio de venta: S/.</label>
+                                <input type="text" class="form-control" th:field="*{precioventa}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('precioventa')}" th:errors="*{precioventa}" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="stock" class="col-form-label">Cantidad:</label>
+                                <input type="number" class="form-control" th:field="*{stock}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha" class="col-form-label">Fecha de envio:</label>
+                                <input type="date" class="form-control" id="fecha" name="fecha">
+                            </div>
+                            <a th:href="@{'/gestor/productosDisponibles'}" class="btn btn-danger">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Asignar</button>
+                        </form>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <div th:replace="fragments/general-gestor.html :: footer"></div>
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div th:replace="fragments/general-gestor.html :: logout-modal"></div>
+
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+<!-- Custom scripts for all pages-->
+<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+<!-- Page level plugins -->
+<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+<!-- Page level custom scripts -->
+<script th:src="@{/js/demo/datatables-demo.js}"></script>
+
+</body>
+</html>

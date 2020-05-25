@@ -45,30 +45,55 @@ $(document).on("click",".delete-Sede", function(){
     $("#deleteModal #deleteModalBody #tableModal").prop("hidden",true);
 
 
-
     $.ajax({
         method:"GET", url:contextPath+"/has?id="  + id
     }).done(function(data){
-        if (data==null || data.length === 0){
+        if (data==null || data[0].length === 0 && data[1].length === 0){
+            console.log(data);
             $("#deleteModal #codigo").val(id);
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar esta Sede? Esta acción no se puede deshacer.")
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar esta Sede? Esta acción no se puede deshacer.");
             $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
         }
         else {
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La Sede no se puede borrar, está asociada a " + data.length + " ventas:")
+            console.log(data);
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La Sede no se puede borrar, está asociada a los siguientes Ventas y Prodcutos Asignados");
             $("#deleteModal #deleteModalBody #tableModal").prop("hidden",false);
             $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
-            let r = [], j = -1;
-            for (let key=0, size=data.length; key<size; key++){
-                r[++j] ='<tr><td>';
-                r[++j] = data[key].rucdni;
-                r[++j] = '</td><td>';
-                r[++j] = data[key].cliente;
-                r[++j] = '</td><td>';
-                r[++j] = data[key].vendedor;
-                r[++j] = '</td></tr>';
+
+            if(data[0].length===0){
+            }else{
+
+                let r = [], j = -1;
+                for (let key=0, size=data[0].length; key<size; key++){
+                    r[++j] ='<tr><td>';
+                    r[++j] = data[0][key].rucdni;
+                    r[++j] = '</td><td>';
+                    r[++j] = data[0][key].cliente;
+                    r[++j] = '</td><td>';
+                    r[++j] = data[0][key].vendedor;
+                    r[++j] = '</td></tr>';
+                }
+                $("#deleteModal #tbody").html(r.join(''));
+
             }
-            $("#deleteModal #tbody").html(r.join(''));
+            if(data[1].length===0){
+            }else{
+                let rr = [], jj = -1;
+                let ventas = data[1];
+                for (let key=0, size=data[1].length; key<size; key++){
+                    rr[++jj] ='<tr><td>';
+                    rr[++jj] = ventas[key].sede;
+                    rr[++jj] = '</td><td>';
+                    rr[++jj] = ventas[key].stock;
+                    rr[++jj] = '</td><td>';
+                    rr[++jj] = ventas[key].vendedor;
+                    rr[++jj] = '</td></tr>';
+                }
+                $("#deleteModal #tbody1").html(rr.join(''));
+            }
+
+
+
         }
     }).fail(function (err) {
         console.log(err);

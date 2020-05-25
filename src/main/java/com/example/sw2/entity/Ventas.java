@@ -3,7 +3,7 @@ package com.example.sw2.entity;
 import com.example.sw2.constantes.VentasId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
+import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "Ventas")
@@ -32,6 +33,7 @@ public class Ventas implements Serializable {
     @JoinColumn(name="productoinventario",nullable = false)
     private Inventario inventario;
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
     @ManyToOne
     @JoinColumn(name="vendedor",nullable = false)
