@@ -51,7 +51,7 @@
                                                 <th>Descripción</th>
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
-                                                <th>Cantidad Actual</th>
+                                                <th>Cantidad sin Asignar</th>
                                                 <th>Color</th>
                                                 <th>Costo Unitario(S/.)</th>
                                                 <th>Asignar a una sede</th>
@@ -65,7 +65,7 @@
                                                 <th>Descripción</th>
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
-                                                <th>Cantidad Actual</th>
+                                                <th>Cantidad sin Asignar</th>
                                                 <th>Color</th>
                                                 <th>Costo Unitario(S/.)</th>
                                                 <th>Asignar a una sede</th>
@@ -73,7 +73,7 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr th:each="inv:${listainventario}">
+                                            <tr th:each="inv:${listainventario}" th:if="${inv.getCantidadgestor() != 0}" >
                                                 <td th:text="${inv.numpedido}">1</td>
                                                 <td th:text="${inv.productos.nombre}">Lliklla</td>
                                                 <td th:text="${inv.productos.descripcion}">Blanket/Manta</td>
