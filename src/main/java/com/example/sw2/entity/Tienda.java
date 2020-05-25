@@ -1,10 +1,13 @@
 package com.example.sw2.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Tienda")
@@ -23,6 +26,17 @@ public class Tienda implements Serializable {
     @Column(nullable = true)
     private String direccion;
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tienda")
+    private List<AsignacionTiendas> asignacionTiendas;
+
+    public List<AsignacionTiendas> getAsignacionTiendas() {
+        return asignacionTiendas;
+    }
+
+    public void setAsignacionTiendas(List<AsignacionTiendas> asignacionTiendas) {
+        this.asignacionTiendas = asignacionTiendas;
+    }
 
     public String getDireccion() {
         return direccion;

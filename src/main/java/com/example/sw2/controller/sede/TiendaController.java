@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/sede/tienda")
@@ -36,7 +36,7 @@ public class TiendaController {
         if(bindingResult.hasErrors()){
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", tiendaRepository.findAll());
-            model.addAttribute("msg", "ERROR");
+            model.addAttribute("msgError", "ERROR");
             return "sede/tiendas";
         }
         else {
@@ -74,6 +74,24 @@ public class TiendaController {
         return new ResponseEntity<>(tiendaRepository.findById(id), HttpStatus.OK);
     }
 
+    //Has items
+    @ResponseBody
+    @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<HashMap<String,String>>> hasItem(@RequestParam(value = "id") int id){
+        return new ResponseEntity<>(new ArrayList<HashMap<String,String>>() {{
+            Objects.requireNonNull(tiendaRepository.findById(id).orElse(null)).getAsignacionTiendas().forEach((i)->
+            {
+                add(new HashMap<String, String>() {
+                    {
+                        put("gestor", i.getAsignadosSedes().getId().getGestor().getFullname());
+                        put("codigo", i.getAsignadosSedes().getId().getProductoinventario().getCodigoinventario());
+                        put("stock", Integer.toString(i.getStock()));
+                    }
+                });
+            });
+        }},
+                HttpStatus.OK);
+    }
 
 
 }

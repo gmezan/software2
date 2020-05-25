@@ -32,7 +32,8 @@
 
                 </div>
 
-                <div id="msgListaTiendas" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+                <div  th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+                <div id="msgListaTiendas" th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
 
 
                 <div class="card shadow mb-4">
@@ -99,7 +100,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="EditarTiendaModalLabel">Lista de Tiendas</h5>
+                <h5 th:text="${formtype!=null && formtype.equals('1')}? 'Nueva Tienda':'Editar Tienda'" id="formTitle" class="modal-title"></h5>
                 <a type="button" th:href="@{/sede/tienda}" class="close"  aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
@@ -143,13 +144,24 @@
                 <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <form method="get" th:action="@{/sede/tienda/delete}" th:object="${tienda}">
-                <div class="modal-body">
+                <div id="deleteModalBody"  class="modal-body">
                     <input hidden type="text" class="form-control" th:field="*{idtienda}" >
-                    <p>¿Seguro que desea borrar esta Tienda? Esta acción no se puede deshacer.</p>
+                    <p id="deleteModalBodyP"></p>
+                    <table hidden class="table" id="tableModal">
+                        <thead>
+                        <tr>
+                            <th>Encargado</th>
+                            <th>Codigo Inventario</th>
+                            <th>Stock</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                    <button hidden id="buttonDelete" type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
                 </div>
             </form>
         </div>
