@@ -38,5 +38,4 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
 
     List<AsignadosSedes> findAsignadosSedesById_Sede_idusuarios(int id);
 
-
 }
