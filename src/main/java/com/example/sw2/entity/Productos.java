@@ -40,6 +40,9 @@ public class Productos implements Serializable {
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 
+
+
+
     public Productos(){
         this.fechacreacion=LocalDateTime.now();
     }
