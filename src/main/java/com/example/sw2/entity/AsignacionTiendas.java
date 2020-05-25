@@ -30,7 +30,7 @@ public class AsignacionTiendas implements Serializable {
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumns({
             @JoinColumn(name = "gestor", referencedColumnName = "gestor"),
             @JoinColumn(name = "sede", referencedColumnName = "sede"),
@@ -38,8 +38,6 @@ public class AsignacionTiendas implements Serializable {
             @JoinColumn(name = "fecha_envio",referencedColumnName = "fecha_envio")
     })
     private AsignadosSedes asignadosSedes;
-
-
 
     public int getIdtiendas() {
         return idtiendas;

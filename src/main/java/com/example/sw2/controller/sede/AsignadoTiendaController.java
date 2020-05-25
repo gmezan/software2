@@ -1,10 +1,7 @@
 package com.example.sw2.controller.sede;
 
 import com.example.sw2.dto.DatosAsignadosTiendaDto;
-import com.example.sw2.entity.AsignacionTiendas;
-import com.example.sw2.entity.Inventario;
-import com.example.sw2.entity.Tienda;
-import com.example.sw2.entity.Ventas;
+import com.example.sw2.entity.*;
 import com.example.sw2.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,23 +31,21 @@ public class AsignadoTiendaController {
 
 
     @GetMapping(value = {"", "/"})
-    public String ListaAsignacionTiendas(@ModelAttribute("venta") Ventas venta,
-                                         @ModelAttribute("asignados") AsignacionTiendas asignados,
+    public String ListaAsignacionTiendas(@ModelAttribute("ventas") Ventas v,
+                                         HttpSession session,
                                          Model model){
-        model.addAttribute("asignados", asignacionTiendasRepository.findAll());
-        model.addAttribute("listaDatosAsignados", asignacionTiendasRepository.obtenerDatosAsignados());
+        Usuarios sede = (Usuarios) session.getAttribute("usuario");
+        model.addAttribute("asignados", asignacionTiendasRepository.buscarPorSede(sede.getIdusuarios()));
         return "sede/asignadoTiendas";
     }
 
     @PostMapping("/registrar")
-    public String RegistrarVentas(@ModelAttribute("venta") Ventas venta,
+    public String RegistrarVentas(@ModelAttribute("ventas") Ventas venta,
                                   @RequestParam("id") int id,
                                   Model model, RedirectAttributes attr){
 
         int cantVent = venta.getCantidad();
         String codigo = venta.getInventario().getCodigoinventario();
-        asignacionTiendasRepository.stockAsignadoSedeActualizado(codigo, cantVent);
-        asignacionTiendasRepository.stockInventarioActualizado(codigo, cantVent);
         attr.addFlashAttribute("msg", "Venta registrada exitosamente");
         ventasRepository.save(venta);
         return "redirect:/sede/AsignadoTienda";
