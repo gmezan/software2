@@ -13,9 +13,11 @@ import com.example.sw2.repository.VentasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -42,7 +44,7 @@ public class ProductosDisponiblesController {
 
 
     @GetMapping(value="venta")
-    public String ventasDeProductos(Model model, @RequestParam("x") String x){
+    public String ventasDeProductos(@ModelAttribute("ventas") Ventas ventas, Model model, @RequestParam("x") String x){
         Optional<Inventario> optionalInventario = inventarioRepository.findById(x);
         if ( optionalInventario.isPresent()){
             Inventario inventario=optionalInventario.get();
@@ -55,21 +57,27 @@ public class ProductosDisponiblesController {
     @PostMapping("/registrarventa")
     public String registrarventa(@RequestParam("tipodocumento") int tipodocumento,
                                  @RequestParam("documento") String documento,
-                                 Ventas ventas,
+                                 @ModelAttribute("ventas") @Valid Ventas ventas, BindingResult bindingResult,
+                                 Model model,
                                  HttpSession session){
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("inv", ventas.getInventario());
+            return "gestor/productosDisponiblesForm";
 
-        Usuarios usuarios = (Usuarios) session.getAttribute("usuario");
-        ventas.setId(new VentasId(tipodocumento,documento));
-        ventas.setVendedor(usuarios);
-        ventas.setFechacreacion(LocalDateTime.now());
-        ventasRepository.save(ventas);
+        } else {
+            Usuarios usuarios = (Usuarios) session.getAttribute("usuario");
+            ventas.setId(new VentasId(tipodocumento, documento));
+            ventas.setVendedor(usuarios);
+            ventas.setFechacreacion(LocalDateTime.now());
+            ventasRepository.save(ventas);
 
-        return "redirect:/gestor/productosDisponibles";
+            return "redirect:/gestor/productosDisponibles";
+        }
     }
 
 
     @GetMapping(value="asignar")
-    public String asignarProducto(@ModelAttribute("asignadossedes") AsignadosSedes asignadosSedes ,Model model, @RequestParam("x") String x){
+    public String asignarProducto(@ModelAttribute("asignadosSedes") AsignadosSedes asignadosSedes ,Model model, @RequestParam("x") String x){
         Optional<Inventario> optionalInventario = inventarioRepository.findById(x);
         if ( optionalInventario.isPresent()){
             Inventario inventario=optionalInventario.get();
@@ -86,23 +94,34 @@ public class ProductosDisponiblesController {
     public String registrarAsignacionProducto(@RequestParam("sede") int sede,
                                               @RequestParam("fecha") String fecha,
                                               @RequestParam("inventario") String inventario,
-                                              AsignadosSedes asignadosSedes,
-                                              HttpSession session){
-        LocalDate day = LocalDate.parse(fecha);
-        Usuarios usuarios = (Usuarios) session.getAttribute("usuario");
-        Optional<Usuarios> optionalUsuarios = usuariosRepository.findById(sede);
-        Usuarios sedes = optionalUsuarios.get();
-        Optional<Inventario> optionalInventario = inventarioRepository.findById(inventario);
-        Inventario inv = optionalInventario.get();
-        asignadosSedes.setId(new AsignadosSedesId(usuarios,sedes,inv,day));
-        asignadosSedes.setCantidadactual(asignadosSedes.getStock());
-        asignadosSedes.setCodEstadoAsignacion(1);
-        asignadosSedes.setFechacreacion(LocalDateTime.now());
+                                              @ModelAttribute("asignadosSedes") @Valid AsignadosSedes asignadosSedes, BindingResult bindingResult,
+                                              Model model,
+                                              HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            Optional<Inventario> optionalInventario = inventarioRepository.findById(inventario);
+            Inventario inv = optionalInventario.get();
+            model.addAttribute("inv", inv);
+            model.addAttribute("listasedes",usuariosRepository.findUsuariosByRoles_idroles(3));
+            return "gestor/productosDisponiblesAsignar";
 
-        asignadosSedesRepository.save(asignadosSedes);
+        } else {
+
+            LocalDate day = LocalDate.parse(fecha);
+            Usuarios usuarios = (Usuarios) session.getAttribute("usuario");
+            Optional<Usuarios> optionalUsuarios = usuariosRepository.findById(sede);
+            Usuarios sedes = optionalUsuarios.get();
+            Optional<Inventario> optionalInventario = inventarioRepository.findById(inventario);
+            Inventario inv = optionalInventario.get();
+            asignadosSedes.setId(new AsignadosSedesId(usuarios, sedes, inv, day));
+            asignadosSedes.setCantidadactual(asignadosSedes.getStock());
+            asignadosSedes.setCodEstadoAsignacion(1);
+            asignadosSedes.setFechacreacion(LocalDateTime.now());
+
+            asignadosSedesRepository.save(asignadosSedes);
 
 
-        return "redirect:/gestor/productosDisponibles";
+            return "redirect:/gestor/productosDisponibles";
+        }
     }
 
 

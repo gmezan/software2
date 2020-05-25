@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ public class AsignadosSedes implements Serializable {
 
     @EmbeddedId
     private AsignadosSedesId id;
+    @Positive
     @Column(nullable = false)
     private int stock;
     @Column(nullable = false)
