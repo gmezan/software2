@@ -42,8 +42,8 @@ public class ProductosDisponiblesController {
 
 
     @GetMapping(value="venta")
-    public String ventasDeProductos(Model model, @RequestParam("id") String id){
-        Optional<Inventario> optionalInventario = inventarioRepository.findById(id);
+    public String ventasDeProductos(Model model, @RequestParam("x") String x){
+        Optional<Inventario> optionalInventario = inventarioRepository.findById(x);
         if ( optionalInventario.isPresent()){
             Inventario inventario=optionalInventario.get();
             model.addAttribute("inv", inventario);
@@ -69,8 +69,8 @@ public class ProductosDisponiblesController {
 
 
     @GetMapping(value="asignar")
-    public String asignarProducto(Model model, @RequestParam("id") String id){
-        Optional<Inventario> optionalInventario = inventarioRepository.findById(id);
+    public String asignarProducto(@ModelAttribute("asignadossedes") AsignadosSedes asignadosSedes ,Model model, @RequestParam("x") String x){
+        Optional<Inventario> optionalInventario = inventarioRepository.findById(x);
         if ( optionalInventario.isPresent()){
             Inventario inventario=optionalInventario.get();
             model.addAttribute("inv", inventario);
