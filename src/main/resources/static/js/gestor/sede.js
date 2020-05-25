@@ -92,6 +92,8 @@ $(document).on("click",".delete-Sede", function(){
                 $("#deleteModal #tbody1").html(rr.join(''));
             }
 
+
+
         }
     }).fail(function (err) {
         console.log(err);

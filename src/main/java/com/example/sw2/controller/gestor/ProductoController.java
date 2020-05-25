@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/gestor/producto")
@@ -80,6 +80,25 @@ public class ProductoController {
     @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<Productos>> getCat(@RequestParam(value = "id") String id){
         return new ResponseEntity<>(productosRepository.findById(id), HttpStatus.OK);
+    }
+
+
+    @ResponseBody
+    @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<HashMap<String,String>>> hasItems(@RequestParam(value = "id") String id){
+        return new ResponseEntity<>(new ArrayList<HashMap<String,String>>() {{
+            Objects.requireNonNull(productosRepository.findById(id).orElse(null)).getInventario().forEach((i)->
+            {
+                add(new HashMap<String, String>() {
+                    {
+                        put("codigo", i.getCodigoinventario());
+                        put("comunidad", i.getComunidades().getNombre());
+                        put("categoria", i.getCategorias().getNombre());
+                    }
+                });
+            });
+        }},
+                HttpStatus.OK);
     }
 
 }
