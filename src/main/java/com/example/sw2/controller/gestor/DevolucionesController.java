@@ -61,6 +61,7 @@ public class DevolucionesController {
 
         if (optAsig.isPresent()) {
             AsignadosSedes as = optAsig.get();
+            //aumentar cantidad_gestor
             asignadosSedesRepository.deleteByIdAndCodEstadoAsignacion(as.getId(),4);
             attr.addFlashAttribute("msg","Producto devuelto exitosamente");
         }

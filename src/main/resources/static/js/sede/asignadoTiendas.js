@@ -1,28 +1,20 @@
 var contextPath  = window.location.href+"/get?id=";
 
 $(document).on("click",".registrar-Venta", function(){
-    $("#registrarModal  #ruc_dni").val('');
-    $("#registrarModal  #nombrecliente").val('');
-    $("#registrarModal  #tipodocumento").val('');
-    $("#registrarModal  #lugarventa").val('');
-    $("#registrarModal  #productoinventario").val('');
-    $("#registrarModal  #fecha").val('');
-    $("#registrarModal  #nombre").val('');
-    $("#registrarModal  #cantidad").val('');
-    $("#registrarModal  #precio_venta").val('');
+    $("#registrarModal  #id").val('');
     $.ajax({
         method:"GET", url:contextPath  +$(this).data('id')
-    }).done(function(venta){
-        if (venta!=null){
-            $("#registrarModal  #ruc_dni").val(venta.ruc_dni);
-            $("#registrarModal  #nombrecliente").val(venta.nombrecliente);
-            $("#registrarModal  #tipodocumento").val(venta.tipodocumento);
-            $("#registrarModal  #lugarventa").val(venta.lugarventa);
-            $("#registrarModal  #productoinventario").val(venta.productoinventario);
-            $("#registrarModal  #fecha").val(venta.fecha);
-            $("#registrarModal  #nombre").val(venta.nombre);
-            $("#registrarModal  #cantidad").val(venta.cantidad);
-            $("#registrarModal  #precio_venta").val(venta.precio_venta);
+    }).done(function(asignados){
+        if (asignados!=null){
+            $("#registrarModal  #ruc_dni").val(asignados.tienda.ruc);
+            $("#registrarModal  #nombrecliente").val(asignados.tienda.nombre);
+            $("#registrarModal  #tipodocumento").val(asignados.tipodocumento);
+            $("#registrarModal  #lugarventa").val(asignados.tienda.direccion);
+            $("#registrarModal  #productoinventario").val(asignados.asignadosSedes.id.productoinventario.codigoinventario);
+            //$("#registrarModal  #fecha").val(asignados.fecha);
+            //$("#registrarModal  #nombre").val(asignados.nombre);
+            //$("#registrarModal  #cantidad").val(asignados.cantidad);
+            $("#registrarModal  #precio_venta").val(asignados.precio_venta);
         }
     }).fail(function (err) {
         console.log(err);
