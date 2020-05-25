@@ -193,13 +193,27 @@
                 <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <form method="get" th:action="@{/gestor/producto/delete}" th:object="${producto}">
+                <!-- -->
                 <div class="modal-body">
                     <input hidden type="text" class="form-control" th:field="*{codigonom}" >
-                    <p>¿Seguro que desea borrar esta categoría? Esta acción no se puede deshacer.</p>
+                    <p id="deleteModalBodyP"></p>
+                    <table hidden class="table" id="tableModal">
+                        <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Comunidad</th>
+                            <th>Categoría</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody">
+
+                        </tbody>
+                    </table>
                 </div>
+                <!-- -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                    <button id="buttonDelete" type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
                 </div>
             </form>
         </div>
