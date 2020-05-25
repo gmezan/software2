@@ -60,31 +60,37 @@ $(document).on("click",".delete-Sede", function(){
             $("#deleteModal #deleteModalBody #tableModal").prop("hidden",false);
             $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
 
+            if(data[0].length===0){
+            }else{
 
-            let r = [], j = -1;
-            for (let key=0, size=data[0].length; key<size; key++){
-                r[++j] ='<tr><td>';
-                r[++j] = data[0][key].rucdni;
-                r[++j] = '</td><td>';
-                r[++j] = data[0][key].cliente;
-                r[++j] = '</td><td>';
-                r[++j] = data[0][key].vendedor;
-                r[++j] = '</td></tr>';
-            }
-            $("#deleteModal #tbody").html(r.join(''));
+                let r = [], j = -1;
+                for (let key=0, size=data[0].length; key<size; key++){
+                    r[++j] ='<tr><td>';
+                    r[++j] = data[0][key].rucdni;
+                    r[++j] = '</td><td>';
+                    r[++j] = data[0][key].cliente;
+                    r[++j] = '</td><td>';
+                    r[++j] = data[0][key].vendedor;
+                    r[++j] = '</td></tr>';
+                }
+                $("#deleteModal #tbody").html(r.join(''));
 
-            let rr = [], jj = -1;
-            let ventas = data[1];
-            for (let key=0, size=data[1].length; key<size; key++){
-                rr[++jj] ='<tr><td>';
-                rr[++jj] = ventas[key].sede;
-                rr[++jj] = '</td><td>';
-                rr[++jj] = ventas[key].stock;
-                rr[++jj] = '</td><td>';
-                rr[++jj] = ventas[key].vendedor;
-                rr[++jj] = '</td></tr>';
             }
-            $("#deleteModal #tbody1").html(rr.join(''));
+            if(data[1].length===0){
+            }else{
+                let rr = [], jj = -1;
+                let ventas = data[1];
+                for (let key=0, size=data[1].length; key<size; key++){
+                    rr[++jj] ='<tr><td>';
+                    rr[++jj] = ventas[key].sede;
+                    rr[++jj] = '</td><td>';
+                    rr[++jj] = ventas[key].stock;
+                    rr[++jj] = '</td><td>';
+                    rr[++jj] = ventas[key].vendedor;
+                    rr[++jj] = '</td></tr>';
+                }
+                $("#deleteModal #tbody1").html(rr.join(''));
+            }
 
         }
     }).fail(function (err) {
