@@ -64,20 +64,6 @@ public class ProductosDisponiblesController {
         ventas.setFechacreacion(LocalDateTime.now());
         ventasRepository.save(ventas);
 
-        //System.out.println(ventas.getVendedor().getCorreo());
-        //System.out.println(ventas.getInventario().getCodigoinventario());
-        //System.out.println(ventas.getRucdni());
-        //System.out.println(ventas.getNombrecliente());
-        //System.out.println(tipodocumento);
-        //System.out.println(documento);
-        //System.out.println(ventas.getPrecioventa());
-        //System.out.println(ventas.getLugarventa());
-        //System.out.println(ventas.getCantidad());
-        //System.out.println(ventas.getFecha());
-        //System.out.println(ventas.getId().getTipodocumento());
-        //System.out.println(ventas.getId().getNumerodocumento());
-        //System.out.println(ventas.getFechacreacion());
-
         return "redirect:/gestor/productosDisponibles";
     }
 
@@ -114,11 +100,6 @@ public class ProductosDisponiblesController {
         asignadosSedes.setFechacreacion(LocalDateTime.now());
 
         asignadosSedesRepository.save(asignadosSedes);
-
-        System.out.println(asignadosSedes.getId().getGestor().getCorreo());
-        System.out.println(asignadosSedes.getId().getFechaenvio());
-        System.out.println(asignadosSedes.getStock());
-        System.out.println(asignadosSedes.getPrecioventa());
 
 
         return "redirect:/gestor/productosDisponibles";
