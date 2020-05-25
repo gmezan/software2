@@ -60,7 +60,8 @@ public class DevolucionesController {
         Optional<AsignadosSedes> optAsig = asignadosSedesRepository.findByIdAndCodEstadoAsignacion(aid,estado);
 
         if (optAsig.isPresent()) {
-            asignadosSedesRepository.deleteByIdAndCodEstadoAsignacion(aid,estado);
+            AsignadosSedes as = optAsig.get();
+            asignadosSedesRepository.deleteByIdAndCodEstadoAsignacion(as.getId(),4);
             attr.addFlashAttribute("msg","Producto devuelto exitosamente");
         }
 
