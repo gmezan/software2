@@ -56,7 +56,7 @@ $(document).on("click",".delete-Sede", function(){
         }
         else {
             console.log(data);
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La Sede no se puede borrar, está asociada a algo");
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La Sede no se puede borrar, está asociada a los siguientes Ventas y Prodcutos Asignados");
             $("#deleteModal #deleteModalBody #tableModal").prop("hidden",false);
             $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
 
@@ -91,6 +91,8 @@ $(document).on("click",".delete-Sede", function(){
                 }
                 $("#deleteModal #tbody1").html(rr.join(''));
             }
+
+
 
         }
     }).fail(function (err) {
