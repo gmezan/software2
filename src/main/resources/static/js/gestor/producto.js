@@ -39,12 +39,12 @@ $(document).on("click",".delete-Producto", function(){
         method:"GET", url:contextPath+"/has?id="  + id
     }).done(function(data){
         if (data==null || data.length === 0){
-            $("#deleteModal #codigo").val(id);
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar este Producto? Esta acción no se puede deshacer.")
+            $("#deleteModal #codigonom").val(id);
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar este Producto? Esta acción no se puede deshacer.");
             $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
         }
         else {
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La comunidad no se puede borrar, está asociada a " + data.length + " elementos de inventario:")
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La comunidad no se puede borrar, está asociada a " + data.length + " elementos de inventario:");
             $("#deleteModal #deleteModalBody #tableModal").prop("hidden",false);
             $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
             let r = [], j = -1;
@@ -66,16 +66,7 @@ $(document).on("click",".delete-Producto", function(){
         alert("Ocurrió un error");
     })
 
-
-
-
-
-
-
-
-
 });
-
 
 $(document).ready(function() {
     if ($("#msgProducto").text()==="ERROR"){

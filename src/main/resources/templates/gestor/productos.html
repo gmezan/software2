@@ -194,7 +194,7 @@
             </div>
             <form method="get" th:action="@{/gestor/producto/delete}" th:object="${producto}">
                 <!-- -->
-                <div class="modal-body">
+                <div id="deleteModalBody" class="modal-body">
                     <input hidden type="text" class="form-control" th:field="*{codigonom}" >
                     <p id="deleteModalBodyP"></p>
                     <table hidden class="table" id="tableModal">
