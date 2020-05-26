@@ -35,7 +35,8 @@ public class AsignadoTiendaController {
                                          HttpSession session,
                                          Model model){
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
-        model.addAttribute("asignados", asignacionTiendasRepository.buscarPorSede(sede.getIdusuarios()));
+        model.addAttribute("asignados", asignacionTiendasRepository.
+                findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
         return "sede/asignadoTiendas";
     }
 

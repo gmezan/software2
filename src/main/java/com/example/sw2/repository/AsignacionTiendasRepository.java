@@ -4,6 +4,7 @@ package com.example.sw2.repository;
 import com.example.sw2.dto.DatosAsignadosTiendaDto;
 import com.example.sw2.entity.AsignacionTiendas;
 import com.example.sw2.entity.AsignadosSedes;
+import com.example.sw2.entity.Usuarios;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -42,6 +43,8 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
             "WHERE sede=?1",nativeQuery=true)
 
     List<AsignacionTiendas> buscarPorSede(int sede);
+
+    List<AsignacionTiendas> findAsignacionTiendasByAsignadosSedes_Id_Sede(Usuarios sede);
 
     @Transactional
     @Modifying
