@@ -36,10 +36,10 @@ public class AsignadosSedes implements Serializable {
     private LocalDateTime fechacreacion;
     private String mensaje;
 
-
-    //@JsonIgnore
-    //@OneToMany(mappedBy = "asignadosSedes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //private Set<AsignacionTiendas> sed;
+/*
+    @JsonIgnore
+    @OneToMany(mappedBy = "asignadosSedes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<AsignacionTiendas> sed;
 
 
     public Set<AsignacionTiendas> getSed() {
@@ -48,7 +48,7 @@ public class AsignadosSedes implements Serializable {
 
     public void setSed(Set<AsignacionTiendas> sed) {
         this.sed = sed;
-    }
+    }*/
 
     public AsignadosSedesId getId() { return id; }
 
