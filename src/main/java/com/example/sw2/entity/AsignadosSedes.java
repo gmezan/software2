@@ -1,6 +1,7 @@
 package com.example.sw2.entity;
 import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.CustomConstants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -35,8 +36,11 @@ public class AsignadosSedes implements Serializable {
     private LocalDateTime fechacreacion;
     private String mensaje;
 
-    @OneToMany(mappedBy = "asignadosSedes", cascade = CascadeType.ALL)
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "asignadosSedes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<AsignacionTiendas> sed;
+
 
     public Set<AsignacionTiendas> getSed() {
         return sed;
