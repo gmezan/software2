@@ -22,7 +22,6 @@ public class Inventario implements Serializable {
     @Id
     @Column(name = "codigo_inventario")
     private String codigoinventario;
-    @NotNull(message = "Ingrese el N° de pedido.")
     @Min(value = 1,message = "Ingrese un número válido.")
     @Column(nullable = false)
     private int numpedido;
@@ -39,7 +38,7 @@ public class Inventario implements Serializable {
     @Column(name = "tamanho", nullable = false)
 
     @NotEmpty(message = "Seleccione un tamaño.")
-    @Size(max = 1, message = "Tamaño no válido")
+    @Size(min=1,max = 2, message = "Tamaño no válido")
     private String codtamanho;
 
     @ManyToOne
@@ -66,15 +65,12 @@ public class Inventario implements Serializable {
     @Column(name = "fecha_inicio_consignacion")
     private LocalDate fechainicioconsignacion;
 
-    @Range(min = 1, max = 31, message = "Ingrese un día válido.")
     private int dia;
-    @Size(max = 3, message = "Mes no válido.")
-    @NotBlank(message = "Seleccione un mes.")
+
     @Column(name = "mes", nullable = false)
     private String codmes;
-    //Falta validar años
+
     @Column(nullable = false)
-    @NotNull(message = "Seleccione un mes")
     private int anho;
     @Size(max = 45, message = "Máximo 45 caracteres.")
     private String color;

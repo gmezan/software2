@@ -70,3 +70,9 @@ $("#addForm #comunidades").on('change', function() {
     }
 
 });
+$("#addForm #conDia").on('change', function() {
+
+    $("#addForm #fechadia").prop("hidden",!this.checked).prop("disabled",!this.checked);
+    $("#addForm #fechames").prop("hidden",this.checked).prop("disabled",this.checked);
+
+});

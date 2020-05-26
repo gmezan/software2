@@ -48,33 +48,35 @@ public class InventarioController {
 
     @GetMapping(value = {"/form"})
     public String form(@ModelAttribute("inventario") Inventario inventario, Model m) {
-
-        m.addAttribute("Meses", CustomConstants.getMeses());
-        m.addAttribute("taman", CustomConstants.getTamanhos());
-        m.addAttribute("tipoAdqui", CustomConstants.getTiposAdquisicion());
-        m.addAttribute("lineas", CustomConstants.getLineas());
-        m.addAttribute("listCat", categoriasRepository.findAll());
-        m.addAttribute("listCom", comunidadesRepository.findAll());
+        listasCamposInv(m);
         return "gestor/inventarioGestorForm";
     }
 
-    @PostMapping(value = {"/save"})
-    public String save(@ModelAttribute("inventario") @Valid Inventario inventario,
-                       BindingResult bindingResult, Model m, RedirectAttributes attributes) {
 
-        if(bindingResult.hasErrors()){
-            m.addAttribute("Meses", CustomConstants.getMeses());
-            m.addAttribute("taman", CustomConstants.getTamanhos());
-            m.addAttribute("tipoAdqui", CustomConstants.getTiposAdquisicion());
-            m.addAttribute("lineas", CustomConstants.getLineas());
-            m.addAttribute("listCat", categoriasRepository.findAll());
-            m.addAttribute("listCom", comunidadesRepository.findAll());
+    @PostMapping(value = {"/save"})
+    public String save(@ModelAttribute("inventario") Inventario inventario,
+                       BindingResult bindingResult, Model m, RedirectAttributes attributes, @RequestParam("conDia") String[] conDiastr) {
+        Boolean conDia=conDiastr.length==2;
+
+        if (bindingResult.hasErrors()) {
+            listasCamposInv(m);
             m.addAttribute("listArt", artesanosRepository.findAll());
             m.addAttribute("listProd", productosRepository.findAll());
 
             return "gestor/inventarioGestorForm";
-        }
-        else {/*
+        } else {
+            String codInv = generaCodigo(inventario);
+            Optional<Inventario> optionalInventario =
+                    inventarioRepository.findById(codInv);
+            if (optionalInventario.isPresent()) {
+                m.addAttribute("msg", "El código de este producto en el inventario ya existe. Si desea aumentar la cantidad de este producto, revise el inventario.");
+
+                listasCamposInv(m);
+                m.addAttribute("listArt", artesanosRepository.findAll());
+                m.addAttribute("listProd", productosRepository.findAll());
+                return "gestor/inventarioGestorForm";
+            }
+            /*
             //se necesita checar si hay un inventario idéntico para sumar
             Optional<Inventario> optionalInventario =
                     inventarioRepository.findById(inventario.getCodigoinventario());
@@ -94,20 +96,45 @@ public class InventarioController {
         }
     }
 
+
+    private void listasCamposInv(Model m) {
+        m.addAttribute("Meses", CustomConstants.getMeses());
+        m.addAttribute("taman", CustomConstants.getTamanhos());
+        m.addAttribute("tipoAdqui", CustomConstants.getTiposAdquisicion());
+        m.addAttribute("lineas", CustomConstants.getLineas());
+        m.addAttribute("listCat", categoriasRepository.findAll());
+        m.addAttribute("listCom", comunidadesRepository.findAll());
+    }
+
+    private String generaCodigo(Inventario inv) {
+        String cod = inv.getProductos().getCodigolinea()
+                + inv.getCategorias().getCodigo()
+                + inv.getProductos().getCodigonom()
+                + inv.getProductos().getCodigodesc()
+                + inv.getCodtamanho()
+                + inv.getComunidades().getCodigo();
+        if (inv.getCodAdquisicion() == 1) {
+            cod += inv.getArtesanos().getCodigo()
+                    + inv.getAnho()
+                    + inv.getCodmes();
+        }
+        return cod;
+    }
+
+
     //Web service
     @ResponseBody
-    @GetMapping(value = {"/form/getLinea","/save/getLinea"},produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Productos>> getCom(@RequestParam(value = "linea") String linea){
+    @GetMapping(value = {"/form/getLinea", "/save/getLinea"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Productos>> getCom(@RequestParam(value = "linea") String linea) {
         return new ResponseEntity<>(productosRepository.findProductosByCodigolinea(linea), HttpStatus.OK);
     }
 
     //Web service
     @ResponseBody
-    @GetMapping(value = {"/form/getArtesanos","/save/getArtesanos"},produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Artesanos>> getArtesanos(@RequestParam(value = "comunidad") String comunidad){
+    @GetMapping(value = {"/form/getArtesanos", "/save/getArtesanos"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Artesanos>> getArtesanos(@RequestParam(value = "comunidad") String comunidad) {
         return new ResponseEntity<>(artesanosRepository.findArtesanosByComunidades_Codigo(comunidad), HttpStatus.OK);
     }
-
 
 
 }
