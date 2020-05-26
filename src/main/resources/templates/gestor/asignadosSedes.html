@@ -63,10 +63,10 @@
                                         <tbody>
                                             <tr th:each="asig,i:${listaAsignados}">
                                                 <td th:text="${i.index+1}">1</td>
-                                                <td th:text="${asig.inventario.codigoinventario}">Codigo 1</td>
-                                                <td th:text="${asig.sede.nombre}">Sede 1</td>
+                                                <td th:text="${asig.id.productoinventario.codigoinventario}">Codigo 1</td>
+                                                <td th:text="${asig.id.sede.nombre}">Sede 1</td>
                                                 <td th:text="${asig.stock}">20</td>
-                                                <td th:text="${asig.estadoAsignacion.estado}">Recibido por sede</td>
+                                                <td th:text="${asig.codEstadoAsignacion}">Recibido por sede</td>
                                                 <td th:text="${asig.stock - asig.cantidadactual}">20</td>
                                             </tr>
                                         </tbody>

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -58,7 +59,7 @@ public class ProductosDisponiblesController {
     public String registrarventa(@RequestParam("tipodocumento") int tipodocumento,
                                  @RequestParam("documento") String documento,
                                  @ModelAttribute("ventas") @Valid Ventas ventas, BindingResult bindingResult,
-                                 Model model,
+                                 Model model, RedirectAttributes attributes,
                                  HttpSession session){
         if (bindingResult.hasErrors()) {
             model.addAttribute("inv", ventas.getInventario());
@@ -70,7 +71,7 @@ public class ProductosDisponiblesController {
             ventas.setVendedor(usuarios);
             ventas.setFechacreacion(LocalDateTime.now());
             ventasRepository.save(ventas);
-
+            attributes.addFlashAttribute("msg", "Venta de producto realizada");
             return "redirect:/gestor/productosDisponibles";
         }
     }
@@ -95,7 +96,7 @@ public class ProductosDisponiblesController {
                                               @RequestParam("fecha") String fecha,
                                               @RequestParam("inventario") String inventario,
                                               @ModelAttribute("asignadosSedes") @Valid AsignadosSedes asignadosSedes, BindingResult bindingResult,
-                                              Model model,
+                                              Model model, RedirectAttributes attributes,
                                               HttpSession session) {
         if (bindingResult.hasErrors()) {
             Optional<Inventario> optionalInventario = inventarioRepository.findById(inventario);
@@ -119,7 +120,7 @@ public class ProductosDisponiblesController {
 
             asignadosSedesRepository.save(asignadosSedes);
 
-
+            attributes.addFlashAttribute("msg", "Producto asignado exitosamente");
             return "redirect:/gestor/productosDisponibles";
         }
     }
