@@ -63,11 +63,12 @@ public class SedeController {
 
     @PostMapping("registrarVenta")
     public String registrarVenta(@ModelAttribute("venta") @Valid Ventas ventas,
+                                 @ModelAttribute("ventasId") @Valid VentasId ventasId,
                           BindingResult bindingResult, RedirectAttributes attr, HttpSession session, Model model) {
 
         if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
-            model.addAttribute("venta",ventasRepository.findById(new VentasId(ventas.getId().getTipodocumento2(),ventas.getId().getNumerodocumento())));
+            model.addAttribute("venta",ventasRepository.findById(new VentasId(ventasId.getTipodocumento2(),ventasId.getNumerodocumento())));
             model.addAttribute("msgError", "ERROR");
             model.addAttribute("listaProductosConfirmados",asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
             return "sede/ListaProductosConfirmados";
