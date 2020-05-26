@@ -37,9 +37,9 @@ public class AsignadosSedes implements Serializable {
     private String mensaje;
 
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "asignadosSedes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<AsignacionTiendas> sed;
+    //@JsonIgnore
+    //@OneToMany(mappedBy = "asignadosSedes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //private Set<AsignacionTiendas> sed;
 
 
     public Set<AsignacionTiendas> getSed() {
