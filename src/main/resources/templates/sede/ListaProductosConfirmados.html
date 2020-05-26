@@ -28,7 +28,7 @@
                         </div>
 
                         <!-- Page Heading -->
-
+                        <div id="msgVenta" th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
 
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
@@ -46,7 +46,7 @@
                                                 <th>Color</th>
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
-                                                <th>Precio de venta (Dolar)</th>
+                                                <th>Precio de venta (Soles)</th>
                                                 <th>Stock total</th>
                                                 <th>Stock (productos no asignados a una tienda)</th>
                                                 <th>Fecha de asignacion</th>
@@ -64,7 +64,7 @@
                                                 <th>Color</th>
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
-                                                <th>Precio de venta (Dolar)</th>
+                                                <th>Precio de venta (Soles)</th>
                                                 <th>Stock total</th>
                                                 <th>Stock (productos no asignados a una tienda)</th>
                                                 <th>Fecha de asignacion</th>
@@ -94,17 +94,13 @@
                                                              alt="">
                                                     </div>
                                                 </td>
-                                                <!--td>
-                                                    <button th:attr="data-id1=${prodConfirm.id.gestor.idusuarios}, data-id2=${prodConfirm.id.sede.idusuarios}, data-id3=${prodConfirm.id.productoinventario.codigoinventario}, data-id4=${prodConfirm.id.fechaenvio}"
-                                                            type="button" class="conf-Produc btn btn-success "
-                                                            data-toggle="modal" data-target="#confirmarRecepcionModal">
-                                                        <i class="fas fa-check-circle"></i></button>
-                                                </td-->
                                                 <td>
-                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#AsignarProductoModal" data-whatever="@mdo"><i class="fas fa-store"></i></button>
+                                                    <button th:attr="data-id1=${prodConfirm.id.gestor.idusuarios}, data-id2=${prodConfirm.id.sede.idusuarios}, data-id3=${prodConfirm.id.productoinventario.codigoinventario}, data-id4=${prodConfirm.id.fechaenvio}"
+                                                            type="button" class="asign-A-Tienda btn btn-warning" data-toggle="modal" data-target="#AsignarProductoModal"><i class="fas fa-store"></i></button>
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#registrarVentaModal" data-whatever="@mdo"><i class="fas fa-dollar-sign"></i></button>
+                                                    <button th:attr="data-id12=${prodConfirm.id.gestor.idusuarios}, data-id22=${prodConfirm.id.sede.idusuarios}, data-id32=${prodConfirm.id.productoinventario.codigoinventario}, data-id42=${prodConfirm.id.fechaenvio}"
+                                                            type="button" class="regis-Venta btn btn-success" data-toggle="modal" data-target="#registrarVentaModal" data-whatever="@mdo"><i class="fas fa-dollar-sign"></i></button>
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-danger"><i class="fas fa-undo-alt"></i></button>
@@ -139,66 +135,93 @@
         <!-- Logout Modal-->
         <div th:replace="fragments/general-sede.html :: logout-modal"></div>
 
-
         <div class="modal fade" id="registrarVentaModal" tabindex="-1" role="dialog" aria-labelledby="registrarVentaModal" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="registrarVentaModalLabel">Registrar venta de un producto</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" th:href="@{/sede/productosConfirmados}" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">x</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form method="post" th:action="@{/sede/registrarVenta}" th:object="${venta}">
+
+                            <div th:if="${msgBoleta != null}" th:text="${msgBoleta}" class="alert alert-danger py-1" role="alert"></div>
+
+                            <input type="hidden" class="form-control" id="idgestor" name="idgestor">
+                            <input type="hidden" class="form-control" id="idsede" name="vendedor" th:value="${venta.vendedor}">
+                            <input type="hidden" class="form-control" id="idfechaenvio" name="idfechaenvio">
+                            <input type="hidden" class="form-control"  id="idproductoinvinput" name="inventario" th:value="${venta.inventario}" >
+
+                            <label>Codigo del producto: <span><b id="idproductoinvlabel" name="inventario" th:value="${venta.inventario}"></b></span></label>
+
+
                             <div class="form-group">
-                                <label for="nombrecliente" class="col-form-label">Nombre del cliente:</label>
-                                <input type="text" class="form-control" name="nombrecliente" id="nombrecliente">
+                                <label class="col-form-label">Nombre del cliente:</label>
+                                <input type="text" class="form-control" th:field="*{nombrecliente}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('nombrecliente')}" th:errors="*{nombrecliente}">Error</div>
                             </div>
 
                             <div class="form-group">
-                                <label for="tipodocumento">Tipo de Documento:</label>
-                                <input type="text" class="form-control" name="tipodocumento" id="tipodocumento">
+                                <label class="col-form-label">Tipo de Documento:</label>
+                                <select class="form-control" th:field="*{id.tipodocumento2}">
+                                    <option value="1">Factura</option>
+                                    <option value="2">Boleta</option>
+                                    <option value="3">Recibo</option>
+                                    <option value="4">Transacción</option>
+                                </select>
+                                <div class="text-danger" th:if="${#fields.hasErrors('id.tipodocumento2')}" th:errors="*{id.tipodocumento2}">Error</div>
                             </div>
 
                             <div class="form-group">
-                                <label for="numero" class="col-form-label">Numero de documento:</label>
-                                <input type="text" class="form-control" name="numero" id="numero">
+                                <label class="col-form-label">Numero de documento:</label>
+                                <input  type="text" class="form-control" th:field="*{id.numerodocumento}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}" th:errors="*{id.numerodocumento}">Error</div>
                             </div>
                             <div class="form-group">
-                                <label for="fecha" class="col-form-label">Fecha de venta:</label>
-                                <input type="text" class="form-control" name="fecha" id="fecha">
+                                <label class="col-form-label">Fecha de venta:</label>
+                                <input type="date" class="form-control" th:field="*{fecha}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}">Error</div>
                             </div>
                             <div class="form-group">
-                                <label for="lugarventa" class="col-form-label">Lugar de venta:</label>
-                                <input type="text" class="form-control" name="lugarventa" id="lugarventa">
+                                <label class="col-form-label">Lugar de venta:</label>
+                                <input type="text" class="form-control" th:field="*{lugarventa}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('lugarventa')}" th:errors="*{lugarventa}">Error</div>
                             </div>
                             <div class="form-group">
-                                <label for="rucodni" class="col-form-label">RUC/DNI(Opcional):</label>
-                                <input type="text" class="form-control" name="rucodni" id="rucodni">
+                                <label  class="col-form-label">RUC/DNI(Opcional):</label>
+                                <input type="text" class="form-control" th:field="*{rucdni}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('rucdni')}" th:errors="*{rucdni}">Error</div>
                             </div>
                             <div class="form-group">
-                                <label for="cantidad" class="col-form-label">Cantidad:</label>
-                                <input type="text" class="form-control" name="cantidad" id="cantidad">
+                                <label class="col-form-label">Precio de venta:</label>
+                                <input type="text" class="form-control" th:field="*{precioventa}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('precioventa')}" th:errors="*{precioventa}">Error</div>
                             </div>
-
+                            <div class="form-group">
+                                <label  class="col-form-label">Cantidad:</label>
+                                <input type="text" class="form-control"  th:field="*{cantidad}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}">Error</div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Registrar</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Registrar</button>
-                    </div>
+
                 </div>
             </div>
         </div>
 
-        <!--div class="modal fade" id="AsignarProductoModal" tabindex="-1" role="dialog" aria-labelledby="AsignarProductoModal" aria-hidden="true">
+        <div class="modal fade" id="AsignarProductoModal" tabindex="-1" role="dialog" aria-labelledby="AsignarProductoModal" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="AsignarProductoModalLabel">Asignar producto a una tienda</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">x</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -217,15 +240,16 @@
                                 <label for="cantidad" class="col-form-label">Cantidad</label>
                                 <input type="text" class="form-control" name="cantidad" id="cantidad">
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Asignar</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Asignar</button>
-                    </div>
+
                 </div>
             </div>
-        </div-->
+        </div>
 
         <!-- Bootstrap core JavaScript-->
         <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
@@ -243,7 +267,8 @@
 
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
-
+        <script th:src="@{/js/sede/asignarATienda.js}"></script>
+        <script th:src="@{/js/sede/registrarVentaSede.js}"></script>
 
     </body>
 

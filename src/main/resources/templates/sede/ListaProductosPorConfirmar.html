@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
     <head th:replace="fragments/general-sede.html ::sede-head(title='Lista de productos por confirmar')">
     </head>
 
@@ -48,7 +48,7 @@
                                                 <th>Color</th>
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
-                                                <th>Precio de venta (Dolar)</th>
+                                                <th>Precio de venta (Soles)</th>
                                                 <th>Stock asignado</th>
                                                 <th>Fecha de asignacion</th>
                                                 <th>Foto</th>
@@ -64,7 +64,7 @@
                                                 <th>Color</th>
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
-                                                <th>Precio de venta (Dolar)</th>
+                                                <th>Precio de venta (Soles)</th>
                                                 <th>Stock asignado</th>
                                                 <th>Fecha de asignacion</th>
                                                 <th>Foto</th>
@@ -155,15 +155,16 @@
 
                             <h6><b>Antes de confirmar, se recomienda verificar todos los datos del producto</b>
                             </h6></br>
-                            <h6><b>Codigo del inventario:</b></h6> <h6 id="codinv"></h6>
-                            <h6><b>Nombre:</b></h6> <h6 id="producto"></h6>
-                            <h6><b>Color:</b></h6> <h6 id="color"></h6>
-                            <h6><b>Tamaño:</b></h6> <h6 id="tamanho"></h6>
-                            <h6><b>Comunidad:</b></h6> <h6 id="comunidades"></h6>
-                            <h6><b>Precio de venta:</b></h6> <h6 id="precioventa"></h6>
-                            <h6><b>Stock:</b></h6> <h6 id="stock"></h6>
-                            <h6><b>Fecha de recepcion:</b></h6> <h6 id="fechaenvio"></h6>
-                            <h6><b>Foto:</b></h6></br>
+
+                            <label><b>Codigo del inventario: </b><span><label id="codinv"></label></span></label></br>
+                            <label><b>Nombre: </b><span><label id="producto"></label></span></label></br>
+                            <label><b>Color: </b><span><label id="color"></label></span></label></br>
+                            <label><b>Tamaño: </b><span><label id="tamanho"></label></span></label></br>
+                            <label><b>Comunidad: </b><span><label id="comunidades"></label></span></label></br>
+                            <label><b>Precio de venta: </b><span><label> S/.</label><label id="precioventa"></label></span></label></br>
+                            <label><b>Stock: </b><span><label id="stock"></label></span></label></br>
+                            <label><b>Fecha de recepcion: </b><span><label id="fechaenvio"></label></span></label></br>
+                            <label><b>Foto:</b></label></br>
                             <div class="form-group">
                                 <img id="foto" class="rounded-pill" width="100" style="height: auto;">
                             </div>
