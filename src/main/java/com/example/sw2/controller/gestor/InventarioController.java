@@ -54,7 +54,7 @@ public class InventarioController {
 
 
     @PostMapping(value = {"/save"})
-    public String save(@ModelAttribute("inventario") Inventario inventario,
+    public String save(@ModelAttribute("inventario") @Valid Inventario inventario,
                        BindingResult bindingResult, Model m, RedirectAttributes attributes, @RequestParam("conDia") String[] conDiastr) {
         Boolean conDia=conDiastr.length==2;
 
