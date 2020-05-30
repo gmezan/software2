@@ -50,7 +50,7 @@ public class AsignadosSedes implements Serializable {
 
     public void setId(AsignadosSedesId id) { this.id = id; }
 
-    public String getStock() {
+    public int getStock() {
         return stock;
     }
 
