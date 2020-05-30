@@ -31,10 +31,10 @@ $(document).on("click",".conf-Produc", function(){
         },
         method:"POST", url:url,
         data: JSON.stringify({
-            sede: parseInt($(this).data('id2')),
-            gestor: parseInt($(this).data('id1')),
-            productoinventario: $(this).data('id3'),
-            fechaenvio: $(this).data('id4')
+            "sede": parseInt($(this).data('id2')),
+            "gestor": parseInt($(this).data('id1')),
+            "productoinventario": $(this).data('id3'),
+            "fechaenvio": $(this).data('id4')
         })
     }).done(function(asignsede){
         if (asignsede!=null){
