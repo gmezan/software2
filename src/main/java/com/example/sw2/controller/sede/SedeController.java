@@ -158,21 +158,13 @@ public class SedeController {
 
         return new ResponseEntity<>(new HashMap<String,String>(){{
             asignadosSedesId.setProductoinventario(inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
-            asignadosSedesId.setGestor(usuariosRepository.findById(asignadosSedesId.getGestor().getIdusuarios()).orElse(null));
-            asignadosSedesId.setSede(usuariosRepository.findById(asignadosSedesId.getSede().getIdusuarios()).orElse(null));
-            System.out.println(asignadosSedesId.getFechaenvio().toString());
-            System.out.println(asignadosSedesId.getProductoinventario().getCodigoinventario());
-            System.out.println(asignadosSedesId.getGestor().getIdusuarios());
-            System.out.println(asignadosSedesId.getSede().getIdusuarios());
-
             asignadosSedesRepository.findAll();
             AsignadosSedes asignadosSedes = asignadosSedesRepository.findById(asignadosSedesId).orElse(null);
             put("idgestor",Integer.toString(asignadosSedesId.getSede().getIdusuarios()));
             put("idsede",Integer.toString(asignadosSedesId.getGestor().getIdusuarios()));
             put("idproductoinv",asignadosSedesId.getProductoinventario().getCodigoinventario());
             put("idfechaenvio", asignadosSedesId.getFechaenvio().toString());
-            put("producto",
-                    asignadosSedesId.getProductoinventario().getProductos().getNombre());
+            put("producto", asignadosSedesId.getProductoinventario().getProductos().getNombre());
             put("color",asignadosSedesId.getProductoinventario().getColor());
             put("tamanho", asignadosSedesId.getProductoinventario().getTamanho());
             put("precioventa", asignadosSedes!=null? Float.toString(asignadosSedes.getPrecioventa()):null);
