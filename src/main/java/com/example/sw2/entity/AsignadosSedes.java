@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,15 +16,13 @@ public class AsignadosSedes implements Serializable {
 
     @EmbeddedId
     private AsignadosSedesId id;
+    @Column(name = "fecha_envio")
+    private LocalDate fechaenvio;
     @Positive
     @Column(nullable = false)
     private int stock;
     @Column(nullable = false)
     private int cantidadactual;
-    @Column(nullable = false)
-    private Float precioventa;
-    @Column(name="estadoasignacion",nullable = false)
-    private int codEstadoAsignacion;
     @LastModifiedDate
     @Column(name="fecha_modificacion")
     private LocalDateTime fechamodificacion;
@@ -46,9 +45,21 @@ public class AsignadosSedes implements Serializable {
         this.sed = sed;
     }*/
 
-    public AsignadosSedesId getId() { return id; }
+    public AsignadosSedesId getId() {
+        return id;
+    }
 
-    public void setId(AsignadosSedesId id) { this.id = id; }
+    public void setId(AsignadosSedesId id) {
+        this.id = id;
+    }
+
+    public LocalDate getFechaenvio() {
+        return fechaenvio;
+    }
+
+    public void setFechaenvio(LocalDate fechaenvio) {
+        this.fechaenvio = fechaenvio;
+    }
 
     public int getStock() {
         return stock;
@@ -64,24 +75,6 @@ public class AsignadosSedes implements Serializable {
 
     public void setCantidadactual(int cantidadactual) {
         this.cantidadactual = cantidadactual;
-    }
-
-    public Float getPrecioventa() {
-        return precioventa;
-    }
-
-    public void setPrecioventa(Float precioventa) {
-        this.precioventa = precioventa;
-    }
-
-    public int getCodEstadoAsignacion() {
-        return codEstadoAsignacion;
-    }
-    public String getnombreEstadoAsignacion() {
-        return CustomConstants.getEstadoAsignacion().get(this.codEstadoAsignacion);
-    }
-    public void setCodEstadoAsignacion(int codEstadoAsignacion) {
-        this.codEstadoAsignacion = codEstadoAsignacion;
     }
 
     public LocalDateTime getFechamodificacion() {

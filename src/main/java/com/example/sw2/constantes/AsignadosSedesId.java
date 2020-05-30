@@ -9,7 +9,6 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Embeddable
 public class AsignadosSedesId implements Serializable {
@@ -22,17 +21,24 @@ public class AsignadosSedesId implements Serializable {
     @ManyToOne
     @JoinColumn(name= "producto_inventario")
     private Inventario productoinventario;
-    @Column(name = "fecha_envio")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate fechaenvio;
+    @Column(name = "estadoasignacion")
+    private int estadoasignacion;
+    @Column(name = "precioventa")
+    private Float precioventa;
+
 
     public AsignadosSedesId(){}
 
-    public AsignadosSedesId(Usuarios gestor, Usuarios sede, Inventario inventario, LocalDate d){
-        this.setGestor(gestor);
-        this.setSede(sede);
-        this.setProductoinventario(inventario);
-        this.setFechaenvio(d);
+    public AsignadosSedesId(Usuarios gestor, Usuarios sede, Inventario inventario, int estadoasignacion, Float precioventa){
+        this.gestor=gestor;
+        this.sede=sede;
+        this.productoinventario=inventario;
+        this.estadoasignacion=estadoasignacion;
+        this.precioventa=precioventa;
+    }
+
+    public String getNombreEstado(){
+        return CustomConstants.getEstadoAsignacion().get(estadoasignacion);
     }
 
     public Usuarios getGestor() {
@@ -59,11 +65,19 @@ public class AsignadosSedesId implements Serializable {
         this.productoinventario = productoinventario;
     }
 
-    public LocalDate getFechaenvio() {
-        return fechaenvio;
+    public int getEstadoasignacion() {
+        return estadoasignacion;
     }
 
-    public void setFechaenvio(LocalDate fechaenvio) {
-        this.fechaenvio = fechaenvio;
+    public void setEstadoasignacion(int estadoasignacion) {
+        this.estadoasignacion = estadoasignacion;
+    }
+
+    public Float getPrecioventa() {
+        return precioventa;
+    }
+
+    public void setPrecioventa(Float precioventa) {
+        this.precioventa = precioventa;
     }
 }

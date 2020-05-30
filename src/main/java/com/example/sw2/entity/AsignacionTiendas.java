@@ -35,7 +35,8 @@ public class AsignacionTiendas implements Serializable {
             @JoinColumn(name = "gestor", referencedColumnName = "gestor"),
             @JoinColumn(name = "sede", referencedColumnName = "sede"),
             @JoinColumn(name = "producto_inventario", referencedColumnName = "producto_inventario"),
-            @JoinColumn(name = "fecha_envio",referencedColumnName = "fecha_envio")
+            @JoinColumn(name = "estadoasignacion",referencedColumnName = "estadoasignacion"),
+            @JoinColumn(name = "precioventa",referencedColumnName = "precioventa")
     })
     private AsignadosSedes asignadosSedes;
 
@@ -45,14 +46,6 @@ public class AsignacionTiendas implements Serializable {
 
     public void setIdtiendas(int idtiendas) {
         this.idtiendas = idtiendas;
-    }
-
-    public AsignadosSedes getAsignadosSedes() {
-        return asignadosSedes;
-    }
-
-    public void setAsignadosSedes(AsignadosSedes asignadosSedes) {
-        this.asignadosSedes = asignadosSedes;
     }
 
     public int getStock() {
@@ -93,5 +86,13 @@ public class AsignacionTiendas implements Serializable {
 
     public void setFechacreacion(LocalDateTime fechacreacion) {
         this.fechacreacion = fechacreacion;
+    }
+
+    public AsignadosSedes getAsignadosSedes() {
+        return asignadosSedes;
+    }
+
+    public void setAsignadosSedes(AsignadosSedes asignadosSedes) {
+        this.asignadosSedes = asignadosSedes;
     }
 }
