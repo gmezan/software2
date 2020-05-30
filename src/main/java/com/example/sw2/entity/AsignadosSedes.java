@@ -7,7 +7,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -51,7 +50,7 @@ public class AsignadosSedes implements Serializable {
 
     public void setId(AsignadosSedesId id) { this.id = id; }
 
-    public int getStock() {
+    public String getStock() {
         return stock;
     }
 

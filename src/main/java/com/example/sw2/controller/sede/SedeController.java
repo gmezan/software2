@@ -167,8 +167,8 @@ public class SedeController {
                     asignadosSedesId.getProductoinventario().getProductos().getNombre());
             put("color",asignadosSedesId.getProductoinventario().getColor());
             put("tamanho", asignadosSedesId.getProductoinventario().getTamanho());
-            put("precioventa", Float.toString(Objects.requireNonNull(asignadosSedes).getPrecioventa()));
-            put("stock",Integer.toString(Objects.requireNonNull(asignadosSedes).getStock()));
+            put("precioventa", asignadosSedes!=null? Float.toString(asignadosSedes.getPrecioventa()):null);
+            put("stock", asignadosSedes!=null? String.valueOf(asignadosSedes.getStock()):null);
             put("foto",asignadosSedesId.getProductoinventario().getFoto());
             put("comunidades",asignadosSedesId.getProductoinventario().getComunidades().getNombre());
 
