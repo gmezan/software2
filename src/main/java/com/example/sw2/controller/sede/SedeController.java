@@ -165,13 +165,7 @@ public class SedeController {
             System.out.println(asignadosSedesId.getGestor().getIdusuarios());
             System.out.println(asignadosSedesId.getSede().getIdusuarios());
 
-            asignadosSedesRepository.findAll().forEach((i)->{
-                System.out.println("\t"+i.getCantidadactual());
-                System.out.println("\t"+i.getStock());
-                System.out.println("\t"+i.getId().getGestor().getIdusuarios());
-                System.out.println("\t"+i.getId().getProductoinventario().getCodigoinventario());
-            });
-
+            asignadosSedesRepository.findAll();
             AsignadosSedes asignadosSedes = asignadosSedesRepository.findById(asignadosSedesId).orElse(null);
             put("idgestor",Integer.toString(asignadosSedesId.getSede().getIdusuarios()));
             put("idsede",Integer.toString(asignadosSedesId.getGestor().getIdusuarios()));
