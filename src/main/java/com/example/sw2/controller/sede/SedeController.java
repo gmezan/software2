@@ -21,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -152,12 +154,25 @@ public class SedeController {
     //Web service
     @ResponseBody
     @PostMapping(value = "/productosPorConfirmar/post",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<AsignadosSedes>> getAsignsedePost(@RequestBody AsignadosSedesId asignadosSedesId){
+    public ResponseEntity<HashMap<String,String>> getAsignsedePost(@RequestBody AsignadosSedesId asignadosSedesId){
 
-        asignadosSedesId.setProductoinventario(
-                inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
+        return new ResponseEntity<>(new HashMap<String,String>(){{
+            asignadosSedesId.setProductoinventario(inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
+            AsignadosSedes asignadosSedes = asignadosSedesRepository.findById(asignadosSedesId).orElse(null);
+            put("idgestor",Integer.toString(asignadosSedesId.getSede().getIdusuarios()));
+            put("idsede",Integer.toString(asignadosSedesId.getGestor().getIdusuarios()));
+            put("idproductoinv",asignadosSedesId.getProductoinventario().getCodigoinventario());
+            put("idfechaenvio", asignadosSedesId.getFechaenvio().toString());
+            put("producto",
+                    asignadosSedesId.getProductoinventario().getProductos().getNombre());
+            put("color",asignadosSedesId.getProductoinventario().getColor());
+            put("tamanho", asignadosSedesId.getProductoinventario().getTamanho());
+            put("precioventa", Float.toString(Objects.requireNonNull(asignadosSedes).getPrecioventa()));
+            put("stock",Integer.toString(Objects.requireNonNull(asignadosSedes).getStock()));
+            put("foto",asignadosSedesId.getProductoinventario().getFoto());
+            put("comunidades",asignadosSedesId.getProductoinventario().getComunidades().getNombre());
 
-        return new ResponseEntity<>(asignadosSedesRepository.findById(asignadosSedesId), HttpStatus.OK);
+        }}, HttpStatus.OK);
     }
 
 

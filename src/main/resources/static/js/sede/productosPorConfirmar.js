@@ -39,19 +39,19 @@ $(document).on("click",".conf-Produc", function(){
     }).done(function(asignsede){
         if (asignsede!=null){
             console.log(asignsede);
-            $("#confirmarRecepcionModal  #idgestor").val(asignsede.id.gestor.idusuarios);
-            $("#confirmarRecepcionModal  #idsede").val(asignsede.id.sede.idusuarios);
-            $("#confirmarRecepcionModal  #idproductoinv").val(asignsede.id.productoinventario.codigoinventario);
-            $("#confirmarRecepcionModal  #idfechaenvio").val(asignsede.id.fechaenvio);
-            $("#confirmarRecepcionModal #codinv").text(asignsede.id.productoinventario.codigoinventario);
-            $("#confirmarRecepcionModal  #producto").text(asignsede.id.productoinventario.productos.nombre);
-            $("#confirmarRecepcionModal  #color").text(asignsede.id.productoinventario.color);
-            $("#confirmarRecepcionModal  #tamanho").text(asignsede.id.productoinventario.tamanho);
+            $("#confirmarRecepcionModal  #idgestor").val(asignsede.idgestor);
+            $("#confirmarRecepcionModal  #idsede").val(asignsede.idsede);
+            $("#confirmarRecepcionModal  #idproductoinv").val(asignsede.idproductoinv);
+            $("#confirmarRecepcionModal  #idfechaenvio").val(asignsede.idfechaenvio);
+            $("#confirmarRecepcionModal #codinv").text(asignsede.idproductoinv);
+            $("#confirmarRecepcionModal  #producto").text(asignsede.producto);
+            $("#confirmarRecepcionModal  #color").text(asignsede.color);
+            $("#confirmarRecepcionModal  #tamanho").text(asignsede.tamanho);
             $("#confirmarRecepcionModal  #precioventa").text(asignsede.precioventa);
             $("#confirmarRecepcionModal  #stock").text(asignsede.stock);
-            $("#confirmarRecepcionModal  #fechaenvio").text(asignsede.id.fechaenvio);
-            $("#confirmarRecepcionModal #foto").attr("src",asignsede.id.productoinventario.foto).attr("hidden",asignsede.id.productoinventario.foto==="");
-            $("#confirmarRecepcionModal  #comunidades").text(asignsede.id.productoinventario.comunidades.nombre);
+            $("#confirmarRecepcionModal  #fechaenvio").text(asignsede.idfechaenvio);
+            $("#confirmarRecepcionModal #foto").attr("src",asignsede.foto).attr("hidden",asignsede.foto==="");
+            $("#confirmarRecepcionModal  #comunidades").text(asignsede.comunidades);
 
         }
     }).fail(function (err) {

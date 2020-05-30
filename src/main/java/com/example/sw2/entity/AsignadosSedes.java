@@ -1,7 +1,6 @@
 package com.example.sw2.entity;
 import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.CustomConstants;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -9,9 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Table(name="Asignados_sedes")
@@ -25,7 +22,7 @@ public class AsignadosSedes implements Serializable {
     @Column(nullable = false)
     private int cantidadactual;
     @Column(nullable = false)
-    private BigDecimal precioventa;
+    private Float precioventa;
     @Column(name="estadoasignacion",nullable = false)
     private int codEstadoAsignacion;
     @LastModifiedDate
@@ -70,11 +67,11 @@ public class AsignadosSedes implements Serializable {
         this.cantidadactual = cantidadactual;
     }
 
-    public BigDecimal getPrecioventa() {
+    public Float getPrecioventa() {
         return precioventa;
     }
 
-    public void setPrecioventa(BigDecimal precioventa) {
+    public void setPrecioventa(Float precioventa) {
         this.precioventa = precioventa;
     }
 
