@@ -1,6 +1,5 @@
 package com.example.sw2.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -15,7 +14,7 @@ public class Tienda implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idTienda")
+    @Column(name="idtienda")
     private int idtienda;
     @NotBlank(message = "El campo no puede estar vacío")
     @Column(nullable = false)

@@ -1,4 +1,4 @@
-var contextPath  = window.location.href+"/get?id=";
+var contextPath  = window.location.href;
 
 $(document).on("click",".edit-Tienda", function(){
     $("#EditarTiendaModal  #idtienda").val('');
@@ -7,7 +7,7 @@ $(document).on("click",".edit-Tienda", function(){
     $("#EditarTiendaModal  #type").val('0');
     $("#EditarTiendaModal  #formTitle").text('Editar Tienda');
     $.ajax({
-        method:"GET", url:contextPath +$(this).data('id')
+        method:"GET", url:contextPath+"/get?id=" +$(this).data('id')
     }).done(function(tienda){
         if (tienda!=null){
             $("#EditarTiendaModal  #idtienda").val(tienda.idtienda);

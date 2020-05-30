@@ -50,7 +50,7 @@ $(document).on("click",".delete-Sede", function(){
     }).done(function(data){
         if (data==null || data[0].length === 0 && data[1].length === 0){
             console.log(data);
-            $("#deleteModal #codigo").val(id);
+            $("#deleteModal #idusuarios").val($(this).data('id'));
             $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar esta Sede? Esta acción no se puede deshacer.");
             $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
         }
@@ -99,12 +99,9 @@ $(document).on("click",".delete-Sede", function(){
         console.log(err);
         $('#deleteModal').modal('hide');
         alert("Ocurrió un error");
-    })
+    });
 
 
-
-
-    $("#deleteModal #idusuarios").val($(this).data('id'));
 });
 $(document).ready(function() {
     if ($("#msgSedes").text()==="ERROR"){
