@@ -158,6 +158,8 @@ public class SedeController {
 
         return new ResponseEntity<>(new HashMap<String,String>(){{
             asignadosSedesId.setProductoinventario(inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
+            asignadosSedesId.setGestor(usuariosRepository.findById(asignadosSedesId.getGestor().getIdusuarios()).orElse(null));
+            asignadosSedesId.setSede(usuariosRepository.findById(asignadosSedesId.getSede().getIdusuarios()).orElse(null));
             AsignadosSedes asignadosSedes = asignadosSedesRepository.findById(asignadosSedesId).orElse(null);
             put("idgestor",Integer.toString(asignadosSedesId.getSede().getIdusuarios()));
             put("idsede",Integer.toString(asignadosSedesId.getGestor().getIdusuarios()));
