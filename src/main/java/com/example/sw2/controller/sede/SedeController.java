@@ -171,10 +171,9 @@ public class SedeController {
             put("stock", asignadosSedes!=null? String.valueOf(asignadosSedes.getStock()):null);
             put("foto",asignadosSedesId.getProductoinventario().getFoto());
             put("comunidades",asignadosSedesId.getProductoinventario().getComunidades().getNombre());
-
-        }}, HttpStatus.OK);
+        }},
+                HttpStatus.OK);
     }
-
 
 }
     
