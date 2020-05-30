@@ -148,5 +148,18 @@ public class SedeController {
                                                                         idfechaenvio)), HttpStatus.OK);
     }
 
+
+    //Web service
+    @ResponseBody
+    @PostMapping(value = "/productosPorConfirmar/post",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<AsignadosSedes>> getAsignsedePost(@RequestBody AsignadosSedesId asignadosSedesId){
+
+        asignadosSedesId.setProductoinventario(
+                inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
+
+        return new ResponseEntity<>(asignadosSedesRepository.findById(asignadosSedesId), HttpStatus.OK);
+    }
+
+
 }
     

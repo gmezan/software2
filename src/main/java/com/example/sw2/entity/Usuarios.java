@@ -64,6 +64,14 @@ public class Usuarios implements Serializable {
     private List<Ventas> ventas;
 
 
+    public Usuarios(){
+
+    }
+
+    public Usuarios(int idusuarios){
+        this.idusuarios=idusuarios;
+    }
+
     //@JsonIgnore
     //@OneToMany(fetch = FetchType.LAZY, mappedBy = "sede")
     //private List<AsignadosSedes> asignadosSedes;

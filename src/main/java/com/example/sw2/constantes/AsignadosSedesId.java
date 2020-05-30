@@ -2,6 +2,7 @@ package com.example.sw2.constantes;
 
 import com.example.sw2.entity.Inventario;
 import com.example.sw2.entity.Usuarios;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -22,6 +23,7 @@ public class AsignadosSedesId implements Serializable {
     @JoinColumn(name= "producto_inventario")
     private Inventario productoinventario;
     @Column(name = "fecha_envio")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate fechaenvio;
 
     public AsignadosSedesId(){}

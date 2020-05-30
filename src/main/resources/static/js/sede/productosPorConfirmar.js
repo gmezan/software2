@@ -18,13 +18,27 @@ $(document).on("click",".conf-Produc", function(){
     $("#confirmarRecepcionModal  #foto").text('');
 
 
-    let url = contextPath + "/get?idgestor=" + $(this).data('id1') + "&idsede=" + $(this).data('id2')
-        + "&idproductoinv=" + $(this).data('id3') + "&idfechaenvio=" + $(this).data('id4');
+    let url = contextPath + "/post";
+        //+ $(this).data('id1') + "&idsede=" + $(this).data('id2')
+        //+ "&idproductoinv=" + $(this).data('id3') + "&idfechaenvio=" + $(this).data('id4');
 
     $.ajax({
-        method:"GET", url:url
+        async: false,
+        dataType : "json",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method:"POST", url:url,
+        data: JSON.stringify({
+            sede: parseInt($(this).data('id2')),
+            gestor: parseInt($(this).data('id1')),
+            productoinventario: $(this).data('id3'),
+            fechaenvio: $(this).data('id4')
+        })
     }).done(function(asignsede){
         if (asignsede!=null){
+            console.log(asignsede);
             $("#confirmarRecepcionModal  #idgestor").val(asignsede.id.gestor.idusuarios);
             $("#confirmarRecepcionModal  #idsede").val(asignsede.id.sede.idusuarios);
             $("#confirmarRecepcionModal  #idproductoinv").val(asignsede.id.productoinventario.codigoinventario);

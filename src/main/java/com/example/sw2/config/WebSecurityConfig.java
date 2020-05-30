@@ -21,14 +21,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
 
+        http.csrf().disable();
+
         http.formLogin()
                 .loginPage("/loginForm")
                 .loginProcessingUrl("/processLogin")
                 .defaultSuccessUrl("/redirectByRole", true);
         http.authorizeRequests()
-                .antMatchers("/admin", "/admin/**").hasAnyAuthority("admin")
-                .antMatchers("/gestor", "/gestor/**").hasAnyAuthority("gestor")
-                .antMatchers("/sede", "/sede/**").hasAnyAuthority("sede")
+                //.antMatchers("/admin", "/admin/**").hasAnyAuthority("admin")
+                //.antMatchers("/gestor", "/gestor/**").hasAnyAuthority("gestor")
+                //.antMatchers("/sede", "/sede/**").hasAnyAuthority("sede")
                 .anyRequest().permitAll()
                 ;
 
