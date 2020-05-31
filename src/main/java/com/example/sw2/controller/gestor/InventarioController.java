@@ -6,6 +6,7 @@ import com.example.sw2.entity.Inventario;
 import com.example.sw2.entity.Productos;
 import com.example.sw2.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.time.YearMonth;
 import java.util.Optional;
 
 //REPLANTEAR inventario entity
@@ -54,9 +58,46 @@ public class InventarioController {
 
 
     @PostMapping(value = {"/save"})
-    public String save(@ModelAttribute("inventario") @Valid Inventario inventario,
-                       BindingResult bindingResult, Model m, RedirectAttributes attributes, @RequestParam("conDia") String[] conDiastr) {
-        Boolean conDia=conDiastr.length==2;
+    public String save(@ModelAttribute("inventario") Inventario inventario,
+                       BindingResult bindingResult, Model m, RedirectAttributes attributes,
+                       @RequestParam("conDia") String[] conDiastr,
+                       @RequestParam(value = "fechadia", required = false) String fechadia,
+                       @RequestParam(value = "fechames", required = false) String fechames) {
+        LocalDate fechadiaformat=null;
+        YearMonth fechamesformat=null;
+
+        Boolean conDia = conDiastr.length == 2;
+        if (conDia){
+            if (fechadia.isEmpty()) {
+                bindingResult.rejectValue("dia", "error.user", "Ingrese una fecha");
+            }else {
+                try {
+                    DateTimeFormatter dateTimeFormat = DateTimeFormatter.ISO_DATE;
+                    fechadiaformat = LocalDate.parse(fechadia, dateTimeFormat);
+                    inventario.setFechaDiaFORMAT(fechadiaformat);
+                } catch (Exception e) {
+                    bindingResult.rejectValue("dia", "error.user", "Ingrese una fecha válida");
+                }
+            }
+
+        }else {
+            if (fechames.isEmpty()) {
+                bindingResult.rejectValue("dia", "error.user", "Ingrese una fecha");
+            }else {
+                try {
+                    DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM");
+                    fechamesformat = YearMonth.parse(fechames, dateTimeFormat);
+                    inventario.setFechaMesFORMAT(fechamesformat);
+                } catch (Exception e) {
+                    bindingResult.rejectValue("dia", "error.user", "Ingrese una fecha válida");
+                }
+            }
+        }
+
+        Optional<Inventario> optionalInventario = inventarioRepository.findInventariosByNumpedido(inventario.getNumpedido());
+        if (optionalInventario.isPresent()) {
+            bindingResult.rejectValue("numpedido", "error.user", "Este número de pedido ya existe");
+        }
 
         if (bindingResult.hasErrors()) {
             listasCamposInv(m);
@@ -65,10 +106,12 @@ public class InventarioController {
 
             return "gestor/inventarioGestorForm";
         } else {
+
+
             String codInv = generaCodigo(inventario);
-            Optional<Inventario> optionalInventario =
+            Optional<Inventario> optionalInventario2 =
                     inventarioRepository.findById(codInv);
-            if (optionalInventario.isPresent()) {
+            if (optionalInventario2.isPresent()) {
                 m.addAttribute("msg", "El código de este producto en el inventario ya existe. Si desea aumentar la cantidad de este producto, revise el inventario.");
 
                 listasCamposInv(m);
@@ -76,6 +119,10 @@ public class InventarioController {
                 m.addAttribute("listProd", productosRepository.findAll());
                 return "gestor/inventarioGestorForm";
             }
+
+
+
+
             /*
             //se necesita checar si hay un inventario idéntico para sumar
             Optional<Inventario> optionalInventario =
@@ -98,7 +145,7 @@ public class InventarioController {
 
 
     private void listasCamposInv(Model m) {
-        m.addAttribute("Meses", CustomConstants.getMeses());
+
         m.addAttribute("taman", CustomConstants.getTamanhos());
         m.addAttribute("tipoAdqui", CustomConstants.getTiposAdquisicion());
         m.addAttribute("lineas", CustomConstants.getLineas());

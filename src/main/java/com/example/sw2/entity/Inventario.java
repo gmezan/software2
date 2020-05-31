@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.Calendar;
 
 @Entity
@@ -23,6 +25,7 @@ public class Inventario implements Serializable {
     @Column(name = "codigo_inventario")
     private String codigoinventario;
     @Min(value = 1,message = "Ingrese un número válido.")
+    @Digits(integer = 11, fraction = 0, message = "Ingrese un número entero.")
     @Column(nullable = false)
     private int numpedido;
     @ManyToOne
@@ -88,7 +91,7 @@ public class Inventario implements Serializable {
     @Size(max = 45, message = "Máximo 45 caracteres.")
     @NotBlank(message = "Ingrese un facilitador.")
     private String facilitador;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_vencimiento_consignacion")
     private LocalDate fechavencimientoconsignacion;
 
@@ -198,10 +201,17 @@ public class Inventario implements Serializable {
         return fechainicioconsignacion;
     }
 
-    public void setFechainicioconsignacion(LocalDate fechainicioconsignacion) {
-        this.fechainicioconsignacion = fechainicioconsignacion;
+    public void setFechaMesFORMAT(YearMonth fechamesformat) {
+        this.setDia(0);
+        this.setCodmes(CustomConstants.getMeses().get(fechamesformat.getMonthValue()));
+        this.setAnho(fechamesformat.getYear() % 100);
     }
-
+    public void setFechaDiaFORMAT(LocalDate fechadiaformat) {
+        this.setFechainicioconsignacion(fechadiaformat);
+        this.setDia(fechadiaformat.getDayOfMonth());
+        this.setCodmes(CustomConstants.getMeses().get(fechadiaformat.getMonthValue()));
+        this.setAnho(fechadiaformat.getYear() % 100);
+    }
     public int getDia() {
         return dia;
     }
@@ -218,10 +228,6 @@ public class Inventario implements Serializable {
         this.codmes = codmes;
     }
 
-    public String getMes() {
-        return CustomConstants.getMeses().get(this.codmes);
-    }
-
     public int getAnho() {
         return anho;
     }
@@ -229,6 +235,16 @@ public class Inventario implements Serializable {
     public void setAnho(int anho) {
         this.anho = anho;
     }
+
+
+    public void setFechainicioconsignacion(LocalDate fechainicioconsignacion) {
+        this.fechainicioconsignacion = fechainicioconsignacion;
+    }
+
+
+
+
+
 
     public String getColor() {
         return color;

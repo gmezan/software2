@@ -28,6 +28,7 @@ $("#addForm #linea").on('change', function() {
 $("#addForm #codAdquisicion").on('change', function() {
     let cond = this.value==='0';
         $("#addForm #artesanoConsignacion").prop("hidden",cond).prop("disabled",cond);
+        $("#addForm #vencimientoConsignacion").prop("hidden",cond).prop("disabled",cond);
         if (cond){
             $("#addForm #artesanos").empty();
         }else {

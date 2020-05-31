@@ -18,7 +18,7 @@ public final class CustomConstants {
 
 
     private static final LinkedHashMap<String, String> lineas = new LinkedHashMap<>();
-    private static final LinkedHashMap<String, String> meses = new LinkedHashMap<>();
+    private static final LinkedHashMap<Integer, String> meses = new LinkedHashMap<>();
     private static final HashMap<Integer, String> tiposAdquisicion = new HashMap<>();
     private static final HashMap<Integer, String> tiposDocumento = new HashMap<>();
     private static final HashMap<Integer, String> estadoAsignacion = new HashMap<>();
@@ -29,18 +29,18 @@ public final class CustomConstants {
         lineas.put("M", "Mosqoy");
         lineas.put("F", "Fibras");
 
-        meses.put("JAN", "Enero");
-        meses.put("FEB", "Febrero");
-        meses.put("MAR", "Marzo");
-        meses.put("APR", "Abril");
-        meses.put("MAY", "Mayo");
-        meses.put("JUN", "Junio");
-        meses.put("JUL", "Julio");
-        meses.put("AUG", "Agosto");
-        meses.put("SEP", "Septiembre");
-        meses.put("OCT", "Octubre");
-        meses.put("NOV", "Noviembre");
-        meses.put("DEC", "Diciembre");
+        meses.put(1,"JAN");
+        meses.put(2,"FEB");
+        meses.put(3,"MAR");
+        meses.put(4,"APR");
+        meses.put(5,"MAY");
+        meses.put(6,"JUN");
+        meses.put(7,"JUL");
+        meses.put(8,"AUG");
+        meses.put(9,"SEP");
+        meses.put(10,"OCT");
+        meses.put(11,"NOV");
+        meses.put(12,"DEC");
 
         tamanhos.put("OS", "One-Size");
         tamanhos.put("S", "Small");
@@ -77,7 +77,7 @@ public final class CustomConstants {
         return lineas;
     }
 
-    public static LinkedHashMap<String, String> getMeses() {
+    public static LinkedHashMap<Integer, String> getMeses() {
         return meses;
     }
 
