@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
-import java.util.Calendar;
 
 @Entity
 @Table(name = "Inventario")
@@ -24,30 +23,30 @@ public class Inventario implements Serializable {
     @Id
     @Column(name = "codigo_inventario")
     private String codigoinventario;
+
     @Min(value = 1,message = "Ingrese un número válido.")
     @Digits(integer = 11, fraction = 0, message = "Ingrese un número entero.")
     @Column(nullable = false)
     private int numpedido;
+
     @ManyToOne
     @JoinColumn(name = "categoria", nullable = false)
-    @NotNull(message = "Seleccione una categoría.")
+    @NotNull(message = "Seleccione una categoría de la lista.")
     private Categorias categorias;
 
     @ManyToOne
     @JoinColumn(name = "producto", nullable = false)
-    @NotNull(message = "Seleccione un producto.")
+    @NotNull(message = "Seleccione un producto de la lista.")
     private Productos productos;
 
     @Column(name = "tamanho", nullable = false)
-
-    @NotEmpty(message = "Seleccione un tamaño.")
-    @Size(min=1,max = 2, message = "Tamaño no válido")
     private String codtamanho;
 
     @ManyToOne
     @JoinColumn(name = "comunidad", nullable = false)
-    @NotNull(message = "Seleccione una comunidad.")
+    @NotNull(message = "Seleccione una comunidad de la lista.")
     private Comunidades comunidades;
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "artesano")
@@ -55,42 +54,50 @@ public class Inventario implements Serializable {
 
     @Digits(integer = 11, fraction = 0, message = "Ingrese un número entero.")
     @Positive(message = "Ingrese una cantidad válida.")
-    @NotNull(message = "Ingrese una cantidad.")
     @Column(name = "cantidad_total", nullable = false)
     private int cantidadtotal;
+
     @Column(name = "cantidad_gestor", nullable = false)
     private int cantidadgestor;
 
-    @NotNull(message = "Seleccione un tipo de adquisición.")
-    @Range(min = 0, max = 1, message = "Seleccione un tipo de adquisición.")
+    @Range(min = 0, max = 1, message = "Seleccione un modo disponible.")
     @Column(name = "tipoadquisicion", nullable = false)
     private int codAdquisicion;
-    @Column(name = "fecha_inicio_consignacion")
-    private LocalDate fechainicioconsignacion;
+
+    @Column(name = "fecha_adquisicion")
+    private LocalDate fechaadquisicion;
 
     private int dia;
 
-    @Column(name = "mes", nullable = false)
-    private String codmes;
+    @Column(nullable = false)
+    private int mes;
 
     @Column(nullable = false)
     private int anho;
+
     @Size(max = 45, message = "Máximo 45 caracteres.")
     private String color;
+
     @Column(nullable = false)
     private String foto;
+
     @Column(nullable = false)
     @Digits(integer = 9, fraction = 2, message = "Costo no válido.")
+    @Positive()
     @NotNull(message = "Ingrese un costo.")
     private BigDecimal costotejedor;
+
     @Column(nullable = false)
     @Digits(integer = 9, fraction = 2, message = "Costo no válido.")
+    @Positive()
     @NotNull(message = "Ingrese un costo.")
     private BigDecimal costomosqoy;
+
     @Column(nullable = false)
     @Size(max = 45, message = "Máximo 45 caracteres.")
     @NotBlank(message = "Ingrese un facilitador.")
     private String facilitador;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_vencimiento_consignacion")
     private LocalDate fechavencimientoconsignacion;
@@ -98,6 +105,7 @@ public class Inventario implements Serializable {
     @LastModifiedDate
     @Column(name = "fecha_modificacion")
     private LocalDateTime fechamodificacion;
+
     @CreatedDate
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fechacreacion;
@@ -197,20 +205,20 @@ public class Inventario implements Serializable {
         this.codAdquisicion = codAdquisicion;
     }
 
-    public LocalDate getFechainicioconsignacion() {
-        return fechainicioconsignacion;
+    public LocalDate getFechaadquisicion() {
+        return fechaadquisicion;
     }
 
     public void setFechaMesFORMAT(YearMonth fechamesformat) {
         this.setDia(0);
-        this.setCodmes(CustomConstants.getMeses().get(fechamesformat.getMonthValue()));
-        this.setAnho(fechamesformat.getYear() % 100);
+        this.setMes(fechamesformat.getMonthValue());
+        this.setAnho(fechamesformat.getYear());
     }
     public void setFechaDiaFORMAT(LocalDate fechadiaformat) {
-        this.setFechainicioconsignacion(fechadiaformat);
+        this.setFechaadquisicion(fechadiaformat);
         this.setDia(fechadiaformat.getDayOfMonth());
-        this.setCodmes(CustomConstants.getMeses().get(fechadiaformat.getMonthValue()));
-        this.setAnho(fechadiaformat.getYear() % 100);
+        this.setMes(fechadiaformat.getMonthValue());
+        this.setAnho(fechadiaformat.getYear());
     }
     public int getDia() {
         return dia;
@@ -220,12 +228,12 @@ public class Inventario implements Serializable {
         this.dia = dia;
     }
 
-    public String getCodmes() {
-        return codmes;
+    public int getMes() {
+        return mes;
     }
 
-    public void setCodmes(String codmes) {
-        this.codmes = codmes;
+    public void setMes(int codmes) {
+        this.mes = codmes;
     }
 
     public int getAnho() {
@@ -237,8 +245,8 @@ public class Inventario implements Serializable {
     }
 
 
-    public void setFechainicioconsignacion(LocalDate fechainicioconsignacion) {
-        this.fechainicioconsignacion = fechainicioconsignacion;
+    public void setFechaadquisicion(LocalDate fechainicioconsignacion) {
+        this.fechaadquisicion = fechainicioconsignacion;
     }
 
 

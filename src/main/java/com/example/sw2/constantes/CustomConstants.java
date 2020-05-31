@@ -18,12 +18,12 @@ public final class CustomConstants {
 
 
     private static final LinkedHashMap<String, String> lineas = new LinkedHashMap<>();
-    private static final LinkedHashMap<Integer, String> meses = new LinkedHashMap<>();
+    private static final HashMap<Integer, String> meses = new HashMap<>();
     private static final HashMap<Integer, String> tiposAdquisicion = new HashMap<>();
     private static final HashMap<Integer, String> tiposDocumento = new HashMap<>();
     private static final HashMap<Integer, String> estadoAsignacion = new HashMap<>();
     private static final LinkedHashMap<String, String> tamanhos = new LinkedHashMap<>();
-    public static final Calendar calendar = Calendar.getInstance();
+
     static {
         lineas.put("T", "Tradicional");
         lineas.put("M", "Mosqoy");
@@ -77,7 +77,7 @@ public final class CustomConstants {
         return lineas;
     }
 
-    public static LinkedHashMap<Integer, String> getMeses() {
+    public static HashMap<Integer, String> getMeses() {
         return meses;
     }
 

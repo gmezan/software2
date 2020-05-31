@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/general-gestor.html ::gestor-head(title='Registro')">
+    <head th:replace="fragments/general-gestor.html ::gestor-head(title='Registro del inventario')">
     </head>
     <body id="page-top">
         
@@ -49,11 +49,10 @@
                                                     <label class="col-form-label"><b>Pedido:</b></label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
-                                                            <div class="input-group-text">N°</div>
+                                                            <div class="input-group-text text-body">N°</div>
                                                         </div>
                                                         <input th:field="*{numpedido}" type="number"
-                                                               class="form-control"
-                                                               placeholder="--- Mosqoy ---">
+                                                               class="form-control" min="1">
                                                     </div>
                                                     <div class="text-danger" th:if="${#fields.hasErrors('numpedido')}"
                                                          th:errors="*{numpedido}">Error
@@ -132,8 +131,7 @@
                                             
                                             <div class="form-row ml-5 mr-5">
                                                 <div class="form-group col-4">
-                                                    <label class="col-form-label"><b>Modo de
-                                                        adquisición:</b></label>
+                                                    <label class="col-form-label"><b>Modo de adquisición:</b></label>
                                                     <select th:field="*{codAdquisicion}" class="form-control">
                                                         <option th:each="t : ${tipoAdqui}" th:text="${t.value}"
                                                                 th:value="${t.key}"></option>
@@ -147,7 +145,7 @@
                                                 <div class="form-group col-4">
                                                     <label class="col-form-label"><b>Comunidad:</b></label>
                                                     <select th:field="*{comunidades}" class="form-control">
-                                                        <option selected value="">--- Seleccionar ---</option>
+                                                        <option value="">--- Seleccionar ---</option>
                                                         <option th:each="item : ${listCom}"
                                                                 th:text="${item.getNombre()}"
                                                                 th:value="${item.getCodigo()}"></option>
@@ -160,8 +158,7 @@
                                                 <div th:hidden="${inventario.codAdquisicion!=1}"
                                                      id="artesanoConsignacion" class="form-group col-4">
                                                     <label
-                                                            class="col-form-label"><b>Artesano
-                                                        (Consignación):</b></label>
+                                                            class="col-form-label"><b>Artesano(consignación):</b></label>
                                                     <select th:field="*{artesanos}" class="form-control">
                                                         <option value="">--- Seleccionar ---</option>
                                                         <option th:each="item : ${listArt}"
@@ -186,35 +183,43 @@
                                                 <div class="form-group col-4">
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
-                                                            <div class="input-group-text">S/.</div>
+                                                            <div class="input-group-text text-body">S/.</div>
                                                         </div>
                                                         <input th:field="*{costotejedor}" type="number"
-                                                               step='0.01'
+                                                               step='0.01' min="0.01"
                                                                class="form-control"
-                                                               placeholder="--- Tejedor ---" >
+                                                               placeholder="000.00">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text text-body">(Tejedor)</div>
+                                                        </div>
                                                     </div>
                                                     <div class="text-danger"
                                                          th:if="${#fields.hasErrors('costotejedor')}"
                                                          th:errors="*{costotejedor}">Error
                                                     </div>
+                                                    
                                                 </div>
                                                 
                                                 <div class="form-group col-4">
                                                     
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
-                                                            <div class="input-group-text">S/.</div>
+                                                            <div class="input-group-text text-body">S/.</div>
                                                         </div>
-                                                        <input th:field="*{costomosqoy}" type="number"
+                                                        <input th:field="*{costomosqoy}" type="number" min="0.01"
                                                                step='0.01'
                                                                class="form-control"
-                                                               placeholder="--- Mosqoy ---">
+                                                               placeholder="000.00">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text text-body">(Mosqoy)</div>
+                                                        </div>
                                                     </div>
                                                     <div class="text-danger"
                                                          th:if="${#fields.hasErrors('costomosqoy')}"
-                                                         
+                                                    
                                                          th:errors="*{costomosqoy}">Error
                                                     </div>
+                                                    
                                                 
                                                 </div>
                                             </div>
@@ -229,7 +234,6 @@
                                                 </div>
                                             </div>
                                             
-                                           
                                             
                                             <div class="form-row ml-5 mr-5">
                                                 
@@ -237,43 +241,52 @@
                                                     
                                                     <label class="col-form-label"><b>Fecha de adquisición:</b></label>
                                                     
-                                                    <input th:hidden="${inventario.dia==0}" id="fechadia" type="date" name="fechadia"
-                                                           class="form-control" th:value="${inventario.fechainicioconsignacion}">
-                                                    <input th:hidden="${inventario.dia!=0}"  id="fechames" type="month" name="fechames"
-                                                           class="form-control">
+                                                    <input th:hidden="${inventario.dia==0}" id="fechadia" type="date"
+                                                           name="fechadia"
+                                                           class="form-control"
+                                                           th:value="${inventario.fechaadquisicion}" th:max="${todayd}">
+                                                    <input th:hidden="${inventario.dia!=0}" id="fechames" type="month"
+                                                           name="fechames"
+                                                           class="form-control" th:max="${todaym}"
+                                                           th:value="${inventario.mes<10? inventario.anho+'-0'+inventario.mes  : inventario.anho+'-'+inventario.mes}">
+                                                    <div class="text-danger" th:if="${#fields.hasErrors('dia')}"
+                                                         th:errors="*{dia}">Error
+                                                    </div>
                                                     <div class="form-check ">
-                                                        <input th:checked="${inventario.dia!=0}" class="form-check-input" type="checkbox" name="conDia"
+                                                        <input th:checked="${inventario.dia!=0}"
+                                                               class="form-check-input" type="checkbox" name="conDia"
                                                                id="conDia">
                                                         <label class="form-check-label" for="conDia">Con día</label>
                                                         <input hidden type="text" name="conDia"/>
                                                     </div>
-                                                    <div class="text-danger" th:if="${#fields.hasErrors('dia')}"
-                                                         th:errors="*{dia}">Error
-                                                    </div>
+                                                    
                                                 </div>
                                                 
-                                                <div  th:hidden="${inventario.codAdquisicion!=1}" id="vencimientoConsignacion" class="form-group col-4">
-                                                    <label class="col-form-label"><b>Fecha de vencimiento(consignación):</b></label>
-                                                    <input th:field="*{fechavencimientoconsignacion}" type="date"
+                                                <div th:hidden="${inventario.codAdquisicion!=1}"
+                                                     id="vencimientoConsignacion" class="form-group col-4">
+                                                    <label class="col-form-label"><b>Fecha de
+                                                        vencimiento(consignación):</b></label>
+                                                    <input th:value="*{fechavencimientoconsignacion}" name="fechaexp" id="fechaexp" type="date"
                                                            class="form-control">
-                                                    <div class="text-danger" th:if="${#fields.hasErrors('fechavencimientoconsignacion')}"
+                                                    <div class="text-danger"
+                                                         th:if="${#fields.hasErrors('fechavencimientoconsignacion')}"
                                                          th:errors="*{fechavencimientoconsignacion}">Error
                                                     </div>
                                                 
                                                 </div>
                                                 <div class="form-group col-4">
-                                                    
+                                                
                                                 
                                                 </div>
-                                                
-                                                
+                                            
+                                            
                                             </div>
                                             
                                             
                                             <div class="form-row ml-5 mr-5">
                                                 <div class="form-group col-4">
                                                     <label class="col-form-label"><b>Cantidad:</b></label>
-                                                    <input th:field="*{cantidadtotal}" type="number"
+                                                    <input th:field="*{cantidadtotal}" type="number" min="1"
                                                            class="form-control">
                                                     <div class="text-danger"
                                                          th:if="${#fields.hasErrors('cantidadtotal')}"
