@@ -6,16 +6,16 @@ import java.util.*;
 
 
 public final class CustomConstants {
+
+
+
+
     public final static String AWS_BUCKET_NAME = "test-bucket-sw2-1";
     public final static String INVENTARIO = "inventario";
     public final static String PERFIL = "profile";
     public final static int BIGNUMBER = 1749183;
 
 
-/*
-    public String generateS3Link(String  objectName, String folder){
-        return "https://"+AWS_BUCKET_NAME+".s3.amazonaws.com/"+FOLDER1+"/"+objectName+".png";
-    }*/
 
     private static final LinkedHashMap<String, String> lineas = new LinkedHashMap<>();
     private static final LinkedHashMap<String, String> meses = new LinkedHashMap<>();
@@ -60,8 +60,14 @@ public final class CustomConstants {
         estadoAsignacion.put(3, "Recibido con Problemas");
         estadoAsignacion.put(4, "Devuelto por Sede");
 
-
     }
+
+    public final static int ESTADO_ENVIADO_A_SEDE=1;
+    public final static int ESTADO_RECIBIDO_POR_SEDE=2;
+    public final static int ESTADO_RECIBIDO_CON_PROBLEMAS=3;
+    public final static int ESTADO_DEVUELTO_POR_SEDE=4;
+
+
 
     public static HashMap<Integer, String> getEstadoAsignacion() {
         return estadoAsignacion;
