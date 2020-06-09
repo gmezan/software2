@@ -11,8 +11,9 @@ public interface DevolucionDto {
     String getCorreo();
     int getCantidad();
     byte[] getFoto();
-    int getDni();
+    int getDniSede();
     int getEstado();
     String getCodigo();
     LocalDate getFecha();
+    Float getPrecio();
 }

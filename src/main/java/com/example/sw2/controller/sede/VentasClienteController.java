@@ -37,7 +37,7 @@ public class VentasClienteController {
 
         if (optProduct.isPresent()) {
             ventasRepository.deleteById(new VentasId(id2, id1));
-            attr.addFlashAttribute("msg","Venta eliminada exitosamente");
+            attr.addFlashAttribute("msgBorrado","Venta eliminada exitosamente");
         }
         return "redirect:/sede/ventasCliente";
 

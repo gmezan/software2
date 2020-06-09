@@ -47,22 +47,27 @@ public class DevolucionesController {
     @GetMapping("/confirmar")
     public String Confirmar(@RequestParam("id1") int sede_dni,
                             @RequestParam("id2") String codigo,
-                            @RequestParam("id3") int estado,
+                            @RequestParam("id3") Float precio,
                             @RequestParam("id4") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
                             Authentication auth,
                             RedirectAttributes attr) {
 
+        int estado = 4; //devolucion
+
+        //AsignadosID = gestor - sede - inventario - estado - precio
         //sede - producto - estado
         Usuarios gestor = usuariosRepository.findByCorreo(auth.getName());
         Usuarios sede = usuariosRepository.findByIdusuarios(sede_dni);
         Inventario inv = inventarioRepository.findByCodigoinventario(codigo);
-        AsignadosSedesId aid = new AsignadosSedesId(gestor, sede, inv, fecha);
-        Optional<AsignadosSedes> optAsig = asignadosSedesRepository.findByIdAndCodEstadoAsignacion(aid,estado);
+        AsignadosSedesId aid = new AsignadosSedesId(gestor, sede, inv, estado, precio);
+        Optional<AsignadosSedes> optAsig = asignadosSedesRepository.findById(aid);
 
         if (optAsig.isPresent()) {
             AsignadosSedes as = optAsig.get();
             //aumentar cantidad_gestor
-            asignadosSedesRepository.deleteByIdAndCodEstadoAsignacion(as.getId(),4);
+            asignadosSedesRepository.update_cant_gestor(as.getStock(), codigo);
+            asignadosSedesRepository.deleteById(as.getId());
+            //sumar lo devuelto a cant_gestor del inventario
             attr.addFlashAttribute("msg","Producto devuelto exitosamente");
         }
 

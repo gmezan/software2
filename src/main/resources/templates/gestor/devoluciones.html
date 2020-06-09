@@ -65,14 +65,14 @@
                                             <tbody>
                                             <tr th:each="d, index : ${devueltos}">
                                                 <td th:text="${index.count}"></td>
-                                                <td></td>
+                                                <td th:text="${d.fecha}"></td>
                                                 <td th:text="${d.nombreproducto}"></td>
                                                 <td th:text="${d.cantidad}"></td>
                                                 <td th:text="${d.nombre} + ' ' + ${d.apellido}"></td>
                                                 <td>
-                                                    <button th:attr="data-id1=${d.dni},data-id2=${d.codigo},data-id3=${d.estado}, data-id4=${d.fecha}" data-toggle="modal"
+                                                    <button th:attr="data-id1=${d.dniSede},data-id2=${d.codigo},data-id3=${d.precio}, data-id4=${d.fecha}" data-toggle="modal"
                                                             data-target="#confirmarModal" class="confirmar btn btn-datatable btn-icon btn-success"><i class="fas fa-check"></i></button>
-                                                    <button th:attr="data-id=${d.dni}" data-toggle="modal" data-target="#infoModal"
+                                                    <button th:attr="data-id=${d.dniSede}" data-toggle="modal" data-target="#infoModal"
                                                             class="info-Sede btn btn-datatable btn-icon btn-danger"><i class="fas fa-phone"></i></button>
                                                 </td>
                                             </tr>
@@ -140,11 +140,13 @@
 
                     <form method="get" th:object="${sede}">
                         <ul>
-                            <span></span>
-                            <li id="nombre" th:text="${sede.nombre}+ ' ' + ${sede.apellido}"></li>
-                            <li id="correo" th:text="${sede.correo}"></li>
-                            <li id="telefono" th:text="${sede.telefono}"></li>
+
+                            <span></span></br>
+                            <b>Nombre y Apellido: </b><li id="nombre" th:text="${sede.nombre}+ ' ' + ${sede.apellido}"></li>
+                            <b>Correo: </b><li id="correo" th:text="${sede.correo}"></li>
+                            <b>Teléfono: </b><li id="telefono" th:text="${sede.telefono}"></li>
                         </ul>
+
                     </form>
                 </div>
             </div>
@@ -158,7 +160,7 @@
                         <h4 class="modal-title">Confirmar devolución</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <form method="get" th:action="@{confirmar}">
+                    <form method="get" th:action="@{devoluciones/confirmar}">
                         <div class="modal-body">
                             <input hidden type="text" class="form-control" id="id1" name="id1">
                             <input hidden type="text" class="form-control" id="id2" name="id2">

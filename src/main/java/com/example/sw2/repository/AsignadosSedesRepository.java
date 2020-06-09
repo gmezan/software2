@@ -8,6 +8,7 @@ import com.example.sw2.entity.AsignadosSedes;
 import com.example.sw2.entity.Usuarios;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
     List<AsignadosSedes> buscarPorSede(int sede);
 
     @Query(value="select p.nombre as nombreproducto, i.codigo_inventario as codigo,a.fecha_envio as fecha," +
-            "a.cantidadactual as cantidad, u.nombre as nombre, u.foto as foto, u.apellido as apellido,"+
-            "u.correo as correo, u.telefono as telefono, u.dni as dni, a.estadoasignacion as estado\n"+
+            "a.cantidadactual as cantidad, u.nombre as nombre, u.foto as foto, u.apellido as apellido, a.precioventa as precio,"+
+            "u.correo as correo, u.telefono as telefono, u.dni as dniSede, a.estadoasignacion as estado\n"+
             "FROM Asignados_sedes a\n"+
             "inner join Inventario i on (a.producto_inventario = i.codigo_inventario)\n" +
             "inner join Productos p on (i.producto = p.codigonom)\n"+
@@ -33,9 +34,9 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
             nativeQuery = true)
     List<DevolucionDto> DatosDevolucion(int estado, int dni);
 
-    Optional<AsignadosSedes> findByIdAndCodEstadoAsignacion(AsignadosSedesId id, int estado);
-    Optional<AsignadosSedes> deleteByIdAndCodEstadoAsignacion(AsignadosSedesId id, int estado);
-
     List<AsignadosSedes> findAsignadosSedesById_Sede_idusuarios(int id);
+
+    @Procedure(name = "update_cant_gestor")
+    void update_cant_gestor(int cant_devol, String codigo);
 
 }
