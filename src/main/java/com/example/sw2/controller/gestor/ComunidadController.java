@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/gestor/comunidad")
@@ -36,6 +37,24 @@ public class ComunidadController {
 
         if(type==1 && comunidadesRepository.findById(comunidades.getCodigo()).isPresent()){ //if new
             bindingResult.rejectValue("codigo","error.user","Este código ya existe");
+        }
+
+        if (!comunidades.getCodigo().isEmpty()) {
+            if (Pattern.compile("[0-9]").matcher(comunidades.getCodigo()).find()) {
+                bindingResult.rejectValue("codigo", "error.user", "No ingrese valores numéricos.");
+            }
+            if (comunidades.getCodigo().trim().length() == 0) {
+                bindingResult.rejectValue("codigo", "error.user", "Ingrese un código válido.");
+            }
+        }
+
+        if (!comunidades.getNombre().isEmpty()) {
+            if (Pattern.compile("[0-9]").matcher(comunidades.getNombre()).find()) {
+                bindingResult.rejectValue("nombre", "error.user", "No ingrese valores numéricos.");
+            }
+            if (comunidades.getNombre().trim().length() == 0) {
+                bindingResult.rejectValue("nombre", "error.user", "Ingrese un nombre válido.");
+            }
         }
 
         if(bindingResult.hasErrors()){

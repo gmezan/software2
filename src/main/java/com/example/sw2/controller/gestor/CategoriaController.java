@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/gestor/categoria")
@@ -42,6 +43,23 @@ public class CategoriaController {
             bindingResult.rejectValue("codigo","error.user","Este codigo ya existe");
         }
 
+        if (!categorias.getCodigo().isEmpty()) {
+            if (Pattern.compile("[0-9]").matcher(categorias.getCodigo()).find()) {
+                bindingResult.rejectValue("codigo", "error.user", "No ingrese valores numéricos.");
+            }
+            if (categorias.getCodigo().trim().length() == 0) {
+                bindingResult.rejectValue("codigo", "error.user", "Ingrese código válido.");
+            }
+        }
+
+        if (!categorias.getNombre().isEmpty()) {
+            if (Pattern.compile("[0-9]").matcher(categorias.getNombre()).find()) {
+                bindingResult.rejectValue("nombre", "error.user", "No ingrese valores numéricos.");
+            }
+            if (categorias.getNombre().trim().length() == 0) {
+                bindingResult.rejectValue("nombre", "error.user", "Ingrese nombre válido.");
+            }
+        }
 
         if(bindingResult.hasErrors()){
             model.addAttribute("formtype",Integer.toString(type));

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/gestor/producto")
@@ -41,6 +42,33 @@ public class ProductoController {
 
         if(type==1 && productosRepository.findById(productos.getCodigonom()).isPresent()){ //if new
             bindingResult.rejectValue("codigonom","error.user","Este codigo ya existe");
+        }
+
+        if (!productos.getCodigonom().isEmpty()) {
+            if (Pattern.compile("[0-9]").matcher(productos.getCodigonom()).find()) {
+                bindingResult.rejectValue("codigonom", "error.user", "No ingrese valores numéricos.");
+            }
+            if (productos.getCodigonom().trim().length() == 0) {
+                bindingResult.rejectValue("codigonom", "error.user", "Ingrese código válido.");
+            }
+        }
+
+        if (!productos.getNombre().isEmpty()) {
+            if (Pattern.compile("[0-9]").matcher(productos.getNombre()).find()) {
+                bindingResult.rejectValue("nombre", "error.user", "No ingrese valores numéricos.");
+            }
+            if (productos.getNombre().trim().length() == 0) {
+                bindingResult.rejectValue("nombre", "error.user", "Ingrese nombre válido.");
+            }
+        }
+
+        if (!productos.getCodigodesc().isEmpty()) {
+            if (Pattern.compile("[0-9]").matcher(productos.getCodigodesc()).find()) {
+                bindingResult.rejectValue("codigodesc", "error.user", "No ingrese valores numéricos.");
+            }
+            if (productos.getCodigodesc().trim().length() == 0) {
+                bindingResult.rejectValue("codigodesc", "error.user", "Ingrese código válido.");
+            }
         }
 
         if(bindingResult.hasErrors()){
