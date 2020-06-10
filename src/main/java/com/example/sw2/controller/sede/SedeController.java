@@ -97,6 +97,7 @@ public class SedeController {
         }
     }
 
+    /*
     @PostMapping("confirmarRecepcion")
     public String confirmarRecepcion(@RequestParam(value = "idgestor") int idgestor,
                                        @RequestParam(value = "idsede") int idsede,
@@ -149,7 +150,7 @@ public class SedeController {
                                                                         inventarioRepository.findById(idproductoinv).get(),
                                                                         idfechaenvio)), HttpStatus.OK);
     }
-
+*/
 
     //Web service
     @ResponseBody
@@ -163,11 +164,11 @@ public class SedeController {
             put("idgestor",Integer.toString(asignadosSedesId.getSede().getIdusuarios()));
             put("idsede",Integer.toString(asignadosSedesId.getGestor().getIdusuarios()));
             put("idproductoinv",asignadosSedesId.getProductoinventario().getCodigoinventario());
-            put("idfechaenvio", asignadosSedesId.getFechaenvio().toString());
+            //put("idfechaenvio", asignadosSedesId.getFechaenvio().toString());
             put("producto", asignadosSedesId.getProductoinventario().getProductos().getNombre());
             put("color",asignadosSedesId.getProductoinventario().getColor());
             put("tamanho", asignadosSedesId.getProductoinventario().getTamanho());
-            put("precioventa", asignadosSedes!=null? Float.toString(asignadosSedes.getPrecioventa()):null);
+            //put("precioventa", asignadosSedes!=null? Float.toString(asignadosSedes.getPrecioventa()):null);
             put("stock", asignadosSedes!=null? String.valueOf(asignadosSedes.getStock()):null);
             put("foto",asignadosSedesId.getProductoinventario().getFoto());
             put("comunidades",asignadosSedesId.getProductoinventario().getComunidades().getNombre());
