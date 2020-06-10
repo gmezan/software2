@@ -113,9 +113,9 @@ public class ProductosDisponiblesController {
             Usuarios sedes = optionalUsuarios.get();
             Optional<Inventario> optionalInventario = inventarioRepository.findById(inventario);
             Inventario inv = optionalInventario.get();
-            asignadosSedes.setId(new AsignadosSedesId(usuarios, sedes, inv, day));
+            //asignadosSedes.setId(new AsignadosSedesId(usuarios, sedes, inv, day));
             asignadosSedes.setCantidadactual(asignadosSedes.getStock());
-            asignadosSedes.setCodEstadoAsignacion(1);
+            //asignadosSedes.setCodEstadoAsignacion(1);
             asignadosSedes.setFechacreacion(LocalDateTime.now());
 
             asignadosSedesRepository.save(asignadosSedes);
