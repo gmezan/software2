@@ -5,7 +5,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -38,6 +40,8 @@ public class Ventas implements Serializable {
     @ManyToOne
     @JoinColumn(name="vendedor",nullable = false)
     private Usuarios vendedor;
+    @NotNull
+    @Min(value = 1, message = "La cantidad debe ser mayor a 0")
     @Column(nullable = false)
     private int cantidad;
     @Column(name="precio_venta",nullable = false)
@@ -53,9 +57,10 @@ public class Ventas implements Serializable {
         return id;
     }
 
-    public void setId(VentasId   id) {
+    public void setId(VentasId id) {
         this.id = id;
     }
+
 
     public String getRucdni() {
         return rucdni;

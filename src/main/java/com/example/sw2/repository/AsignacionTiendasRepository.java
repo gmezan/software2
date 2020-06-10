@@ -8,9 +8,11 @@ import com.example.sw2.entity.Usuarios;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
@@ -28,16 +30,6 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
             nativeQuery = true)
     List<DatosAsignadosTiendaDto> obtenerDatosAsignados();
 
-    @Query(value="update Inventario i set i.cantidad_total =  i.cantidad_total - ?2 " +
-            " where i.codigo_inventario =?1\n",
-            nativeQuery = true)
-    void stockInventarioActualizado(String codigo, int cantVent);
-
-    @Query(value="update Asignados_sedes a set a.cantidadactual =  a.cantidadactual - ?2 " +
-            " where a.producto_inventario =?1\n",
-            nativeQuery = true)
-    void stockAsignadoSedeActualizado(String codigo, int cantVent);
-
     @Query(value="SELECT ast.*\n" +
             "FROM Asignacion_tienda ast\n" +
             "WHERE sede=?1",nativeQuery=true)
@@ -46,11 +38,13 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
 
     List<AsignacionTiendas> findAsignacionTiendasByAsignadosSedes_Id_Sede(Usuarios sede);
 
-    @Transactional
-    @Modifying
-    @Query(value="update Inventario i set i.cantidad_gestor =  i.cantidad_gestor - ?2 " +
-            " where i.codigo_inventario =?1\n",
-            nativeQuery = true)
-    void cantidadGestorDevueltaActualizada(String codigo, int cantDev);
+    @Procedure(name = "registrar_venta_tienda")
+    void registrar_venta_tienda(int dni_gestor, int dni_sede, String codigo,
+                                int estado, BigDecimal precio, int cant, int aTienda);
+
+    @Procedure(name = "devol_tienda")
+    void devol_tienda(int dni_gestor, int dni_sede, String codigo,
+                      int estado, Float precio, int cant, int aTienda);
+
 
 }

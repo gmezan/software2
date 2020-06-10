@@ -1,5 +1,8 @@
 package com.example.sw2.controller.sede;
 
+import com.example.sw2.constantes.AsignadosSedesId;
+import com.example.sw2.constantes.CustomConstants;
+import com.example.sw2.constantes.VentasId;
 import com.example.sw2.dto.DatosAsignadosTiendaDto;
 import com.example.sw2.entity.*;
 import com.example.sw2.repository.*;
@@ -9,10 +12,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,34 +35,97 @@ public class AsignadoTiendaController {
     AsignadosSedesRepository asignadosSedesRepository;
     @Autowired
     InventarioRepository inventarioRepository;
+    @Autowired
+    UsuariosRepository usuariosRepository;
 
 
     @GetMapping(value = {"", "/"})
-    public String ListaAsignacionTiendas(@ModelAttribute("ventas") Ventas v,
+    public String ListaAsignacionTiendas(@ModelAttribute("ventas") @Valid Ventas v,
+                                         BindingResult bindingResult,
                                          HttpSession session,
                                          Model model){
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
-        model.addAttribute("asignados", asignacionTiendasRepository.
-                findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
+        model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
+        model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
         return "sede/asignadoTiendas";
     }
 
     @PostMapping("/registrar")
-    public String RegistrarVentas(@ModelAttribute("ventas") Ventas venta,
-                                  @RequestParam("id") int id,
+    public String RegistrarVentas(@ModelAttribute("ventas") @Valid Ventas venta,
+                                  BindingResult bindingResult, HttpSession session,
+                                  @RequestParam("id1") int idAstiendas,
                                   Model model, RedirectAttributes attr){
 
-        int cantVent = venta.getCantidad();
-        String codigo = venta.getInventario().getCodigoinventario();
-        attr.addFlashAttribute("msg", "Venta registrada exitosamente");
-        ventasRepository.save(venta);
+        Optional<AsignacionTiendas> optaTienda = asignacionTiendasRepository.findById(idAstiendas);
+        AsignacionTiendas aTienda = optaTienda.get();
+
+        if(venta.getCantidad() > aTienda.getStock()){
+            bindingResult.rejectValue("cantidad", "error.user","La cantidad no puede ser mayor al stock de la tienda");
+
+        }
+        if(venta.getId().getNumerodocumento() == null){
+            bindingResult.rejectValue("id.numerodocumento", "error.user","El número de documento no puede estar vacío");
+        }
+        if(!(bindingResult.hasErrors())){
+            venta.setFecha(LocalDate.now());
+            venta.setFechacreacion(LocalDateTime.now());
+            ventasRepository.save(venta);
+
+            //actualizar stock(Asignados_sedes) cant_total(inventario)
+            asignacionTiendasRepository.registrar_venta_tienda(aTienda.getAsignadosSedes().getId().getGestor().getIdusuarios(),
+                    venta.getVendedor().getIdusuarios(), venta.getInventario().getCodigoinventario(),
+                    2,venta.getPrecioventa(), venta.getCantidad(), idAstiendas);
+
+            attr.addFlashAttribute("msg", "Venta registrada exitosamente");
+            return "redirect:/sede/AsignadoTienda";
+        }else{
+            Usuarios sede = (Usuarios) session.getAttribute("usuario");
+            model.addAttribute("id1",idAstiendas);
+            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
+            model.addAttribute("msgError", "ERROR");
+            return "sede/asignadoTiendas";
+        }
+
+    }
+
+    @GetMapping("/devolucion")
+    public String DevolTienda(@ModelAttribute("ventas") Ventas v,
+                              @RequestParam("id2") int idAstiendas,
+                              @RequestParam("cant") int cant,
+                              Model model, RedirectAttributes attr){
+
+
+        Optional<AsignacionTiendas> optAt = asignacionTiendasRepository.findById(idAstiendas);
+
+        //AsignadosID = gestor - sede - inventario - estado - precio
+        //sede - producto - estado
+
+        if (optAt.isPresent()) {
+
+            AsignacionTiendas at = optAt.get();
+            AsignadosSedes as = at.getAsignadosSedes();
+
+            //restar stock(Asignado_Tienda) y sumar cantidadactual(Asigandos_sedes)
+
+            asignacionTiendasRepository.devol_tienda(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
+                    as.getId().getProductoinventario().getCodigoinventario(), as.getId().getEstadoasignacion(),
+                    as.getId().getPrecioventa(),cant, at.getIdtiendas());
+            if(at.getStock() == 0){
+                asignacionTiendasRepository.deleteById(at.getIdtiendas());
+            }
+            //sumar lo devuelto a cant_gestor del inventario
+            attr.addFlashAttribute("msg","Producto devuelto exitosamente");
+        }
+
+
+
         return "redirect:/sede/AsignadoTienda";
     }
 
     //Web service
     @ResponseBody
     @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<AsignacionTiendas>> getAsignacion(@RequestParam(value = "id") int id){
+    public ResponseEntity<Optional<AsignacionTiendas>> getAsignacion(@RequestParam(value = "id1") int id){
         return new ResponseEntity<>(asignacionTiendasRepository.findById(id), HttpStatus.OK);
     }
 

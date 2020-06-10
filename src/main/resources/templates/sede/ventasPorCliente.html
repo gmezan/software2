@@ -76,7 +76,7 @@
                                         <tbody>
                                             <tr th:each="product : ${listaVentas}">
                                                 <td th:text="${product.nombrecliente}"></td>
-                                                <td th:text="${product.id.tipodocumento}"></td>
+                                                <td th:text="${product.id.tipodocumento2}"></td>
                                                 <td th:text="${product.id.numerodocumento}"></td>
                                                 <td th:text="${product.fecha}"></td>
                                                 <td th:text="${product.lugarventa}"></td>
@@ -92,7 +92,7 @@
                                                          height=100 style="width: auto" >
                                                 </td>
                                                 <td>
-                                                    <button th:attr="data-id1=${product.id.numerodocumento}, data-id2=${product.id.tipodocumento2}"
+                                                    <button th:attr="data-id1=${product.id.numerodocumento}, data-id2=${product.id.tipodocumento}"
                                                             data-toggle="modal" data-target="#deleteModal"
                                                             class="borrar-VentasCliente btn btn-datatable btn-icon btn-danger">Borrar</button></td>
                                                 <!--th:src="${product.fotoproducto}"-->
