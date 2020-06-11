@@ -106,3 +106,15 @@ function setminfecha(fechasig){
     }
     $("#addForm #fechaexp").prop("min",fechastr);
 }
+
+$(document).on("click",".add-inventario", function() {
+    $("#addModal #cant").val('1');
+    $("#addModal #codinv").val($(this).data('id'));
+});
+
+$(document).ready(function() {
+    if ($("#msgError").text()==="ERROR DE CANTIDAD"){
+        //$('#formModal').modal('show');
+        $('#addModal').modal({show: true, backdrop: 'static', keyboard: false });
+    }
+});

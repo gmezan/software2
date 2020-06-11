@@ -182,7 +182,7 @@ public class InventarioController {
             inventario.setFoto(".");
             inventario.setCodigoinventario(codInv);
             inventario.setFechacreacion(LocalDateTime.now());
-
+            inventario.setCantidadgestor(inventario.getCantidadtotal());
             /*
             //se necesita checar si hay un inventario idéntico para sumar
             Optional<Inventario> optionalInventario =
@@ -197,11 +197,45 @@ public class InventarioController {
                 inventario.setCantidadgestor(inventario.getCantidadtotal());
             }*/
             inventarioRepository.save(inventario);
-            attributes.addFlashAttribute("msg", "LA VALIDACION PERFECTA. Codigo generado: " + codInv);
+            attributes.addFlashAttribute("msg", "Producto registrado exitosamente! Codigo generado: " + codInv);
 
             return "redirect:/gestor/inventario";
         }
     }
+
+    @PostMapping("/addInv")
+    public String addInv(@RequestParam("cant") String cant, @RequestParam("codinv") String codinv,RedirectAttributes attributes,Model m){
+
+        Optional<Inventario> opt = inventarioRepository.findById(codinv);
+        if (!opt.isPresent()){
+            attributes.addFlashAttribute("msgError", "PRODUCTO NO ENCONTRADO");
+            return "redirect:/gestor/inventario";
+
+        }
+
+        int cantInt=0;
+        try{
+            cantInt = Integer.parseInt(cant);
+            if (cantInt<0){
+                throw new Exception("");
+            }
+        }catch(Exception e){
+            attributes.addFlashAttribute("cantError","Cantidad no válida.");
+            attributes.addFlashAttribute("cant",cant);
+            attributes.addFlashAttribute("msgError", "ERROR DE CANTIDAD");
+            return "redirect:/gestor/inventario";
+        }
+
+
+        Inventario inventario = opt.get();
+        inventario.setCantidadtotal(cantInt + inventario.getCantidadtotal());
+        inventario.setCantidadgestor(cantInt + inventario.getCantidadgestor());
+        attributes.addFlashAttribute("msg", "Producto añadido exitosamente!");
+
+
+        return "redirect:/gestor/inventario";
+    }
+
 
 
     private void listasCamposInv(Model m) {

@@ -38,6 +38,7 @@
                         </p>
 
                         <div id="msgInventario" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+                        <div id="msgError" th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
 
 
                         <!-- DataTales Example -->
@@ -151,12 +152,17 @@
                                                     Sam Sammie
                                                 </td>
                                                 <td>
+                                                    
                                                     <a type="button" th:href="@{'/gestor/inventario/edit?id='+${inv.codigoinventario}}"
                                                             class="btn btn-datatable btn-icon btn-primary mr-2"><i
                                                             class="fa fa-edit"></i></a>
                                                     <button data-toggle="modal" data-target="#deleteModal"
                                                             class="btn btn-datatable btn-icon btn-danger"><i
                                                             class="fas fa-trash-alt"></i></button>
+                                                    <button th:attr="data-id=${inv.codigoinventario}" data-toggle="modal" data-target="#addModal"
+                                                            class="add-inventario btn btn-datatable btn-icon btn-success"><i
+                                                            class="fas fa-arrow-alt-circle-up"></i></button>
+                                                    
                                                 </td>
                                             </tr>
                                         
@@ -191,8 +197,49 @@
         
         <!-- Logout Modal-->
         <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
+    
+    
+    
+    
+        <!-- Modal Add-->
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Añadir producto de Inventario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <form id="add" method="post" th:action="@{/gestor/inventario/addInv}">
+                            <input type="text" hidden id="codinv" name="codinv" th:value="${codinv}">
+                            <div class="form-group">
+                                <label for="cant" class="col-form-label">Cantidad a adicionar:</label>
+                                <input type="number" min="0" class="form-control" id="cant" name="cant" th:value="${cant}">
+                                <div class="text-danger" th:text="${cantError}">Error</div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button form="add" type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Añadir</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
         
-
+        
+        
+        
+        
+        
+        
+        
+        
         <!-- Modal Edit-->
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -267,8 +314,8 @@
         
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
-
-
+    
+        <script th:src="@{/js/gestor/inventario.js}"></script>
     
     </body>
 </html>
