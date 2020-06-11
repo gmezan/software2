@@ -35,7 +35,7 @@ $(document).on("click",".conf-Produc", function(){
             sede: parseInt($(this).data('id2')),
             gestor: parseInt($(this).data('id1')),
             productoinventario: $(this).data('id3'),
-            estadoasignacion: parseInt($(this).data('id4')),
+            estadoasignacion: $(this).data('id4'),
             precioventa: $(this).data('id5'),
         })
     }).done(function(asignsede){

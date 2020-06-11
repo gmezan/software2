@@ -170,12 +170,10 @@
                             <input type="hidden" class="form-control" id="idgestor" name="idgestor">
                             <input type="hidden" class="form-control" id="idestadoasign" name="idestadoasign">
                             <input type="hidden" class="form-control" id="idprecioventa" name="idprecioventa">
-                            <input type="hidden" class="form-control" id="idsede" name="vendedor"
-                                   th:value="${venta.vendedor}">
-                            <input type="hidden" class="form-control" id="idproductoinvinput" name="inventario"
-                                   th:value="${venta.inventario}">
+                            <input type="hidden" class="form-control" id="idsede" name="vendedor">
+                            <input type="hidden" class="form-control" id="idproductoinvinput" name="inventario">
 
-                            <label>Codigo del producto: <span><b id="idproductoinvlabel" name="inventario" th:value="${venta.inventario}"></b></span></label>
+                            <label>Codigo del producto: <span><b id="idproductoinvlabel" name="inventario"></b></span></label>
 
                             <div class="form-group">
                                 <label class="col-form-label">Nombre del cliente:</label>
@@ -221,21 +219,21 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">RUC/DNI(Opcional):</label>
-                                <input type="text" class="form-control" th:field="*{rucdni}">
+                                <input type="number" class="form-control" th:field="*{rucdni}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('rucdni')}" th:errors="*{rucdni}">
                                     Error
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Precio de venta:</label>
-                                <input type="text" class="form-control" th:field="*{precioventa}">
+                                <input type="number" step="0.01" class="form-control" th:field="*{precioventa}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('precioventa')}"
                                      th:errors="*{precioventa}">Error
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Cantidad:</label>
-                                <input type="text" class="form-control" th:field="*{cantidad}">
+                                <input type="number" class="form-control" th:field="*{cantidad}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}"
                                      th:errors="*{cantidad}">Error
                                 </div>
@@ -262,20 +260,36 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form method="post" th:action="@{/sede/asignar}" th:object="${asignaciontiendas}">
+
+                            <input type="hidden" class="form-control" id="idgestor2" name="gestor">
+                            <input type="hidden" class="form-control" id="idproductoinventario2" name="producto_inventario">
+                            <input type="hidden" class="form-control" id="idestadoasign2" name="estadoasignacion">
+                            <input type="hidden" class="form-control" id="idprecioventa2" name="precioventa">
+                            <input type="hidden" class="form-control" id="idsede2" name="sede">
+
                             <div class="form-group">
-                                <label for="nombretienda" class="col-form-label">Nombre de la tienda:</label>
-                                <input type="text" class="form-control" name="nombretienda" id="nombretienda">
+                                <label class="col-form-label">Nombre de la tienda:</label>
+                                <input type="text" class="form-control" id="tienda" name="tienda">
+                                <div class="text-danger" th:if="${#fields.hasErrors('tienda')}"
+                                     th:errors="*{tienda}">Error
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="fechaasignacion">Fecha en la que se deja el producto:</label>
-                                <input type="text" class="form-control" name="fechaasignacion" id="fechaasignacion">
+                                <label>Fecha en la que se deja el producto:</label>
+                                <input type="date" class="form-control" th:field="*{fechaasignacion}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('fechaasignacion')}"
+                                     th:errors="*{fechaasignacion}">Error
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="cantidad" class="col-form-label">Cantidad</label>
-                                <input type="text" class="form-control" name="cantidad" id="cantidad">
+                                <label class="col-form-label">Cantidad</label>
+                                <input type="number" class="form-control" th:field="*{stock}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('stock')}"
+                                     th:errors="*{stock}">Error
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>

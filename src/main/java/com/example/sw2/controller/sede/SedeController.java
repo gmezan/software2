@@ -3,10 +3,7 @@ package com.example.sw2.controller.sede;
 import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.VentasId;
 import com.example.sw2.entity.*;
-import com.example.sw2.repository.AsignadosSedesRepository;
-import com.example.sw2.repository.InventarioRepository;
-import com.example.sw2.repository.UsuariosRepository;
-import com.example.sw2.repository.VentasRepository;
+import com.example.sw2.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -40,6 +37,8 @@ public class SedeController {
     InventarioRepository inventarioRepository;
     @Autowired
     VentasRepository ventasRepository;
+    @Autowired
+    AsignacionTiendasRepository asignacionTiendasRepository;
 
     @GetMapping(value = {"/", ""})
     public String init() {
@@ -57,7 +56,8 @@ public class SedeController {
     }
 
     @GetMapping("productosConfirmados")
-    public String productosConfirmados(@ModelAttribute("venta") Ventas ventas, HttpSession session, Model model) {
+    public String productosConfirmados(@ModelAttribute("venta") Ventas ventas,
+            @ModelAttribute("asignaciontiendas") AsignacionTiendas asignacionTiendas,HttpSession session, Model model) {
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
 
@@ -94,6 +94,34 @@ public class SedeController {
         }
     }
 
+
+    @PostMapping("asignar")
+    public String asignarProducto(@ModelAttribute("asignaciontiendas") @Valid AsignacionTiendas asignacionTiendas, BindingResult bindingResult,
+                                  RedirectAttributes attr, HttpSession session, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            Usuarios sede = (Usuarios) session.getAttribute("usuario");
+            model.addAttribute("asignaciontiendas", asignacionTiendas);
+            model.addAttribute("msgError", "ERROR");
+            model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
+            return "sede/ListaProductosConfirmados";
+        } else {
+            Optional<AsignacionTiendas> asignTiendasOpt = asignacionTiendasRepository.findById(asignacionTiendas.getIdtiendas());
+
+            if (asignTiendasOpt.isPresent()) {
+                Usuarios sede = (Usuarios) session.getAttribute("usuario");
+                model.addAttribute("msgError", "ERROR");
+                model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
+                return "sede/ListaProductosConfirmados";
+            } else {
+                attr.addFlashAttribute("msgExito", "Producto asignado exitosamente");
+                asignacionTiendas.setFechacreacion(LocalDateTime.now());
+                asignacionTiendasRepository.save(asignacionTiendas);
+                return "redirect:/sede/productosConfirmados";
+            }
+        }
+    }
+
     @PostMapping("confirmarRecepcion")
     public String confirmarRecepcion(@RequestParam(value = "idgestor") int idgestor,
                                      @RequestParam(value = "idsede") int idsede,
@@ -101,13 +129,18 @@ public class SedeController {
                                      @RequestParam(value = "idestadoasign") int idestadoasign,
                                      @RequestParam(value = "idprecioventa") Float idprecioventa, RedirectAttributes attr) {
 
-        Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(new AsignadosSedesId(usuariosRepository.findById(idgestor).get(), usuariosRepository.findById(idsede).get(),
+        AsignadosSedesId id = new AsignadosSedesId(usuariosRepository.findById(idgestor).get(), usuariosRepository.findById(idsede).get(),
                 inventarioRepository.findById(idproductoinv).get(),
-                idestadoasign, idprecioventa));
+                idestadoasign, idprecioventa);
+        Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
 
         if (asignadosSedesOptional.isPresent()) {
+            AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
+                    id.getProductoinventario(), 2, id.getPrecioventa());
+            asignadosSedesRepository.deleteById(id);
             AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
-            asignadosSedes.getId().setEstadoasignacion(2);
+            asignadosSedes.setId(idNew);
+            asignadosSedes.setFechacreacion(LocalDateTime.now());
         }
         return "redirect:/sede/productosPorConfirmar";
     }
@@ -142,6 +175,8 @@ public class SedeController {
     }
 
 
+
+
     //Web service
     @ResponseBody
     @GetMapping(value = {"/productosPorConfirmar/get"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -171,6 +206,7 @@ public class SedeController {
             put("idproductoinv", asignadosSedesId.getProductoinventario().getCodigoinventario());
             put("idestadoasign", Integer.toString(asignadosSedesId.getEstadoasignacion()));
             put("idprecioventa", Float.toString(asignadosSedesId.getPrecioventa()));
+            put("codinv", asignadosSedesId.getProductoinventario().getCodigoinventario());
             put("fechaenvio", asignadosSedes != null ? asignadosSedes.getFechaenvio().toString() : null);
             put("producto", asignadosSedesId.getProductoinventario().getProductos().getNombre());
             put("precioventa", asignadosSedes != null ? Float.toString(asignadosSedesId.getPrecioventa()) : null);
