@@ -1,4 +1,4 @@
-var contextPath  = window.location.href+"/get?id=";
+var contextPath  = window.location.href;
 
 $(document).on("click",".edit-Gestor", function(){
     $("#formModal #idusuarios").val('');
@@ -9,7 +9,7 @@ $(document).on("click",".edit-Gestor", function(){
     $("#formModal  #type").val('0');
     $("#formModal  #formTitle").text('Editar Gestor');
     $.ajax({
-        method:"GET", url:contextPath + $(this).data('id')
+        method:"GET", url:contextPath+"/get?id="+ $(this).data('id')
     }).done(function(gestor){
         if (gestor!=null){
             $("#formModal #idusuarios").val(gestor.idusuarios).prop("readonly", true);
