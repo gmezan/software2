@@ -73,7 +73,7 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr th:if="${prodPorConfirm.codEstadoAsignacion==1}"
+                                            <tr th:if="${prodPorConfirm.id.estadoasignacion==1}"
                                                 th:each="prodPorConfirm, i : ${listaProductosPorConfirmar}">
                                                 <td th:text="${i.index + 1}">1</td>
                                                 <td th:text="${prodPorConfirm.id.productoinventario.codigoinventario}"></td>
@@ -81,9 +81,9 @@
                                                 <td th:text="${prodPorConfirm.id.productoinventario.color}"></td>
                                                 <td th:text="${prodPorConfirm.id.productoinventario.tamanho}"></td>
                                                 <td th:text="${prodPorConfirm.id.productoinventario.comunidades.nombre}"></td>
-                                                <td th:text="${prodPorConfirm.precioventa}"></td>
+                                                <td th:text="${prodPorConfirm.id.precioventa}"></td>
                                                 <td th:text="${prodPorConfirm.stock}"></td>
-                                                <td th:text="${prodPorConfirm.id.fechaenvio}"></td>
+                                                <td th:text="${prodPorConfirm.fechaenvio}"></td>
                                                 <td>
                                                     <div class="progress mx-auto" style="height: 100px;width: 100px;">
                                                         <img class="mx-auto my-auto mh-100 img-fluid"
@@ -92,13 +92,17 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <button th:attr="data-id1=${prodPorConfirm.id.gestor.idusuarios}, data-id2=${prodPorConfirm.id.sede.idusuarios}, data-id3=${prodPorConfirm.id.productoinventario.codigoinventario}, data-id4=${prodPorConfirm.id.fechaenvio}"
+                                                    <button th:attr="data-id1=${prodPorConfirm.id.gestor.idusuarios}, data-id2=${prodPorConfirm.id.sede.idusuarios},
+                                                     data-id3=${prodPorConfirm.id.productoinventario.codigoinventario},
+                                                     data-id4=${prodPorConfirm.id.estadoasignacion}, data-id5=${prodPorConfirm.id.precioventa}"
                                                             type="button" class="conf-Produc btn btn-success "
                                                             data-toggle="modal" data-target="#confirmarRecepcionModal">
                                                         <i class="fas fa-check-circle"></i></button>
                                                 </td>
                                                 <td>
-                                                    <button th:attr="data-id12=${prodPorConfirm.id.gestor.idusuarios}, data-id22=${prodPorConfirm.id.sede.idusuarios}, data-id32=${prodPorConfirm.id.productoinventario.codigoinventario}, data-id42=${prodPorConfirm.id.fechaenvio}"
+                                                    <button th:attr="data-id12=${prodPorConfirm.id.gestor.idusuarios}, data-id22=${prodPorConfirm.id.sede.idusuarios},
+                                                     data-id32=${prodPorConfirm.id.productoinventario.codigoinventario},
+                                                     data-id42=${prodPorConfirm.id.estadoasignacion}, data-id52=${prodPorConfirm.id.precioventa}"
                                                             type="button" class="problem-Produc btn btn-danger "
                                                             data-toggle="modal"
                                                             data-target="#problemaModal"><i
@@ -151,7 +155,8 @@
                             <input type="hidden" class="form-control" id="idgestor" name="idgestor">
                             <input type="hidden" class="form-control" id="idsede" name="idsede">
                             <input type="hidden" class="form-control" id="idproductoinv" name="idproductoinv">
-                            <input type="hidden" class="form-control" id="idfechaenvio" name="idfechaenvio">
+                            <input type="hidden" class="form-control" id="idestadoasign" name="idestadoasign">
+                            <input type="hidden" class="form-control" id="idprecioventa" name="idprecioventa">
 
                             <h6><b>Antes de confirmar, se recomienda verificar todos los datos del producto</b>
                             </h6></br>
@@ -161,7 +166,8 @@
                             <label><b>Color: </b><span><label id="color"></label></span></label></br>
                             <label><b>Tamaño: </b><span><label id="tamanho"></label></span></label></br>
                             <label><b>Comunidad: </b><span><label id="comunidades"></label></span></label></br>
-                            <label><b>Precio de venta: </b><span><label> S/.</label><label id="precioventa"></label></span></label></br>
+                            <label><b>Precio de venta: </b><span><label> S/.</label><label
+                                    id="precioventa"></label></span></label></br>
                             <label><b>Stock: </b><span><label id="stock"></label></span></label></br>
                             <label><b>Fecha de recepcion: </b><span><label id="fechaenvio"></label></span></label></br>
                             <label><b>Foto:</b></label></br>
@@ -171,7 +177,8 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Confirmar</a></button>
+                                <button type="submit" class="btn btn-primary"><a
+                                        style="color:white;text-decoration:none">Confirmar</a></button>
                             </div>
                         </form>
                     </div>
@@ -196,12 +203,14 @@
                             <input type="hidden" class="form-control" id="idgestor12" name="idgestor">
                             <input type="hidden" class="form-control" id="idsede22" name="idsede">
                             <input type="hidden" class="form-control" id="idproductoinv32" name="idproductoinv">
-                            <input type="hidden" class="form-control" id="idfechaenvio42" name="idfechaenvio">
+                            <input type="hidden" class="form-control" id="idestadoasign42" name="idestadoasign">
+                            <input type="hidden" class="form-control" id="idprecioventa52" name="idprecioventa">
 
                             <textarea type="text" class="form-control" id="mensaje" name="mensaje"></textarea>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Confirmar</a></button>
+                                <button type="submit" class="btn btn-primary"><a
+                                        style="color:white;text-decoration:none">Confirmar</a></button>
                             </div>
                         </form>
                     </div>

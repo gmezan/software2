@@ -65,19 +65,18 @@ public class SedeController {
 
     @PostMapping("registrarVenta")
     public String registrarVenta(@ModelAttribute("venta") @Valid Ventas ventas,
-                                 @ModelAttribute("ventasId") @Valid VentasId ventasId,
                           BindingResult bindingResult, RedirectAttributes attr, HttpSession session, Model model) {
 
         if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
-            model.addAttribute("venta",ventasRepository.findById(new VentasId(ventasId.getTipodocumento2(),ventasId.getNumerodocumento())));
+            model.addAttribute("venta",ventasRepository.findById(new VentasId(ventas.getId().getTipodocumento(),ventas.getId().getNumerodocumento())));
             model.addAttribute("msgError", "ERROR");
             model.addAttribute("listaProductosConfirmados",asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
             return "sede/ListaProductosConfirmados";
         }
         else {
 
-            Optional<Ventas> optVenta = ventasRepository.findById(new VentasId(ventas.getId().getTipodocumento2(),ventas.getId().getNumerodocumento()));
+            Optional<Ventas> optVenta = ventasRepository.findById(new VentasId(ventas.getId().getTipodocumento(),ventas.getId().getNumerodocumento()));
 
             if (optVenta.isPresent()) {
                 Usuarios sede = (Usuarios) session.getAttribute("usuario");
@@ -97,20 +96,20 @@ public class SedeController {
         }
     }
 
-    /*
     @PostMapping("confirmarRecepcion")
     public String confirmarRecepcion(@RequestParam(value = "idgestor") int idgestor,
                                        @RequestParam(value = "idsede") int idsede,
                                        @RequestParam(value = "idproductoinv") String idproductoinv,
-                                       @RequestParam(value = "idfechaenvio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate idfechaenvio){
+                                       @RequestParam(value = "idestadoasign") int idestadoasign,
+                                       @RequestParam(value = "idprecioventa") Float idprecioventa){
 
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById( new AsignadosSedesId(usuariosRepository.findById(idgestor).get(), usuariosRepository.findById(idsede).get(),
                 inventarioRepository.findById(idproductoinv).get(),
-                idfechaenvio));
+                idestadoasign, idprecioventa));
 
         if (asignadosSedesOptional.isPresent()){
             AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
-            asignadosSedes.setCodEstadoAsignacion(2);
+            asignadosSedes.getId().setEstadoasignacion(2);
         }
             return "redirect:/sede/productosPorConfirmar";
 
@@ -121,15 +120,16 @@ public class SedeController {
                                     @RequestParam(value = "idgestor") int idgestor,
                                     @RequestParam(value = "idsede") int idsede,
                                     @RequestParam(value = "idproductoinv") String idproductoinv,
-                                    @RequestParam(value = "idfechaenvio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate idfechaenvio){
+                                    @RequestParam(value = "idestadoasign") int idestadoasign,
+                                    @RequestParam(value = "idprecioventa") Float idprecioventa){
 
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById( new AsignadosSedesId(usuariosRepository.findById(idgestor).get(), usuariosRepository.findById(idsede).get(),
                 inventarioRepository.findById(idproductoinv).get(),
-                idfechaenvio));
+                idestadoasign, idprecioventa));
 
         if (asignadosSedesOptional.isPresent()){
             AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
-            asignadosSedes.setCodEstadoAsignacion(3);
+            asignadosSedes.getId().setEstadoasignacion(3);
             asignadosSedes.setMensaje(mensaje);
         }
         return "redirect:/sede/productosPorConfirmar";
@@ -142,15 +142,16 @@ public class SedeController {
     public ResponseEntity<Optional<AsignadosSedes>> getAsignsede(@RequestParam(value = "idgestor") int idgestor,
                                                                  @RequestParam(value = "idsede") int idsede,
                                                                  @RequestParam(value = "idproductoinv") String idproductoinv,
-                                                                 @RequestParam(value = "idfechaenvio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate idfechaenvio){
+                                                                 @RequestParam(value = "idestadoasign") int idestadoasign,
+                                                                 @RequestParam(value = "idprecioventa") Float idprecioventa){
 
 
         return new ResponseEntity<>(asignadosSedesRepository.findById(new AsignadosSedesId(usuariosRepository.findById(idgestor).get(),
                                                                         usuariosRepository.findById(idsede).get(),
                                                                         inventarioRepository.findById(idproductoinv).get(),
-                                                                        idfechaenvio)), HttpStatus.OK);
+                                                                        idestadoasign, idprecioventa)), HttpStatus.OK);
     }
-*/
+
 
     //Web service
     @ResponseBody
@@ -164,11 +165,13 @@ public class SedeController {
             put("idgestor",Integer.toString(asignadosSedesId.getSede().getIdusuarios()));
             put("idsede",Integer.toString(asignadosSedesId.getGestor().getIdusuarios()));
             put("idproductoinv",asignadosSedesId.getProductoinventario().getCodigoinventario());
-            //put("idfechaenvio", asignadosSedesId.getFechaenvio().toString());
+            put("idestadoasign", Integer.toString(asignadosSedesId.getEstadoasignacion()));
+            put("idprecioventa", Float.toString(asignadosSedesId.getPrecioventa()));
+            put("fechaenvio", asignadosSedes!=null? asignadosSedes.getFechaenvio().toString():null);
             put("producto", asignadosSedesId.getProductoinventario().getProductos().getNombre());
+            put("precioventa",  asignadosSedes!=null? Float.toString(asignadosSedesId.getPrecioventa()):null);
             put("color",asignadosSedesId.getProductoinventario().getColor());
             put("tamanho", asignadosSedesId.getProductoinventario().getTamanho());
-            //put("precioventa", asignadosSedes!=null? Float.toString(asignadosSedes.getPrecioventa()):null);
             put("stock", asignadosSedes!=null? String.valueOf(asignadosSedes.getStock()):null);
             put("foto",asignadosSedesId.getProductoinventario().getFoto());
             put("comunidades",asignadosSedesId.getProductoinventario().getComunidades().getNombre());

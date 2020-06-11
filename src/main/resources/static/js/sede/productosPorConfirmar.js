@@ -5,7 +5,8 @@ $(document).on("click",".conf-Produc", function(){
     $("#confirmarRecepcionModal  #idgestor").val('');
     $("#confirmarRecepcionModal  #idsede").val('');
     $("#confirmarRecepcionModal  #idproductoinv").val('');
-    $("#confirmarRecepcionModal  #idfechaenvio").val('');
+    $("#confirmarRecepcionModal  #idestadoasign").val('');
+    $("#confirmarRecepcionModal  #idprecioventa").val('');
 
     $("#confirmarRecepcionModal #codinv").text('');
     $("#confirmarRecepcionModal  #producto").text('');
@@ -34,7 +35,8 @@ $(document).on("click",".conf-Produc", function(){
             sede: parseInt($(this).data('id2')),
             gestor: parseInt($(this).data('id1')),
             productoinventario: $(this).data('id3'),
-            fechaenvio: $(this).data('id4')
+            estadoasignacion: parseInt($(this).data('id4')),
+            precioventa: $(this).data('id5'),
         })
     }).done(function(asignsede){
         if (asignsede!=null){
@@ -42,14 +44,16 @@ $(document).on("click",".conf-Produc", function(){
             $("#confirmarRecepcionModal  #idgestor").val(asignsede.idgestor);
             $("#confirmarRecepcionModal  #idsede").val(asignsede.idsede);
             $("#confirmarRecepcionModal  #idproductoinv").val(asignsede.idproductoinv);
-            $("#confirmarRecepcionModal  #idfechaenvio").val(asignsede.idfechaenvio);
+            $("#confirmarRecepcionModal  #idestadoasign").val(asignsede.idestadoasign);
+            $("#confirmarRecepcionModal  #idprecioventa").val(asignsede.idprecioventa);
+
             $("#confirmarRecepcionModal #codinv").text(asignsede.idproductoinv);
             $("#confirmarRecepcionModal  #producto").text(asignsede.producto);
             $("#confirmarRecepcionModal  #color").text(asignsede.color);
             $("#confirmarRecepcionModal  #tamanho").text(asignsede.tamanho);
             $("#confirmarRecepcionModal  #precioventa").text(asignsede.precioventa);
             $("#confirmarRecepcionModal  #stock").text(asignsede.stock);
-            $("#confirmarRecepcionModal  #fechaenvio").text(asignsede.idfechaenvio);
+            $("#confirmarRecepcionModal  #fechaenvio").text(asignsede.fechaenvio);
             $("#confirmarRecepcionModal #foto").attr("src",asignsede.foto).attr("hidden",asignsede.foto==="");
             $("#confirmarRecepcionModal  #comunidades").text(asignsede.comunidades);
 
