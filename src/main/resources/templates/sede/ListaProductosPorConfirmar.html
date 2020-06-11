@@ -29,7 +29,8 @@
                         </div>
 
                         <!-- Page Heading -->
-
+                        <div  th:if="${msgExito != null}" th:text="${msgExito}"
+                              class="alert alert-success py-1" role="alert"></div>
 
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
@@ -200,13 +201,13 @@
                     </div>
                     <div class="modal-body">
                         <form method="post" th:action="@{/sede/registrarProblema}">
-                            <input type="hidden" class="form-control" id="idgestor12" name="idgestor">
-                            <input type="hidden" class="form-control" id="idsede22" name="idsede">
-                            <input type="hidden" class="form-control" id="idproductoinv32" name="idproductoinv">
-                            <input type="hidden" class="form-control" id="idestadoasign42" name="idestadoasign">
-                            <input type="hidden" class="form-control" id="idprecioventa52" name="idprecioventa">
+                            <input type="hidden" class="form-control" id="idgestor12" name="idgestor1">
+                            <input type="hidden" class="form-control" id="idsede22" name="idsede1">
+                            <input type="hidden" class="form-control" id="idproductoinv32" name="idproductoinv1">
+                            <input type="hidden" class="form-control" id="idestadoasign42" name="idestadoasign1">
+                            <input type="hidden" class="form-control" id="idprecioventa52" name="idprecioventa1">
 
-                            <textarea type="text" class="form-control" id="mensaje" name="mensaje"></textarea>
+                            <textarea type="text" class="form-control" name="mensaje" th:value="${mensaje}"></textarea>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 <button type="submit" class="btn btn-primary"><a
