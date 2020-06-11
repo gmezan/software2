@@ -42,9 +42,14 @@ public class VentasGestorController {
             return "gestor/ventas";
         }
         else {
+
             Optional<Ventas> optionalVentas = ventasRepository.findById(new VentasId(id2,id1));
             if (optionalVentas.isPresent()) {
                 Ventas ven = optionalVentas.get();
+                ven.setRucdni(ventas.getRucdni());
+                ven.setNombrecliente(ventas.getNombrecliente());
+
+                /*
                 ventas.setId(new VentasId(id2,id1));
                 ventas.setFechamodificacion(LocalDateTime.now());
                 ventas.setFechacreacion(ven.getFechacreacion());
@@ -53,10 +58,11 @@ public class VentasGestorController {
                 ventas.setFecha(ven.getFecha());
                 ventas.setVendedor(ven.getVendedor());
                 ventas.setCantidad(ven.getCantidad());
-                ventas.setPrecioventa(ven.getPrecioventa());
+                ventas.setPrecioventa(ven.getPrecioventa());*/
                 attr.addFlashAttribute("msg", "Venta actualizada exitosamente");
+                ventasRepository.save(ven);
             }
-            ventasRepository.save(ventas);
+
             return "redirect:/gestor/venta";
         }
     }

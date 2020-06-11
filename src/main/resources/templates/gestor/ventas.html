@@ -169,9 +169,10 @@
                     <div class="modal-body">
                         <form method="post" th:action="@{/gestor/venta/save}" th:object="${venta}">
 
-                                <input type="hidden" class="form-control" id="id12" name="id1" >
-                                <input type="hidden" class="form-control" id="id21" name="id2" >
-
+                                <input type="text" hidden class="form-control" id="id12" name="id1" >
+                                <input type="text" hidden class="form-control" id="id21" name="id2" >
+                                <input type="text" hidden class="form-control" id="cant" name="cantidad" >
+                                <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}">Error</div>
                             <div class="form-group">
                                 <label  class="col-form-label">Ruc/Dni:</label>
                                 <input type="text" class="form-control" th:field="*{rucdni}">

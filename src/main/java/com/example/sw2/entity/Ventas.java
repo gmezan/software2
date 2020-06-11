@@ -22,7 +22,7 @@ public class Ventas implements Serializable {
     @EmbeddedId
     private VentasId id;
 
-    @Size(max = 11, message = "El Ruc/Dni debe contener 11 caracteres")
+    @Size(min= 8, max = 11, message = "El Ruc/Dni debe contener 11 caracteres")
     @Column(name="ruc_dni")
     private String rucdni;
     @NotBlank
