@@ -39,7 +39,7 @@
 
                 <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
 
-                <div id="msgSedes" th:if="${msgYaExiste != null}" th:text="${msgYaExiste}" class="alert alert-danger py-1" role="alert"></div>
+                <div id="msgSedes" th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
 
 
                 <!-- Database Table -->
@@ -155,7 +155,7 @@
                     <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                     <div class="form-group">
                         <label class="col-form-label">DNI:</label>
-                        <input  th:readonly="${sede.idusuarios!=0  && !#fields.hasErrors('idusuarios')}" type="text" class="form-control" th:field="*{idusuarios}" th:value="*{idusuarios!=0}? *{idusuarios}">
+                        <input  th:readonly="${sede.idusuarios!=0 && sede.idusuarios!=null && !#fields.hasErrors('idusuarios')}" type="text" class="form-control" th:field="*{idusuarios}" th:value="*{idusuarios!=0}? *{idusuarios}">
                         <div class="text-danger" th:if="${#fields.hasErrors('idusuarios')}" th:errors="*{idusuarios}">Error</div>
                     </div>
                     <div class="form-group">
@@ -178,18 +178,12 @@
                         <input type="text" class="form-control" th:field="*{telefono}">
                         <div class="text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Error</div>
                     </div>
-                    <div hidden id="passwordField" class="form-group">
-                        <label  class="col-form-label">Contraseña:</label>
-                        <input type="password" class="form-control" th:field="*{password}">
-                        <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</div>
-                    </div>
                     <div class="form-group">
                         <img id="foto" class="rounded-pill"  width="100" style="height: auto;">
                     </div>
                     <div class="form-group">
                         <label for="photo"  class="col-form-label">Foto</label>
                         <input type="file"  id="photo" name="photo">
-
                     </div>
                     <div class="modal-footer">
                         <a type="button" th:href="@{/gestor/sede}"  class="btn btn-secondary" >Cancelar</a>

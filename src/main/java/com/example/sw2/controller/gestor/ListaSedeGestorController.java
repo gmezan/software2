@@ -8,6 +8,7 @@ import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
 import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.UsuariosRepository;
+import com.example.sw2.utils.CustomMailService;
 import com.example.sw2.utils.UploadObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,9 +33,10 @@ public class ListaSedeGestorController {
 
     @Autowired
     UsuariosRepository usuariosRepository;
-
     @Autowired
     AsignadosSedesRepository asignadosSedesRepository;
+    @Autowired
+    CustomMailService customMailService;
 
     @GetMapping(value = {""})
     public String listaSede(@ModelAttribute("sede") Usuarios usuarios, Model model){
@@ -56,7 +58,7 @@ public class ListaSedeGestorController {
         if(bindingResult.hasErrors()){
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
-            model.addAttribute("msgYaExiste", "ERROR");
+            model.addAttribute("msgError", "ERROR");
             return "gestor/sedes";
         }
         else {
@@ -67,11 +69,18 @@ public class ListaSedeGestorController {
                 msg = "Sede actualizada exitosamente";
             }
             else if (type==1){
-                msg = "Sede creada exitosamente";
-                usuarios.setRoles(new Roles(){{setIdroles(ROL_CRUD);}});
+                try {
+                    usuarios.setRoles(new Roles(ROL_CRUD));
+                    customMailService.sendEmailPassword(usuarios);
+                    msg = "Sede creada exitosamente";
+                }
+                catch (Exception e){
+                    attr.addFlashAttribute("msgError", "Hubo un problema con el envío de credenciales, no se creo el usuario");
+                    return "redirect:/gestor/sede";
+                }
             }
             else {
-                attr.addFlashAttribute("msg", "Ocurrió un problema, no se pudo guardar");
+                attr.addFlashAttribute("msgError", "Ocurrió un problema, no se pudo guardar");
                 return "redirect:/gestor/sede";
             }
             UploadObject.uploadProfilePhoto(usuarios,multipartFile);

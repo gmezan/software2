@@ -5,6 +5,7 @@ import com.example.sw2.entity.Roles;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.UsuariosRepository;
+import com.example.sw2.utils.CustomMailService;
 import com.example.sw2.utils.UploadObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,9 +30,10 @@ public class GestoresController {
 
     @Autowired
     UsuariosRepository usuariosRepository;
-
     @Autowired
     AsignadosSedesRepository asignadosSedesRepository;
+    @Autowired
+    CustomMailService customMailService;
 
     @GetMapping(value = {""})
     public String listaSede(@ModelAttribute("gestor")  Usuarios usuarios, Model model){
@@ -64,11 +66,18 @@ public class GestoresController {
                 msg = "Gestor actualizado exitosamente";
             }
             else if (type==1){
-                msg = "Gestor creado exitosamente";
-                usuarios.setRoles(new Roles(){{setIdroles(ROL_CRUD);}});
+                try {
+                    usuarios.setRoles(new Roles(ROL_CRUD));
+                    customMailService.sendEmailPassword(usuarios);
+                    msg = "Gestor creado exitosamente";
+                }
+                catch (Exception e){
+                    attr.addFlashAttribute("msgError", "Hubo un problema con el envío de credenciales, no se creo el usuario");
+                    return "redirect:/admin/gestor";
+                }
             }
             else {
-                attr.addFlashAttribute("msg", "Ocurrió un problema, no se pudo guardar");
+                attr.addFlashAttribute("msgError", "Ocurrió un problema, no se pudo guardar");
                 return "redirect:/admin/gestor";
             }
             UploadObject.uploadProfilePhoto(usuarios,multipartFile);

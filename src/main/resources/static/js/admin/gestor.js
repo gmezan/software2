@@ -7,7 +7,6 @@ $(document).on("click",".edit-Gestor", function(){
     $("#formModal #correo").val('');
     $("#formModal #telefono").val('');
     $("#formModal  #type").val('0');
-    $("#formModal  #passwordField").prop("hidden",true).prop("disabled",true);
     $("#formModal  #formTitle").text('Editar Gestor');
     $.ajax({
         method:"GET", url:contextPath + $(this).data('id')
@@ -34,7 +33,6 @@ $(document).on("click",".new-Gestor", function(){
     $("#formModal #correo").val('');
     $("#formModal #telefono").val('');
     $("#formModal  #type").val('1');
-    $("#formModal  #passwordField").prop("hidden",false).prop("disabled",false);
     $("#formModal #password").val('');
     $("#formModal #foto").attr("hidden",true);
 });

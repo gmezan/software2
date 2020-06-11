@@ -1,5 +1,6 @@
 package com.example.sw2.utils;
 
+import com.example.sw2.entity.Usuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -61,12 +62,19 @@ public class CustomMailService {
 		MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 		helper.setTo(to);
 		helper.setSubject(subject);
-		helper.setText(message);
 		helper.setText("<h1>"+title+"</h1>", true);
+		helper.setText(message);
 		javaMailSender.send(msg);
-		helper.setText("<h1>Check attachment for image!</h1>", true);
-		javaMailSender.send(msg);
+	}
 
+	public void sendEmailPassword(Usuarios u) throws MessagingException, IOException {
+		MimeMessage msg = javaMailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+		helper.setTo(u.getCorreo());
+		helper.setSubject("Confirmación de cuenta");
+		helper.setText("<h1>Bienvenido " + u.getFullname() + ", usuario "+u.getRoles().getNombrerol().toUpperCase()+" </h1>", true);
+		helper.setText("Este es un mensaje de confirmación de cuenta, para ingresar al sistema use la siguiente contraseña:\n"+u.generateNewPassword());
+		javaMailSender.send(msg);
 	}
 
 
