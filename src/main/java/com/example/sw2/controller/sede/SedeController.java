@@ -109,7 +109,6 @@ public class SedeController {
             asignadosSedes.getId().setEstadoasignacion(2);
         }
             return "redirect:/sede/productosPorConfirmar";
-
     }
 
     @PostMapping("registrarProblema")
@@ -131,6 +130,7 @@ public class SedeController {
         }
         return "redirect:/sede/productosPorConfirmar";
     }
+
 
     //Web service
     @ResponseBody

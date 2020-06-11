@@ -7,6 +7,7 @@ $(document).on("click",".registar-Venta", function(){
         method:"GET", url:contextPath  +$(this).data('id1')
     }).done(function(ventas){
         if (ventas!=null){
+
             $("#registrarModal  #rucdni").val(ventas.tienda.ruc);
             $("#registrarModal  #nombrecliente").val(ventas.tienda.nombre);
             $("#registrarModal  #lugarventa").val(ventas.tienda.direccion);

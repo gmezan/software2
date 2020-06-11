@@ -8,7 +8,7 @@ $(document).on("click",".problem-Produc", function(){
     $("#problemaModal  #idestadoasign42").val('');
     $("#problemaModal  #idprecioventa52").val('');
 
-    let url = contextPath + "/get?idgestor=" + $(this).data('id12') + "&idsede=" + $(this).data('id22')
+    let url = contextPath + "/get?idgestor=" + $(this).data('id12') + "&idsede=" + $(this).data('id22') +
         + "&idproductoinv=" + $(this).data('id32') + "&idestadoasign42=" + $(this).data('id42') + "&idprecioventa52=" + $(this).data('id52') ;
 
     console.log(url);

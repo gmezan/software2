@@ -129,8 +129,4 @@ public class AsignadoTiendaController {
         return new ResponseEntity<>(asignacionTiendasRepository.findById(id), HttpStatus.OK);
     }
 
-
-
-
-
 }
