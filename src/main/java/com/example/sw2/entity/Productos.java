@@ -27,6 +27,7 @@ public class Productos implements Serializable {
     @NotBlank
     private String nombre;
     @Column(nullable = false)
+    @Size(max = 45, message = "Máximo 45 caracteres")
     private String descripcion;
     @NotBlank
     @Column(nullable = false)
