@@ -213,7 +213,7 @@
             <form method="get" th:action="@{/gestor/sede/delete}" th:object="${sede}">
                 <!-- -->
                 <div id="deleteModalBody" class="modal-body">
-                    <input hidden type="number" class="form-control" th:field="*{idusuarios}" >
+                    <input hidden type="text" class="form-control" th:field="*{idusuarios}" >
                     <p id="deleteModalBodyP"></p>
                     <table hidden class="table" id="tableModal1">
                         <thead>

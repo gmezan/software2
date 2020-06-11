@@ -50,7 +50,7 @@ $(document).on("click",".delete-Sede", function(){
         method:"GET", url:contextPath+"/has?id="  + id
     }).done(function(data){
         if (data==null || data[0].length === 0 && data[1].length === 0){
-            $("#deleteModal #idusuarios").val($(this).data('id'));
+            $("#deleteModal #idusuarios").val(id);
             $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar esta Sede? Esta acción no se puede deshacer.");
             $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
         }

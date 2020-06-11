@@ -84,9 +84,11 @@ public class ListaSedeGestorController {
     public String deleteCat(Model model,
                             @RequestParam("idusuarios") int id,
                             RedirectAttributes attr) {
+        System.out.println(id);
         Optional<Usuarios> c = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id);
 
         if (c.isPresent()) {
+            System.out.println(c.get().getNombre());
             usuariosRepository.delete(c.get());
             attr.addFlashAttribute("msg", "Sede borrada exitosamente");
         }
