@@ -101,7 +101,7 @@ public class ListaSedeGestorController {
 
         if (c.isPresent()) {
             try {
-                notificaRepository.deleteByUsuarios(c.get());
+                notificaRepository.delete_notifications(c.get().getIdusuarios());
                 usuariosRepository.delete(c.get());
                 attr.addFlashAttribute("msg", "Sede borrado exitosamente");
             }
