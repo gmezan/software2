@@ -50,11 +50,11 @@ $(document).on("click",".delete-Gestor", function(){
     }).done(function(data){
         if (data==null || data[0].length === 0 && data[1].length === 0){
             $("#deleteModal #idusuarios").val(id);
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar esta Sede? Esta acción no se puede deshacer.");
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar este Gestor? Esta acción no se puede deshacer.");
             $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
         }
         else {
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La Sede no se puede borrar, está asociada a los siguientes Ventas y/o Prodcutos Asignados");
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("El gestor no se puede borrar, está asociada a los siguientes Ventas y/o Prodcutos Asignados");
 
             let r = [], j = -1;
             if(data[0].length!==0){

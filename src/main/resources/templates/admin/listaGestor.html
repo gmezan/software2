@@ -156,8 +156,8 @@
             <div class="modal-header">
                 <h5 th:text="${formtype!=null && formtype.equals('1')}? 'Nuevo Gestor':'Editar Gestor'" id="formTitle" class="modal-title"></h5>
                 <a type="button" th:href="@{/admin/gestor}" class="close"  aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
+                <span aria-hidden="true">&times;</span>
+            </a>
             </div>
             <div class="modal-body">
                 <form method="post" th:action="@{/admin/gestor/save}" th:object="${gestor}" enctype="multipart/form-data">
@@ -174,7 +174,7 @@
                     </div>
                     <div class="form-group">
                         <label  class="col-form-label">Apellido:</label>
-                        <input type="text" class="form-control" th:field="*{apellido}" >
+                        <input type="text" class="form-control" th:field="*{apellido}">
                         <div class="text-danger" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error</div>
                     </div>
                     <div class="form-group">
@@ -184,7 +184,7 @@
                     </div>
                     <div class="form-group">
                         <label  class="col-form-label">Telefono:</label>
-                        <input type="text" class="form-control" th:field="*{telefono}" >
+                        <input type="text" class="form-control" th:field="*{telefono}">
                         <div class="text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Error</div>
                     </div>
                     <div class="form-group">
