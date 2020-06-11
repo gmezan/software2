@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
@@ -69,7 +70,7 @@ public class SedeController {
 
         if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
-            model.addAttribute("venta",ventasRepository.findById(new VentasId(ventas.getId().getTipodocumento(),ventas.getId().getNumerodocumento())));
+            model.addAttribute("venta",ventas);
             model.addAttribute("msgError", "ERROR");
             model.addAttribute("listaProductosConfirmados",asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
             return "sede/ListaProductosConfirmados";
@@ -85,9 +86,10 @@ public class SedeController {
                 return "sede/ListaProductosConfirmados";
             }
             else {
-                Ventas venta = optVenta.get();
+
                 attr.addFlashAttribute("msgExito", "Venta registrada exitosamente");
-                ventasRepository.save(venta);
+                ventas.setFechacreacion(LocalDateTime.now());
+                ventasRepository.save(ventas);
                 return "redirect:/sede/productosConfirmados";
             }
         }
