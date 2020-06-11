@@ -26,7 +26,6 @@ $(document).on("click",".edit-Gestor", function(){
     })
 });
 $(document).on("click",".new-Gestor", function(){
-    $("#formModal  #formTitle").text('Nuevo Gestor');
     $("#formModal #idusuarios").val('').prop("readonly", false);
     $("#formModal #nombre").val('');
     $("#formModal #apellido").val('');
@@ -35,6 +34,7 @@ $(document).on("click",".new-Gestor", function(){
     $("#formModal  #type").val('1');
     $("#formModal #password").val('');
     $("#formModal #foto").attr("hidden",true);
+    $("#formModal  #formTitle").text('Nuevo Gestor');
 });
 $(document).on("click",".delete-Gestor", function(){
 

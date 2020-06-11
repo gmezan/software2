@@ -98,12 +98,12 @@ public class GestoresController {
 
         if (c.isPresent()) {
             try {
-                notificaRepository.deleteByUsuarios(c.get());
+                notificaRepository.delete_notifications(c.get().getIdusuarios());
                 usuariosRepository.delete(c.get());
                 attr.addFlashAttribute("msg", "Gestor borrado exitosamente");
             }
             catch (Exception ex){
-                attr.addFlashAttribute("msgError", "Ocurrió un problema, nno se pudo borrar a la sede");
+                attr.addFlashAttribute("msgError", "Ocurrió un problema, no se pudo borrar ");
                 ex.fillInStackTrace();
             }
         }
