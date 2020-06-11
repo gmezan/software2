@@ -50,11 +50,11 @@ $(document).on("click",".delete-Sede", function(){
         method:"GET", url:contextPath+"/has?id="  + id
     }).done(function(data){
         if (data==null || data[0].length === 0 && data[1].length === 0){
+            $("#deleteModal #idusuarios").val($(this).data('id'));
             $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar esta Sede? Esta acción no se puede deshacer.");
             $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
         }
         else {
-            $("#deleteModal #idusuarios").val($(this).data('id'));
             $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La Sede no se puede borrar, está asociada a los siguientes Ventas y/o Prodcutos Asignados");
 
             let r = [], j = -1;
