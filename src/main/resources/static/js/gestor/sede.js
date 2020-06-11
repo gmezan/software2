@@ -40,9 +40,10 @@ $(document).on("click",".new-Gestor", function(){
 });
 $(document).on("click",".delete-Sede", function(){
     let id = $(this).data('id');
-    $("#deleteModal #buttonDelete").prop("hidden",true);
+    $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
     $("#deleteModal #deleteModalBody #deleteModalBodyP").text("");
-    $("#deleteModal #deleteModalBody #tableModal").prop("hidden",true);
+    $("#deleteModal #deleteModalBody #tableModal1").prop("hidden",true);
+    $("#deleteModal #deleteModalBody #tableModal2").prop("hidden",true);
 
 
     $.ajax({
@@ -54,9 +55,7 @@ $(document).on("click",".delete-Sede", function(){
         }
         else {
             $("#deleteModal #idusuarios").val($(this).data('id'));
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La Sede no se puede borrar, está asociada a los siguientes Ventas y Prodcutos Asignados");
-
-            $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La Sede no se puede borrar, está asociada a los siguientes Ventas y/o Prodcutos Asignados");
 
             let r = [], j = -1;
             if(data[0].length!==0){
