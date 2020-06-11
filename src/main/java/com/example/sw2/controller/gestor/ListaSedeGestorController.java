@@ -28,7 +28,7 @@ import java.util.*;
 @RequestMapping("/gestor/sede")
 public class ListaSedeGestorController {
 
-    private final int ROL_CRUD = 3;
+    private final int ROL_CRUD = 3; // rol al que se le hace el crud
 
     @Autowired
     UsuariosRepository usuariosRepository;
@@ -50,32 +50,33 @@ public class ListaSedeGestorController {
                           RedirectAttributes attr, Model model) {
 
         if(type==1 && usuariosRepository.findById(usuarios.getIdusuarios()).isPresent()){ //if new
-            bindingResult.rejectValue("idusuarios","error.user","Este dni ya existe");
+            bindingResult.rejectValue("idusuarios","error.user","Este dni ya está registrado");
         }
 
         if(bindingResult.hasErrors()){
-
-            for( ObjectError e : bindingResult.getAllErrors()){
-                System.out.println(e.toString());
-            }
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
             model.addAttribute("msgYaExiste", "ERROR");
             return "gestor/sedes";
         }
         else {
-            Optional<Usuarios> optionalUsuarios = usuariosRepository.findById(usuarios.getIdusuarios());
-            if (optionalUsuarios.isPresent()) {
+            String msg;
+            Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD, usuarios.getIdusuarios());
+            if (optionalUsuarios.isPresent() && (type==0) ) {
                 usuarios = optionalUsuarios.get().updateFields(usuarios); // actualizar
-                if (usuarios.getRoles().getIdroles()!=ROL_CRUD) return "redirect:/gestor/sede";
-                attr.addFlashAttribute("msg", "Sede actualizada exitosamente");
+                msg = "Sede actualizada exitosamente";
+            }
+            else if (type==1){
+                msg = "Sede creada exitosamente";
+                usuarios.setRoles(new Roles(){{setIdroles(ROL_CRUD);}});
             }
             else {
-                attr.addFlashAttribute("msg", "Sede creada exitosamente");
-                usuarios.setRoles(new Roles(){{setIdroles(ROL_CRUD);}});
+                attr.addFlashAttribute("msg", "Ocurrió un problema, no se pudo guardar");
+                return "redirect:/gestor/sede";
             }
             UploadObject.uploadProfilePhoto(usuarios,multipartFile);
             usuariosRepository.save(usuarios);
+            attr.addFlashAttribute("msg", msg);
             return "redirect:/gestor/sede";
         }
     }
@@ -84,13 +85,14 @@ public class ListaSedeGestorController {
     public String deleteCat(Model model,
                             @RequestParam("idusuarios") int id,
                             RedirectAttributes attr) {
-        System.out.println(id);
         Optional<Usuarios> c = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id);
 
         if (c.isPresent()) {
-            System.out.println(c.get().getNombre());
             usuariosRepository.delete(c.get());
             attr.addFlashAttribute("msg", "Sede borrada exitosamente");
+        }
+        else {
+            attr.addFlashAttribute("msg", "Ocurrió un problema, nno se pudo borrar a la sede");
         }
 
         return "redirect:/gestor/sede";

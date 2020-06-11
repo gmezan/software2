@@ -39,31 +39,27 @@ $(document).on("click",".new-Gestor", function(){
     $("#formModal #foto").attr("hidden",true);
 });
 $(document).on("click",".delete-Gestor", function(){
+
     let id = $(this).data('id');
-    $("#deleteModal #buttonDelete").prop("hidden",true);
+    $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
     $("#deleteModal #deleteModalBody #deleteModalBodyP").text("");
-    $("#deleteModal #deleteModalBody #tableModal").prop("hidden",true);
+    $("#deleteModal #deleteModalBody #tableModal1").prop("hidden",true);
+    $("#deleteModal #deleteModalBody #tableModal2").prop("hidden",true);
 
 
     $.ajax({
         method:"GET", url:contextPath+"/has?id="  + id
     }).done(function(data){
         if (data==null || data[0].length === 0 && data[1].length === 0){
-            console.log(data);
-            $("#deleteModal #idusuarios").val($(this).data('id'));
+            $("#deleteModal #idusuarios").val(id);
             $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar esta Sede? Esta acción no se puede deshacer.");
             $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
         }
         else {
-            console.log(data);
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La Sede no se puede borrar, está asociada a los siguientes Ventas y Prodcutos Asignados");
-            $("#deleteModal #deleteModalBody #tableModal").prop("hidden",false);
-            $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La Sede no se puede borrar, está asociada a los siguientes Ventas y/o Prodcutos Asignados");
 
-            if(data[0].length===0){
-            }else{
-
-                let r = [], j = -1;
+            let r = [], j = -1;
+            if(data[0].length!==0){
                 for (let key=0, size=data[0].length; key<size; key++){
                     r[++j] ='<tr><td>';
                     r[++j] = data[0][key].rucdni;
@@ -73,33 +69,32 @@ $(document).on("click",".delete-Gestor", function(){
                     r[++j] = data[0][key].vendedor;
                     r[++j] = '</td></tr>';
                 }
+                $("#deleteModal #deleteModalBody #tableModal1").prop("hidden",false);
                 $("#deleteModal #tbody").html(r.join(''));
 
             }
-            if(data[1].length===0){
-            }else{
-                let rr = [], jj = -1;
-                let ventas = data[1];
+            if(data[1].length!==0){
+                r = []; j = -1;
                 for (let key=0, size=data[1].length; key<size; key++){
-                    rr[++jj] ='<tr><td>';
-                    rr[++jj] = ventas[key].sede;
-                    rr[++jj] = '</td><td>';
-                    rr[++jj] = ventas[key].stock;
-                    rr[++jj] = '</td><td>';
-                    rr[++jj] = ventas[key].vendedor;
-                    rr[++jj] = '</td></tr>';
+                    r[++j] ='<tr><td>';
+                    r[++j] = data[1][key].gestor;
+                    r[++j] = '</td><td>';
+                    r[++j] = data[1][key].stock;
+                    r[++j] = '</td><td>';
+                    r[++j] = data[1][key].sede;
+                    r[++j] = '</td></tr>';
                 }
-                $("#deleteModal #tbody1").html(rr.join(''));
+                $("#deleteModal #deleteModalBody #tableModal2").prop("hidden",false);
+                $("#deleteModal #tbody2").html(r.join(''));
             }
-
-
-
         }
     }).fail(function (err) {
         console.log(err);
         $('#deleteModal').modal('hide');
         alert("Ocurrió un error");
     });
+
+
 });
 
 $(document).ready(function() {

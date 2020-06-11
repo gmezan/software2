@@ -39,61 +39,41 @@ public class GestoresController {
         return "admin/listaGestor";
     }
 
-
     @PostMapping("/save")
     public String editCat(@ModelAttribute("gestor") @Valid Usuarios usuarios,
                           BindingResult bindingResult,
                           @RequestParam(name = "photo", required = false) MultipartFile multipartFile,
                           @RequestParam("type") int type,
                           RedirectAttributes attr, Model model) {
-        String url;
 
         if(type==1 && usuariosRepository.findById(usuarios.getIdusuarios()).isPresent()){ //if new
-            bindingResult.rejectValue("idusuarios","error.user","Este dni ya existe");
+            bindingResult.rejectValue("idusuarios","error.user","Este dni ya está registrado");
         }
 
         if(bindingResult.hasErrors()){
-
-            for( ObjectError e : bindingResult.getAllErrors()){
-                System.out.println(e.toString());
-            }
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
-            model.addAttribute("msg", "ERROR");
+            model.addAttribute("msgError", "ERROR");
             return "admin/listaGestor";
         }
         else {
-            Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,usuarios.getIdusuarios());
-            if (optionalUsuarios.isPresent()) {
-                Usuarios u = optionalUsuarios.get();
-                u.setNombre(usuarios.getNombre());
-                u.setApellido(usuarios.getApellido());
-                u.setTelefono(usuarios.getTelefono());
-                u.setCorreo(usuarios.getCorreo());
-                usuarios.setFoto(u.getFoto());
-                usuarios = u;
-                attr.addFlashAttribute("msg", "Gestor actualizado exitosamente");
+            String msg;
+            Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD, usuarios.getIdusuarios());
+            if (optionalUsuarios.isPresent() && (type==0) ) {
+                usuarios = optionalUsuarios.get().updateFields(usuarios); // actualizar
+                msg = "Gestor actualizado exitosamente";
+            }
+            else if (type==1){
+                msg = "Gestor creado exitosamente";
+                usuarios.setRoles(new Roles(){{setIdroles(ROL_CRUD);}});
             }
             else {
-                attr.addFlashAttribute("msg", "Gestor creado exitosamente");
-                Roles roles = new Roles(); roles.setIdroles(ROL_CRUD);
-                usuarios.setRoles(roles);
+                attr.addFlashAttribute("msg", "Ocurrió un problema, no se pudo guardar");
+                return "redirect:/admin/gestor";
             }
-            if (multipartFile!=null && !multipartFile.isEmpty()){
-                try {
-                    //pseudo random number
-                    String name = Integer.toString(usuarios.getIdusuarios()*CustomConstants.BIGNUMBER).hashCode()+Integer.toString(usuarios.getIdusuarios());
-                    System.out.println(name);
-                    url = UploadObject.uploadPhoto(name,
-                            multipartFile, CustomConstants.PERFIL);
-                    usuarios.setFoto(url);
-                }
-                catch (Exception ex){
-                    ex.fillInStackTrace();
-                }
-            }
-
+            UploadObject.uploadProfilePhoto(usuarios,multipartFile);
             usuariosRepository.save(usuarios);
+            attr.addFlashAttribute("msg", msg);
             return "redirect:/admin/gestor";
         }
     }
@@ -103,20 +83,18 @@ public class GestoresController {
                             @RequestParam("idusuarios") int id,
                             RedirectAttributes attr) {
         Optional<Usuarios> c = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id);
+
         if (c.isPresent()) {
-            usuariosRepository.deleteById(id);
-            attr.addFlashAttribute("msg","Gestor borrado exitosamente");
+            usuariosRepository.delete(c.get());
+            attr.addFlashAttribute("msg", "Gestor borrado exitosamente");
         }
+        else {
+            attr.addFlashAttribute("msg", "Ocurrió un problema, nno se pudo borrar a la sede");
+        }
+
         return "redirect:/admin/gestor";
     }
 
-    //Web service
-    @ResponseBody
-    @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<Usuarios>> getCat(@RequestParam(value = "id") int id){
-
-        return new ResponseEntity<>(usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id), HttpStatus.OK);
-    }
 
     @ResponseBody
     @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -139,13 +117,13 @@ public class GestoresController {
                 );
                 add(
                         new ArrayList<HashMap<String,String>>() {{
-                            asignadosSedesRepository.findAsignadosSedesById_Sede_idusuarios(id).forEach((a)->
+                            asignadosSedesRepository.findAsignadosSedesById_Gestor_idusuarios(id).forEach((a)->
                             {
                                 add(new HashMap<String, String>() {
                                     {
-                                        put("sede", a.getId().getSede().getFullname());
+                                        put("gestor", a.getId().getGestor().getFullname());
                                         put("stock", Integer.toString(a.getStock()));
-                                        put("vendedor", Integer.toString(a.getCantidadactual()));
+                                        put("sede", a.getId().getSede().getFullname());
                                     }
                                 });
                             });

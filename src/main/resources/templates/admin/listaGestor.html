@@ -51,7 +51,9 @@
                     <button data-toggle="modal" data-target="#formModal" type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class="new-Gestor fas fa-box-open fa-sm text-white-50"></i>Crear un nuevo Gestor</button>
                 </div>
-                <div id="msgGestores" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+
+                <div  th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+                <div id="msgGestores" th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
 
 
                 <!-- DataTales Example -->
@@ -162,7 +164,7 @@
                     <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                     <div class="form-group">
                         <label class="col-form-label">DNI:</label>
-                        <input  th:readonly="${gestor.idusuarios!=0 && !#fields.hasErrors('idusuarios')}" type="text" class="form-control" th:field="*{idusuarios}" placeholder="DNI">
+                        <input  th:readonly="${gestor.idusuarios!=0 && ${gestor.idusuarios}!=null && !#fields.hasErrors('idusuarios')}" type="text" class="form-control" th:field="*{idusuarios}" th:value="*{idusuarios!=0}? *{idusuarios}">
                         <div class="text-danger" th:if="${#fields.hasErrors('idusuarios')}" th:errors="*{idusuarios}">Error</div>
                     </div>
                     <div class="form-group">
@@ -204,7 +206,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
@@ -214,37 +215,38 @@
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Borrar Categoría</h4>
+                <h4 class="modal-title">Borrar Gestor</h4>
                 <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <form method="get" th:action="@{/admin/gestor/delete}" th:object="${gestor}">
                 <div id="deleteModalBody" class="modal-body">
                     <input hidden type="text" class="form-control" th:field="*{idusuarios}" >
                     <p id="deleteModalBodyP"></p>
-                    <table hidden class="table" id="tableModal">
+                    <table hidden class="table" id="tableModal1">
                         <thead>
                         <tr>
                             <th>RUC/DNI</th>
                             <th>Cliente</th>
-                            <th>Apellido</th>
+                            <th>Gestor</th>
                         </tr>
                         </thead>
                         <tbody id="tbody">
 
                         </tbody>
-
+                    </table>
+                    <table hidden class="table" id="tableModal2">
                         <thead>
                         <tr>
                             <th>Sede</th>
                             <th>Stock</th>
-                            <th>Vendedor</th>
+                            <th>Gestor</th>
                         </tr>
                         </thead>
-                        <tbody id="tbody1">
+                        <tbody id="tbody2">
                         </tbody>
-
                     </table>
                 </div>
+                <!-- -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button id="buttonDelete" type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>

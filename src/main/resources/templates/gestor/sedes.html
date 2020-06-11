@@ -32,7 +32,7 @@
                 </div>
     
                 <p class="mb-4">Aquí puedes ver las sedes registradas. Para asignar productos a una sede, revisa la lista de <a
-                        th:href="@{/gestor/productosDisponibles}" >productos disponibles</a>. </br>Para ver el estado de las asignaciones a sedes, revisa la lista de <a
+                        th:href="@{/gestor/productosDisponibles}" >productos disponibles</a>. <br>Para ver el estado de las asignaciones a sedes, revisa la lista de <a
                         th:href="@{/gestor/asignado}" >productos asignados</a>.
                 </p>
 
@@ -155,7 +155,7 @@
                     <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                     <div class="form-group">
                         <label class="col-form-label">DNI:</label>
-                        <input  th:readonly="${sede.idusuarios!=0 && sede.idusuarios!=null && !#fields.hasErrors('idusuarios')}" type="text" class="form-control" th:field="*{idusuarios}" th:value="*{idusuarios!=0}? *{idusuarios}">
+                        <input  th:readonly="${sede.idusuarios!=0 && ${sede.idusuarios}!=null && !#fields.hasErrors('idusuarios')}" type="text" class="form-control" th:field="*{idusuarios}" th:value="*{idusuarios!=0}? *{idusuarios}">
                         <div class="text-danger" th:if="${#fields.hasErrors('idusuarios')}" th:errors="*{idusuarios}">Error</div>
                     </div>
                     <div class="form-group">
@@ -220,7 +220,7 @@
                         <tr>
                             <th>RUC/DNI</th>
                             <th>Cliente</th>
-                            <th>Apellido</th>
+                            <th>Gestor</th>
                         </tr>
                         </thead>
                         <tbody id="tbody">
@@ -232,7 +232,7 @@
                         <tr>
                             <th>Sede</th>
                             <th>Stock</th>
-                            <th>Vendedor</th>
+                            <th>Gestor</th>
                         </tr>
                         </thead>
                         <tbody id="tbody2">

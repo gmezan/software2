@@ -36,6 +36,8 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
 
     List<AsignadosSedes> findAsignadosSedesById_Sede_idusuarios(int id);
 
+    List<AsignadosSedes> findAsignadosSedesById_Gestor_idusuarios(int id);
+
     @Procedure(name = "update_cant_gestor")
     void update_cant_gestor(int cant_devol, String codigo);
 

@@ -10,9 +10,9 @@ public final class CustomConstants {
 
 
 
-    public final static String AWS_BUCKET_NAME = "test-bucket-sw2-1";
+    public final static String AWS_BUCKET_NAME = "mosqoy-sw2-bucket";
     public final static String INVENTARIO = "inventario";
-    public final static String PERFIL = "profile";
+    public final static String PERFIL = "perfil";
     public final static int BIGNUMBER = 1749183;
 
 
