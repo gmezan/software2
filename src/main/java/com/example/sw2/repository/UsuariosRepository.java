@@ -5,6 +5,7 @@ import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
     List<Usuarios> findUsuariosByRoles_idroles(int rol);
 
     Optional<Usuarios> findUsuariosByRoles_idrolesAndIdusuarios(int rol, int idUsuario);
+
+    @Procedure(procedureName = "delete_user")
+    void delete_user(int idusuario);
 
     //@Query(value = "SELECT * FROM mosqoy2.Ventas v WHERE v.vendedor=?1;",nativeQuery = true)
     //List<Ventas> buscarSedesenVentas(int idUsuario);
