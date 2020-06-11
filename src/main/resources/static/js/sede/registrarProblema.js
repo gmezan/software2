@@ -21,7 +21,6 @@ $(document).on("click",".problem-Produc", function(){
             $("#problemaModal  #idgestor12").val(asignsede.id.gestor.idusuarios);
             $("#problemaModal  #idsede22").val(asignsede.id.sede.idusuarios);
             $("#problemaModal  #idproductoinv32").val(asignsede.id.productoinventario.codigoinventario);
-            $("#problemaModal  #idfechaenvio42").val(asignsede.id.fechaenvio);
             $("#problemaModal  #idestadoasign42").val(asignsede.idestadoasign);
             $("#problemaModal  #idprecioventa52").val(asignsede.idprecioventa);
 
