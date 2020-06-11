@@ -112,7 +112,7 @@ public class GestoresController {
             {
                 add(
                         new ArrayList<HashMap<String,String>>() {{
-                            Objects.requireNonNull(usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(id,ROL_CRUD).orElse(null)).getVentas().forEach((i)->
+                            Objects.requireNonNull(usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id).orElse(null)).getVentas().forEach((i)->
                             {
                                 add(new HashMap<String, String>() {
                                     {
