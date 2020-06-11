@@ -1,11 +1,7 @@
 var contextPath  = window.location.href;
 
 $(document).on("click",".edit-Gestor", function(){
-    $("#formModal #idusuarios").val('');
-    $("#formModal #nombre").val('');
-    $("#formModal #apellido").val('');
-    $("#formModal #correo").val('');
-    $("#formModal #telefono").val('');
+    $("#formModal input").val('');
     $("#formModal  #type").val('0');
     $("#formModal  #formTitle").text('Editar Gestor');
     $.ajax({
@@ -26,14 +22,9 @@ $(document).on("click",".edit-Gestor", function(){
     })
 });
 $(document).on("click",".new-Gestor", function(){
-    $("#formModal #idusuarios").val('').prop("readonly", false);
-    $("#formModal #nombre").val('');
-    $("#formModal #apellido").val('');
-    $("#formModal #correo").val('');
-    $("#formModal #telefono").val('');
-    $("#formModal  #type").val('1');
-    $("#formModal #password").val('');
+    $("#formModal input").val('').prop("readonly",false);
     $("#formModal #foto").attr("hidden",true);
+    $("#formModal  #type").val('1');
     $("#formModal  #formTitle").text('Nuevo Gestor');
 });
 $(document).on("click",".delete-Gestor", function(){
@@ -41,9 +32,7 @@ $(document).on("click",".delete-Gestor", function(){
     let id = $(this).data('id');
     $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
     $("#deleteModal #deleteModalBody #deleteModalBodyP").text("");
-    $("#deleteModal #deleteModalBody #tableModal1").prop("hidden",true);
-    $("#deleteModal #deleteModalBody #tableModal2").prop("hidden",true);
-
+    $("#deleteModal #deleteModalBody table").prop("hidden",true);
 
     $.ajax({
         method:"GET", url:contextPath+"/has?id="  + id

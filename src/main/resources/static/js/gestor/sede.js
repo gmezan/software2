@@ -1,11 +1,7 @@
 var contextPath  = window.location.href;
 
 $(document).on("click",".edit-Sede", function(){
-    $("#formModal #idusuarios").val('');
-    $("#formModal #nombre").val('');
-    $("#formModal #apellido").val('');
-    $("#formModal #correo").val('');
-    $("#formModal #telefono").val('');
+    $("#formModal input").val('');
     $("#formModal  #type").val('0');
     $("#formModal  #formTitle").text('Editar Sede');
     $.ajax({
@@ -26,15 +22,10 @@ $(document).on("click",".edit-Sede", function(){
     })
 });
 $(document).on("click",".new-Gestor", function(){
-    $("#formModal  #formTitle").text('Nueva Sede');
-    $("#formModal #idusuarios").val('').prop("readonly", false);
-    $("#formModal #nombre").val('');
-    $("#formModal #apellido").val('');
-    $("#formModal #correo").val('');
-    $("#formModal #telefono").val('');
+    $("#formModal input").val('').prop("readonly",false);
     $("#formModal  #type").val('1');
-    $("#formModal #password").val('');
     $("#formModal #foto").attr("hidden",true);
+    $("#formModal  #formTitle").text('Nueva sede');
 });
 $(document).on("click",".delete-Sede", function(){
     let id = $(this).data('id');
