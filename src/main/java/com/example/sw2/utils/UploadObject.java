@@ -129,6 +129,7 @@ public class UploadObject {
         if (multipartFile!=null && !multipartFile.isEmpty()){
             try {
                 String name = Integer.toString(u.getIdusuarios()* CustomConstants.BIGNUMBER).hashCode()+Integer.toString(u.getIdusuarios());
+                DeleteObjectNonVersionedBucket.deletePhoto(CustomConstants.PERFIL+"/"+name);
                 u.setFoto(UploadObject.uploadPhoto(name,multipartFile, CustomConstants.PERFIL));
             }
             catch (Exception ex){
@@ -140,6 +141,7 @@ public class UploadObject {
     public static void uploadProductPhoto(Inventario i, MultipartFile multipartFile){
         if (multipartFile!=null && !multipartFile.isEmpty()){
             try {
+                DeleteObjectNonVersionedBucket.deletePhoto(CustomConstants.INVENTARIO+"/"+i.getCodigoinventario());
                 i.setFoto(UploadObject.uploadPhoto(i.getCodigoinventario(),multipartFile, CustomConstants.INVENTARIO));
             }
             catch (Exception ex){

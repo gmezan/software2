@@ -37,7 +37,7 @@ public class DeleteObjectNonVersionedBucket {
         }
     }
 
-    public static void deletePhoto(String filename) throws IOException {
+    public static void deletePhoto(String filename) {
         Regions clientRegion = Regions.US_EAST_1;
         String bucketName = CustomConstants.AWS_BUCKET_NAME;
         try {
@@ -56,6 +56,8 @@ public class DeleteObjectNonVersionedBucket {
             e.printStackTrace();
         }
     }
+
+
 
 }
 
