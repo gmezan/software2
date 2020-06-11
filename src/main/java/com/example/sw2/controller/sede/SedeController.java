@@ -75,7 +75,6 @@ public class SedeController {
             return "sede/ListaProductosConfirmados";
         }
         else {
-
             Optional<Ventas> optVenta = ventasRepository.findById(new VentasId(ventas.getId().getTipodocumento(),ventas.getId().getNumerodocumento()));
 
             if (optVenta.isPresent()) {
@@ -91,8 +90,6 @@ public class SedeController {
                 ventasRepository.save(venta);
                 return "redirect:/sede/productosConfirmados";
             }
-
-
         }
     }
 
@@ -133,7 +130,6 @@ public class SedeController {
             asignadosSedes.setMensaje(mensaje);
         }
         return "redirect:/sede/productosPorConfirmar";
-
     }
 
     //Web service
@@ -145,13 +141,11 @@ public class SedeController {
                                                                  @RequestParam(value = "idestadoasign") int idestadoasign,
                                                                  @RequestParam(value = "idprecioventa") Float idprecioventa){
 
-
         return new ResponseEntity<>(asignadosSedesRepository.findById(new AsignadosSedesId(usuariosRepository.findById(idgestor).get(),
                                                                         usuariosRepository.findById(idsede).get(),
                                                                         inventarioRepository.findById(idproductoinv).get(),
                                                                         idestadoasign, idprecioventa)), HttpStatus.OK);
     }
-
 
     //Web service
     @ResponseBody
