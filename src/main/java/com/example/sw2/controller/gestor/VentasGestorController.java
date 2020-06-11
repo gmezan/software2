@@ -65,8 +65,8 @@ public class VentasGestorController {
     public String deleteVen(@RequestParam("id1") String id1,
                             @RequestParam("id2") int id2,
                             RedirectAttributes attr) {
-        Optional<Ventas> c = ventasRepository.findById(new VentasId(id2,id1));
-        if (c.isPresent()) {
+        Optional<Ventas> v = ventasRepository.findById(new VentasId(id2,id1));
+        if (v.isPresent()) {
             ventasRepository.deleteById(new VentasId(id2,id1));
             attr.addFlashAttribute("msg","Venta borrada exitosamente");
         }
