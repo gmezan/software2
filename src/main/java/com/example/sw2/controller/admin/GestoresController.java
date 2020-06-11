@@ -4,6 +4,7 @@ import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.entity.Roles;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.repository.AsignadosSedesRepository;
+import com.example.sw2.repository.NotificaRepository;
 import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.utils.CustomMailService;
 import com.example.sw2.utils.UploadObject;
@@ -34,6 +35,8 @@ public class GestoresController {
     AsignadosSedesRepository asignadosSedesRepository;
     @Autowired
     CustomMailService customMailService;
+    @Autowired
+    NotificaRepository notificaRepository;
 
     @GetMapping(value = {""})
     public String listaSede(@ModelAttribute("gestor")  Usuarios usuarios, Model model){
@@ -94,11 +97,17 @@ public class GestoresController {
         Optional<Usuarios> c = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id);
 
         if (c.isPresent()) {
-            usuariosRepository.delete(c.get());
-            attr.addFlashAttribute("msg", "Gestor borrado exitosamente");
+            try {
+                notificaRepository.deleteAllByUsuarios_Idusuarios(c.get().getIdusuarios());
+                usuariosRepository.delete(c.get());
+                attr.addFlashAttribute("msg", "Gestor borrado exitosamente");
+            }
+            catch (Exception ex){
+                ex.fillInStackTrace();
+            }
         }
         else {
-            attr.addFlashAttribute("msg", "Ocurrió un problema, nno se pudo borrar a la sede");
+            attr.addFlashAttribute("msgError", "Ocurrió un problema, no se pudo borrar");
         }
 
         return "redirect:/admin/gestor";

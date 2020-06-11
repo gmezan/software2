@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NotificaRepository extends JpaRepository<Notifica,Integer> {
+
+    void deleteAllByUsuarios_Idusuarios(int idusuarios);
 }
