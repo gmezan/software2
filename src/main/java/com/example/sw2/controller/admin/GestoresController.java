@@ -113,6 +113,13 @@ public class GestoresController {
         return "redirect:/admin/gestor";
     }
 
+    @ResponseBody
+    @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<Usuarios>> getCat(@RequestParam(value = "id") int id){
+        return new ResponseEntity<>(usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id), HttpStatus.OK);
+    }
+
+
 
     @ResponseBody
     @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
