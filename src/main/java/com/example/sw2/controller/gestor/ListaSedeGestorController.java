@@ -101,11 +101,12 @@ public class ListaSedeGestorController {
 
         if (c.isPresent()) {
             try {
-                notificaRepository.deleteAllByUsuarios_Idusuarios(c.get().getIdusuarios());
+                notificaRepository.deleteByUsuarios(c.get());
                 usuariosRepository.delete(c.get());
                 attr.addFlashAttribute("msg", "Sede borrado exitosamente");
             }
             catch (Exception ex){
+                attr.addFlashAttribute("msgError", "Ocurrió un problema, nno se pudo borrar a la sede");
                 ex.fillInStackTrace();
             }
         }
