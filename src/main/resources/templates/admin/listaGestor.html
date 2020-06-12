@@ -48,8 +48,10 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-900">Gestores principales</h1>
-                    <button data-toggle="modal" data-target="#formModal" type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="new-Gestor fas fa-box-open fa-sm text-white-50"></i>Crear un nuevo Gestor</button>
+                    <button data-toggle="modal" data-target="#formModal" type="button"
+                            class="new-Gestor d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class="fas fa-user-plus fa-sm text-white-50"></i> Nuevo Gestor
+                    </button>
                 </div>
 
                 <div  th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>

@@ -51,6 +51,7 @@ public class GestoresController {
                           @RequestParam("type") int type,
                           RedirectAttributes attr, Model model) {
 
+
         if(type==1 && usuariosRepository.findById(usuarios.getIdusuarios()).isPresent()){ //if new
             bindingResult.rejectValue("idusuarios","error.user","Este dni ya está registrado");
         }

@@ -1,12 +1,14 @@
 var contextPath  = window.location.href;
 
 $(document).on("click",".edit-Gestor", function(){
+    console.log("Edit gestor");
     $("#formModal input").val('');
     $("#formModal  #type").val('0');
     $("#formModal  #formTitle").text('Editar Gestor');
     $.ajax({
         method:"GET", url:contextPath+"/get?id="+ $(this).data('id')
     }).done(function(gestor){
+
         if (gestor!=null){
             $("#formModal #idusuarios").val(gestor.idusuarios).prop("readonly", true);
             $("#formModal #nombre").val(gestor.nombre);
@@ -20,15 +22,14 @@ $(document).on("click",".edit-Gestor", function(){
         $('#formModal').modal('hide');
         alert("Ocurrió un error");
     })
-});
-$(document).on("click",".new-Gestor", function(){
+}).on("click",".new-Gestor", function(){
+    console.log("New gestor");
     $("#formModal input").val('').prop("readonly",false);
     $("#formModal #foto").attr("hidden",true);
     $("#formModal  #type").val('1');
     $("#formModal  #formTitle").text('Nuevo Gestor');
-});
-$(document).on("click",".delete-Gestor", function(){
 
+}).on("click",".delete-Gestor", function(){
     let id = $(this).data('id');
     $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
     $("#deleteModal #deleteModalBody #deleteModalBodyP").text("");
