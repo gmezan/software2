@@ -141,6 +141,9 @@ public class SedeController {
             AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
             asignadosSedes.setId(idNew);
             asignadosSedes.setFechacreacion(LocalDateTime.now());
+            attr.addFlashAttribute("msgExito", "Se ha registrado la recepcion correctamente");
+
+            asignadosSedesRepository.save(asignadosSedes);
         }
         return "redirect:/sede/productosPorConfirmar";
     }
@@ -167,7 +170,7 @@ public class SedeController {
             AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
             asignadosSedes.setId(idNew);
             asignadosSedes.setMensaje(mensaje);
-            attr.addFlashAttribute("msgExito", "Problema registrado :|");
+            attr.addFlashAttribute("msgExito", "Se ha reportado el problema correctamente");
 
             asignadosSedesRepository.save(asignadosSedes);
         }
