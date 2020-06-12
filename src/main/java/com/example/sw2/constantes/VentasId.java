@@ -13,7 +13,7 @@ public class VentasId implements Serializable {
 
     @Column(name = "tipodocumento")
     private int tipodocumento;
-    @NotBlank(message= "Este campo no puede estar vacío")
+    @NotBlank(message = "Este campo no puede estar vacío")
     @Column(name = "numerodocumento")
     private String numerodocumento;
 

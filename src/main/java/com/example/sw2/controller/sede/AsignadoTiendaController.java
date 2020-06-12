@@ -40,8 +40,7 @@ public class AsignadoTiendaController {
 
 
     @GetMapping(value = {"", "/"})
-    public String ListaAsignacionTiendas(@ModelAttribute("ventas") @Valid Ventas v,
-                                         BindingResult bindingResult,
+    public String ListaAsignacionTiendas(@ModelAttribute("ventas") Ventas v,
                                          HttpSession session,
                                          Model model){
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
@@ -61,16 +60,24 @@ public class AsignadoTiendaController {
 
         if(venta.getCantidad() > aTienda.getStock()){
             bindingResult.rejectValue("cantidad", "error.user","La cantidad no puede ser mayor al stock de la tienda");
+        }
+        if(venta.getId().getNumerodocumento() == ""){
+            bindingResult.rejectValue("id.numerodocumento", "error.user","Este campo no puede estar vacío");
+        }
 
-        }
-        if(venta.getId().getNumerodocumento() == null){
-            bindingResult.rejectValue("id.numerodocumento", "error.user","El número de documento no puede estar vacío");
-        }
-        if(!(bindingResult.hasErrors())){
+        if(bindingResult.hasErrors()){
+            Usuarios sede = (Usuarios) session.getAttribute("usuario");
+            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
+            model.addAttribute("id1", idAstiendas);
+            model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
+            model.addAttribute("msgErrorRegistrar", "ERROR");
+            return "sede/asignadoTiendas";
+
+
+        }else{
             venta.setFecha(LocalDate.now());
             venta.setFechacreacion(LocalDateTime.now());
             ventasRepository.save(venta);
-
             //actualizar stock(Asignados_sedes) cant_total(inventario)
             asignacionTiendasRepository.registrar_venta_tienda(aTienda.getAsignadosSedes().getId().getGestor().getIdusuarios(),
                     venta.getVendedor().getIdusuarios(), venta.getInventario().getCodigoinventario(),
@@ -78,48 +85,55 @@ public class AsignadoTiendaController {
 
             attr.addFlashAttribute("msg", "Venta registrada exitosamente");
             return "redirect:/sede/AsignadoTienda";
-        }else{
-            Usuarios sede = (Usuarios) session.getAttribute("usuario");
-            model.addAttribute("id1",idAstiendas);
-            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
-            model.addAttribute("msgError", "ERROR");
-            return "sede/asignadoTiendas";
         }
+
 
     }
 
     @GetMapping("/devolucion")
     public String DevolTienda(@ModelAttribute("ventas") Ventas v,
                               @RequestParam("id2") int idAstiendas,
-                              @RequestParam("cant") int cant,
+                              BindingResult bindingResult,
+                              HttpSession session,
                               Model model, RedirectAttributes attr){
 
 
         Optional<AsignacionTiendas> optAt = asignacionTiendasRepository.findById(idAstiendas);
+        AsignacionTiendas at = optAt.get();
 
-        //AsignadosID = gestor - sede - inventario - estado - precio
-        //sede - producto - estado
+        if(v.getCantDevol() >= 0){
 
-        if (optAt.isPresent()) {
+            if(v.getCantDevol() > at.getStock()){
+                bindingResult.rejectValue("cantDevol", "error.user","La cantidad no puede ser mayor al stock actual de la tienda");
+            }
+            bindingResult.rejectValue("cantDevol", "error.user","La cantidad tiene que ser mayor a 0");
 
-            AsignacionTiendas at = optAt.get();
+            Usuarios sede = (Usuarios) session.getAttribute("usuario");
+            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
+            model.addAttribute("id2", idAstiendas);
+            model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
+            model.addAttribute("msgErrorDevolucion", "ERROR");
+            return "sede/asignadoTiendas";
+        }else{
             AsignadosSedes as = at.getAsignadosSedes();
 
             //restar stock(Asignado_Tienda) y sumar cantidadactual(Asigandos_sedes)
 
             asignacionTiendasRepository.devol_tienda(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
                     as.getId().getProductoinventario().getCodigoinventario(), as.getId().getEstadoasignacion(),
-                    as.getId().getPrecioventa(),cant, at.getIdtiendas());
+                    as.getId().getPrecioventa(),v.getCantDevol(), at.getIdtiendas());
             if(at.getStock() == 0){
                 asignacionTiendasRepository.deleteById(at.getIdtiendas());
             }
             //sumar lo devuelto a cant_gestor del inventario
             attr.addFlashAttribute("msg","Producto devuelto exitosamente");
+
+            return "redirect:/sede/AsignadoTienda";
+
         }
 
-
-
-        return "redirect:/sede/AsignadoTienda";
+        //AsignadosID = gestor - sede - inventario - estado - precio
+        //sede - producto - estado
     }
 
     //Web service

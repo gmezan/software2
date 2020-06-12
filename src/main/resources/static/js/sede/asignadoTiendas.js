@@ -1,13 +1,12 @@
-var contextPath  = window.location.href+"/get?id1=";
+var contextPath  = window.location.href;
 
 $(document).on("click",".registar-Venta", function(){
-    $("#registrarModal  #id1").val($(this).data('id1'));
-
+    $("#registrarModal  #id1").val($(this).data(''));
     $.ajax({
-        method:"GET", url:contextPath  +$(this).data('id1')
+        method:"GET", url:contextPath +"/get?id1=" +$(this).data('id1')
     }).done(function(ventas){
         if (ventas!=null){
-
+            $("#registrarModal  #id1").val(ventas.idtiendas);
             $("#registrarModal  #rucdni").val(ventas.tienda.ruc);
             $("#registrarModal  #nombrecliente").val(ventas.tienda.nombre);
             $("#registrarModal  #lugarventa").val(ventas.tienda.direccion);
@@ -25,6 +24,14 @@ $(document).on("click",".registar-Venta", function(){
 $(document).on("click",".retornar-Producto", function(){
     $("#devolucionModal #id2").val($(this).data('id2'));
     console.log($(this).data('id2'))
+});
+
+$(document).ready(function() {
+    if ($("#msgRegistrar").text()==="ERROR"){
+        $('#registrarModal').modal({show: true, backdrop: 'static', keyboard: false });
+    }else if($("#msgDevolucion").text()==="ERROR"){
+        $('#devolucionModal').modal({show: true, backdrop: 'static', keyboard: false });
+    }
 
 });
 

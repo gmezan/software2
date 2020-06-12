@@ -30,7 +30,8 @@
                     </div>
 
                     <div  th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
-                    <div id="msgAsigTiendas" th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
+                    <div id="msgRegistrar" th:if="${msgErrorRegistrar != null}" th:text="${msgErrorRegistrar}" class="alert alert-danger py-1" role="alert"></div>
+                    <div id="msgDevolucion" th:if="${msgErrorDevolucion != null}" th:text="${msgErrorDevolucion}" class="alert alert-danger py-1" role="alert"></div>
 
                     <div class="card shadow mb-4">
 
@@ -130,19 +131,20 @@
 
 
     <!-- Modal Registrar Venta -->
-    <div id="registrarModal" class="modal fade" role="dialog" aria-labelledby="registrarModal">
-        <div class="modal-dialog modal-confirm">
+    <div id="registrarModal" class="modal fade" role="dialog" aria-labelledby="registrarModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-confirm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Registrar venta</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <button type="button" th:href="@{/sede/AsignadoTienda}" class="close" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
 
-
                 <div class="modal-body">
-                    <form method="post" th:action="@{AsignadoTienda/registrar}" th:object="${ventas}">
+                    <form method="post" th:action="@{/sede/AsignadoTienda/registrar}" th:object="${ventas}">
 
-                        <input hidden id="id1" name ="id1" type="text" class="form-control">
+                        <input hidden id="id1" name ="id1" type="text" class="form-control"  th:value="${id1!=null}? ${id1}">
 
                         <input hidden type="text" class="form-control" th:field="*{rucdni}">
                         <input hidden type="text" class="form-control" th:field="*{nombrecliente}">
@@ -169,12 +171,13 @@
 
                         <div class="form-group">
                             <label class="col-form-label">Número de documento</label>
-                            <input id="numerodocumento" type="text" class="form-control" th:field="*{id.numerodocumento}">
+                            <input type="text" class="form-control" th:field="*{id.numerodocumento}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}" th:errors="*{id.numerodocumento}">Error</div>
                         </div>
 
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button th:href="@{/sede/AsignadoTienda}" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-success"><a style="color:white;text-decoration:none">Registrar</a></button>
                         </div>
                     </form>
@@ -189,20 +192,23 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Devolución de productos</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <a th:href="@{/sede/AsignadoTienda}" type="button" class="close" data-dismiss="modal">
+                        <span area-hidden="true">&times;</span>
+                    </a>
                 </div>
 
                 <div class="modal-body">
-                    <form method="get" th:action="@{AsignadoTienda/devolucion}">
-                        <input id="id2" name ="id2" type="text" class="form-control">
+                    <form method="get" th:action="@{/sede/AsignadoTienda/devolucion}" th:object="${ventas}">
+                        <input id="id2" name ="id2" type="text" class="form-control" th:value="${id2!=null}? ${id2}">
 
                         <div class="form-group">
                             <label class="col-form-label">Cantidad retornada</label>
-                            <input type="text" class="form-control" id="cant" name="cant">
+                            <input type="text" class="form-control" th:field="*{cantDevol}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('cantDevol')}" th:errors="*{cantDevol}">Error</div>
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <a th:href="@{/sede/AsignadoTienda}" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
                             <button type="submit" class="btn btn-success"><a style="color:white;text-decoration:none">Registrar</a></button>
                         </div>
                     </form>

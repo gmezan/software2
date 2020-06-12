@@ -52,6 +52,16 @@ public class Ventas implements Serializable {
     @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
+    @Transient
+    private int cantDevol;
+
+    public int getCantDevol() {
+        return cantDevol;
+    }
+
+    public void setCantDevol(int cantDevol) {
+        this.cantDevol = cantDevol;
+    }
 
     public VentasId getId() {
         return id;

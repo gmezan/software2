@@ -22,6 +22,7 @@ public class Tienda implements Serializable {
     @NotBlank(message = "El campo no puede estar vacío")
     @Column(nullable = false)
     private String ruc;
+    @NotBlank(message = "El campo no puede estar vacío")
     @Column(nullable = true)
     private String direccion;
 
