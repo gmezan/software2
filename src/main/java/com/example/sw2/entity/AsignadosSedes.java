@@ -45,6 +45,19 @@ public class AsignadosSedes implements Serializable {
         this.sed = sed;
     }*/
 
+    public AsignadosSedes(){
+
+    }
+
+    public AsignadosSedes(AsignadosSedesId id,AsignadosSedes as){
+        this.id = id;
+        fechaenvio = as.getFechaenvio();
+        stock = as.getStock();
+        cantidadactual = as.getCantidadactual();
+        fechacreacion = LocalDateTime.now();
+    }
+
+
     public AsignadosSedesId getId() {
         return id;
     }

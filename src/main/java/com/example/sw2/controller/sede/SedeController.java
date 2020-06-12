@@ -1,6 +1,7 @@
 package com.example.sw2.controller.sede;
 
 import com.example.sw2.constantes.AsignadosSedesId;
+import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.constantes.VentasId;
 import com.example.sw2.entity.*;
 import com.example.sw2.repository.*;
@@ -122,28 +123,21 @@ public class SedeController {
         }
     }
 
-    @PostMapping("confirmarRecepcion")
-    public String confirmarRecepcion(@RequestParam(value = "idgestor") int idgestor,
-                                     @RequestParam(value = "idsede") int idsede,
-                                     @RequestParam(value = "idproductoinv") String idproductoinv,
-                                     @RequestParam(value = "idestadoasign") int idestadoasign,
-                                     @RequestParam(value = "idprecioventa") Float idprecioventa, RedirectAttributes attr) {
-
+    @PostMapping("/confirmarRecepcion")
+    public String confirmarRecepcion(AsignadosSedesId id, RedirectAttributes attr) {
+/*
         AsignadosSedesId id = new AsignadosSedesId(usuariosRepository.findById(idgestor).get(), usuariosRepository.findById(idsede).get(),
                 inventarioRepository.findById(idproductoinv).get(),
-                idestadoasign, idprecioventa);
-        Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
+                idestadoasign, idprecioventa);*/
 
+        Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         if (asignadosSedesOptional.isPresent()) {
             AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
-                    id.getProductoinventario(), 2, id.getPrecioventa());
-            asignadosSedesRepository.deleteById(id);
-            AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
-            asignadosSedes.setId(idNew);
-            asignadosSedes.setFechacreacion(LocalDateTime.now());
+                    id.getProductoinventario(), CustomConstants.ESTADO_RECIBIDO_POR_SEDE, id.getPrecioventa());
+            AsignadosSedes newAsignadosSedes = new AsignadosSedes(idNew, asignadosSedesOptional.get());
             attr.addFlashAttribute("msgExito", "Se ha registrado la recepcion correctamente");
-
-            asignadosSedesRepository.save(asignadosSedes);
+            asignadosSedesRepository.save(newAsignadosSedes);
+            asignadosSedesRepository.deleteById(id);
         }
         return "redirect:/sede/productosPorConfirmar";
     }
@@ -204,8 +198,8 @@ public class SedeController {
             asignadosSedesId.setProductoinventario(inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
             asignadosSedesRepository.findAll();
             AsignadosSedes asignadosSedes = asignadosSedesRepository.findById(asignadosSedesId).orElse(null);
-            put("idgestor", Integer.toString(asignadosSedesId.getSede().getIdusuarios()));
-            put("idsede", Integer.toString(asignadosSedesId.getGestor().getIdusuarios()));
+            put("idgestor", Integer.toString(asignadosSedesId.getGestor().getIdusuarios()));
+            put("idsede", Integer.toString(asignadosSedesId.getSede().getIdusuarios()));
             put("idproductoinv", asignadosSedesId.getProductoinventario().getCodigoinventario());
             put("idestadoasign", Integer.toString(asignadosSedesId.getEstadoasignacion()));
             put("idprecioventa", Float.toString(asignadosSedesId.getPrecioventa()));
