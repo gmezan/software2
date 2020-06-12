@@ -16,7 +16,35 @@ public class Notifica implements Serializable {
     @Column(nullable = false)
     private String mensaje;
     @Column(nullable = false)
-    private LocalDateTime fecha;
+    private LocalDateTime datetime;
+
+    private int state;
+
+    private int ntype;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getNtype() {
+        return ntype;
+    }
+
+    public void setNtype(int ntype) {
+        this.ntype = ntype;
+    }
+
+    public LocalDateTime getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(LocalDateTime datetime) {
+        this.datetime = datetime;
+    }
 
     public int getIdnotificaciones() {
         return idnotificaciones;
@@ -42,11 +70,6 @@ public class Notifica implements Serializable {
         this.mensaje = mensaje;
     }
 
-    public LocalDateTime getFecha() {
-        return fecha;
-    }
 
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
-    }
+
 }

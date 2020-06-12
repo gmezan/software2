@@ -15,14 +15,15 @@ public final class CustomConstants {
     public final static String PERFIL = "perfil";
     public final static int BIGNUMBER = 1749183;
 
-
-
     private static final LinkedHashMap<String, String> lineas = new LinkedHashMap<>();
     private static final HashMap<Integer, String> meses = new HashMap<>();
     private static final HashMap<Integer, String> tiposAdquisicion = new HashMap<>();
     private static final HashMap<Integer, String> tiposDocumento = new HashMap<>();
     private static final HashMap<Integer, String> estadoAsignacion = new HashMap<>();
     private static final LinkedHashMap<String, String> tamanhos = new LinkedHashMap<>();
+
+    private static final HashMap<Integer,String> notificationState = new HashMap<>();
+    private static final HashMap<Integer,String> notificationType = new HashMap<>();
 
     static {
         lineas.put("T", "Tradicional");
@@ -60,7 +61,27 @@ public final class CustomConstants {
         estadoAsignacion.put(3, "Recibido con Problemas");
         estadoAsignacion.put(4, "Devuelto por Sede");
 
+        notificationState.put(1, "Nuevo");
+        notificationState.put(2, "Leído");
+        notificationState.put(3, "Archivado");
+
+        notificationType.put(1, "aviso");
+        notificationType.put(2, "alerta");
+        notificationType.put(3, "problema");
+        notificationType.put(4, "devolucion");
+        notificationType.put(5, "otro");
+
     }
+
+    public final static int N_TYPE_NOTICE = 1;
+    public final static int N_TYPE_ALERT = 2;
+    public final static int N_TYPE_PROBLEM = 3;
+    public final static int N_TYPE_RETURN = 4;
+    public final static int N_TYPE_OTHER = 5;
+
+    public final static int NOTF_STATE_NEW = 1;
+    public final static int NOTF_STATE_READ = 2;
+    public final static int NOTF_STATE_ARCHIVED = 3;
 
     public final static int ESTADO_ENVIADO_A_SEDE=1;
     public final static int ESTADO_RECIBIDO_POR_SEDE=2;
