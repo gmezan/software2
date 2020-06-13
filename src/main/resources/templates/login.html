@@ -33,7 +33,7 @@
             <!-- Nested Row within Card Body -->
             <div class="row">
               <div class="col-lg-6 container-fluid my-auto mx-auto">
-                <img class="mx-auto  img-fluid d-block" th:src="@{/img/bandi.png}" alt="Responsive image">
+                <img class="mx-auto  img-fluid d-block" th:src="@{/img/mosqoyRed.jpg}" alt="Responsive image">
               </div>
               <div class="col-lg-6 mx-auto">
                 <div class="p-5">
@@ -53,7 +53,7 @@
                   </form>
                   <br>
                   <div class="text-center">
-                    <a class="small" href="forgot-password.html">¿Olvidaste tu contraseña?</a>
+                    <a class="small" th:href="@{/forgotPassword}">¿Olvidaste tu contraseña?</a>
                   </div>
 
                   <div th:replace="fragments/general :: footer"></div>
