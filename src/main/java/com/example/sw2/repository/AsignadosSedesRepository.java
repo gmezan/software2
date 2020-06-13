@@ -41,4 +41,6 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
     @Procedure(name = "update_cant_gestor")
     void update_cant_gestor(int cant_devol, String codigo);
 
+    List<AsignadosSedes> findAllByOrderByFechacreacionDesc();
+
 }

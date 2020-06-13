@@ -69,7 +69,7 @@
                                                 <td th:text="${asig.id.sede.nombre}">Sede 1</td>
                                                 <td th:text="${asig.stock}">20</td>
                                                 <td th:text="${asig.id.precioventa}">20</td>
-                                                <td th:text="${asig.id.estadoasignacion}">Recibido por sede</td>
+                                                <td th:text="${asig.id.getNombreEstado()}">Recibido por sede</td>
                                                 <td th:text="${asig.stock - asig.cantidadactual}">20</td>
                                             </tr>
                                         </tbody>
