@@ -56,7 +56,7 @@ public class LoginController {
     public String forgotPassword(){ return "forgot-password";}
 
     @GetMapping("/processForgotPassword")
-    public String processForgotPassword(Model model, @RequestParam(value = "username", required = true) String email){
+    public String processForgotPassword(Model model, @RequestParam(value = "username", required = false) String email){
         System.out.println(email);
         model.addAttribute("msg", email);
         return "message-sent";
