@@ -61,8 +61,8 @@
                                 <tbody>
                                     <tr th:each="item : ${lista}">
                                         <td th:text="${item.nombre}" ></td>
-                                        <td th:text="${item.ruc}"></td>
                                         <td th:text="${item.direccion}"></td>
+                                        <td th:text="${item.ruc}"></td>
                                         <td>
                                             <button th:attr="data-id=${item.idtienda}" data-toggle="modal" data-target="#EditarTiendaModal" class="edit-Tienda btn  btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></button>
                                             <button th:attr="data-id=${item.idtienda}" data-toggle="modal" data-target="#deleteTiendaModal" class="delete-Tienda btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -116,12 +116,17 @@
 
                     <div class="form-group">
                         <label class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de categoría">
+                        <input type="text" class="form-control" th:field="*{nombre}">
                         <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
                     </div>
                     <div class="form-group">
+                        <label class="col-form-label">RUC:</label>
+                        <input type="text" class="form-control" th:field="*{ruc}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('ruc')}" th:errors="*{ruc}">Error</div>
+                    </div>
+                    <div class="form-group">
                         <label  class="col-form-label">Direccion:</label>
-                        <input type="text" class="form-control" th:field="*{direccion}" placeholder="Nombre de categoría">
+                        <input type="text" class="form-control" th:field="*{direccion}" >
                         <div class="text-danger" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}">Error</div>
                     </div>
 
