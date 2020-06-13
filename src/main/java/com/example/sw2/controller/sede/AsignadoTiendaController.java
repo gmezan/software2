@@ -61,7 +61,7 @@ public class AsignadoTiendaController {
         if(venta.getCantidad() > aTienda.getStock()){
             bindingResult.rejectValue("cantidad", "error.user","La cantidad no puede ser mayor al stock de la tienda");
         }
-        if(venta.getId().getNumerodocumento() == ""){
+        if(venta.getId().getNumerodocumento().equals("")){
             bindingResult.rejectValue("id.numerodocumento", "error.user","Este campo no puede estar vacío");
         }
 
