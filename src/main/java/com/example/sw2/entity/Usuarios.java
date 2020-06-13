@@ -126,7 +126,7 @@ public class Usuarios implements Serializable {
     }
 
     public void setCorreo(String correo) {
-        this.correo = correo;
+        this.correo = correo.replace(" ","");
     }
 
     public String getPassword() {
