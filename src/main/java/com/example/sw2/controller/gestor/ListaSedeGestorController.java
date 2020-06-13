@@ -54,6 +54,10 @@ public class ListaSedeGestorController {
                           @RequestParam("type") int type,
                           RedirectAttributes attr, Model model) {
 
+        if(usuariosRepository.findByCorreo(usuarios.getCorreo())!=null){
+            bindingResult.rejectValue("correo","error.user", "Este correo ya está registrado");
+        }
+
         if(type==1 && usuariosRepository.findById(usuarios.getIdusuarios()).isPresent()){ //if new
             bindingResult.rejectValue("idusuarios","error.user","Este dni ya está registrado");
         }

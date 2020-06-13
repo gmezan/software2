@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -43,8 +44,9 @@ public class Usuarios implements Serializable {
     @Column(nullable = false)
     @JsonIgnore
     private String password;
-    @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
-    private String telefono;
+    @Positive
+    @Digits(integer = 9, fraction =0, message = "Ingrese un número de celular válido")
+    private int telefono;
     @ManyToOne
     @JoinColumn(name = "rol",nullable = false)
     private Roles roles;
@@ -135,11 +137,11 @@ public class Usuarios implements Serializable {
         this.password = new BCryptPasswordEncoder().encode(password);
     }
 
-    public String getTelefono() {
+    public int getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
 
