@@ -5,10 +5,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,14 +19,15 @@ public class Ventas implements Serializable {
     @EmbeddedId
     private VentasId id;
 
-    @Size(min= 8, max = 11, message = "El Ruc/Dni debe contener 11 caracteres")
+    @Size(min= 8, max = 11, message = "El Ruc/Dni debe contener 8 o 11 caracteres")
     @Column(name="ruc_dni")
     private String rucdni;
-    @NotBlank
+    @NotBlank(message = "Este campo no puede estar vacío")
     @Size(max = 45, message = "El nombre debe contener 45 caracteres")
     @Column(nullable = false)
     private String nombrecliente;
     @Column(nullable = false)
+    @NotBlank(message = "Este campo no puede estar vacío")
     private String lugarventa;
     @ManyToOne
     @JoinColumn(name="productoinventario",nullable = false)
@@ -45,6 +43,7 @@ public class Ventas implements Serializable {
     @Column(nullable = false)
     private int cantidad;
     @Column(name="precio_venta",nullable = false)
+    @NotNull(message = "Debe ingresar un precio de venta")
     private BigDecimal precioventa;
     @LastModifiedDate
     @Column(name="fecha_modificacion")
