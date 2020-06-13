@@ -45,7 +45,7 @@ public class Usuarios implements Serializable {
     @JsonIgnore
     private String password;
     @Positive
-    @Digits(integer = 9, fraction =0, message = "Ingrese un número de celular válido")
+    @Digits(integer = 9, fraction=0, message = "Ingrese un número de celular válido")
     private int telefono;
     @ManyToOne
     @JoinColumn(name = "rol",nullable = false)

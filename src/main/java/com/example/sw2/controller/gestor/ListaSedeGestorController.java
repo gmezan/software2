@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/gestor/sede")
@@ -56,6 +57,14 @@ public class ListaSedeGestorController {
 
         if(usuariosRepository.findByCorreo(usuarios.getCorreo())!=null){
             bindingResult.rejectValue("correo","error.user", "Este correo ya está registrado");
+        }
+
+        if(Pattern.compile("[0-9]").matcher(usuarios.getNombre()).find()){
+            bindingResult.rejectValue("nombre","error.user", "No ingrese valores numéricos");
+        }
+
+        if(Pattern.compile("[0-9]").matcher(usuarios.getApellido()).find()){
+            bindingResult.rejectValue("apellido","error.user", "No ingrese valores numéricos");
         }
 
         if(type==1 && usuariosRepository.findById(usuarios.getIdusuarios()).isPresent()){ //if new
