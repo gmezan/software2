@@ -16,7 +16,7 @@ public class ProductosAsignadosController {
 
     @GetMapping("")
     public String ListarProductosAsignados(Model model){
-        model.addAttribute("listaAsignados",asignadosSedesRepository.findAll());
+        model.addAttribute("listaAsignados",asignadosSedesRepository.findAllByOrderByFechacreacionDesc());
         return "gestor/asignadosSedes";
     }
 }

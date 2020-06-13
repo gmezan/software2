@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/gestor/venta")
@@ -36,6 +37,25 @@ public class VentasGestorController {
                           BindingResult bindingResult, RedirectAttributes attr, Model model,
                           @RequestParam("id1") String id1,
                           @RequestParam("id2") int id2) {
+
+        if (!ventas.getRucdni().isEmpty()) {
+            if (ventas.getRucdni().trim().length() == 9) {
+                bindingResult.rejectValue("rucdni", "error.user", "Ingrese un Ruc/DNI válido.");
+            }
+            if (ventas.getRucdni().trim().length() == 10) {
+                bindingResult.rejectValue("rucdni", "error.user", "Ingrese un Ruc/DNI válido.");
+            }
+        }
+
+        if (!ventas.getNombrecliente().isEmpty()) {
+            if (Pattern.compile("[0-9]").matcher(ventas.getNombrecliente()).find()) {
+                bindingResult.rejectValue("nombrecliente", "error.user", "Ingrese un nombre válido.");
+            }
+            if (ventas.getNombrecliente().trim().length() == 0) {
+                bindingResult.rejectValue("nombrecliente", "error.user", "Ingrese un nombre.");
+            }
+        }
+
         if(bindingResult.hasErrors()){
             model.addAttribute("lista", ventasRepository.findAll());
             model.addAttribute("msgError", "ERROR");
@@ -48,7 +68,6 @@ public class VentasGestorController {
                 Ventas ven = optionalVentas.get();
                 ven.setRucdni(ventas.getRucdni());
                 ven.setNombrecliente(ventas.getNombrecliente());
-
                 /*
                 ventas.setId(new VentasId(id2,id1));
                 ventas.setFechamodificacion(LocalDateTime.now());

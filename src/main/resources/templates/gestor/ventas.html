@@ -175,7 +175,7 @@
                                 <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}">Error</div>
                             <div class="form-group">
                                 <label  class="col-form-label">Ruc/Dni:</label>
-                                <input type="text" class="form-control" th:field="*{rucdni}">
+                                <input type="number" class="form-control" th:field="*{rucdni}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('rucdni')}" th:errors="*{rucdni}">Error</div>
                             </div>
                             <div class="form-group">

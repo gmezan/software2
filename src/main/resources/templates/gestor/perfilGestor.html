@@ -27,7 +27,8 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-900">Perfil del Gestor</h1>
                         </div>
-
+                        <div id="msg" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
+                        <div id="msgGestor" th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
 
                             <div class="col-md-9 mx-auto">
 
@@ -38,7 +39,11 @@
                                             <div class="profile mr-3 mt-3">
                                                 <img th:if="session.usuario.foto!=''" th:src="${session.usuario.foto}"
                                                     alt="..." width="130" class="rounded mb-2 img-thumbnail">
-                                                <a data-toggle="modal" data-target="#editModal" style="color: white" class="btn btn-dark btn-sm btn-block">Editar perfil</a></div>
+
+                                                <a th:attr="data-id=${session.usuario.idusuarios}" data-toggle="modal" data-target="#formModal"
+                                                   style="color: white"
+                                                   class="editar-Gestor btn btn-dark btn-sm btn-block">Editar perfil</a></div>
+
                                             <div class="media-body mb-5 text-white">
                                                 <h4 class="mt-0 mb-4" th:text="${session.usuario.getFullname()}"></h4>
                                                 <p class="small mb-2"><i class="fa fa-user-circle mr-2"></i><span th:text="${session.usuario.idusuarios}"></span></p>
@@ -136,40 +141,56 @@
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/chart-area-demo.js}"></script>
         <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
+        <script th:src="@{/js/gestor/perfil.js}"></script>
 
-        <!-- Modal Edit-->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        <!-- Modal Form-->
+        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Editar Perfil</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <h5 id="formTitle" class="modal-title">Editar Perfil</h5>
+                        <button type="button" th:href="@{/gestor/perfil}" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form method="post" th:action="@{/gestor/save}" th:object="${gestor}">
+                            <input type="text" hidden class="form-control" id="idusuarios" name="idusuarios" >
+                            <!--div class="form-group">
+                                <label class="col-form-label">DNI:</label>
+                                <input  th:readonly="${gestor.idusuarios!=0 && gestor.idusuarios!=null && !#fields.hasErrors('idusuarios')}" type="text" class="form-control" th:field="*{idusuarios}" th:value="*{idusuarios!=0}? *{idusuarios}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('idusuarios')}" th:errors="*{idusuarios}">Error</div>
+                            </div-->
                             <div class="form-group">
-                                <label for="recipient-name2" class="col-form-label">Nombre:</label>
-                                <input type="text" class="form-control" id="recipient-name2" placeholder="Katherine">
+                                <label class="col-form-label">Nombre:</label>
+                                <input type="text" class="form-control" th:text="*{nombre}" >
+                                <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
                             </div>
                             <div class="form-group">
-                                <label for="recipient-name3" class="col-form-label">Apellido:</label>
-                                <input type="text" class="form-control" id="recipient-name3" placeholder="Vargas">
+                                <label class="col-form-label">Apellido:</label>
+                                <input type="text" class="form-control" th:text="*{apellido}" >
+                                <div class="text-danger" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error</div>
                             </div>
                             <div class="form-group">
-                                <label for="recipient-name4" class="col-form-label">Ciudad:</label>
-                                <input type="text" class="form-control" id="recipient-name4" placeholder="Lima">
+                                <label class="col-form-label">Correo:</label>
+                                <input type="text" class="form-control" th:text="*{correo}" >
+                                <div class="text-danger" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Error</div>
                             </div>
                             <div class="form-group">
-                                <label for="recipient-name5" class="col-form-label">Correo:</label>
-                                <input type="text" class="form-control" id="recipient-name5" placeholder="a20160555@pucp.edu.pe">
+                                <label class="col-form-label">Teléfono:</label>
+                                <input type="text" class="form-control" th:text="*{telefono}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Error</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="photo"  class="col-form-label">Foto</label>
+                                <input type="file"  id="photo" name="photo">
+                            </div>
+                            <div class="modal-footer">
+                                <a type="button" th:href="@{/gestor/perfil}"  class="btn btn-secondary" >Cancelar</a>
+                                <button type="submit" class="btn btn-primary"><a id="formSavebtn" style="color:white;text-decoration:none">Actualizar</a></button>
                             </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary"><a href="perfilGestor.html" style="color:white;text-decoration:none">Guardar cambios</a></button>
                     </div>
                 </div>
             </div>

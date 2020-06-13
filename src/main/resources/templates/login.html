@@ -33,12 +33,12 @@
             <!-- Nested Row within Card Body -->
             <div class="row">
               <div class="col-lg-6 container-fluid my-auto mx-auto">
-                <img class="mx-auto  img-fluid d-block" th:src="@{/img/bandi.png}" alt="Responsive image">
+                <img class="mx-auto  img-fluid d-block" th:src="@{/img/mosqoyRed.jpg}" alt="Responsive image">
               </div>
               <div class="col-lg-6 mx-auto">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Bienvenido!</h1>
+                    <h1 class="h4 text-gray-900 mb-4">¡Bienvenido!</h1>
                   </div>
                   <form th:action="@{/processLogin}" method="post" class="user">
                     <div class="form-group">
@@ -47,13 +47,14 @@
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Contraseña">
                     </div>
+                    <h6 th:if="${param.error}" class="form-signin-heading" style="color:#ff0000">Acceso denegado</h6>
                     <button type="submit" class="btn btn-primary btn-user btn-block">
                       Iniciar Sesión
                     </button>
                   </form>
                   <br>
                   <div class="text-center">
-                    <a class="small" href="forgot-password.html">¿Olvidaste tu contraseña?</a>
+                    <a class="small" th:href="@{/forgotPassword}">¿Olvidaste tu contraseña?</a>
                   </div>
 
                   <div th:replace="fragments/general :: footer"></div>

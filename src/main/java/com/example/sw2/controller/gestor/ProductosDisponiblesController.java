@@ -60,12 +60,19 @@ public class ProductosDisponiblesController {
                                  @RequestParam("documento") String documento,
                                  @ModelAttribute("ventas") @Valid Ventas ventas, BindingResult bindingResult,
                                  Model model, RedirectAttributes attributes,
-                                 HttpSession session){
-        if (bindingResult.hasErrors()) {
+                                 HttpSession session) {
+        if ((bindingResult.hasErrors()) || (documento=="") || (ventas.getFecha() == null ) || (ventas.getCantidad() > ventas.getInventario().getCantidadgestor()) ) {
             model.addAttribute("inv", ventas.getInventario());
+            if(documento == "") { model.addAttribute("msg", "Debe ingresar un número de documento"); }
+            if(ventas.getFecha()==null){model.addAttribute("msg1", "Debe seleccionar una fecha");}
+            if(ventas.getCantidad() > ventas.getInventario().getCantidadgestor()){model.addAttribute("msg2", "No hay suficientes productos en stock");}
             return "gestor/productosDisponiblesForm";
 
-        } else {
+        }else {
+            Inventario inventario = ventas.getInventario();
+            inventario.setCantidadgestor( inventario.getCantidadgestor() - ventas.getCantidad());
+            inventario.setCantidadtotal( inventario.getCantidadtotal() - ventas.getCantidad());
+            inventarioRepository.save(inventario);
             Usuarios usuarios = (Usuarios) session.getAttribute("usuario");
             ventas.setId(new VentasId(tipodocumento, documento));
             ventas.setVendedor(usuarios);
@@ -93,31 +100,33 @@ public class ProductosDisponiblesController {
 
     @PostMapping("/resgistrarasignacion")
     public String registrarAsignacionProducto(@RequestParam("sede") int sede,
-                                              @RequestParam("fecha") String fecha,
+                                              @RequestParam("precioventa") String precioventa,
                                               @RequestParam("inventario") String inventario,
                                               @ModelAttribute("asignadosSedes") @Valid AsignadosSedes asignadosSedes, BindingResult bindingResult,
                                               Model model, RedirectAttributes attributes,
                                               HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            Optional<Inventario> optionalInventario = inventarioRepository.findById(inventario);
-            Inventario inv = optionalInventario.get();
+        Optional<Inventario> optionalInventario = inventarioRepository.findById(inventario);
+        Inventario inv = optionalInventario.get();
+
+        if ((bindingResult.hasErrors()) || (precioventa == "") || (asignadosSedes.getFechaenvio() == null) || (asignadosSedes.getStock() > inv.getCantidadgestor())) {
             model.addAttribute("inv", inv);
             model.addAttribute("listasedes",usuariosRepository.findUsuariosByRoles_idroles(3));
+            if(precioventa == "") { model.addAttribute("msg", "Debe ingresar un precio de venta"); }
+            if(asignadosSedes.getFechaenvio() == null ){ model.addAttribute("msg1", "Debe seleccionar una fecha"); }
+            if(asignadosSedes.getStock() > inv.getCantidadgestor()){ model.addAttribute("msg2", "No hay suficientes productos para asignar");}
             return "gestor/productosDisponiblesAsignar";
 
         } else {
-
-            LocalDate day = LocalDate.parse(fecha);
+            inv.setCantidadgestor(inv.getCantidadgestor()-asignadosSedes.getStock());
+            inventarioRepository.save(inv);
             Usuarios usuarios = (Usuarios) session.getAttribute("usuario");
             Optional<Usuarios> optionalUsuarios = usuariosRepository.findById(sede);
             Usuarios sedes = optionalUsuarios.get();
-            Optional<Inventario> optionalInventario = inventarioRepository.findById(inventario);
-            Inventario inv = optionalInventario.get();
-            //asignadosSedes.setId(new AsignadosSedesId(usuarios, sedes, inv, day));
+            Float precio = Float.parseFloat(precioventa);
+            asignadosSedes.setId(new AsignadosSedesId(usuarios, sedes, inv,1,precio));
             asignadosSedes.setCantidadactual(asignadosSedes.getStock());
-            //asignadosSedes.setCodEstadoAsignacion(1);
             asignadosSedes.setFechacreacion(LocalDateTime.now());
-
+            System.out.println( "La puta fecha sin asignar es " + asignadosSedes.getFechaenvio());
             asignadosSedesRepository.save(asignadosSedes);
 
             attributes.addFlashAttribute("msg", "Producto asignado exitosamente");

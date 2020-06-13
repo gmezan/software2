@@ -3,8 +3,11 @@ import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.CustomConstants;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -17,8 +20,10 @@ public class AsignadosSedes implements Serializable {
     @EmbeddedId
     private AsignadosSedesId id;
     @Column(name = "fecha_envio")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaenvio;
-    @Positive
+    @NotNull
+    @Min(value = 1, message = "La cantidad debe ser mayor a 0")
     @Column(nullable = false)
     private int stock;
     @Column(nullable = false)
