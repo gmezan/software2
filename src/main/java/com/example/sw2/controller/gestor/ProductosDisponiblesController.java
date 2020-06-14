@@ -62,11 +62,15 @@ public class ProductosDisponiblesController {
                                  Model model, RedirectAttributes attributes,
                                  HttpSession session) {
 
+        boolean fechavalida = true;
+        if(ventas.getFecha()!=null) {
+        if (ventas.getFecha().isBefore(ventas.getInventario().getFechaadquisicion())){fechavalida=false;}
+        }
 
-        if ((bindingResult.hasErrors()) || (documento=="") || (ventas.getFecha() == null ) || (ventas.getCantidad() > ventas.getInventario().getCantidadgestor()) ) {
+        if ((bindingResult.hasErrors()) || (documento=="") || (ventas.getCantidad() > ventas.getInventario().getCantidadgestor()) || (fechavalida==false) ) {
             model.addAttribute("inv", ventas.getInventario());
             if(documento == "") { model.addAttribute("msg", "Debe ingresar un número de documento"); }
-            if(ventas.getFecha()==null){model.addAttribute("msg1", "Debe seleccionar una fecha");}
+            if(fechavalida==false){model.addAttribute("msg1", "La fecha debe ser igual o posterior a la  fecha de aquisision del producto");}
             if(ventas.getCantidad() > ventas.getInventario().getCantidadgestor()){model.addAttribute("msg2", "No hay suficientes productos en stock");}
             return "gestor/productosDisponiblesForm";
         }else {
@@ -91,7 +95,7 @@ public class ProductosDisponiblesController {
         if ( optionalInventario.isPresent()){
             Inventario inventario=optionalInventario.get();
             model.addAttribute("inv", inventario);
-            model.addAttribute("listasedes",usuariosRepository.findUsuariosByRoles_idroles(3));
+            model.addAttribute("listasedes",usuariosRepository.findUsuariosByRoles_IdrolesOrderByApellido(3));
             return "gestor/productosDisponiblesAsignar";
         }
         return "redirect:/gestor/productosDisponibles";
@@ -109,12 +113,23 @@ public class ProductosDisponiblesController {
         Optional<Inventario> optionalInventario = inventarioRepository.findById(inventario);
         Inventario inv = optionalInventario.get();
 
-        if ((bindingResult.hasErrors()) || (precioventa == "") || (asignadosSedes.getFechaenvio() == null) || (asignadosSedes.getStock() > inv.getCantidadgestor())) {
+        boolean fechavalida = true;
+        if(asignadosSedes.getFechaenvio()!=null) {
+            if (asignadosSedes.getFechaenvio().isBefore(inv.getFechaadquisicion())) {
+                fechavalida = false;
+            }
+        }
+
+        Boolean validacion = true;
+        Float precio = Float.valueOf(0);
+        try { precio = Float.parseFloat(precioventa);} catch (NumberFormatException exception){ validacion = false;}
+
+        if ((bindingResult.hasErrors()) || (asignadosSedes.getStock() > inv.getCantidadgestor()) || (validacion == false) || (fechavalida==false)) {
             model.addAttribute("inv", inv);
             model.addAttribute("listasedes",usuariosRepository.findUsuariosByRoles_idroles(3));
-            if(precioventa == "") { model.addAttribute("msg", "Debe ingresar un precio de venta"); }
-            if(asignadosSedes.getFechaenvio() == null ){ model.addAttribute("msg1", "Debe seleccionar una fecha"); }
+            if(validacion == false){ model.addAttribute("msg1", "Debe ingresar un precio de venta valido"); }
             if(asignadosSedes.getStock() > inv.getCantidadgestor()){ model.addAttribute("msg2", "No hay suficientes productos para asignar");}
+            if(fechavalida==false){ model.addAttribute("msg3", "La fecha debe ser igual o posterior a la  fecha de aquisision del producto"); }
             return "gestor/productosDisponiblesAsignar";
 
         } else {
@@ -123,7 +138,6 @@ public class ProductosDisponiblesController {
             Usuarios usuarios = (Usuarios) session.getAttribute("usuario");
             Optional<Usuarios> optionalUsuarios = usuariosRepository.findById(sede);
             Usuarios sedes = optionalUsuarios.get();
-            Float precio = Float.parseFloat(precioventa);
             asignadosSedes.setId(new AsignadosSedesId(usuarios, sedes, inv,1,precio));
             asignadosSedes.setCantidadactual(asignadosSedes.getStock());
             asignadosSedes.setFechacreacion(LocalDateTime.now());

@@ -37,4 +37,7 @@ public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
     //@Query(value = "SELECT * FROM mosqoy2.Asignados_sedes asigse WHERE asigse.gestor=?1;",nativeQuery = true)
     //List<AsignadosSedes> (int idUsuario);
 
+    List<Usuarios> findUsuariosByRoles_IdrolesOrderByApellido(int rol);
+
+
 }

@@ -21,6 +21,7 @@ public class AsignadosSedes implements Serializable {
     private AsignadosSedesId id;
     @Column(name = "fecha_envio")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Selecione una fecha")
     private LocalDate fechaenvio;
     @NotNull
     @Min(value = 1, message = "La cantidad debe ser mayor a 0")

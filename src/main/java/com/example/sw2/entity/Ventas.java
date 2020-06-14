@@ -33,6 +33,7 @@ public class Ventas implements Serializable {
     private Inventario inventario;
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Selecione una fecha")
     private LocalDate fecha;
     @ManyToOne
     @JoinColumn(name="vendedor",nullable = false)
