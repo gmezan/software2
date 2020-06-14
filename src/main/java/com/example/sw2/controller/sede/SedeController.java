@@ -143,19 +143,16 @@ public class SedeController {
 
         if (asignacionTiendas.getStock()<= 0) {
             bindingResult.rejectValue("stock", "error.user","Ingrese una cantidad valida");
-            model.addAttribute("listaTiendas",tiendaRepository.findAll());
         }else{
 
             if(asignacionTiendas.getStock() > asignadosSedes.getCantidadactual()){
                 bindingResult.rejectValue("stock", "error.user","La cantidad asignada no puede ser mayor a la cantidad actual de la sede");
-                model.addAttribute("listaTiendas",tiendaRepository.findAll());
             }
         }
 
 
         if (bindingResult.hasErrors()) {
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
-            model.addAttribute("asignaciontiendas", asignacionTiendas);
             model.addAttribute("msgError", "ERROR");
             model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
             model.addAttribute("listaTiendas",tiendaRepository.findAll());
@@ -166,7 +163,6 @@ public class SedeController {
             if (asignTiendasOpt.isPresent()) {
                 Usuarios sede = (Usuarios) session.getAttribute("usuario");
                 model.addAttribute("msgError", "ERROR");
-                model.addAttribute("asignaciontiendas", asignacionTiendas);
                 model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
                 model.addAttribute("listaTiendas",tiendaRepository.findAll());
                 return "sede/ListaProductosConfirmados";
