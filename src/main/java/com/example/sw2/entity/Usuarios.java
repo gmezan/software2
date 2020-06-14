@@ -24,7 +24,7 @@ public class Usuarios implements Serializable {
 
     @Id
     //@NotBlank
-    @Digits(integer = 11, fraction = 0)
+    @Digits(integer = 8, fraction = 0)
     @Column(name = "dni")
     private int idusuarios;
     @Column(nullable = false)
