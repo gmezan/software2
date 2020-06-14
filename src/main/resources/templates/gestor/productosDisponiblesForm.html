@@ -38,7 +38,7 @@
                         <form method="post" th:action="@{'/gestor/productosDisponibles/registrarventa'}" th:object="${ventas}">
                             <div class="form-group">
                                 <label for="inventario" class="col-form-label">Código de producto:</label>
-                                <input type="text" class="form-control" id="inventario" name="inventario" th:value="${inv.codigoinventario}">
+                                <input type="text" class="form-control" id="inventario" name="inventario" th:value="${inv.codigoinventario}" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="rucdni" class="col-form-label">Número RUC o DNI (opcional)</label>
