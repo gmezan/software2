@@ -65,13 +65,17 @@ public class ComunidadController {
         }
         else {
             Optional<Comunidades> optionalComunidades = comunidadesRepository.findById(comunidades.getCodigo());
-            if (optionalComunidades.isPresent()) {
+            if (optionalComunidades.isPresent() && type==0) {
                 Comunidades com = optionalComunidades.get();
                 System.out.println(com.getCodigo());
                 attr.addFlashAttribute("msg", "Comunidad actualizada exitosamente");
             }
-            else {
+            else if (type==1){
                 attr.addFlashAttribute("msg", "Comunidad creada exitosamente");
+            }
+            else{
+                attr.addFlashAttribute("msg", "Hubo un problema");
+                return "redirect:/gestor/comunidad";
             }
             comunidadesRepository.save(comunidades);
             return "redirect:/gestor/comunidad";
