@@ -157,16 +157,19 @@ public class SedeController {
             } else {
                 AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
                 asignadosSedes.setCantidadactual(asignadosSedes.getCantidadactual()-1);
-                //AsignacionTiendas asignacionTiendas = asignTiendasOpt.get();
-
+                AsignacionTiendas asignacionTiendass = asignTiendasOpt.get();
+                asignacionTiendass.setStock(asignacionTiendass.getStock()+1);
 
                 asignadosSedesRepository.save(asignadosSedes);
+                asignacionTiendasRepository.save(asignacionTiendass);
 
 
                 attr.addFlashAttribute("msgExito", "Producto asignado exitosamente");
                 asignacionTiendas.setFechacreacion(LocalDateTime.now());
                 asignacionTiendasRepository.save(asignacionTiendas);
                 return "redirect:/sede/productosConfirmados";
+
+
             }
         }
     }
@@ -234,14 +237,14 @@ public class SedeController {
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
 
-        if (ventas.getCantDevol()< 0) {
+        if (ventas.getCantDevol()<= 0) {
             bindingResult.rejectValue("cantDevol", "error.user","Ingrese una cantidad valida");
         }
 
         if(ventas.getCantDevol() >= 0){
 
-            if(ventas.getCantDevol() > asignadosSedes.getStock()){
-                bindingResult.rejectValue("cantDevol", "error.user","La cantidad devuelta no puede ser mayor al stock actual de la sede");
+            if(ventas.getCantDevol() > asignadosSedes.getCantidadactual()){
+                bindingResult.rejectValue("cantDevol", "error.user","La cantidad devuelta no puede ser mayor a la cantidad actual de la sede");
             }
 
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
@@ -264,23 +267,27 @@ public class SedeController {
 
             AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
                     id.getProductoinventario(), CustomConstants.ESTADO_DEVUELTO_POR_SEDE, id.getPrecioventa());
-            asignadosSedesRepository.deleteById(id);
+            Optional<AsignadosSedes> asignSedes = asignadosSedesRepository.findById(idNew);
             AsignadosSedes asignadosSedesNew = asignadosSedesOptional.get();
-            asignadosSedesNew.setId(idNew);
 
-            int StockActual=asignadosSedesNew.getStock()-ventas.getCantDevol();
-            asignadosSedesNew.setCantidadactual(asignadosSedesNew.getStock()-StockActual);
-            asignadosSedesNew.setStock(StockActual);
-
-            Inventario inventario = inventarioRepository.findByCodigoinventario(asignadosSedesNew.getId().getProductoinventario().getCodigoinventario());
-            inventario.setCantidadgestor(inventario.getCantidadgestor()+ventas.getCantDevol());
-
-            asignadosSedesRepository.save(asignadosSedesNew);
-            inventarioRepository.save(inventario);
-
-            if(asignadosSedes.getStock() == 0){
-                asignadosSedesRepository.deleteById(idNew);
+            if(asignSedes.isPresent()){
+                asignadosSedesNew.setId(idNew);
+                asignadosSedesNew.setCantidadactual(asignSedes.get().getCantidadactual()+ventas.getCantDevol());
+                asignadosSedesNew.setStock(asignSedes.get().getStock()+ventas.getCantDevol());
+            }else {
+                asignadosSedesNew.setId(idNew);
+                asignadosSedesNew.setCantidadactual(ventas.getCantDevol());
+                asignadosSedesNew.setStock(ventas.getCantDevol());
             }
+            asignadosSedesNew.setFechaenvio(LocalDate.now());
+
+            asignadosSedes.setCantidadactual(asignadosSedes.getCantidadactual() - ventas.getCantDevol());
+            asignadosSedesRepository.save(asignadosSedes);
+            asignadosSedesRepository.save(asignadosSedesNew);
+
+            /*Inventario inventario = inventarioRepository.findByCodigoinventario(asignadosSedesNew.getId().getProductoinventario().getCodigoinventario());
+            inventario.setCantidadgestor(inventario.getCantidadgestor()+ventas.getCantDevol());
+            inventarioRepository.save(inventario);*/
 
             attr.addFlashAttribute("msg","Producto devuelto exitosamente");
 
