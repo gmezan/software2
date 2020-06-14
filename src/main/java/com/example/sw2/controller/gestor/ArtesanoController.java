@@ -97,16 +97,19 @@ public class ArtesanoController {
         }
         else {
             Optional<Artesanos> optionalArtesanos = artesanosRepository.findById(artesanos.getCodigo());
-            if (optionalArtesanos.isPresent()) {
+            if (optionalArtesanos.isPresent() && type==0) {
                 Artesanos cat = optionalArtesanos.get();
                 System.out.println(cat.getCodigo());
                 artesanos.setFechamodificacion(LocalDateTime.now());
                 artesanos.setFechacreacion(cat.getFechacreacion());
                 attr.addFlashAttribute("msg", "Artesano actualizado exitosamente");
             }
-            else {
+            else if (type==1){
                 artesanos.setFechacreacion(LocalDateTime.now());
                 attr.addFlashAttribute("msg", "Artesano creado exitosamente");
+            }else{
+                attr.addFlashAttribute("msg", "Hubo un problema");
+                return "redirect:/gestor/artesano";
             }
             artesanosRepository.save(artesanos);
             return "redirect:/gestor/artesano";

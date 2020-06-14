@@ -69,11 +69,15 @@ public class CategoriaController {
         }
         else {
             Optional<Categorias> optionalCategorias = categoriasRepository.findById(categorias.getCodigo());
-            if (optionalCategorias.isPresent()) {
+            if (optionalCategorias.isPresent() && type==0) {
                 attr.addFlashAttribute("msg", "Categoría actualizada exitosamente");
             }
-            else {
+            else if (type==1){
                 attr.addFlashAttribute("msg", "Categoría creada exitosamente");
+            }
+            else {
+                attr.addFlashAttribute("msg", "Hubo un problema");
+                return "redirect:/gestor/categoria";
             }
             categoriasRepository.save(categorias);
             return "redirect:/gestor/categoria";

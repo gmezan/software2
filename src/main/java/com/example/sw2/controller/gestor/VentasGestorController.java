@@ -40,10 +40,19 @@ public class VentasGestorController {
 
         if (!ventas.getRucdni().isEmpty()) {
             if (ventas.getRucdni().trim().length() == 9) {
-                bindingResult.rejectValue("rucdni", "error.user", "Ingrese un Ruc/DNI válido.");
+                bindingResult.rejectValue("rucdni", "error.user", "Ingrese un Ruc(11 dígitos) / DNI(8 dígitos) válido.");
             }
             if (ventas.getRucdni().trim().length() == 10) {
-                bindingResult.rejectValue("rucdni", "error.user", "Ingrese un Ruc/DNI válido.");
+                bindingResult.rejectValue("rucdni", "error.user", "Ingrese un Ruc(11 dígitos) / DNI(8 dígitos) válido.");
+            }
+            if (ventas.getRucdni().trim().length() < 8) {
+                bindingResult.rejectValue("rucdni", "error.user", "Ingrese un Ruc(11 dígitos) / DNI(8 dígitos) válido.");
+            }
+            if (ventas.getRucdni().trim().length() > 11) {
+                bindingResult.rejectValue("rucdni", "error.user", "Ingrese un Ruc(11 dígitos) / DNI(8 dígitos) válido.");
+            }
+            if (!Pattern.compile("[0-9]").matcher(ventas.getRucdni()).find()) {
+                bindingResult.rejectValue("rucdni", "error.user", "Ingrese solo valores numéricos.");
             }
         }
 
