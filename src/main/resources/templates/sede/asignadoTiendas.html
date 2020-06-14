@@ -151,7 +151,7 @@
                         <input hidden id="vendedor" type="text" class="form-control" th:field="*{vendedor.idusuarios}">
 
                         <div class="form-group">
-                            <label class="col-form-label">Cantidad</label>
+                            <label id="cant" class="col-form-label">Cantidad</label>
                             <input type="text" class="form-control" th:field="*{cantidad}">
                             <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}">Error</div>
                         </div>
@@ -196,8 +196,9 @@
 
                 <div class="modal-body">
                     <form method="get" th:action="@{/sede/AsignadoTienda/devolucion}" th:object="${ventas}">
-                        <input hidden id="id2" name ="id2" type="text" class="form-control" th:value="${id2!=null}? ${id2}">
+                        <p>¿Seguro que desea registrar la cantidad de devolución? Esta acción no se puede deshacer.</p>
 
+                        <input hidden id="id2" name ="id2" type="text" class="form-control" th:value="${id2!=null}? ${id2}">
                         <div class="form-group">
                             <label class="col-form-label">Cantidad retornada</label>
                             <input type="text" class="form-control" th:field="*{cantDevol}">
