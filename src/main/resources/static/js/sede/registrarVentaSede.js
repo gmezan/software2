@@ -1,6 +1,7 @@
 var contextPath  = window.location.href;
 
 $(document).on("click",".regis-Venta", function(){
+//    $("#registrarVentaModal  input").val( '');
 
     $("#registrarVentaModal  #idgestor").val( '');
     $("#registrarVentaModal  #idsede").val( '');
@@ -47,7 +48,7 @@ $(document).on("click",".regis-Venta", function(){
         }
     }).fail(function (err) {
         console.log(err);
-        $('#registrarVentaModal').modal('hide');
+        $("#registrarVentaModal").modal('hide');
         alert("Ocurrió un error");
     })
 
@@ -57,9 +58,7 @@ $(document).on("click",".regis-Venta", function(){
 
 $(document).ready(function() {
     if ($("#msgVenta").text()==="ERROR"){
-        $('#registrarVentaModal').modal('show');
+        $("#registrarVentaModal").modal({show:true});
     }
 });
-
-
 
