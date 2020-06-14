@@ -61,13 +61,14 @@ public class ProductosDisponiblesController {
                                  @ModelAttribute("ventas") @Valid Ventas ventas, BindingResult bindingResult,
                                  Model model, RedirectAttributes attributes,
                                  HttpSession session) {
+
+
         if ((bindingResult.hasErrors()) || (documento=="") || (ventas.getFecha() == null ) || (ventas.getCantidad() > ventas.getInventario().getCantidadgestor()) ) {
             model.addAttribute("inv", ventas.getInventario());
             if(documento == "") { model.addAttribute("msg", "Debe ingresar un número de documento"); }
             if(ventas.getFecha()==null){model.addAttribute("msg1", "Debe seleccionar una fecha");}
             if(ventas.getCantidad() > ventas.getInventario().getCantidadgestor()){model.addAttribute("msg2", "No hay suficientes productos en stock");}
             return "gestor/productosDisponiblesForm";
-
         }else {
             Inventario inventario = ventas.getInventario();
             inventario.setCantidadgestor( inventario.getCantidadgestor() - ventas.getCantidad());

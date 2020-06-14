@@ -9,7 +9,6 @@ $(document).on("click", ".asign-A-Tienda", function () {
     $("#AsignarProductoModal  #idprecioventa2").val('');
 
 
-
     $("#AsignarProductoModal  #idgestor2").val($(this).data('id1'));
     $("#AsignarProductoModal  #idsede2").val($(this).data('id2'));
     $("#AsignarProductoModal  #idproductoinventario2").val($(this).data('id3'));

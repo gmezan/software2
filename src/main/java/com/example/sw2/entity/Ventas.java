@@ -18,8 +18,7 @@ public class Ventas implements Serializable {
 
     @EmbeddedId
     private VentasId id;
-
-    @Size(min= 8, max = 11, message = "El Ruc/Dni debe contener 8 o 11 caracteres")
+    //@Size(min= 8, max = 11, message = "El Ruc/Dni debe contener 8 o 11 caracteres")
     @Column(name="ruc_dni")
     private String rucdni;
     @NotBlank(message = "Este campo no puede estar vacío")

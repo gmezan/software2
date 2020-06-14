@@ -26,6 +26,8 @@ public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
 
     Optional<Usuarios> findUsuariosByRoles_idrolesAndIdusuarios(int rol, int idUsuario);
 
+
+
     @Procedure(procedureName = "delete_user")
     void delete_user(int idusuario);
 
