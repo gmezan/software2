@@ -31,12 +31,12 @@
 
       <div class="col-xl-10 col-lg-12 col-md-9">
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
-          <div class="card-body p-0">
+          <div class="card o-hidden border-0 shadow-lg my-5" style="background-color: rgba(255,255,255, 0.8) !important; ">
+          <div class="card-body p-0" style=" opacity: 1;">
             <!-- Nested Row within Card Body -->
             <div class="row">
-              <div class="col-lg-6 container-fluid my-auto mx-auto">
-                <img class="mx-auto  img-fluid d-block" th:src="@{/img/mosqoyRed.jpg}" alt="Responsive image">
+              <div class="col-lg-6 container-fluid my-auto mx-auto" >
+                <img class="mx-auto  img-fluid d-block" th:src="@{/img/mosqoyRed1.png}" alt="Responsive image" >
               </div>
               <div class="col-lg-6 mx-auto">
                 <div class="p-5">
@@ -61,7 +61,15 @@
                     <a class="small" style="color:#5e5a5a" th:href="@{/forgotPassword}">¿Olvidaste tu contraseña?</a>
                   </div>
 
-                  <div th:replace="fragments/general :: footer"></div>
+                  <footer th:fragment="footer"  >
+                    <div class="container my-auto">
+                      <div class="copyright text-center my-auto">
+                        <hr>
+                        <em><small><span>@Software para telecomunicaciones 2 &copy; Mosqoy - 2020</span></small></em>
+                      </div>
+                    </div>
+                  </footer>
+
                 </div>
               </div>
             </div>
