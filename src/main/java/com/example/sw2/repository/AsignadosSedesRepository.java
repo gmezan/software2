@@ -24,7 +24,7 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
     List<AsignadosSedes> buscarPorSede(int sede);
 
     @Query(value="select p.nombre as nombreproducto, i.codigo_inventario as codigo,a.fecha_envio as fecha," +
-            "a.cantidadactual as cantidad, u.nombre as nombre, u.foto as foto, u.apellido as apellido, a.precioventa as precio,"+
+            "a.stock as cantidad, u.nombre as nombre, u.foto as foto, u.apellido as apellido, a.precioventa as precio,"+
             "u.correo as correo, u.telefono as telefono, u.dni as dniSede, a.estadoasignacion as estado\n"+
             "FROM Asignados_sedes a\n"+
             "inner join Inventario i on (a.producto_inventario = i.codigo_inventario)\n" +
@@ -38,8 +38,8 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
 
     List<AsignadosSedes> findAsignadosSedesById_Gestor_idusuarios(int id);
 
-    @Procedure(name = "update_cant_gestor")
-    void update_cant_gestor(int cant_devol, String codigo);
+    @Procedure(name = "devol_sede_gestor")
+    void devol_sede_gestor(int cant_devol, int gestor, int sede, String codigo, int estado, Float precio);
 
     List<AsignadosSedes> findAllByOrderByFechacreacionDesc();
 

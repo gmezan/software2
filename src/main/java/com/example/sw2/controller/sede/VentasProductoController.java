@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/sede/ventasProducto")
 public class VentasProductoController {
@@ -18,7 +20,7 @@ public class VentasProductoController {
     UsuariosRepository usuariosRepository;
 
     @GetMapping(value = {"", "ListaVentasProductos"})
-    public String ListaVentasCliente(Model model){
+    public String ListaVentasCliente(Model model, HttpSession session){
 
         model.addAttribute("listaProductos", ventasRepository.obtenerDatosPorProducto());
         return "sede/ventasPorProducto";
