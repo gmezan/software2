@@ -41,9 +41,8 @@
                                     <thead>
                                     <tr>
                                         <th>Tienda</th>
+                                        <th>Código del producto</th>
                                         <th>Nombre del producto</th>
-                                        <th>Color</th>
-                                        <th>Tamaño</th>
                                         <th>Fecha de asignación</th>
                                         <th>Precio de venta (Dolar)</th>
                                         <th>Cantidad</th>
@@ -54,9 +53,8 @@
                                     <tfoot>
                                     <tr>
                                         <th>Tienda</th>
+                                        <th>Código del producto</th>
                                         <th>Nombre del producto</th>
-                                        <th>Color</th>
-                                        <th>Tamaño</th>
                                         <th>Fecha de asignación</th>
                                         <th>Precio de venta (Dolar)</th>
                                         <th>Cantidad</th>
@@ -68,9 +66,8 @@
                                     <tbody>
                                     <tr th:each="a : ${asignados}">
                                         <td th:text="${a.tienda.nombre}"></td>
+                                        <td th:text="${a.asignadosSedes.id.productoinventario.codigoinventario}"></td>
                                         <td th:text="${a.asignadosSedes.id.productoinventario.productos.nombre}"></td>
-                                        <td th:text="${a.asignadosSedes.id.productoinventario.color}"></td>
-                                        <td th:text="${a.asignadosSedes.id.productoinventario.tamanho}"></td>
                                         <td th:text="${a.fechaasignacion}"></td>
                                         <td th:text="${a.asignadosSedes.id.precioventa}"></td>
                                         <td th:text="${a.stock}"></td>

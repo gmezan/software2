@@ -82,7 +82,9 @@ public class AsignadoTiendaController {
             asignacionTiendasRepository.registrar_venta_tienda(aTienda.getAsignadosSedes().getId().getGestor().getIdusuarios(),
                     venta.getVendedor().getIdusuarios(), venta.getInventario().getCodigoinventario(),
                     2,venta.getPrecioventa(), venta.getCantidad(), idAstiendas);
-
+            if(aTienda.getStock() == 0){
+                asignacionTiendasRepository.deleteById(aTienda.getIdtiendas());
+            }
             attr.addFlashAttribute("msg", "Venta registrada exitosamente");
             return "redirect:/sede/AsignadoTienda";
         }

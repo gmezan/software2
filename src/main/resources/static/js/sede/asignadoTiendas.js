@@ -1,6 +1,7 @@
 var contextPath  = window.location.href;
 
 $(document).on("click",".registar-Venta", function(){
+    $("#registrarModal  input").val('');
     $("#registrarModal  #id1").val($(this).data(''));
     $.ajax({
         method:"GET", url:contextPath +"/get?id1=" +$(this).data('id1')
