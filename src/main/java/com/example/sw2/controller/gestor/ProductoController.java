@@ -80,11 +80,15 @@ public class ProductoController {
         }
         else {
             Optional<Productos> optionalProductos = productosRepository.findById(productos.getCodigonom());
-            if (optionalProductos.isPresent()) {
+            if (optionalProductos.isPresent() && type==0) {
                 attr.addFlashAttribute("msg", "Producto actualizado exitosamente");
             }
-            else {
+            else if (type==1){
                 attr.addFlashAttribute("msg", "Producto creado exitosamente");
+            }
+            else {
+                attr.addFlashAttribute("msg", "Hubo un problema");
+                return "redirect:/gestor/producto";
             }
             productosRepository.save(productos);
             return "redirect:/gestor/producto";

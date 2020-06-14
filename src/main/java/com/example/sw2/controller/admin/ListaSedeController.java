@@ -19,5 +19,4 @@ public class ListaSedeController {
         model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_Nombrerol("sede"));
         return "admin/listaSede";
     }
-
 }

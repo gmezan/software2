@@ -126,7 +126,7 @@ public class InventarioController {
             }
         }
 
-        if (inventario.getTipoAdquisicion() == "Consignado") {
+        if (inventario.getTipoAdquisicion().equalsIgnoreCase("consignado")) {
             if (inventario.getArtesanos() == null) {
                 bindingResult.rejectValue("artesanos", "error.user", "Seleccione un artesano de la lista.");
             }
