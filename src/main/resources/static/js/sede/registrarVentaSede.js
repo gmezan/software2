@@ -1,8 +1,8 @@
 var contextPath  = window.location.href;
 
 $(document).on("click",".regis-Venta", function(){
-    $("#registrarVentaModal  input").val( '');
-/*
+//    $("#registrarVentaModal  input").val( '');
+
     $("#registrarVentaModal  #idgestor").val( '');
     $("#registrarVentaModal  #idsede").val( '');
     $("#registrarVentaModal  #nombrecliente").val('');
@@ -15,7 +15,7 @@ $(document).on("click",".regis-Venta", function(){
     $("#registrarVentaModal  #idproductoinvlabel").text('');
     $("#registrarVentaModal  #idproductoinvinput").val('');
     $("#registrarVentaModal  #idprecioventa").val( '');
-    $("#registrarVentaModal  #idestadoasign").val( '');*/
+    $("#registrarVentaModal  #idestadoasign").val( '');
 
     let url = contextPath + "/post";
 
