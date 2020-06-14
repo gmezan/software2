@@ -103,36 +103,42 @@ public class AsignadoTiendaController {
         Optional<AsignacionTiendas> optAt = asignacionTiendasRepository.findById(idAstiendas);
         AsignacionTiendas at = optAt.get();
 
-        if(v.getCantDevol() >= 0){
 
-            if(v.getCantDevol() > at.getStock()){
-                bindingResult.rejectValue("cantDevol", "error.user","La cantidad no puede ser mayor al stock actual de la tienda");
-            }
-            bindingResult.rejectValue("cantDevol", "error.user","La cantidad tiene que ser mayor a 0");
 
+        if(v.getCantDevol() > at.getStock()){
+            bindingResult.rejectValue("cantDevol", "error.user","La cantidad no puede ser mayor al stock actual de la tienda");
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
             model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
             model.addAttribute("id2", idAstiendas);
             model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
             model.addAttribute("msgErrorDevolucion", "ERROR");
             return "sede/asignadoTiendas";
-        }else{
-            AsignadosSedes as = at.getAsignadosSedes();
-
-            //restar stock(Asignado_Tienda) y sumar cantidadactual(Asigandos_sedes)
-
-            asignacionTiendasRepository.devol_tienda(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
-                    as.getId().getProductoinventario().getCodigoinventario(), as.getId().getEstadoasignacion(),
-                    as.getId().getPrecioventa(),v.getCantDevol(), at.getIdtiendas());
-            if(at.getStock() == 0){
-                asignacionTiendasRepository.deleteById(at.getIdtiendas());
-            }
-            //sumar lo devuelto a cant_gestor del inventario
-            attr.addFlashAttribute("msg","Producto devuelto exitosamente");
-
-            return "redirect:/sede/AsignadoTienda";
-
         }
+        if(v.getCantDevol() == 0){
+            bindingResult.rejectValue("cantDevol", "error.user","La cantidad tiene que ser mayor a 0");
+            Usuarios sede = (Usuarios) session.getAttribute("usuario");
+            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
+            model.addAttribute("id2", idAstiendas);
+            model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
+            model.addAttribute("msgErrorDevolucion", "ERROR");
+            return "sede/asignadoTiendas";
+        }
+
+        AsignadosSedes as = at.getAsignadosSedes();
+
+        //restar stock(Asignado_Tienda) y sumar cantidadactual(Asigandos_sedes)
+
+        asignacionTiendasRepository.devol_tienda(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
+                as.getId().getProductoinventario().getCodigoinventario(), as.getId().getEstadoasignacion(),
+                as.getId().getPrecioventa(),v.getCantDevol(), at.getIdtiendas());
+        if(at.getStock() == 0){
+            asignacionTiendasRepository.deleteById(at.getIdtiendas());
+        }
+        //sumar lo devuelto a cant_gestor del inventario
+        attr.addFlashAttribute("msg","Producto devuelto exitosamente");
+
+        return "redirect:/sede/AsignadoTienda";
+
 
         //AsignadosID = gestor - sede - inventario - estado - precio
         //sede - producto - estado

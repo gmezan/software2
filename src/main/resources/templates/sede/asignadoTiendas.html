@@ -196,7 +196,7 @@
 
                 <div class="modal-body">
                     <form method="get" th:action="@{/sede/AsignadoTienda/devolucion}" th:object="${ventas}">
-                        <input id="id2" name ="id2" type="text" class="form-control" th:value="${id2!=null}? ${id2}">
+                        <input hidden id="id2" name ="id2" type="text" class="form-control" th:value="${id2!=null}? ${id2}">
 
                         <div class="form-group">
                             <label class="col-form-label">Cantidad retornada</label>
