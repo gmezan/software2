@@ -36,6 +36,8 @@ public class DevolucionesController {
     @Autowired
     InventarioRepository inventarioRepository;
 
+    private int estado_devol = CustomConstants.ESTADO_DEVUELTO_POR_SEDE;
+    private int estado_recibido = CustomConstants.ESTADO_RECIBIDO_POR_SEDE;
 
     @GetMapping(value = {"", "/"})
     public String ListaDevoluciones(@ModelAttribute("sede") Usuarios u,
@@ -57,8 +59,7 @@ public class DevolucionesController {
                             HttpSession session,
                             RedirectAttributes attr) {
 
-        int estado_devol = CustomConstants.ESTADO_DEVUELTO_POR_SEDE; //devolucion
-        int estado_recibido = CustomConstants.ESTADO_RECIBIDO_POR_SEDE; //recibido
+
 
         //AsignadosID = gestor - sede - inventario - estado - precio
         //sede - producto - estado
@@ -93,18 +94,18 @@ public class DevolucionesController {
                             HttpSession session,
                             RedirectAttributes attr) {
 
-        int estado = CustomConstants.ESTADO_DEVUELTO_POR_SEDE;
-
         //AsignadosID = gestor - sede - inventario - estado - precio
         //sede - producto - estado
         Usuarios gestor = (Usuarios) session.getAttribute("usuario");
         Usuarios sede = usuariosRepository.findByIdusuarios(sede_dni);
         Inventario inv = inventarioRepository.findByCodigoinventario(codigo);
-        AsignadosSedesId aid = new AsignadosSedesId(gestor, sede, inv, estado, precio);
+        AsignadosSedesId aid = new AsignadosSedesId(gestor, sede, inv, estado_devol, precio);
         Optional<AsignadosSedes> optAsig = asignadosSedesRepository.findById(aid);
 
         if (optAsig.isPresent()) {
             AsignadosSedes as = optAsig.get();
+            asignadosSedesRepository.rechazar_devol_sede(as.getStock(), gestor.getIdusuarios(),
+                    sede_dni,codigo,estado_recibido,precio);
             asignadosSedesRepository.deleteById(as.getId());
             attr.addFlashAttribute("msg","El producto ha sido rechazado ");
         }
