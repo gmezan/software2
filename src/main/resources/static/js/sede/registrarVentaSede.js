@@ -1,7 +1,8 @@
 var contextPath  = window.location.href;
 
 $(document).on("click",".regis-Venta", function(){
-
+    $("#registrarVentaModal  input").val( '');
+/*
     $("#registrarVentaModal  #idgestor").val( '');
     $("#registrarVentaModal  #idsede").val( '');
     $("#registrarVentaModal  #nombrecliente").val('');
@@ -14,7 +15,7 @@ $(document).on("click",".regis-Venta", function(){
     $("#registrarVentaModal  #idproductoinvlabel").text('');
     $("#registrarVentaModal  #idproductoinvinput").val('');
     $("#registrarVentaModal  #idprecioventa").val( '');
-    $("#registrarVentaModal  #idestadoasign").val( '');
+    $("#registrarVentaModal  #idestadoasign").val( '');*/
 
     let url = contextPath + "/post";
 
@@ -47,7 +48,7 @@ $(document).on("click",".regis-Venta", function(){
         }
     }).fail(function (err) {
         console.log(err);
-        $('#registrarVentaModal').modal('hide');
+        $("#registrarVentaModal").modal('hide');
         alert("Ocurrió un error");
     })
 
@@ -57,9 +58,7 @@ $(document).on("click",".regis-Venta", function(){
 
 $(document).ready(function() {
     if ($("#msgVenta").text()==="ERROR"){
-        $('#registrarVentaModal').modal('show');
+        $("#registrarVentaModal").modal({show:true});
     }
 });
-
-
 
