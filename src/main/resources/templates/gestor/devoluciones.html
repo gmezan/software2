@@ -44,34 +44,37 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Fecha de devolución</th>
+                                                <th>Código</th>
                                                 <th>Producto</th>
                                                 <th>Cantidad</th>
                                                 <th>Sede</th>
-                                                <th></th>
-                                                <th></th>
+                                                <th>Confirmar/Rechazar/Datos Sede</th>
                                             </tr>
                                             </thead>
                                             <tfoot>
                                             <tr>
                                                 <th>#</th>
                                                 <th>Fecha de devolución</th>
+                                                <th>Código</th>
                                                 <th>Producto</th>
                                                 <th>Cantidad</th>
                                                 <th>Sede</th>
-                                                <th></th>
-                                                <th></th>
+                                                <th>Confirmar/Rechazar/Datos Sede</th>
                                             </tr>
                                             </tfoot>
                                             <tbody>
                                             <tr th:each="d, index : ${devueltos}">
                                                 <td th:text="${index.count}"></td>
                                                 <td th:text="${d.fecha}"></td>
+                                                <td th:text="${d.codigo}"></td>
                                                 <td th:text="${d.nombreproducto}"></td>
                                                 <td th:text="${d.cantidad}"></td>
                                                 <td th:text="${d.nombre} + ' ' + ${d.apellido}"></td>
                                                 <td>
                                                     <button th:attr="data-id1=${d.dniSede},data-id2=${d.codigo},data-id3=${d.precio}, data-id4=${d.fecha}" data-toggle="modal"
                                                             data-target="#confirmarModal" class="confirmar btn btn-datatable btn-icon btn-success"><i class="fas fa-check"></i></button>
+                                                    <button th:attr="data-id1=${d.dniSede},data-id2=${d.codigo},data-id3=${d.precio}, data-id4=${d.fecha}" data-toggle="modal"
+                                                            data-target="#rechazarModal" class="rechazar btn btn-datatable btn-icon btn-warning"><i class="fas fa-times"></i></button>
                                                     <button th:attr="data-id=${d.dniSede}" data-toggle="modal" data-target="#infoModal"
                                                             class="info-Sede btn btn-datatable btn-icon btn-danger"><i class="fas fa-phone"></i></button>
                                                 </td>
@@ -119,10 +122,6 @@
         <!-- Page level plugins -->
         <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
 
-        <!-- Page level custom scripts -->
-        <script th:src="@{/js/demo/chart-area-demo.js}"></script>
-        <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
-
         <!-- Page level plugins -->
         <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
         <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
@@ -160,7 +159,7 @@
                         <h4 class="modal-title">Confirmar devolución</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <form method="get" th:action="@{devoluciones/confirmar}">
+                    <form method="get" th:action="@{/gestor/devoluciones/confirmar}">
                         <div class="modal-body">
                             <input hidden type="text" class="form-control" id="id1" name="id1">
                             <input hidden type="text" class="form-control" id="id2" name="id2">
@@ -176,6 +175,31 @@
                 </div>
             </div>
         </div>
+
+            <!-- Modal Rechazar -->
+            <div id="rechazarModal" class="modal fade">
+                <div class="modal-dialog modal-confirm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Rechazar devolución</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <form method="get" th:action="@{/gestor/devoluciones/rechazar}">
+                            <div class="modal-body">
+                                <input hidden type="text" class="form-control" id="dni" name="dni">
+                                <input hidden type="text" class="form-control" id="codigo" name="codigo">
+                                <input hidden type="text" class="form-control" id="precio" name="precio">
+                                <input hidden type="text" class="form-control" id="fecha" name="fecha">
+                                <p>¿Seguro que desea rechazar la cantidad devuelta? Esta acción no se puede deshacer.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Confirmar</a></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
     </body>
 </html>
