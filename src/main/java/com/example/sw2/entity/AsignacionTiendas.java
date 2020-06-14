@@ -3,8 +3,12 @@ package com.example.sw2.entity;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,12 +20,16 @@ public class AsignacionTiendas implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idtiendas;
+    @Digits(integer = 6, fraction = 0, message = "Ingrese un número entero.")
+    @Positive(message = "Ingrese una cantidad válida.")
     @Column(nullable = false)
     private int stock;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name="fecha_asignacion", nullable = false)
     private LocalDate fechaasignacion;
     @ManyToOne
     @JoinColumn(name="tienda",nullable = false)
+    @NotNull(message = "Seleccione una tienda de la lista.")
     private Tienda tienda;
     @LastModifiedDate
     @Column(name="fecha_modificacion")

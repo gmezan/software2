@@ -280,14 +280,18 @@
                             <input type="hidden" class="form-control" id="idprecioventa2" name="precioventa">
                             <input type="hidden" class="form-control" id="idsede2" name="sede">
 
-                            <input type="hidden" class="form-control" th:field="*{idtiendas}">
+                            <div hidden class="form-group">
+                                <label  class="col-form-label">idtienda:</label>
+                                <input type="text" class="form-control" th:field="*{idtiendas}" >
+                                <div class="text-danger" th:if="${#fields.hasErrors('idtiendas')}" th:errors="*{idtiendas}">Error</div>
+                            </div>
 
                             <div class="form-group">
                                 <label class="col-form-label">Nombre de la tienda:</label>
                                 <select th:field="*{tienda}" class="form-control">
                                     <option value="">--- Seleccionar ---</option>
-                                    <option th:each="tienda : ${listaTiendas}" th:text="${tienda.nombre}"
-                                            th:value="${tienda.nombre}"></option>
+                                    <option th:each="tienda : ${listaTiendas}" th:value="${tienda.idtienda}"
+                                            th:text="${tienda.nombre}"></option>
                                 </select>
                                 <div class="text-danger"
                                      th:if="${#fields.hasErrors('tienda')}"

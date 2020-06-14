@@ -110,7 +110,7 @@
                     <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                     <div hidden class="form-group">
                         <label  class="col-form-label">idtienda:</label>
-                        <input type="text" class="form-control" th:field="*{idtienda}" placeholder="Nombre de categoría">
+                        <input type="text" class="form-control" th:field="*{idtienda}" >
                         <div class="text-danger" th:if="${#fields.hasErrors('idtienda')}" th:errors="*{idtienda}">Error</div>
                     </div>
 
