@@ -44,6 +44,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Fecha de devolución</th>
+                                                <th>Código</th>
                                                 <th>Producto</th>
                                                 <th>Cantidad</th>
                                                 <th>Sede</th>
@@ -54,6 +55,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Fecha de devolución</th>
+                                                <th>Código</th>
                                                 <th>Producto</th>
                                                 <th>Cantidad</th>
                                                 <th>Sede</th>
@@ -64,6 +66,7 @@
                                             <tr th:each="d, index : ${devueltos}">
                                                 <td th:text="${index.count}"></td>
                                                 <td th:text="${d.fecha}"></td>
+                                                <td th:text="${d.codigo}"></td>
                                                 <td th:text="${d.nombreproducto}"></td>
                                                 <td th:text="${d.cantidad}"></td>
                                                 <td th:text="${d.nombre} + ' ' + ${d.apellido}"></td>
