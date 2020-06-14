@@ -82,7 +82,7 @@
                                             <tr th:each="item, index : ${lista}">
                                                 <td th:text="${index.count}"></td>
                                                 <td th:text="${item.nombrecliente}"></td>
-                                                <td th:text="${item.id.tipodocumento}"></td>
+                                                <td th:text="${item.id.tipodocumento2}"></td>
                                                 <td th:text="${item.id.numerodocumento}"></td>
                                                 <td th:text="${item.fecha}"></td>
                                                 <td th:text="${item.lugarventa}"></td>
@@ -175,7 +175,7 @@
                                 <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}">Error</div>
                             <div class="form-group">
                                 <label  class="col-form-label">Ruc/Dni:</label>
-                                <input type="number" class="form-control" th:field="*{rucdni}">
+                                <input type="text" class="form-control" th:field="*{rucdni}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('rucdni')}" th:errors="*{rucdni}">Error</div>
                             </div>
                             <div class="form-group">
