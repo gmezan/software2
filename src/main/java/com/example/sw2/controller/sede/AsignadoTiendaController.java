@@ -107,15 +107,12 @@ public class AsignadoTiendaController {
 
         if(v.getCantDevol() > at.getStock()){
             bindingResult.rejectValue("cantDevol", "error.user","La cantidad no puede ser mayor al stock actual de la tienda");
-            Usuarios sede = (Usuarios) session.getAttribute("usuario");
-            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
-            model.addAttribute("id2", idAstiendas);
-            model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
-            model.addAttribute("msgErrorDevolucion", "ERROR");
-            return "sede/asignadoTiendas";
         }
         if(v.getCantDevol() == 0){
             bindingResult.rejectValue("cantDevol", "error.user","La cantidad tiene que ser mayor a 0");
+        }
+
+        if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
             model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
             model.addAttribute("id2", idAstiendas);
