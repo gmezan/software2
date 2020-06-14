@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Login</title>
+  <title>Iniciar Sesión</title>
 
   <!-- Custom fonts for this template-->
   <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
@@ -18,8 +18,11 @@
   <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
 
 </head>
-
-<body class="bg-gradient-dark mh-100" >
+<!--  class="bg-gradient-dark mh-100"   -->
+<body class="bg-gradient-dark mh-100" style="position: absolute; top: 0px; width: 100%; object-position: 50% 50%; background-size: cover; background-position: center center; background-repeat: no-repeat; height: 120%;
+  transform: translate3d(0px, 0px, 0px);
+  background-image: url(https://static.wixstatic.com/media/61652e_edeefa4f2e424501bb4dabf1649c670d~mv2_d_5219_3479_s_4_2.jpg/v1/fill/w_1920,h_1280,al_c,q_85,usm_0.66_1.00_0.01/61652e_edeefa4f2e424501bb4dabf1649c670d~mv2_d_5219_3479_s_4_2.webp)"
+  >
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
   <div class="container my-auto">
 
@@ -48,13 +51,14 @@
                       <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Contraseña">
                     </div>
                     <h6 th:if="${param.error}" class="form-signin-heading" style="color:#ff0000">Acceso denegado</h6>
-                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                    <button type="submit" class="btn btn-dark btn-user btn-block" >
                       Iniciar Sesión
                     </button>
+                   <!--btn-user -->
                   </form>
                   <br>
                   <div class="text-center">
-                    <a class="small" th:href="@{/forgotPassword}">¿Olvidaste tu contraseña?</a>
+                    <a class="small" style="color:#5e5a5a" th:href="@{/forgotPassword}">¿Olvidaste tu contraseña?</a>
                   </div>
 
                   <div th:replace="fragments/general :: footer"></div>
