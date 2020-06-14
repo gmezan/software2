@@ -137,16 +137,18 @@ public class SedeController {
         AsignadosSedesId id = new AsignadosSedesId(usuariosRepository.findById(idgestor).get(), usuariosRepository.findById(idsede).get(),
                 inventarioRepository.findById(idproductoinv).get(),
                 idestadoasign, idprecioventa);
-
+        Optional<AsignacionTiendas> asignTiendasOpt = asignacionTiendasRepository.findById(asignacionTiendas.getIdtiendas());
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
 
         if (asignacionTiendas.getStock()<= 0) {
             bindingResult.rejectValue("stock", "error.user","Ingrese una cantidad valida");
+            model.addAttribute("listaTiendas",tiendaRepository.findAll());
         }else{
 
             if(asignacionTiendas.getStock() > asignadosSedes.getCantidadactual()){
                 bindingResult.rejectValue("stock", "error.user","La cantidad asignada no puede ser mayor a la cantidad actual de la sede");
+                model.addAttribute("listaTiendas",tiendaRepository.findAll());
             }
         }
 
@@ -156,14 +158,17 @@ public class SedeController {
             model.addAttribute("asignaciontiendas", asignacionTiendas);
             model.addAttribute("msgError", "ERROR");
             model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
+            model.addAttribute("listaTiendas",tiendaRepository.findAll());
             return "sede/ListaProductosConfirmados";
         } else {
-            Optional<AsignacionTiendas> asignTiendasOpt = asignacionTiendasRepository.findById(asignacionTiendas.getIdtiendas());
+
 
             if (asignTiendasOpt.isPresent()) {
                 Usuarios sede = (Usuarios) session.getAttribute("usuario");
                 model.addAttribute("msgError", "ERROR");
+                model.addAttribute("asignaciontiendas", asignacionTiendas);
                 model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
+                model.addAttribute("listaTiendas",tiendaRepository.findAll());
                 return "sede/ListaProductosConfirmados";
 
             } else {
