@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
@@ -41,7 +42,8 @@ public class SedeController {
     VentasRepository ventasRepository;
     @Autowired
     AsignacionTiendasRepository asignacionTiendasRepository;
-
+    @Autowired
+    TiendaRepository tiendaRepository;
 
     @GetMapping(value = {"/", ""})
     public String init() {
@@ -65,6 +67,7 @@ public class SedeController {
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
 
         model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
+        model.addAttribute("listaTiendas",tiendaRepository.findAll());
         return "sede/ListaProductosConfirmados";
 
     }
@@ -84,7 +87,6 @@ public class SedeController {
 
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
-
 
         if (bindingResult.hasErrors()) {
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
@@ -137,6 +139,16 @@ public class SedeController {
                 idestadoasign, idprecioventa);
 
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
+        AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
+
+        if (asignacionTiendas.getStock()<= 0) {
+            bindingResult.rejectValue("stock", "error.user","Ingrese una cantidad valida");
+        }else{
+
+            if(asignacionTiendas.getStock() > asignadosSedes.getCantidadactual()){
+                bindingResult.rejectValue("stock", "error.user","La cantidad asignada no puede ser mayor a la cantidad actual de la sede");
+            }
+        }
 
 
         if (bindingResult.hasErrors()) {
@@ -155,7 +167,7 @@ public class SedeController {
                 return "sede/ListaProductosConfirmados";
 
             } else {
-                AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
+
                 asignadosSedes.setCantidadactual(asignadosSedes.getCantidadactual()-1);
                 AsignacionTiendas asignacionTiendass = asignTiendasOpt.get();
                 asignacionTiendass.setStock(asignacionTiendass.getStock()+1);
@@ -179,6 +191,7 @@ public class SedeController {
 
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         if (asignadosSedesOptional.isPresent()) {
+
             AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
                     id.getProductoinventario(), CustomConstants.ESTADO_RECIBIDO_POR_SEDE, id.getPrecioventa());
             AsignadosSedes newAsignadosSedes = new AsignadosSedes(idNew, asignadosSedesOptional.get());
@@ -186,6 +199,7 @@ public class SedeController {
             asignadosSedesRepository.save(newAsignadosSedes);
             newAsignadosSedes.setFechacreacion(LocalDateTime.now());
             asignadosSedesRepository.deleteById(id);
+
         }
         return "redirect:/sede/productosPorConfirmar";
     }
@@ -220,7 +234,7 @@ public class SedeController {
     }
 
     @GetMapping("/devolucion")
-    public String devolucionSede(@ModelAttribute("ventas") @Valid Ventas ventas,
+    public String devolucionSede(@ModelAttribute("venta") Ventas ventas,
                                  @RequestParam(value = "idgestor") int idgestor,
                                  @RequestParam(value = "vendedor") int idsede,
                                  @RequestParam(value = "inventario") String idproductoinv,
@@ -341,24 +355,7 @@ public class SedeController {
                 HttpStatus.OK);
     }
 
-    //Web service
-    @ResponseBody
-    @PostMapping(value = "/registrarVentaSede/post", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HashMap<String, String>> getRegisventaPost(@RequestBody AsignadosSedesId asignadosSedesId) {
 
-        return new ResponseEntity<>(new HashMap<String, String>() {{
-            asignadosSedesId.setProductoinventario(inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
-            asignadosSedesRepository.findAll();
-            AsignadosSedes asignadosSedes = asignadosSedesRepository.findById(asignadosSedesId).orElse(null);
-            put("idgestor", Integer.toString(asignadosSedesId.getGestor().getIdusuarios()));
-            put("idsede", Integer.toString(asignadosSedesId.getSede().getIdusuarios()));
-            put("idproductoinv", asignadosSedesId.getProductoinventario().getCodigoinventario());
-            put("idestadoasign", Integer.toString(asignadosSedesId.getEstadoasignacion()));
-            put("idprecioventa", Float.toString(asignadosSedesId.getPrecioventa()));
-            put("idproductoinvlabel", asignadosSedes != null ?  asignadosSedesId.getProductoinventario().getCodigoinventario(): null);
-        }},
-                HttpStatus.OK);
-    }
 
 }
     

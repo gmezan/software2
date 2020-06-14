@@ -161,10 +161,10 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="registrarVentaModalLabel">Registrar venta de un producto</h5>
-                        <button type="button" th:href="@{/sede/productosConfirmados}" class="close"
+                        <a type="button" th:href="@{/sede/productosConfirmados}" class="close"
                                 aria-label="Close">
                             <span aria-hidden="true">x</span>
-                        </button>
+                        </a>
                     </div>
                     <div class="modal-body">
                         <form method="post" th:action="@{/sede/registrarVenta}" th:object="${venta}">
@@ -179,7 +179,12 @@
                             <input type="hidden" class="form-control" id="idproductoinvinput" name="inventario">
 
 
-                            <label>Codigo del producto: <span><b id="idproductoinvlabel"></b></span></label>
+                           <!--label>Codigo del producto: <span><b id="idproductoinvlabel"></b></span></label-->
+
+                            <div class="form-group">
+                                <label class="col-form-label">Codigo del producto:</label>
+                                <input type="text" class="form-control" id="codinv" readonly>
+                            </div>
 
                             <div class="form-group">
                                 <label class="col-form-label">Nombre del cliente:</label>
@@ -262,7 +267,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="AsignarProductoModalLabel">Asignar producto a una tienda</h5>
-                        <a th:href="@{/sede/productosConfirmados}" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <a th:href="@{/sede/productosConfirmados}" type="button" class="close" aria-label="Close">
                             <span aria-hidden="true">x</span>
                         </a>
                     </div>
@@ -275,10 +280,17 @@
                             <input type="hidden" class="form-control" id="idprecioventa2" name="precioventa">
                             <input type="hidden" class="form-control" id="idsede2" name="sede">
 
+                            <input type="hidden" class="form-control" th:field="*{idtiendas}">
+
                             <div class="form-group">
                                 <label class="col-form-label">Nombre de la tienda:</label>
-                                <input type="text" class="form-control" id="tienda" name="tienda">
-                                <div class="text-danger" th:if="${#fields.hasErrors('tienda')}"
+                                <select th:field="*{tienda}" class="form-control">
+                                    <option value="">--- Seleccionar ---</option>
+                                    <option th:each="tienda : ${listaTiendas}" th:text="${tienda.nombre}"
+                                            th:value="${tienda.nombre}"></option>
+                                </select>
+                                <div class="text-danger"
+                                     th:if="${#fields.hasErrors('tienda')}"
                                      th:errors="*{tienda}">Error
                                 </div>
                             </div>
@@ -315,24 +327,22 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="devolucionModalLabel">Devolución del producto</h5>
-                        <a th:href="@{/sede/productosConfirmados}" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <a th:href="@{/sede/productosConfirmados}" type="button" class="close"  aria-label="Close">
                             <span aria-hidden="true">x</span>
                         </a>
                     </div>
                     <div class="modal-body">
-                        <form method="get" th:action="@{/sede/devolucion}" th:object="${ventas}">
+                        <form method="get" th:action="@{/sede/devolucion}" th:object="${venta}">
                             <input type="hidden" class="form-control" id="idgestor3" name="idgestor">
                             <input type="hidden" class="form-control" id="idestadoasign3" name="idestadoasign">
                             <input type="hidden" class="form-control" id="idprecioventa3" name="idprecioventa">
                             <input type="hidden" class="form-control" id="idsede3" name="vendedor">
                             <input type="hidden" class="form-control" id="idproductoinvinput3" name="inventario">
-                            <input id="id2" name ="id2" type="text" class="form-control" th:value="${id2!=null}? ${id2}">
-
 
                             <div class="form-group">
                                 <label class="col-form-label">Cantidad retornada</label>
                                 <input type="number" class="form-control" th:field="*{cantDevol}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('cantDevol')}" th:errors="*{cantDevol}">Error</div>
+                                <div class="text-danger" th:if="${#fields.hasErrors('cantDevol')}" th:errors="*{cantDevol}"></div>
                             </div>
 
                             <div class="modal-footer">
