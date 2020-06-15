@@ -127,9 +127,8 @@ public class SedeController {
            // model.addAttribute("codinv", idproductoinv);
             model.addAttribute("inventario", idproductoinv);
             model.addAttribute("idestadoasign", idestadoasign);
-            model.addAttribute("id53", idprecioventa);
+            model.addAttribute("idprecioventa", idprecioventa);
             model.addAttribute("listaTiendas", tiendaRepository.findAll());
-            model.addAttribute("idprecioventa", idproductoinv);
             model.addAttribute("msgError_V", "ERROR");
             model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
             return "sede/ListaProductosConfirmados";
@@ -198,6 +197,13 @@ public class SedeController {
             model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
             model.addAttribute("listaTiendas", tiendaRepository.findAll());
             model.addAttribute("msgError_A", "ERROR");
+            model.addAttribute("gestor", idgestor);
+            model.addAttribute("sede", idsede);
+            // model.addAttribute("codinv", idproductoinv);
+            model.addAttribute("producto_inventario", idproductoinv);
+            model.addAttribute("estadoasignacion", idestadoasign);
+            model.addAttribute("precioventa", idprecioventa);
+            model.addAttribute("venta", venta);
 
             return "sede/ListaProductosConfirmados";
         } else {
