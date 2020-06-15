@@ -107,7 +107,7 @@ public class SedeController {
                 ventas.setFechacreacion(LocalDateTime.now());
                 ventasRepository.save(ventas);
 
-                int StockActual = asignadosSedes.getStock() - 1;
+                int StockActual = asignadosSedes.getStock() - ventas.getCantidad();
                 asignadosSedes.setCantidadactual(asignadosSedes.getCantidadactual() - 1);
                 asignadosSedes.setStock(StockActual);
 
@@ -127,7 +127,7 @@ public class SedeController {
     @PostMapping("asignar")
     public String asignarProducto(@ModelAttribute("asignaciontiendas") @Valid AsignacionTiendas asignacionTiendas,
                                   BindingResult bindingResult,
-                                  @ModelAttribute("venta")  Ventas venta,
+                                  @ModelAttribute("venta") Ventas venta,
                                   @RequestParam(value = "gestor") int idgestor,
                                   @RequestParam(value = "sede") int idsede,
                                   @RequestParam(value = "producto_inventario") String idproductoinv,
@@ -231,14 +231,15 @@ public class SedeController {
         return "redirect:/sede/productosPorConfirmar";
     }
 
-    @GetMapping("/devolucion")
-    public String devolucionSede(@ModelAttribute("venta") Ventas ventas,
-                                 @RequestParam(value = "idgestor") int idgestor,
-                                 @RequestParam(value = "vendedor") int idsede,
-                                 @RequestParam(value = "inventario") String idproductoinv,
-                                 @RequestParam(value = "idestadoasign") int idestadoasign,
-                                 @RequestParam(value = "idprecioventa") Float idprecioventa,
+    @PostMapping("/devolucion")
+    public String devolucionSede(@ModelAttribute("asignaciontiendas") AsignacionTiendas asignacionTiendas,
                                  BindingResult bindingResult,
+                                 @ModelAttribute("venta") Ventas ventas,
+                                 @RequestParam(value = "id13") int idgestor,
+                                 @RequestParam(value = "id23") int idsede,
+                                 @RequestParam(value = "id33") String idproductoinv,
+                                 @RequestParam(value = "id43") int idestadoasign,
+                                 @RequestParam(value = "id53") Float idprecioventa,
                                  HttpSession session,
                                  Model model, RedirectAttributes attr) {
 
@@ -251,61 +252,57 @@ public class SedeController {
 
         if (ventas.getCantDevol() <= 0) {
             bindingResult.rejectValue("cantDevol", "error.user", "Ingrese una cantidad valida");
-        }
-
-        if (ventas.getCantDevol() >= 0) {
+        } else {
 
             if (ventas.getCantDevol() > asignadosSedes.getCantidadactual()) {
                 bindingResult.rejectValue("cantDevol", "error.user", "La cantidad devuelta no puede ser mayor a la cantidad actual de la sede");
             }
+        }
+
+        if (bindingResult.hasErrors()) {
 
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
+            model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
+            model.addAttribute("listaTiendas", tiendaRepository.findAll());
+            model.addAttribute("msgError_D", "ERROR");
 
             model.addAttribute("venta", ventas);
-            model.addAttribute("msgError", "ERROR");
-            model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
-
-            model.addAttribute("idgestor", idgestor);
-            model.addAttribute("vendedor", idsede);
-            model.addAttribute("inventario", idproductoinv);
-            model.addAttribute("idestadoasign", idestadoasign);
-            model.addAttribute("idprecioventa", idprecioventa);
+            model.addAttribute("id13", idgestor);
+            model.addAttribute("id23", idsede);
+            model.addAttribute("id33", idproductoinv);
+            model.addAttribute("id43", idestadoasign);
+            model.addAttribute("id53", idprecioventa);
 
             // model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
 
-            return "sede/ListaProductosConfirmados";
-
         } else {
-
             AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
                     id.getProductoinventario(), CustomConstants.ESTADO_DEVUELTO_POR_SEDE, id.getPrecioventa());
             Optional<AsignadosSedes> asignSedes = asignadosSedesRepository.findById(idNew);
-            AsignadosSedes asignadosSedesNew = asignadosSedesOptional.get();
+            AsignadosSedes asignadosSedesNew = asignSedes.get();
 
             if (asignSedes.isPresent()) {
                 asignadosSedesNew.setId(idNew);
-                asignadosSedesNew.setCantidadactual(asignSedes.get().getCantidadactual() + ventas.getCantDevol());
-                asignadosSedesNew.setStock(asignSedes.get().getStock() + ventas.getCantDevol());
+                asignadosSedesNew.setCantidadactual(asignadosSedesNew.getCantidadactual() + ventas.getCantDevol());
+                asignadosSedesNew.setStock(asignadosSedesNew.getStock() + ventas.getCantDevol());
             } else {
                 asignadosSedesNew.setId(idNew);
+                asignadosSedesNew.setFechacreacion(LocalDateTime.now());
                 asignadosSedesNew.setCantidadactual(ventas.getCantDevol());
                 asignadosSedesNew.setStock(ventas.getCantDevol());
-            }
-            asignadosSedesNew.setFechaenvio(LocalDate.now());
 
+            }
+            asignadosSedesRepository.save(asignadosSedesNew);
             asignadosSedes.setCantidadactual(asignadosSedes.getCantidadactual() - ventas.getCantDevol());
             asignadosSedesRepository.save(asignadosSedes);
-            asignadosSedesRepository.save(asignadosSedesNew);
 
-            /*Inventario inventario = inventarioRepository.findByCodigoinventario(asignadosSedesNew.getId().getProductoinventario().getCodigoinventario());
-            inventario.setCantidadgestor(inventario.getCantidadgestor()+ventas.getCantDevol());
-            inventarioRepository.save(inventario);*/
+            attr.addFlashAttribute("msgExito", "Producto devuelto exitosamente");
 
-            attr.addFlashAttribute("msg", "Producto devuelto exitosamente");
 
-            return "redirect:/sede/productosConfirmados";
         }
+        return "redirect:/sede/productosConfirmados";
     }
+
 
     //Web service
     @ResponseBody

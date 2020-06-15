@@ -32,6 +32,8 @@
                              class="alert alert-danger py-1" role="alert"></div>
                         <div id="msgAsign" th:if="${msgError_A != null}" th:text="${msgError_A}"
                              class="alert alert-danger py-1" role="alert"></div>
+                        <div id="msgDevolucion" th:if="${msgError_D != null}" th:text="${msgError_D}"
+                             class="alert alert-danger py-1" role="alert"></div>
                         <div th:if="${msgExito != null}" th:text="${msgExito}"
                              class="alert alert-success py-1" role="alert"></div>
 
@@ -82,8 +84,8 @@
                                         </tfoot>
                                         <tbody>
 
-                                            <tr th:if="${prodConfirm.getId().estadoasignacion==2}"
-                                                th:each="prodConfirm, i : ${listaProductosConfirmados}">
+                                            <tr th:each="prodConfirm, i : ${listaProductosConfirmados}"
+                                                th:if="${prodConfirm.getId().estadoasignacion==2}">
                                                 <td th:text="${i.index + 1}">1</td>
                                                 <td th:text="${prodConfirm.id.productoinventario.codigoinventario}"></td>
                                                 <td th:text="${prodConfirm.id.productoinventario.productos.nombre}"></td>
@@ -326,7 +328,7 @@
 
         <!-- Modal Devolucion -->
         <div id="devolucionModal" class="modal fade" role="dialog" aria-labelledby="devolucionModal">
-            <div class="modal-dialog modal-confirm">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="devolucionModalLabel">Devolución del producto</h5>
@@ -335,16 +337,17 @@
                         </a>
                     </div>
                     <div class="modal-body">
-                        <form method="get" th:action="@{/sede/devolucion}" th:object="${venta}">
-                            <input type="hidden" class="form-control" id="idgestor3" name="idgestor">
-                            <input type="hidden" class="form-control" id="idestadoasign3" name="idestadoasign">
-                            <input type="hidden" class="form-control" id="idprecioventa3" name="idprecioventa">
-                            <input type="hidden" class="form-control" id="idsede3" name="vendedor">
-                            <input type="hidden" class="form-control" id="idproductoinvinput3" name="inventario">
+                        <form method="post" th:action="@{/sede/devolucion}" th:object="${venta}">
+                            <input type="hidden" class="form-control" id="id13" name="id13" th:value="${id13!=null}? ${id13} ">
+                            <input type="hidden" class="form-control" id="id23" name="id23" th:value="${id23!=null}? ${id23} ">
+                            <input type="hidden" class="form-control" id="id33" name="id33" th:value="${id33!=null}? ${id33} ">
+                            <input type="hidden" class="form-control" id="id43" name="id43" th:value="${id43!=null}? ${id43} ">
+                            <input type="hidden" class="form-control" id="id53" name="id53" th:value="${id53!=null}? ${id53} ">
+
 
                             <div class="form-group">
                                 <label class="col-form-label">Cantidad retornada</label>
-                                <input type="number" class="form-control" th:field="*{cantDevol}">
+                                <input type="number" class="form-control" id="cantDevol" name="cantDevol" th:value="${venta.cantDevol!=null}? ${venta.cantDevol}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('cantDevol')}"
                                      th:errors="*{cantDevol}"></div>
                             </div>

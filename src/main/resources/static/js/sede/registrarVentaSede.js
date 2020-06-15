@@ -18,13 +18,13 @@ $(document).on("click",".regis-Venta", function(){
     $("#registrarVentaModal  #idestadoasign").val( $(this).data('id42'));
 
 
-    $.ajax({
+   /* $.ajax({
 
     }).fail(function (err) {
         console.log(err);
         $("#registrarVentaModal").modal('hide');
         alert("Ocurrió un error");
-    })
+    })*/
 
 
 });
