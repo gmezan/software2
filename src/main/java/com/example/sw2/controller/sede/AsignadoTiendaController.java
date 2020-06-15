@@ -57,6 +57,8 @@ public class AsignadoTiendaController {
 
         Optional<AsignacionTiendas> optaTienda = asignacionTiendasRepository.findById(idAstiendas);
         AsignacionTiendas aTienda = optaTienda.get();
+        venta.setFecha(LocalDate.now());
+        venta.setFechacreacion(LocalDateTime.now());
 
         if(venta.getCantidad() > aTienda.getStock()){
             bindingResult.rejectValue("cantidad", "error.user","La cantidad no puede ser mayor al stock de la tienda");
@@ -75,8 +77,7 @@ public class AsignadoTiendaController {
 
 
         }else{
-            venta.setFecha(LocalDate.now());
-            venta.setFechacreacion(LocalDateTime.now());
+
             ventasRepository.save(venta);
             //actualizar stock(Asignados_sedes) cant_total(inventario)
             asignacionTiendasRepository.registrar_venta_tienda(aTienda.getAsignadosSedes().getId().getGestor().getIdusuarios(),

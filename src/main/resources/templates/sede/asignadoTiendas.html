@@ -143,12 +143,12 @@
 
                         <input hidden id="id1" name ="id1" type="text" class="form-control"  th:value="${id1!=null}? ${id1}">
 
-                        <input  type="text" class="form-control" th:field="*{rucdni}">
-                        <input  type="text" class="form-control" th:field="*{nombrecliente}">
-                        <input  type="text" class="form-control" th:field="*{lugarventa}">
-                        <input  id="codigoinventario" type="text" class="form-control" th:field="*{inventario.codigoinventario}">
-                        <input  type="text" class="form-control" th:field="*{precioventa}">
-                        <input  id="vendedor" type="text" class="form-control" th:field="*{vendedor.idusuarios}">
+                        <input hidden gittype="text" class="form-control" th:field="*{rucdni}">
+                        <input hidden type="text" class="form-control" th:field="*{nombrecliente}">
+                        <input hidden type="text" class="form-control" th:field="*{lugarventa}">
+                        <input hidden id="codigoinventario" type="text" class="form-control" th:field="*{inventario.codigoinventario}">
+                        <input hidden type="text" class="form-control" th:field="*{precioventa}">
+                        <input hidden id="vendedor" type="text" class="form-control" th:field="*{vendedor.idusuarios}">
 
                         <div class="form-group">
                             <label id="cant" class="col-form-label">Cantidad</label>
@@ -174,7 +174,7 @@
 
 
                         <div class="modal-footer">
-                            <a th:href="@{/sede/AsignadoTienda}" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+                            <a type="button" th:href="@{/sede/AsignadoTienda}" class="btn btn-secondary" >Cancelar</a>
                             <button type="submit" class="btn btn-success"><a style="color:white;text-decoration:none">Registrar</a></button>
                         </div>
                     </form>
@@ -206,7 +206,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <a th:href="@{/sede/AsignadoTienda}" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+                            <a  type="button" th:href="@{/sede/AsignadoTienda}" class="btn btn-secondary" >Cancelar</a>
                             <button type="submit" class="btn btn-success"><a style="color:white;text-decoration:none">Registrar</a></button>
                         </div>
                     </form>

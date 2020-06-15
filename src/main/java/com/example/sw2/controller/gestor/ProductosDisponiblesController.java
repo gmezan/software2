@@ -64,7 +64,12 @@ public class ProductosDisponiblesController {
 
         boolean fechavalida = true;
         if(ventas.getFecha()!=null) {
-        if (ventas.getFecha().isBefore(ventas.getInventario().getFechaadquisicion())){fechavalida=false;}
+
+            if (ventas.getFecha().isBefore(ventas.getInventario().getFechaadquisicion())){
+                fechavalida=false;
+            }
+        }else{
+            bindingResult.rejectValue("fecha", "error.user", "Ingrese una fecha");
         }
 
         if ((bindingResult.hasErrors()) || (documento=="") || (ventas.getCantidad() > ventas.getInventario().getCantidadgestor()) || (fechavalida==false) ) {
