@@ -185,10 +185,10 @@
 
                             <!--label>Codigo del producto: <span><b id="idproductoinvlabel"></b></span></label-->
 
-                            <div class="form-group">
+                            <!--div class="form-group">
                                 <label class="col-form-label">Codigo del producto:</label>
-                                <input type="text" class="form-control" id="codinv" readonly>
-                            </div>
+                                <input type="text" class="form-control" id="codinv" name="codinv" readonly>
+                            </div-->
 
                             <div class="form-group">
                                 <label class="col-form-label">Nombre del cliente:</label>
@@ -338,11 +338,11 @@
                     </div>
                     <div class="modal-body">
                         <form method="post" th:action="@{/sede/devolucion}" th:object="${venta}">
-                            <input  class="form-control" id="id13" name="id13" th:value="${id13!=null}? ${id13} ">
-                            <input  class="form-control" id="id23" name="id23" th:value="${id23!=null}? ${id23} ">
-                            <input class="form-control" id="id33" name="id33" th:value="${id33!=null}? ${id33} ">
-                            <input  class="form-control" id="id43" name="id43" th:value="${id43!=null}? ${id43} ">
-                            <input  class="form-control" id="id53" name="id53" th:value="${id53!=null}? ${id53} ">
+                            <input type="hidden" class="form-control" id="id13" name="id13" th:value="${id13!=null}? ${id13} ">
+                            <input type="hidden" class="form-control" id="id23" name="id23" th:value="${id23!=null}? ${id23} ">
+                            <input type="hidden" class="form-control" id="id33" name="id33" th:value="${id33!=null}? ${id33} ">
+                            <input type="hidden" class="form-control" id="id43" name="id43" th:value="${id43!=null}? ${id43} ">
+                            <input type="hidden" class="form-control" id="id53" name="id53" th:value="${id53!=null}? ${id53} ">
 
 
                             <div class="form-group">
@@ -355,7 +355,7 @@
                             <div class="modal-footer">
                                 <a th:href="@{/sede/productosConfirmados}" type="button" class="btn btn-secondary">Cancelar</a>
                                 <button type="submit" class="btn btn-success"><a
-                                        style="color:white;text-decoration:none">Registrar</a></button>
+                                        style="color:white;text-decoration:none">Devolver</a></button>
                             </div>
                         </form>
                     </div>

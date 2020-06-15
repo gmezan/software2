@@ -74,12 +74,14 @@ public class SedeController {
 
     @PostMapping("registrarVenta")
     public String registrarVenta(@ModelAttribute("venta") @Valid Ventas ventas,
+                                 BindingResult bindingResult,
+                                 @ModelAttribute("asignaciontiendas") AsignacionTiendas asignacionTiendas,
                                  @RequestParam(value = "idgestor") int idgestor,
                                  @RequestParam(value = "vendedor") int idsede,
                                  @RequestParam(value = "inventario") String idproductoinv,
                                  @RequestParam(value = "idestadoasign") int idestadoasign,
                                  @RequestParam(value = "idprecioventa") Float idprecioventa,
-                                 BindingResult bindingResult, RedirectAttributes attr, HttpSession session, Model model) {
+                                 RedirectAttributes attr, HttpSession session, Model model) {
 
         AsignadosSedesId id = new AsignadosSedesId(usuariosRepository.findById(idgestor).get(), usuariosRepository.findById(idsede).get(),
                 inventarioRepository.findById(idproductoinv).get(),
@@ -88,9 +90,46 @@ public class SedeController {
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
 
+        if (ventas.getCantidad() <= 0) {
+            bindingResult.rejectValue("cantidad", "error.user", "Ingrese una cantidad valida");
+
+        } else {
+
+            if (ventas.getCantidad() > asignadosSedes.getCantidadactual()) {
+                bindingResult.rejectValue("cantidad", "error.user", "La cantidad vendida no puede ser mayor a la cantidad actual de la sede");
+            }
+        }
+
+        if (!ventas.getNombrecliente().isEmpty()) {
+            if (Pattern.compile("[0-9]").matcher(ventas.getNombrecliente()).find()) {
+                bindingResult.rejectValue("nombrecliente", "error.user", "No se permiten valores numéricos.");
+            }
+            if (ventas.getNombrecliente().trim().length() == 0) {
+                bindingResult.rejectValue("nombrecliente", "error.user", "Ingrese un nombre válido.");
+            }
+        }
+
+        if (!ventas.getLugarventa().isEmpty()) {
+            if (Pattern.compile("[0-9]").matcher(ventas.getLugarventa()).find()) {
+                bindingResult.rejectValue("lugarventa", "error.user", "No se permiten valores numéricos.");
+            }
+            if (ventas.getLugarventa().trim().length() == 0) {
+                bindingResult.rejectValue("lugarventa", "error.user", "Ingrese un lugar de venta válido.");
+            }
+        }
+
+        Usuarios sede = (Usuarios) session.getAttribute("usuario");
+
         if (bindingResult.hasErrors()) {
-            Usuarios sede = (Usuarios) session.getAttribute("usuario");
             model.addAttribute("venta", ventas);
+            model.addAttribute("idgestor", idgestor);
+            model.addAttribute("vendedor", idsede);
+           // model.addAttribute("codinv", idproductoinv);
+            model.addAttribute("inventario", idproductoinv);
+            model.addAttribute("idestadoasign", idestadoasign);
+            model.addAttribute("id53", idprecioventa);
+            model.addAttribute("listaTiendas", tiendaRepository.findAll());
+            model.addAttribute("idprecioventa", idproductoinv);
             model.addAttribute("msgError_V", "ERROR");
             model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
             return "sede/ListaProductosConfirmados";
@@ -98,21 +137,22 @@ public class SedeController {
             Optional<Ventas> optVenta = ventasRepository.findById(new VentasId(ventas.getId().getTipodocumento(), ventas.getId().getNumerodocumento()));
 
             if (optVenta.isPresent()) {
-                Usuarios sede = (Usuarios) session.getAttribute("usuario");
-                model.addAttribute("msgBoleta", "El codigo de esta venta ya ha sido registrada");
+                model.addAttribute("msgBoleta", "El numero y tipo de documento de esta venta ya ha sido registrada anteriormente");
+                model.addAttribute("id32", idproductoinv);
                 model.addAttribute("msgError_V", "ERROR");
                 model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
                 return "sede/ListaProductosConfirmados";
+
             } else {
                 ventas.setFechacreacion(LocalDateTime.now());
                 ventasRepository.save(ventas);
 
                 int StockActual = asignadosSedes.getStock() - ventas.getCantidad();
-                asignadosSedes.setCantidadactual(asignadosSedes.getCantidadactual() - 1);
+                asignadosSedes.setCantidadactual(asignadosSedes.getCantidadactual() - ventas.getCantidad());
                 asignadosSedes.setStock(StockActual);
 
                 Inventario inventario = inventarioRepository.findByCodigoinventario(asignadosSedes.getId().getProductoinventario().getCodigoinventario());
-                inventario.setCantidadtotal(inventario.getCantidadtotal() - 1);
+                inventario.setCantidadtotal(inventario.getCantidadtotal() - ventas.getCantidad());
 
                 asignadosSedesRepository.save(asignadosSedes);
                 inventarioRepository.save(inventario);
@@ -155,7 +195,6 @@ public class SedeController {
 
         if (bindingResult.hasErrors()) {
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
-
             model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
             model.addAttribute("listaTiendas", tiendaRepository.findAll());
             model.addAttribute("msgError_A", "ERROR");
@@ -273,8 +312,6 @@ public class SedeController {
             model.addAttribute("id33", idproductoinv);
             model.addAttribute("id43", idestadoasign);
             model.addAttribute("id53", idprecioventa);
-
-            // model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
 
         } else {
             AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
