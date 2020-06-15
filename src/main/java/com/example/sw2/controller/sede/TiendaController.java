@@ -45,7 +45,7 @@ public class TiendaController {
                 attr.addFlashAttribute("msg", "Tienda actualizada exitosamente");
             }
             else {
-                attr.addFlashAttribute("msg", "Producto creado exitosamente");
+                attr.addFlashAttribute("msg", "Tienda creada exitosamente");
             }
             tiendaRepository.save(tienda);
             return "redirect:/sede/tienda";

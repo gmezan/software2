@@ -338,11 +338,11 @@
                     </div>
                     <div class="modal-body">
                         <form method="post" th:action="@{/sede/devolucion}" th:object="${venta}">
-                            <input type="hidden" class="form-control" id="id13" name="id13" th:value="${id13!=null}? ${id13} ">
-                            <input type="hidden" class="form-control" id="id23" name="id23" th:value="${id23!=null}? ${id23} ">
-                            <input type="hidden" class="form-control" id="id33" name="id33" th:value="${id33!=null}? ${id33} ">
-                            <input type="hidden" class="form-control" id="id43" name="id43" th:value="${id43!=null}? ${id43} ">
-                            <input type="hidden" class="form-control" id="id53" name="id53" th:value="${id53!=null}? ${id53} ">
+                            <input  class="form-control" id="id13" name="id13" th:value="${id13!=null}? ${id13} ">
+                            <input  class="form-control" id="id23" name="id23" th:value="${id23!=null}? ${id23} ">
+                            <input class="form-control" id="id33" name="id33" th:value="${id33!=null}? ${id33} ">
+                            <input  class="form-control" id="id43" name="id43" th:value="${id43!=null}? ${id43} ">
+                            <input  class="form-control" id="id53" name="id53" th:value="${id53!=null}? ${id53} ">
 
 
                             <div class="form-group">
@@ -381,6 +381,7 @@
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
         <script th:src="@{/js/sede/asignarATienda.js}"></script>
         <script th:src="@{/js/sede/registrarVentaSede.js}"></script>
+        <script th:src="@{/js/sede/devolucionSede.js}"></script>
 
     </body>
 

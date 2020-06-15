@@ -249,6 +249,7 @@ public class SedeController {
 
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
+        System.out.println("Encontrado");
 
         if (ventas.getCantDevol() <= 0) {
             bindingResult.rejectValue("cantDevol", "error.user", "Ingrese una cantidad valida");
@@ -279,20 +280,25 @@ public class SedeController {
             AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
                     id.getProductoinventario(), CustomConstants.ESTADO_DEVUELTO_POR_SEDE, id.getPrecioventa());
             Optional<AsignadosSedes> asignSedes = asignadosSedesRepository.findById(idNew);
-            AsignadosSedes asignadosSedesNew = asignSedes.get();
+
+            System.out.println("Encontrado2");
 
             if (asignSedes.isPresent()) {
+                AsignadosSedes asignadosSedesNew = asignSedes.get();
                 asignadosSedesNew.setId(idNew);
                 asignadosSedesNew.setCantidadactual(asignadosSedesNew.getCantidadactual() + ventas.getCantDevol());
                 asignadosSedesNew.setStock(asignadosSedesNew.getStock() + ventas.getCantDevol());
+                asignadosSedesRepository.save(asignadosSedesNew);
             } else {
-                asignadosSedesNew.setId(idNew);
-                asignadosSedesNew.setFechacreacion(LocalDateTime.now());
-                asignadosSedesNew.setCantidadactual(ventas.getCantDevol());
-                asignadosSedesNew.setStock(ventas.getCantDevol());
-
+                AsignadosSedes nuevoAs = new AsignadosSedes();
+                nuevoAs.setId(idNew);
+                nuevoAs.setFechaenvio(asignadosSedes.getFechaenvio());
+                nuevoAs.setFechacreacion(LocalDateTime.now());
+                nuevoAs.setCantidadactual(ventas.getCantDevol());
+                nuevoAs.setStock(ventas.getCantDevol());
+                asignadosSedesRepository.save(nuevoAs);
             }
-            asignadosSedesRepository.save(asignadosSedesNew);
+
             asignadosSedes.setCantidadactual(asignadosSedes.getCantidadactual() - ventas.getCantDevol());
             asignadosSedesRepository.save(asignadosSedes);
 
