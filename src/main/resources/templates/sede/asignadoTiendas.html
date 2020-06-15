@@ -143,38 +143,37 @@
 
                         <input hidden id="id1" name ="id1" type="text" class="form-control"  th:value="${id1!=null}? ${id1}">
 
-                        <input hidden type="text" class="form-control" th:field="*{rucdni}">
+                        <input hidden gittype="text" class="form-control" th:field="*{rucdni}">
                         <input hidden type="text" class="form-control" th:field="*{nombrecliente}">
                         <input hidden type="text" class="form-control" th:field="*{lugarventa}">
                         <input hidden id="codigoinventario" type="text" class="form-control" th:field="*{inventario.codigoinventario}">
                         <input hidden type="text" class="form-control" th:field="*{precioventa}">
                         <input hidden id="vendedor" type="text" class="form-control" th:field="*{vendedor.idusuarios}">
 
-                        <div class="form-group">
-                            <label id="cant" class="col-form-label">Cantidad</label>
+                        <div class="form-group col">
+                            <label id="cant" class="col-form-label"><b>Cantidad</b></label>
                             <input type="text" class="form-control" th:field="*{cantidad}">
                             <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}">Error</div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-form-label">Tipo de documento</label>
-                            <select class="form-control" th:field="*{id.tipodocumento}">
-                                <option value="1">Factura</option>
-                                <option value="2">Boleta</option>
-                                <option value="3">Recibo</option>
-                                <option value="4">Transacción</option>
+                        <div class="form-group col">
+                            <label class="col-form-label"><b>Tipo de documento:</b></label>
+                            <select class="form-control" th:field ="*{id.tipodocumento}" >
+                                <option th:each="t : ${tipodoc}"
+                                        th:text="${t.value}"
+                                        th:value="${t.key}"></option>
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-form-label">Número de documento</label>
+                        <div class="form-group col">
+                            <label class="col-form-label"><b>Número de documento</b></label>
                             <input type="text" class="form-control" th:field="*{id.numerodocumento}">
                             <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}" th:errors="*{id.numerodocumento}">Error</div>
                         </div>
 
 
                         <div class="modal-footer">
-                            <a th:href="@{/sede/AsignadoTienda}" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+                            <a type="button" th:href="@{/sede/AsignadoTienda}" class="btn btn-secondary" >Cancelar</a>
                             <button type="submit" class="btn btn-success"><a style="color:white;text-decoration:none">Registrar</a></button>
                         </div>
                     </form>
@@ -189,8 +188,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Devolución de productos</h4>
-                    <a th:href="@{/sede/AsignadoTienda}" type="button" class="close" data-dismiss="modal">
-                        <span area-hidden="true">&times;</span>
+                    <a type="button" th:href="@{/sede/AsignadoTienda}" class="close" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
                     </a>
                 </div>
 
@@ -200,13 +199,13 @@
 
                         <input hidden id="id2" name ="id2" type="text" class="form-control" th:value="${id2!=null}? ${id2}">
                         <div class="form-group">
-                            <label class="col-form-label">Cantidad retornada</label>
+                            <label class="col-form-label"><b>Cantidad retornada</b></label>
                             <input type="text" class="form-control" th:field="*{cantDevol}">
                             <div class="text-danger" th:if="${#fields.hasErrors('cantDevol')}" th:errors="*{cantDevol}">Error</div>
                         </div>
 
                         <div class="modal-footer">
-                            <a th:href="@{/sede/AsignadoTienda}" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+                            <a  type="button" th:href="@{/sede/AsignadoTienda}" class="btn btn-secondary" >Cancelar</a>
                             <button type="submit" class="btn btn-success"><a style="color:white;text-decoration:none">Registrar</a></button>
                         </div>
                     </form>
