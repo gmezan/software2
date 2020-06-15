@@ -52,9 +52,8 @@ public class GestoresController {
                           @RequestParam("type") int type,
                           RedirectAttributes attr, Model model) {
 
-        Usuarios u2 = usuariosRepository.findByCorreo(usuarios.getCorreo());
-        if(u2!=null && ((type==1) || (type==0 && u2.getIdusuarios()==usuarios.getIdusuarios()))){
-            bindingResult.rejectValue("correo", "error.user", "Este correo ya está registrado");
+        if(usuariosRepository.findByCorreoAndIdusuariosNot(usuarios.getCorreo(),usuarios.getIdusuarios())!=null){
+            bindingResult.rejectValue("correo", "error.user", "Este correo ya está registrado.");
         }
         if(Pattern.compile("[0-9]").matcher(usuarios.getNombre()).find()){
             bindingResult.rejectValue("nombre","error.user", "No ingrese valores numéricos");
@@ -65,7 +64,6 @@ public class GestoresController {
         if(type==1 && usuariosRepository.findById(usuarios.getIdusuarios()).isPresent()){ //if new
             bindingResult.rejectValue("idusuarios","error.user","Este dni ya está registrado");
         }
-
         if(bindingResult.hasErrors()){
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
