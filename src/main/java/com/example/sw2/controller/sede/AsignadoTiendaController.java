@@ -89,9 +89,7 @@ public class AsignadoTiendaController {
             asignacionTiendasRepository.registrar_venta_tienda(aTienda.getAsignadosSedes().getId().getGestor().getIdusuarios(),
                     venta.getVendedor().getIdusuarios(), venta.getInventario().getCodigoinventario(),
                     2,venta.getPrecioventa(), venta.getCantidad(), idAstiendas);
-            if(aTienda.getStock() == 0){
-                asignacionTiendasRepository.deleteById(aTienda.getIdtiendas());
-            }
+
             attr.addFlashAttribute("msg", "Venta registrada exitosamente");
             return "redirect:/sede/AsignadoTienda";
         }
@@ -126,22 +124,23 @@ public class AsignadoTiendaController {
             model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
             model.addAttribute("msgErrorDevolucion", "ERROR");
             return "sede/asignadoTiendas";
+        }else{
+            AsignadosSedes as = at.getAsignadosSedes();
+
+            //restar stock(Asignado_Tienda) y sumar cantidadactual(Asigandos_sedes)
+
+            asignacionTiendasRepository.devol_tienda(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
+                    as.getId().getProductoinventario().getCodigoinventario(), as.getId().getEstadoasignacion(),
+                    as.getId().getPrecioventa(),v.getCantDevol(), at.getIdtiendas());
+
+            //sumar lo devuelto a cant_gestor del inventario
+            attr.addFlashAttribute("msg","Producto devuelto exitosamente");
+
+            return "redirect:/sede/AsignadoTienda";
+
         }
 
-        AsignadosSedes as = at.getAsignadosSedes();
 
-        //restar stock(Asignado_Tienda) y sumar cantidadactual(Asigandos_sedes)
-
-        asignacionTiendasRepository.devol_tienda(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
-                as.getId().getProductoinventario().getCodigoinventario(), as.getId().getEstadoasignacion(),
-                as.getId().getPrecioventa(),v.getCantDevol(), at.getIdtiendas());
-        if(at.getStock() == 0){
-            asignacionTiendasRepository.deleteById(at.getIdtiendas());
-        }
-        //sumar lo devuelto a cant_gestor del inventario
-        attr.addFlashAttribute("msg","Producto devuelto exitosamente");
-
-        return "redirect:/sede/AsignadoTienda";
 
 
         //AsignadosID = gestor - sede - inventario - estado - precio
