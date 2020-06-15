@@ -28,9 +28,11 @@
                         </div>
 
                         <!-- Page Heading -->
-                        <div id="msgVenta" th:if="${msgError != null}" th:text="${msgError}"
+                        <div id="msgVenta" th:if="${msgError_V != null}" th:text="${msgError_V}"
                              class="alert alert-danger py-1" role="alert"></div>
-<div  th:if="${msgExito != null}" th:text="${msgExito}"
+                        <div id="msgAsign" th:if="${msgError_A != null}" th:text="${msgError_A}"
+                             class="alert alert-danger py-1" role="alert"></div>
+                        <div th:if="${msgExito != null}" th:text="${msgExito}"
                              class="alert alert-success py-1" role="alert"></div>
 
                         <!-- DataTales Example -->
@@ -162,7 +164,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="registrarVentaModalLabel">Registrar venta de un producto</h5>
                         <a type="button" th:href="@{/sede/productosConfirmados}" class="close"
-                                aria-label="Close">
+                           aria-label="Close">
                             <span aria-hidden="true">x</span>
                         </a>
                     </div>
@@ -179,7 +181,7 @@
                             <input type="hidden" class="form-control" id="idproductoinvinput" name="inventario">
 
 
-                           <!--label>Codigo del producto: <span><b id="idproductoinvlabel"></b></span></label-->
+                            <!--label>Codigo del producto: <span><b id="idproductoinvlabel"></b></span></label-->
 
                             <div class="form-group">
                                 <label class="col-form-label">Codigo del producto:</label>
@@ -250,7 +252,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a th:href="@{/sede/productosConfirmados}" type="button" class="btn btn-danger" >Cancelar</a>
+                                <a th:href="@{/sede/productosConfirmados}" type="button"
+                                   class="btn btn-danger">Cancelar</a>
                                 <button type="submit" class="btn btn-primary">Registrar</button>
                             </div>
                         </form>
@@ -275,16 +278,11 @@
                         <form method="post" th:action="@{/sede/asignar}" th:object="${asignaciontiendas}">
 
                             <input type="hidden" class="form-control" id="idgestor2" name="gestor">
-                            <input type="hidden" class="form-control" id="idproductoinventario2" name="producto_inventario">
+                            <input type="hidden" class="form-control" id="idproductoinventario2"
+                                   name="producto_inventario">
                             <input type="hidden" class="form-control" id="idestadoasign2" name="estadoasignacion">
                             <input type="hidden" class="form-control" id="idprecioventa2" name="precioventa">
                             <input type="hidden" class="form-control" id="idsede2" name="sede">
-
-                            <div hidden class="form-group">
-                                <label  class="col-form-label">idtienda:</label>
-                                <input type="text" class="form-control" th:field="*{idtiendas}" >
-                                <div class="text-danger" th:if="${#fields.hasErrors('idtiendas')}" th:errors="*{idtiendas}">Error</div>
-                            </div>
 
                             <div class="form-group">
                                 <label class="col-form-label">Nombre de la tienda:</label>
@@ -315,7 +313,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a th:href="@{/sede/productosConfirmados}" type="button" class="btn btn-danger" >Cancelar</a>
+                                <a th:href="@{/sede/productosConfirmados}" type="button"
+                                   class="btn btn-danger">Cancelar</a>
                                 <button type="submit" class="btn btn-primary">Asignar</button>
                             </div>
                         </form>
@@ -331,7 +330,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="devolucionModalLabel">Devolución del producto</h5>
-                        <a th:href="@{/sede/productosConfirmados}" type="button" class="close"  aria-label="Close">
+                        <a th:href="@{/sede/productosConfirmados}" type="button" class="close" aria-label="Close">
                             <span aria-hidden="true">x</span>
                         </a>
                     </div>
@@ -346,12 +345,14 @@
                             <div class="form-group">
                                 <label class="col-form-label">Cantidad retornada</label>
                                 <input type="number" class="form-control" th:field="*{cantDevol}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('cantDevol')}" th:errors="*{cantDevol}"></div>
+                                <div class="text-danger" th:if="${#fields.hasErrors('cantDevol')}"
+                                     th:errors="*{cantDevol}"></div>
                             </div>
 
                             <div class="modal-footer">
                                 <a th:href="@{/sede/productosConfirmados}" type="button" class="btn btn-secondary">Cancelar</a>
-                                <button type="submit" class="btn btn-success"><a style="color:white;text-decoration:none">Registrar</a></button>
+                                <button type="submit" class="btn btn-success"><a
+                                        style="color:white;text-decoration:none">Registrar</a></button>
                             </div>
                         </form>
                     </div>

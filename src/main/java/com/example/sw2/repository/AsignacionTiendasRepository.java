@@ -4,6 +4,7 @@ package com.example.sw2.repository;
 import com.example.sw2.dto.DatosAsignadosTiendaDto;
 import com.example.sw2.entity.AsignacionTiendas;
 import com.example.sw2.entity.AsignadosSedes;
+import com.example.sw2.entity.Tienda;
 import com.example.sw2.entity.Usuarios;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -37,6 +38,10 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
     List<AsignacionTiendas> buscarPorSede(int sede);
 
     List<AsignacionTiendas> findAsignacionTiendasByAsignadosSedes_Id_Sede(Usuarios sede);
+    List<AsignacionTiendas> findAsignacionTiendasByTiendaAndAsignadosSedes(Tienda tienda,AsignadosSedes as);
+
+
+
 
     @Procedure(name = "registrar_venta_tienda")
     void registrar_venta_tienda(int dni_gestor, int dni_sede, String codigo,

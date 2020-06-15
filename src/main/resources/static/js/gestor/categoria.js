@@ -1,7 +1,8 @@
-var contextPath  = window.location.href;
-
-$(document).on("click",".editar-Categoria", function(){
-    $("#formModal  #codigo").val(' ');$("#formModal  #nombre").val('');
+const contextPath  = window.location.href;
+$(function() {$("#msgCategoria").text()==="ERROR" && $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
+}).on("click",".editar-Categoria", function(){let formModal =  $("#formModal");
+    $("#formModal  #codigo").val('');
+    $("#formModal  #nombre").val('');
     $("#formModal  #type").val('0');
     $("#formModal  #formTitle").text('Editar Categoría');
     $.ajax({
@@ -17,14 +18,12 @@ $(document).on("click",".editar-Categoria", function(){
         $('#formModal').modal('hide');
         alert("Ocurrió un error");
     })
-});
-$(document).on("click",".new-Categoria", function(){
+}).on("click",".new-Categoria", function(){let formModal =  $("#formModal");
     $("#formModal  #codigo").val('').prop("readonly", false);
     $("#formModal  #nombre").val('');
     $("#formModal  #type").val('1');
     $("#formModal  #formTitle").text('Nueva Categoría');
-});
-$(document).on("click",".delete-Categoria", function(){
+}).on("click",".delete-Categoria", function(){
     let id = $(this).data('id');
     $("#deleteModal #buttonDelete").prop("hidden",true);
     $("#deleteModal #deleteModalBody #deleteModalBodyP").text("");
@@ -60,9 +59,3 @@ $(document).on("click",".delete-Categoria", function(){
         alert("Ocurrió un error");
     })
 });
-$(document).ready(function() {
-    if ($("#msgCategoria").text()==="ERROR"){
-        $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
-    }
-});
-
