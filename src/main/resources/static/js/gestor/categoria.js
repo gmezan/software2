@@ -11,26 +11,19 @@ $(function() {$("#msgCategoria").text()==="ERROR" && $('#formModal').modal({show
         if (cat!=null){
             $("#formModal  #codigo").val(cat.codigo).prop("readonly", true);
             $("#formModal #nombre").val(cat.nombre);
-
         }
-    }).fail(function (err) {
-        console.log(err);
-        $('#formModal').modal('hide');
-        alert("Ocurrió un error");
+    }).fail(function (err) {alert("Ocurrió un error"); $('#formModal').modal('hide');
     })
-}).on("click",".new-Categoria", function(){let formModal =  $("#formModal");
-    $("#formModal  #codigo").val('').prop("readonly", false);
-    $("#formModal  #nombre").val('');
-    $("#formModal  #type").val('1');
-    $("#formModal  #formTitle").text('Nueva Categoría');
+}).on("click",".new-Categoria", function(){
+    $("#formModal").find(" #formTitle").text('Nueva Categoría').end().find(" input").val('').prop("readonly",false).end()
+    .find(" #type").val('1');
 }).on("click",".delete-Categoria", function(){
     let id = $(this).data('id');
     $("#deleteModal #buttonDelete").prop("hidden",true);
     $("#deleteModal #deleteModalBody #deleteModalBodyP").text("");
     $("#deleteModal #deleteModalBody #tableModal").prop("hidden",true);
 
-    $.ajax({
-        method:"GET", url:contextPath+"/has?id=" + id
+    $.ajax({method:"GET", url:contextPath+"/has?id="+id
     }).done(function(data){
         if (data==null || data.length === 0){
             $("#deleteModal #codigo").val(id);
@@ -41,21 +34,12 @@ $(function() {$("#msgCategoria").text()==="ERROR" && $('#formModal').modal({show
             $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La categoría no se puede borrar, esta asociada a lo siguiente:")
             $("#deleteModal #deleteModalBody #tableModal").prop("hidden",false);
             $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
-            let r = [], j = -1;
-            for (let key=0, size=data.length; key<size; key++){
-                r[++j] ='<tr><td>';
-                r[++j] = data[key].codigo;
-                r[++j] = '</td><td>';
-                r[++j] = data[key].producto;
-                r[++j] = '</td><td>';
-                r[++j] = data[key].cantidad;
-                r[++j] = '</td></tr>';
+            let r ='';
+            for (let i=0,size=data.length; i<size; i++){
+                r+='<tr><td>'+data[i].codigo+'</td><td>'+data[i].producto+'</td><td>'+data[i].cantidad+'</td></tr>';
             }
-            $("#deleteModal #tbody").html(r.join(''));
+            $("#deleteModal #tbody").html(r);
         }
-    }).fail(function (err) {
-        console.log(err);
-        $('#editModal').modal('hide');
-        alert("Ocurrió un error");
+    }).fail(function (err) {alert("Ocurrió un error");$('#editModal').modal('hide');
     })
 });

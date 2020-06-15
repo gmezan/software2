@@ -14,7 +14,7 @@ $(function(){ $("#msgArtesanos").text()==="ERROR" && $('#editModal').modal({show
 }).on("click",".new-Artesano", function(){
     $("#editModal").find(" #formTitle").text('Nuevo Artesano').end().find(" input").val('').prop("readonly", false)
         .end().find(" #type").val('1');
-}).on("click",".delete-Artesano", function(){let id=$(this).data('id'), dModal=$("#deleteModal");dModal
+}).on("click",".delete-Artesano", function(){let id=$(this).data('id'),dModal=$("#deleteModal");dModal
     .find(" #buttonDelete").prop("hidden",true).end()
     .find(" #deleteModalBody #deleteModalBodyP").text("").end()
     .find(" #deleteModalBody #tableModal").prop("hidden",true);
@@ -27,8 +27,8 @@ $(function(){ $("#msgArtesanos").text()==="ERROR" && $('#editModal').modal({show
             else dModal
                 .find(" #deleteModalBody #deleteModalBodyP").text("El/La Artesana(o) no se puede borrar, esta asociada(o) a estos productos de inventario:").end()
                 .find(" #deleteModalBody #tableModal").prop("hidden",false).end()
-                .find(" #tbody").html((function(data){let r='';for(let key=0,size=data.length,tag='</td><td>';key<size;key++)
-                        r+='<tr><td>'+data[key].codigo+tag+data[key].producto+tag+data[key].cantidad+'</td></tr>'; return r;})(data)).end()
+                .find(" #tbody").html((function(d){let r='';$.each(d, function (i,l)
+                {r+='<tr><td>'+l.codigo+'</td><td>'+l.producto+'</td><td>'+l.cantidad+'</td></tr>'});return r;})(data)).end()
                 .find(" #buttonDelete").prop("disabled",true).prop("hidden",true);})
-        .fail(function (err) {$('#editModal').modal('hide');alert("Ocurrió un error");})
+        .fail(function (err) {alert("Ocurrió un error");dModal.modal('hide');})
 });
