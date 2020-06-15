@@ -16,6 +16,8 @@ public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
 
     Usuarios findByCorreo(String correo);
 
+    Usuarios findByCorreoAndIdusuariosNot(String correo, int idusuarios);
+
     Usuarios findByIdusuarios(int dni);
 
     List<Usuarios> findUsuariosByRoles_Nombrerol(String rol);
@@ -36,5 +38,8 @@ public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
 
     //@Query(value = "SELECT * FROM mosqoy2.Asignados_sedes asigse WHERE asigse.gestor=?1;",nativeQuery = true)
     //List<AsignadosSedes> (int idUsuario);
+
+    List<Usuarios> findUsuariosByRoles_IdrolesOrderByApellido(int rol);
+
 
 }
