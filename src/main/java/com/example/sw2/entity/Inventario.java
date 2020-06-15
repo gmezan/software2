@@ -24,7 +24,7 @@ public class Inventario implements Serializable {
     @Column(name = "codigo_inventario")
     private String codigoinventario;
 
-    @Min(value = 1,message = "Ingrese un número válido.")
+    @Min(value = 1, message = "Ingrese un número válido.")
     @Digits(integer = 11, fraction = 0, message = "Ingrese un número entero.")
     @Column(nullable = false)
     private int numpedido;
@@ -209,17 +209,33 @@ public class Inventario implements Serializable {
         return fechaadquisicion;
     }
 
+    public String getFechaAdquiStr() {
+        String fecha = "";
+        if (this.dia != 0) {
+            if (this.dia < 10) {
+                fecha = "0" + this.dia + "/";
+            } else {
+                fecha = this.dia + "/";
+            }
+        }
+        fecha += getMesCorto(this.mes) + "/" + this.anho;
+
+        return fecha;
+    }
+
     public void setFechaMesFORMAT(YearMonth fechamesformat) {
         this.setDia(0);
         this.setMes(fechamesformat.getMonthValue());
         this.setAnho(fechamesformat.getYear());
     }
+
     public void setFechaDiaFORMAT(LocalDate fechadiaformat) {
         this.setFechaadquisicion(fechadiaformat);
         this.setDia(fechadiaformat.getDayOfMonth());
         this.setMes(fechadiaformat.getMonthValue());
         this.setAnho(fechadiaformat.getYear());
     }
+
     public int getDia() {
         return dia;
     }
@@ -232,9 +248,14 @@ public class Inventario implements Serializable {
         return mes;
     }
 
+    public String getMesCorto(int mes2) {
+        return CustomConstants.getMeses().get(mes2);
+    }
+
     public void setMes(int codmes) {
         this.mes = codmes;
     }
+
 
     public int getAnho() {
         return anho;
@@ -248,10 +269,6 @@ public class Inventario implements Serializable {
     public void setFechaadquisicion(LocalDate fechainicioconsignacion) {
         this.fechaadquisicion = fechainicioconsignacion;
     }
-
-
-
-
 
 
     public String getColor() {
@@ -296,6 +313,22 @@ public class Inventario implements Serializable {
 
     public LocalDate getFechavencimientoconsignacion() {
         return fechavencimientoconsignacion;
+    }
+
+    public String getFechaVencimientoStr() {
+        String fecha = "---";
+        if (this.fechavencimientoconsignacion != null) {
+            int dia2 = this.fechavencimientoconsignacion.getDayOfMonth();
+            if (dia2 < 10) {
+                fecha = "0" + dia2 + "/";
+            } else {
+                fecha = dia2 + "/";
+            }
+            fecha += getMesCorto(this.fechavencimientoconsignacion.getMonthValue()) + "/" + this.fechavencimientoconsignacion.getYear();
+        }
+
+
+        return fecha;
     }
 
     public void setFechavencimientoconsignacion(LocalDate fechavencimientoconsignacion) {

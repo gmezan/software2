@@ -26,7 +26,8 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-900">Inventario</h1>
                             
-                            <a th:href="@{/gestor/inventario/form}" type="button" class=" d-sm-inline-block  shadow-sm btn btn-sm btn-primary"><i
+                            <a th:href="@{/gestor/inventario/form}" type="button"
+                               class=" d-sm-inline-block  shadow-sm btn btn-sm btn-primary"><i
                                     class="fas fa-clipboard-list fa-sm text-white-50"></i> Registra un producto en el
                                 inventario</a>
                         
@@ -36,11 +37,13 @@
                             venta o asignar productos a una sede, revisa la lista de <a
                                     href="productosDisponibles.html">productos disponibles</a>.
                         </p>
-
-                        <div id="msgInventario" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1" role="alert"></div>
-                        <div id="msgError" th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
-
-
+                        
+                        <div id="msgInventario" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1"
+                             role="alert"></div>
+                        <div id="msgError" th:if="${msgError != null}" th:text="${msgError}"
+                             class="alert alert-danger py-1" role="alert"></div>
+                        
+                        
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -62,7 +65,7 @@
                                                 <th rowspan="2">Cantidad Total</th>
                                                 
                                                 <th rowspan="2">Tipo de Adquisición</th>
-                                                <th rowspan="2">Fecha de inicio (consignación)</th>
+                                                <th rowspan="2">Fecha de Adquisición</th>
                                                 <th rowspan="2">Fecha de vencimiento (consignación)</th>
                                                 <th rowspan="2">Facilitador</th>
                                                 <th rowspan="2">Artesano</th>
@@ -70,7 +73,7 @@
                                                 
                                                 <th rowspan="2">Fecha de registro</th>
                                                 <th rowspan="2">Última modificación</th>
-                                                <th rowspan="2">Edit/Delete</th>
+                                                <th rowspan="2">Editar/Borrar/Agregar</th>
                                             </tr>
                                             <tr>
                                                 <th>Nombre</th>
@@ -104,8 +107,8 @@
                                                 
                                                 <th>Cantidad Total</th>
                                                 
-                                                <th>Tipo de Adquisición</th>
-                                                <th>Fecha de inicio (consignación)</th>
+                                                <th>Modo de Adquisición</th>
+                                                <th>Fecha de Adquisición</th>
                                                 <th>Fecha de vencimiento (consignación)</th>
                                                 <th>Facilitador</th>
                                                 <th>Artesano</th>
@@ -113,7 +116,7 @@
                                                 
                                                 <th>Fecha de registro</th>
                                                 <th>Última modificación</th>
-                                                <th>Edit/Delete</th>
+                                                <th>Editar/Borrar/Agregar</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -133,10 +136,10 @@
                                                 <td th:text="${inv.cantidadtotal}">25</td>
                                                 
                                                 <td th:text="${inv.getTipoAdquisicion()}">Consignado</td>
-                                                <td th:text="${inv.fechaadquisicion!=null? inv.fechaadquisicion : '---'}">
+                                                <td th:text="${inv.fechaAdquiStr}">
                                                     FEB, 20
                                                 </td>
-                                                <td th:text="${inv.fechavencimientoconsignacion!=null? inv.fechavencimientoconsignacion : '---'}">
+                                                <td th:text="${inv.fechaVencimientoStr}">
                                                     FEB, 20
                                                 </td>
                                                 <td th:text="${inv.facilitador}">Sam Sammie</td>
@@ -153,16 +156,22 @@
                                                 </td>
                                                 <td>
                                                     
-                                                    <a type="button" th:href="@{'/gestor/inventario/edit?id='+${inv.codigoinventario}}"
-                                                            class="btn btn-datatable btn-icon btn-primary mr-2"><i
-                                                            class="fa fa-edit"></i></a>
-                                                    <button data-toggle="modal" data-target="#deleteModal"
-                                                            class="btn btn-datatable btn-icon btn-danger"><i
-                                                            class="fas fa-trash-alt"></i></button>
-                                                    <button th:attr="data-id=${inv.codigoinventario}" data-toggle="modal" data-target="#addModal"
-                                                            class="add-inventario btn btn-datatable btn-icon btn-success"><i
-                                                            class="fas fa-arrow-alt-circle-up"></i></button>
                                                     
+                                                    <button th:attr="data-id=${inv.codigoinventario}"
+                                                            data-toggle="modal" data-target="#editModal"
+                                                            class="edit-inventario btn btn-datatable btn-icon btn-primary mr-2">
+                                                        <i
+                                                                class="fas fa-edit"></i></button>
+                                                    <button th:attr="data-id=${inv.codigoinventario}"
+                                                            data-toggle="modal" data-target="#deleteModal"
+                                                            class=" delete-inventario btn btn-datatable btn-icon btn-danger mr-2"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                    <button th:attr="data-id=${inv.codigoinventario}"
+                                                            data-toggle="modal" data-target="#addModal"
+                                                            class="add-inventario btn btn-datatable btn-icon btn-success mr-2">
+                                                        <i
+                                                                class="fas fa-arrow-alt-circle-up"></i></button>
+                                                
                                                 </td>
                                             </tr>
                                         
@@ -197,10 +206,8 @@
         
         <!-- Logout Modal-->
         <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
-    
-    
-    
-    
+        
+        
         <!-- Modal Add-->
         <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -215,29 +222,24 @@
                     <div class="modal-body">
                         
                         <form id="add" method="post" th:action="@{/gestor/inventario/addInv}">
-                            <input type="text" hidden id="codinv" name="codinv" th:value="${codinv}">
+                            <input type="text" hidden id="codinvAdd" name="codinv" th:value="${codinv}">
                             <div class="form-group">
                                 <label for="cant" class="col-form-label">Cantidad a adicionar:</label>
-                                <input type="number" min="0" class="form-control" id="cant" name="cant" th:value="${cant}">
-                                <div class="text-danger" th:text="${cantError}">Error</div>
+                                <input type="number" min="0" class="form-control" id="cant" name="cant"
+                                       th:value="${cant}">
+                                <div class="text-danger" id="msgc" th:text="${cantError}">Error</div>
                             </div>
-                            
+                        
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button form="add" type="submit" class="btn btn-primary"><a style="color:white;text-decoration:none">Añadir</a></button>
+                        <button form="add" type="submit" class="btn btn-success"><a
+                                style="color:white;text-decoration:none">Añadir</a></button>
                     </div>
                 </div>
             </div>
         </div>
-        
-        
-        
-        
-        
-        
-        
         
         
         <!-- Modal Edit-->
@@ -252,26 +254,101 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="foto" class="col-form-label">Foto:</label>
-                                <input type="file" class="form-control" id="foto">
+                        <form id="edit" method="post" th:action="@{/gestor/inventario/editInv}"
+                              th:object="${inventario}">
+                            <input type="text" hidden th:field="*{codigoinventario}">
+                            <input type="text" hidden th:field="*{codAdquisicion}">
+                            
+                            <div class="form-row">
+                                <label class="col-form-label"><b>Costos unitarios:</b></label>
                             </div>
-                            <div class="form-group">
-                                <label for="costo" class="col-form-label">Costo Mosqoy:</label>
-                                <input type="text" class="form-control" id="costo">
+                            
+                            
+                            <div class="form-row">
+                                
+                                <div class="form-group col-4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text text-body">S/.</div>
+                                        </div>
+                                        <input th:field="*{costotejedor}" type="number"
+                                               step='0.01' min="0.01"
+                                               class="form-control"
+                                               placeholder="000.00">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text text-body">(Tejedor)</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-danger"
+                                         th:if="${#fields.hasErrors('costotejedor')}"
+                                         th:errors="*{costotejedor}">Error
+                                    </div>
+                                
+                                </div>
+                                
+                                <div class="form-group col-4">
+                                    
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text text-body">S/.</div>
+                                        </div>
+                                        <input th:field="*{costomosqoy}" type="number" min="0.01"
+                                               step='0.01'
+                                               class="form-control"
+                                               placeholder="000.00">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text text-body">(Mosqoy)</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-danger"
+                                         th:if="${#fields.hasErrors('costomosqoy')}"
+                                    
+                                         th:errors="*{costomosqoy}">Error
+                                    </div>
+                                
+                                
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="facilitador" class="col-form-label">Facilitador:</label>
-                                <input type="text" class="form-control" id="facilitador">
+                            <div class="form-row ">
+                                <div class="form-group col-6">
+                                    <label class="col-form-label"><b>Facilitador:</b></label>
+                                    <input th:field="*{facilitador}" type="text" class="form-control">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('facilitador')}"
+                                         th:errors="*{facilitador}">Error
+                                    </div>
+                                
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="form-row">
+                                
+                                <div class="form-group col-6">
+                                    
+                                    
+                                    <div th:hidden="${inventario.codAdquisicion!=1}"
+                                         id="vencimientoConsignacion" class="form-group">
+                                        <label class="col-form-label"><b>Fecha de
+                                            vencimiento(consignación):</b></label>
+                                        <input th:value="*{fechavencimientoconsignacion}" name="fechaexp" id="fechaexp"
+                                               type="date"
+                                               class="form-control">
+                                        <div class="text-danger"
+                                             th:if="${#fields.hasErrors('fechavencimientoconsignacion')}"
+                                             th:errors="*{fechavencimientoconsignacion}">Error
+                                        </div>
+                                    
+                                    </div>
+                                
+                                
+                                </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary"><a href="inventarioGestor.html"
-                                                                         style="color:white;text-decoration:none">Guardar
-                            cambios</a></button>
+                        <button form="edit" type="submit" class="btn btn-primary"><a
+                                style="color:white;text-decoration:none">Guardar cambios</a></button>
                     </div>
                 </div>
             </div>
@@ -289,10 +366,12 @@
                         <p>¿Seguro que desea borrar este registro del inventario? Esta acción no se puede deshacer.</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger"><a href="inventarioGestor.html"
-                                                                        style="color:white;text-decoration:none">Borrar</a>
-                        </button>
+                        <form method="get" th:action="@{/gestor/inventario/delete} ">
+                            <input id="codDelete" hidden name="codDelete">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger"><a
+                                    style="color:white;text-decoration:none">Borrar</a></button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -314,7 +393,7 @@
         
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
-    
+        
         <script th:src="@{/js/gestor/inventario.js}"></script>
     
     </body>

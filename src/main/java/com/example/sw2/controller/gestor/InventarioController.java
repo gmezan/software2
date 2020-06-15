@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -67,13 +68,14 @@ public class InventarioController {
                        @RequestParam(value = "fechadia", required = false) String fechadia,
                        @RequestParam(value = "fechames", required = false) String fechames,
                        @RequestParam(value = "fechaexp", required = false) String fechaexp,
+                       @RequestParam(value = "linea", required = false) String linea,
                        @RequestParam(name = "foto1", required = false) MultipartFile multipartFile) {
         if (!inventario.getColor().isEmpty()) {
             if (Pattern.compile("[0-9]").matcher(inventario.getColor()).find()) {
                 bindingResult.rejectValue("color", "error.user", "No ingrese valores numéricos.");
             }
             if (inventario.getColor().trim().length() == 0) {
-                bindingResult.rejectValue("color", "error.user", "Ingrese color válido.");
+                bindingResult.rejectValue("color", "error.user", "No ingrese espacios.");
 
             }
         }
@@ -129,6 +131,8 @@ public class InventarioController {
         if (inventario.getTipoAdquisicion().equalsIgnoreCase("consignado")) {
             if (inventario.getArtesanos() == null) {
                 bindingResult.rejectValue("artesanos", "error.user", "Seleccione un artesano de la lista.");
+            } else {
+                inventario.setComunidades(inventario.getArtesanos().getComunidades());
             }
             if (fechaexp.isEmpty()) {
                 bindingResult.rejectValue("fechavencimientoconsignacion", "error.user", "Ingrese una fecha.");
@@ -158,23 +162,30 @@ public class InventarioController {
             bindingResult.rejectValue("numpedido", "error.user", "Este número de pedido ya existe.");
         }
 
-        Set<String> keySet = CustomConstants.getTamanhos().keySet();
-        if (!keySet.contains(inventario.getCodtamanho())) {
+        Set<String> keySetT = CustomConstants.getTamanhos().keySet();
+        if (!keySetT.contains(inventario.getCodtamanho())) {
             bindingResult.rejectValue("codtamanho", "error.user", "Seleccione un tamaño de la lista.");
         }
 
+        Set<String> keySetL = CustomConstants.getLineas().keySet();
+        if (!keySetL.contains(linea)) {
+            bindingResult.rejectValue("cantidadgestor", "error.user", "Seleccione una línea de la lista.");
+        } else {
+            m.addAttribute("linea", linea);
+            m.addAttribute("listProd", productosRepository.findProductosByCodigolinea(linea));
+        }
 
         if (bindingResult.hasErrors()) {
             listasCamposInv(m);
-            m.addAttribute("listArt", artesanosRepository.findAll());
-            m.addAttribute("listProd", productosRepository.findAll());
-
+            if (inventario.getComunidades() != null) {
+                m.addAttribute("listArt", artesanosRepository.findArtesanosByComunidades_Codigo(inventario.getComunidades().getCodigo()));
+            }
             return "gestor/inventarioGestorForm";
         } else {
             String codInv = generaCodigo(inventario);
             optionalInventario = inventarioRepository.findById(codInv);
             if (optionalInventario.isPresent()) {
-                m.addAttribute("msg", "El código "+codInv +" ya existe en el inventario. Si desea aumentar la cantidad de este producto, revise el inventario."
+                m.addAttribute("msg", "El código " + codInv + " ya existe en el inventario. Si desea aumentar la cantidad de este producto, revise el inventario."
                 );
 
                 listasCamposInv(m);
@@ -209,24 +220,24 @@ public class InventarioController {
     }
 
     @PostMapping("/addInv")
-    public String addInv(@RequestParam("cant") String cant, @RequestParam("codinv") String codinv,RedirectAttributes attributes,Model m){
+    public String addInv(@RequestParam("cant") String cant, @RequestParam("codinv") String codinv, RedirectAttributes attributes, Model m) {
 
         Optional<Inventario> opt = inventarioRepository.findById(codinv);
-        if (!opt.isPresent()){
+        if (!opt.isPresent()) {
             attributes.addFlashAttribute("msgError", "PRODUCTO NO ENCONTRADO");
             return "redirect:/gestor/inventario";
 
         }
 
-        int cantInt=0;
-        try{
+        int cantInt = 0;
+        try {
             cantInt = Integer.parseInt(cant);
-            if (cantInt<0){
+            if (cantInt < 0) {
                 throw new Exception("");
             }
-        }catch(Exception e){
-            attributes.addFlashAttribute("cantError","Cantidad no válida.");
-            attributes.addFlashAttribute("cant",cant);
+        } catch (Exception e) {
+            attributes.addFlashAttribute("cantError", "Cantidad no válida.");
+            attributes.addFlashAttribute("cant", cant);
             attributes.addFlashAttribute("msgError", "ERROR DE CANTIDAD");
             return "redirect:/gestor/inventario";
         }
@@ -241,6 +252,83 @@ public class InventarioController {
         return "redirect:/gestor/inventario";
     }
 
+
+    @PostMapping("/editInv")
+    public String editInv(@ModelAttribute("inventario") Inventario inv,
+                          BindingResult bindingResult,
+                          @RequestParam(name = "fechaexp", required = false) String fechavencimiento,
+                          RedirectAttributes att,
+                          Model m) {
+        Optional<Inventario> opt = inventarioRepository.findById(inv.getCodigoinventario());
+
+        if (!opt.isPresent()) {
+            att.addFlashAttribute("msgError", "PRODUCTO NO ENCONTRADO");
+            return "redirect:/gestor/inventario";
+
+        }
+        if (!inv.getFacilitador().isEmpty()) {
+            if (Pattern.compile("[0-9]").matcher(inv.getFacilitador()).find()) {
+                bindingResult.rejectValue("facilitador", "error.user", "No ingrese valores numéricos.");
+            }
+            if (inv.getFacilitador().trim().length() == 0) {
+                bindingResult.rejectValue("facilitador", "error.user", "Ingrese un nombre válido.");
+            }
+        }
+
+        if (inv.getCodAdquisicion() == 1) {
+            try {
+                DateTimeFormatter dateTimeFormat = DateTimeFormatter.ISO_DATE;
+                LocalDate fechavencimientoF = LocalDate.parse(fechavencimiento, dateTimeFormat);
+                inv.setFechavencimientoconsignacion(fechavencimientoF);
+
+            } catch (Exception e) {
+                bindingResult.rejectValue("facilitador", "error.user", "Ingrese un nombre válido.");
+                return "redirect:/gestor/inventario";
+
+            }
+        }
+
+
+
+        if (bindingResult.hasErrors()) {
+            m.addAttribute("listaInv", inventarioRepository.findAll());
+            m.addAttribute("msgError", "ERROR DE EDICION");
+
+            return "gestor/inventarioGestor";
+        }else {
+            Inventario invOld = opt.get();
+            invOld.setCostotejedor(inv.getCostotejedor());
+            invOld.setCostomosqoy(inv.getCostomosqoy());
+
+            invOld.setFacilitador(inv.getFacilitador());
+            if (inv.getCodAdquisicion() == 1) {
+                invOld.setFechavencimientoconsignacion(inv.getFechavencimientoconsignacion());
+            }
+            inventarioRepository.save(invOld);
+            att.addFlashAttribute("msg", "Producto editado exitosamente!");
+        }
+
+        return "redirect:/gestor/inventario";
+    }
+    @GetMapping("/delete")
+    public String borrar(Model model,
+                         @RequestParam("codDelete") String id,
+                         RedirectAttributes attr) {
+        Optional<Inventario> c = inventarioRepository.findById(id);
+        if (c.isPresent()) {
+            try{
+                inventarioRepository.deleteById(id);
+            }catch(Exception e){
+                attr.addFlashAttribute("msgError","El registro seleccionado no puede ser borrado");
+                return "redirect:/gestor/inventario";
+            }
+
+            attr.addFlashAttribute("msg","Registro borrado exitosamente!");
+        }else{
+            attr.addFlashAttribute("msgError","El registro seleccionado no existe");
+        }
+        return "redirect:/gestor/inventario";
+    }
 
 
     private void listasCamposInv(Model m) {
@@ -273,6 +361,12 @@ public class InventarioController {
         return cod;
     }
 
+    //Web service
+    @ResponseBody
+    @GetMapping(value = "/getInv", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<Inventario>> getInv(@RequestParam(value = "id") String cod) {
+        return new ResponseEntity<>(inventarioRepository.findById(cod), HttpStatus.OK);
+    }
 
     //Web service
     @ResponseBody
