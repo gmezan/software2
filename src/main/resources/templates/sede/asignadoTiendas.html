@@ -150,24 +150,23 @@
                         <input hidden type="text" class="form-control" th:field="*{precioventa}">
                         <input hidden id="vendedor" type="text" class="form-control" th:field="*{vendedor.idusuarios}">
 
-                        <div class="form-group">
-                            <label id="cant" class="col-form-label">Cantidad</label>
+                        <div class="form-group col">
+                            <label id="cant" class="col-form-label"><b>Cantidad</b></label>
                             <input type="text" class="form-control" th:field="*{cantidad}">
                             <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}">Error</div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-form-label">Tipo de documento</label>
-                            <select class="form-control" th:field="*{id.tipodocumento}">
-                                <option value="1">Factura</option>
-                                <option value="2">Boleta</option>
-                                <option value="3">Recibo</option>
-                                <option value="4">Transacción</option>
+                        <div class="form-group col">
+                            <label class="col-form-label"><b>Tipo de documento:</b></label>
+                            <select class="form-control" th:field ="*{id.tipodocumento}" >
+                                <option th:each="t : ${tipodoc}"
+                                        th:text="${t.value}"
+                                        th:value="${t.key}"></option>
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-form-label">Número de documento</label>
+                        <div class="form-group col">
+                            <label class="col-form-label"><b>Número de documento</b></label>
                             <input type="text" class="form-control" th:field="*{id.numerodocumento}">
                             <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}" th:errors="*{id.numerodocumento}">Error</div>
                         </div>
