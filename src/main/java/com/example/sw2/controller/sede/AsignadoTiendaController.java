@@ -56,16 +56,22 @@ public class AsignadoTiendaController {
                                   Model model, RedirectAttributes attr){
 
         Optional<AsignacionTiendas> optaTienda = asignacionTiendasRepository.findById(idAstiendas);
+        Optional<Ventas> optVentas = ventasRepository.findById(venta.getId());
         AsignacionTiendas aTienda = optaTienda.get();
+
         venta.setFecha(LocalDate.now());
         venta.setFechacreacion(LocalDateTime.now());
 
+        if(optVentas.isPresent()){
+            bindingResult.rejectValue("id.numerodocumento", "error.user", "El número de documento ya ha sido registrado");
+        }
         if(venta.getCantidad() > aTienda.getStock()){
             bindingResult.rejectValue("cantidad", "error.user","La cantidad no puede ser mayor al stock de la tienda");
         }
         if(venta.getId().getNumerodocumento().equals("")){
             bindingResult.rejectValue("id.numerodocumento", "error.user","Este campo no puede estar vacío");
         }
+
 
         if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
