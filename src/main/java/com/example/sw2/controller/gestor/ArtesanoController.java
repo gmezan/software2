@@ -108,7 +108,7 @@ public class ArtesanoController {
                 artesanos.setFechacreacion(LocalDateTime.now());
                 attr.addFlashAttribute("msg", "Artesano creado exitosamente");
             }else{
-                attr.addFlashAttribute("msg", "Hubo un problema");
+                attr.addFlashAttribute("msgError", "Hubo un problema, no se pudo guardar");
                 return "redirect:/gestor/artesano";
             }
             artesanosRepository.save(artesanos);

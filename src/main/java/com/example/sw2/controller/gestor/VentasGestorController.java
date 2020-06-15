@@ -65,14 +65,13 @@ public class VentasGestorController {
             }
         }
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("lista", ventasRepository.findAll());
             model.addAttribute("msgError", "ERROR");
             return "gestor/ventas";
-        }
-        else {
+        } else {
 
-            Optional<Ventas> optionalVentas = ventasRepository.findById(new VentasId(id2,id1));
+            Optional<Ventas> optionalVentas = ventasRepository.findById(new VentasId(id2, id1));
             if (optionalVentas.isPresent()) {
                 Ventas ven = optionalVentas.get();
                 ven.setRucdni(ventas.getRucdni());
@@ -89,28 +88,32 @@ public class VentasGestorController {
                 ventas.setPrecioventa(ven.getPrecioventa());*/
                 attr.addFlashAttribute("msg", "Venta actualizada exitosamente");
                 ventasRepository.save(ven);
+            } else {
+                attr.addFlashAttribute("msgError", "Hubo un problema, no se pudo guardar");
+                return "redirect:/gestor/venta";
             }
-
-            return "redirect:/gestor/venta";
         }
+
+        return "redirect:/gestor/venta";
     }
+
 
     @GetMapping("/delete")
     public String deleteVen(@RequestParam("id1") String id1,
                             @RequestParam("id2") int id2,
                             RedirectAttributes attr) {
-        Optional<Ventas> v = ventasRepository.findById(new VentasId(id2,id1));
+        Optional<Ventas> v = ventasRepository.findById(new VentasId(id2, id1));
         if (v.isPresent()) {
-            ventasRepository.deleteById(new VentasId(id2,id1));
-            attr.addFlashAttribute("msg","Venta borrada exitosamente");
+            ventasRepository.deleteById(new VentasId(id2, id1));
+            attr.addFlashAttribute("msg", "Venta borrada exitosamente");
         }
         return "redirect:/gestor/venta";
     }
 
     //Web service
     @ResponseBody
-    @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<Ventas>> getVen(@RequestParam(value = "id1") String id1, @RequestParam(value = "id2")int id2){
-        return new ResponseEntity<>(ventasRepository.findById(new VentasId(id2,id1)), HttpStatus.OK);
+    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<Ventas>> getVen(@RequestParam(value = "id1") String id1, @RequestParam(value = "id2") int id2) {
+        return new ResponseEntity<>(ventasRepository.findById(new VentasId(id2, id1)), HttpStatus.OK);
     }
 }

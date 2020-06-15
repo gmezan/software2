@@ -76,7 +76,7 @@ public class CategoriaController {
                 attr.addFlashAttribute("msg", "Categoría creada exitosamente");
             }
             else {
-                attr.addFlashAttribute("msg", "Hubo un problema");
+                attr.addFlashAttribute("msgError", "Hubo un problema, no se pudo guardar");
                 return "redirect:/gestor/categoria";
             }
             categoriasRepository.save(categorias);

@@ -74,7 +74,7 @@ public class ComunidadController {
                 attr.addFlashAttribute("msg", "Comunidad creada exitosamente");
             }
             else{
-                attr.addFlashAttribute("msg", "Hubo un problema");
+                attr.addFlashAttribute("msgError", "Hubo un problema, no se pudo guardar");
                 return "redirect:/gestor/comunidad";
             }
             comunidadesRepository.save(comunidades);

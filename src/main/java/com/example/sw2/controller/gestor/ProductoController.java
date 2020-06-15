@@ -87,7 +87,7 @@ public class ProductoController {
                 attr.addFlashAttribute("msg", "Producto creado exitosamente");
             }
             else {
-                attr.addFlashAttribute("msg", "Hubo un problema");
+                attr.addFlashAttribute("msgError", "Hubo un problema, no se pudo guardar");
                 return "redirect:/gestor/producto";
             }
             productosRepository.save(productos);
