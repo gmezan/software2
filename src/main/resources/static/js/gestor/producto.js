@@ -1,10 +1,7 @@
 const contextPath  = window.location.href;
 $(function() {($("#msgProducto").text()==="ERROR") && $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
 }).on("click",".edit-Producto", function(){
-    $("#formModal #codigonom").val('');
-    $("#formModal #nombre").val('');
-    $("#formModal #codigodesc").val('');
-    $("#formModal #descripcion").val('');
+    $("#formModal input").val('');
     $("#formModal  #type").val('0');
     $.ajax({method:"GET", url:contextPath +"/get?id=" + $(this).data('id')
     }).done(function(producto){
@@ -16,7 +13,7 @@ $(function() {($("#msgProducto").text()==="ERROR") && $('#formModal').modal({sho
             $("#formModal #codigolinea").val(producto.codigolinea);
             $("#formModal  #formTitle").text('Editar Producto');
         }
-    }).fail(function (err) {alert("Ocurrió un error");$('#formModal').modal('hide');
+    }).fail(function (err) {alert("Ocurrió un error");$('#formModal').modal({show: false});
     })
 }).on("click",".new-Producto", function(){
     $("#formModal").find(" #formTitle").text('Nuevo Producto').end().find(" input").val('').prop("readonly",false).end()
@@ -35,7 +32,7 @@ $(function() {($("#msgProducto").text()==="ERROR") && $('#formModal').modal({sho
             $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
         }
         else {
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La comunidad no se puede borrar, está asociada a "+data.length+" elementos de inventario:");
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("El producto no se puede borrar, está asociado a "+data.length+" elementos de inventario:");
             $("#deleteModal #deleteModalBody #tableModal").prop("hidden",false);
             $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
             let r='';
@@ -44,10 +41,7 @@ $(function() {($("#msgProducto").text()==="ERROR") && $('#formModal').modal({sho
             }
             $("#deleteModal #tbody").html(r);
         }
-    }).fail(function (err) {
-        console.log(err);
-        $('#deleteModal').modal('hide');
-        alert("Ocurrió un error");
+    }).fail(function (err) {alert("Ocurrió un error");$('#deleteModal').modal({show: false});
     })
 });
 

@@ -1,7 +1,7 @@
 const contextPath  = window.location.href;
 $(function() {($("#msgComunidad").text()==="ERROR") && $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
 }).on("click",".editar-Comunidad", function(){
-    $("#formModal  #codigo").val('');$("#formModal  #nombre").val('');
+    $("#formModal  input").val('');
     $("#formModal  #type").val('0');
     $.ajax({method:"GET", url:contextPath + "/get?id=" + $(this).data('id')
     }).done(function(com){
@@ -11,7 +11,7 @@ $(function() {($("#msgComunidad").text()==="ERROR") && $('#formModal').modal({sh
             $("#formModal  #formTitle").text('Editar Comunidad');
             $("#formModal  #formSavebtn").text('Actualizar');
         }
-    }).fail(function (err) {alert("Ocurrió un error");$('#formModal').modal('hide');})
+    }).fail(function (err) {alert("Ocurrió un error");$('#formModal').modal({show: false});})
 }).on("click",".new-Comunidad", function(){
     $("#formModal").find(" #formTitle").text('Nueva Categoría').end().find(" input").val('').prop("readonly",false).end()
         .find(" #type").val('1').end().find("  #formSavebtn").text('Registrar');
@@ -37,9 +37,6 @@ $(function() {($("#msgComunidad").text()==="ERROR") && $('#formModal').modal({sh
             }
             $("#deleteModal #tbody").html(r);
         }
-    }).fail(function (err) {
-        console.log(err);
-        $('#deleteModal').modal('hide');
-        alert("Ocurrió un error");
+    }).fail(function (err) {alert("Ocurrió un error");$('#deleteModal').modal({show: false});
     })
 });

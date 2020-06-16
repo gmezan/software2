@@ -394,7 +394,5 @@ public class SedeController {
         }},
                 HttpStatus.OK);
     }
-
-
 }
     

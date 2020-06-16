@@ -10,7 +10,7 @@ $(function(){ $("#msgArtesanos").text()==="ERROR" && $('#editModal').modal({show
                 .find(" #apellidomaterno").val(artesano.apellidomaterno).end()
                 .find(" #comunidades").val(artesano.comunidades.codigo).end()
                 .find(" #codigo").val(artesano.codigo).prop("readonly", true);})
-        .fail(function (err) {alert("Ocurrió un error");editModal.modal('hide');})
+        .fail(function (err) {alert("Ocurrió un error");editModal.modal({show: false});})
 }).on("click",".new-Artesano", function(){
     $("#editModal").find(" #formTitle").text('Nuevo Artesano').end().find(" input").val('').prop("readonly", false)
         .end().find(" #type").val('1');
@@ -30,5 +30,5 @@ $(function(){ $("#msgArtesanos").text()==="ERROR" && $('#editModal').modal({show
                 .find(" #tbody").html((function(d){let r='';$.each(d, function (i,l)
                 {r+='<tr><td>'+l.codigo+'</td><td>'+l.producto+'</td><td>'+l.cantidad+'</td></tr>'});return r;})(data)).end()
                 .find(" #buttonDelete").prop("disabled",true).prop("hidden",true);})
-        .fail(function (err) {alert("Ocurrió un error");dModal.modal('hide');})
+        .fail(function (err) {alert("Ocurrió un error");dModal.modal({show: false});})
 });

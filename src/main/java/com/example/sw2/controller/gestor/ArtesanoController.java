@@ -52,42 +52,6 @@ public class ArtesanoController {
             bindingResult.rejectValue("codigo","error.user","Este código ya existe");
         }
 
-        if (!artesanos.getCodigo().isEmpty()) {
-            if (Pattern.compile("[0-9]").matcher(artesanos.getCodigo()).find()) {
-                bindingResult.rejectValue("codigo", "error.user", "No ingrese valores numéricos.");
-            }
-            if (artesanos.getCodigo().trim().length() == 0) {
-                bindingResult.rejectValue("codigo", "error.user", "Ingrese un código válido.");
-            }
-        }
-
-        if (!artesanos.getNombre().isEmpty()) {
-            if (Pattern.compile("[0-9]").matcher(artesanos.getNombre()).find()) {
-                bindingResult.rejectValue("nombre", "error.user", "No ingrese valores numéricos.");
-            }
-            if (artesanos.getNombre().trim().length() == 0) {
-                bindingResult.rejectValue("nombre", "error.user", "Ingrese un nombre válido.");
-            }
-        }
-
-        if (!artesanos.getApellidopaterno().isEmpty()) {
-            if (Pattern.compile("[0-9]").matcher(artesanos.getApellidopaterno()).find()) {
-                bindingResult.rejectValue("apellidopaterno", "error.user", "No ingrese valores numéricos.");
-            }
-            if (artesanos.getApellidopaterno().trim().length() == 0) {
-                bindingResult.rejectValue("apellidopaterno", "error.user", "Ingrese un apellido válido.");
-            }
-        }
-
-        if (!artesanos.getApellidomaterno().isEmpty()) {
-            if (Pattern.compile("[0-9]").matcher(artesanos.getApellidomaterno()).find()) {
-                bindingResult.rejectValue("apellidomaterno", "error.user", "No ingrese valores numéricos.");
-            }
-            if (Pattern.compile("[ ]").matcher(artesanos.getApellidomaterno()).find()) {
-                bindingResult.rejectValue("apellidomaterno", "error.user", "No ingrese solo un espacio.");
-            }
-        }
-
         if(bindingResult.hasErrors()){
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", artesanosRepository.findAll());

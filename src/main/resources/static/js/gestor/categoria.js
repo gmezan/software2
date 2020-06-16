@@ -10,7 +10,7 @@ $(function() {$("#msgCategoria").text()==="ERROR" && $('#formModal').modal({show
             $("#formModal  #codigo").val(cat.codigo).prop("readonly", true);
             $("#formModal #nombre").val(cat.nombre);
         }
-    }).fail(function (err) {alert("Ocurrió un error"); $('#formModal').modal('hide');
+    }).fail(function (err) {alert("Ocurrió un error"); $('#formModal').modal({show: false});
     })
 }).on("click",".new-Categoria", function(){
     $("#formModal").find(" #formTitle").text('Nueva Categoría').end().find(" input").val('').prop("readonly",false).end()
@@ -38,6 +38,6 @@ $(function() {$("#msgCategoria").text()==="ERROR" && $('#formModal').modal({show
             }
             $("#deleteModal #tbody").html(r);
         }
-    }).fail(function (err) {alert("Ocurrió un error");$('#editModal').modal('hide');
+    }).fail(function (err) {alert("Ocurrió un error");$('#deleteModal').modal({show: false});
     })
 });

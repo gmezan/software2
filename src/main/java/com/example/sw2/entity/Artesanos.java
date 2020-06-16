@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -21,14 +22,17 @@ public class Artesanos implements Serializable {
     @Id
     @NotBlank(message = "Este campo no puede estar vacío")
     @Size(max = 4, min = 2, message = "El código debe contener entre 2 y 4 letras")
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ']+$", message = "Ingrese solo caracteres válidos")
     private String codigo;
     @NotBlank(message = "Este campo no puede estar vacío")
     @Size(max = 20, message = "El nombre debe tener menos de 20 caracteres")
     @Column(nullable =false)
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ'. ]+$", message = "Ingrese solo caracteres válidos")
     private String nombre;
     @Size(max = 20, message = "El apellido debe tener menos de 20 caracteres")
     @NotBlank(message = "Este campo no puede estar vacío")
     @Column(nullable =false)
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ'. ]+$", message = "Ingrese solo caracteres válidos")
     private String apellidopaterno;
     @Size(max = 20, message = "El nombre debe tener menos de 20 caracteres")
     private String apellidomaterno;
@@ -64,7 +68,7 @@ public class Artesanos implements Serializable {
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo = codigo.trim().toUpperCase();
     }
 
     public String getNombre() {
@@ -72,7 +76,7 @@ public class Artesanos implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.trim();
     }
 
     public String getApellidopaterno() {
@@ -80,7 +84,7 @@ public class Artesanos implements Serializable {
     }
 
     public void setApellidopaterno(String apellidopaterno) {
-        this.apellidopaterno = apellidopaterno;
+        this.apellidopaterno = apellidopaterno.trim();
     }
 
     public String getApellidomaterno() {
@@ -88,7 +92,7 @@ public class Artesanos implements Serializable {
     }
 
     public void setApellidomaterno(String apellidomaterno) {
-        this.apellidomaterno = apellidomaterno;
+        this.apellidomaterno = apellidomaterno.trim();
     }
 
     public Comunidades getComunidades() {

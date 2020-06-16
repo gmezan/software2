@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -19,9 +20,11 @@ public class Categorias implements Serializable {
     @Id
     @NotBlank
     @Size(max = 1, message = "El codigo debe contener máximo 1 caracter" )
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ]$", message = "Ingrese solo caracteres válidos")
     private String codigo;
     @NotBlank
     @Size(max = 10, message = "El nombre debe contener como máximo 10 caracteres" )
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ'. ]+$", message = "Ingrese solo caracteres válidos")
     @Column(nullable = false)
     private String nombre;
     @LastModifiedDate
@@ -30,7 +33,6 @@ public class Categorias implements Serializable {
     @CreatedDate
     @Column(name="fecha_creacion",nullable =false)
     private LocalDateTime fechacreacion;
-
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "categorias")
     private List<Inventario> inventario;
@@ -52,7 +54,7 @@ public class Categorias implements Serializable {
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo = codigo.toUpperCase().trim();
     }
 
     public String getNombre() {
@@ -60,7 +62,7 @@ public class Categorias implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.trim();
     }
 
     public LocalDateTime getFechamodificacion() {

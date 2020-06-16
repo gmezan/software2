@@ -1,6 +1,6 @@
-var contextPath  = window.location.href;
-
-$(document).on("click",".edit-Gestor", function(){
+const contextPath  = window.location.href;
+$(function() {($("#msgGestores").text()==="ERROR") && $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
+}).on("click",".edit-Gestor", function(){
     console.log("Edit gestor");
     $("#formModal input").val('');
     $("#formModal  #type").val('0');
@@ -59,7 +59,6 @@ $(document).on("click",".edit-Gestor", function(){
                 }
                 $("#deleteModal #deleteModalBody #tableModal1").prop("hidden",false);
                 $("#deleteModal #tbody").html(r.join(''));
-
             }
             if(data[1].length!==0){
                 r = []; j = -1;
@@ -81,12 +80,4 @@ $(document).on("click",".edit-Gestor", function(){
         $('#deleteModal').modal('hide');
         alert("Ocurrió un error");
     });
-
-
-});
-
-$(document).ready(function() {
-    if ($("#msgGestores").text()==="ERROR"){
-        $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
-    }
 });

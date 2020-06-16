@@ -1,40 +1,32 @@
-var contextPath  = window.location.href;
-
-$(document).on("click",".edit-Sede", function(){
-    $("#formModal input").val('');
+const contextPath  = window.location.href;
+$(function() {($("#msgSedes").text()==="ERROR")&& $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
+}).on("click",".edit-Sede", function(){let formModal =  $("#formModal");
+    formModal.find(" input").val('').end();
     $("#formModal  #type").val('0');
     $("#formModal  #formTitle").text('Editar Sede');
-    $.ajax({
-        method:"GET", url:contextPath + "/get?id=" + $(this).data('id')
-    }).done(function(gestor){
-        if (gestor!=null){
-            $("#formModal #idusuarios").val(gestor.idusuarios).prop("readonly", true);
-            $("#formModal #nombre").val(gestor.nombre);
-            $("#formModal #apellido").val(gestor.apellido);
-            $("#formModal #correo").val(gestor.correo);
-            $("#formModal #telefono").val(gestor.telefono);
-            $("#formModal #foto").attr("src",gestor.foto).attr("hidden",gestor.foto==="");
+    $.ajax({method:"GET", url:contextPath+"/get?id="+$(this).data('id')
+    }).done(function(sede){
+        if (sede!=null){
+            $("#formModal #idusuarios").val(sede.idusuarios).prop("readonly", true);
+            $("#formModal #nombre").val(sede.nombre);
+            $("#formModal #apellido").val(sede.apellido);
+            $("#formModal #correo").val(sede.correo);
+            $("#formModal #telefono").val(sede.telefono);
+            $("#formModal #foto").attr("src",sede.foto).attr("hidden",sede.foto==="");
         }
-    }).fail(function (err) {
-        console.log(err);
-        $('#formModal').modal('hide');
-        alert("Ocurrió un error");
+    }).fail(function (err) {alert("Ocurrió un error");formModal.modal({show: false});
     })
-});
-$(document).on("click",".new-Gestor", function(){
+}).on("click",".new-Gestor", function(){
     $("#formModal input").val('').prop("readonly",false);
     $("#formModal  #type").val('1');
     $("#formModal #foto").attr("hidden",true);
     $("#formModal  #formTitle").text('Nueva sede');
-});
-$(document).on("click",".delete-Sede", function(){
+}).on("click",".delete-Sede", function(){
     let id = $(this).data('id');
     $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
     $("#deleteModal #deleteModalBody #deleteModalBodyP").text("");
     $("#deleteModal #deleteModalBody #tableModal1").prop("hidden",true);
     $("#deleteModal #deleteModalBody #tableModal2").prop("hidden",true);
-
-
     $.ajax({
         method:"GET", url:contextPath+"/has?id="  + id
     }).done(function(data){
@@ -45,63 +37,20 @@ $(document).on("click",".delete-Sede", function(){
         }
         else {
             $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La Sede no se puede borrar, está asociada a los siguientes Ventas y/o Prodcutos Asignados");
-
-            let r = [], j = -1;
+            let r = '';
             if(data[0].length!==0){
-                for (let key=0, size=data[0].length; key<size; key++){
-                    r[++j] ='<tr><td>';
-                    r[++j] = data[0][key].rucdni;
-                    r[++j] = '</td><td>';
-                    r[++j] = data[0][key].cliente;
-                    r[++j] = '</td><td>';
-                    r[++j] = data[0][key].vendedor;
-                    r[++j] = '</td></tr>';
-                }
+                for (let key=0, size=data[0].length; key<size; key++)
+                    r+='<tr><td>'+data[0][key].rucdni+'</td><td>'+data[0][key].cliente+'</td><td>'+ data[0][key].vendedor+'</td></tr>';
                 $("#deleteModal #deleteModalBody #tableModal1").prop("hidden",false);
-                $("#deleteModal #tbody").html(r.join(''));
-
+                $("#deleteModal #tbody").html(r);
             }
             if(data[1].length!==0){
-                r = []; j = -1;
-                for (let key=0, size=data[1].length; key<size; key++){
-                    r[++j] ='<tr><td>';
-                    r[++j] = data[1][key].sede;
-                    r[++j] = '</td><td>';
-                    r[++j] = data[1][key].stock;
-                    r[++j] = '</td><td>';
-                    r[++j] = data[1][key].vendedor;
-                    r[++j] = '</td></tr>';
-                }
+                r = '';
+                for (let key=0, size=data[1].length; key<size; key++)
+                    r+='<tr><td>'+data[1][key].sede+'</td><td>'+data[1][key].stock+'</td><td>'+data[1][key].vendedor+'</td></tr>';
                 $("#deleteModal #deleteModalBody #tableModal2").prop("hidden",false);
                 $("#deleteModal #tbody2").html(r.join(''));
             }
         }
-    }).fail(function (err) {
-        console.log(err);
-        $('#deleteModal').modal('hide');
-        alert("Ocurrió un error");
-    });
-
-
+    }).fail(function (err) {alert("Ocurrió un error");$('#deleteModal').modal({show: false});});
 });
-
-
-$(document).ready(function() {
-    if ($("#msgSedes").text()==="ERROR"){
-        $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
-    }
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-

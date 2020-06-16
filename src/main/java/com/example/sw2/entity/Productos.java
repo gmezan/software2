@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -22,9 +23,11 @@ public class Productos implements Serializable {
     @Id
     @NotBlank
     @Size(max = 3, message = "El codigo debe contener máximo 3 caracteres")
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ]+$", message = "Ingrese solo caracteres válidos")
     private String codigonom;
     @Column(nullable = false)
     @NotBlank
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ'. ]+$", message = "Ingrese solo caracteres válidos")
     private String nombre;
     @Column(nullable = false)
     @Size(max = 45, message = "Máximo 45 caracteres")
@@ -32,6 +35,7 @@ public class Productos implements Serializable {
     @NotBlank
     @Column(nullable = false)
     @Size(max = 3, message = "El codigo debe contener máximo 3 caracteres")
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ]+$", message = "Ingrese solo caracteres válidos")
     private String codigodesc;
     @NotBlank
     @Column(name="linea",nullable = false)
@@ -72,7 +76,7 @@ public class Productos implements Serializable {
     }
 
     public void setCodigonom(String codigonom) {
-        this.codigonom = codigonom;
+        this.codigonom = codigonom.toUpperCase();
     }
 
     public String getNombre() {
@@ -96,7 +100,7 @@ public class Productos implements Serializable {
     }
 
     public void setCodigodesc(String codigodesc) {
-        this.codigodesc = codigodesc;
+        this.codigodesc = codigodesc.toUpperCase();
     }
 
     public void setCodigolinea(String codigolinea) {

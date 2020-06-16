@@ -16,27 +16,29 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "Usuarios")
 public class Usuarios implements Serializable {
 
     @Id
-    @Min(10000000)
-    @Max(99999999)
-    @Digits(integer = 8, fraction = 0)
+    @Min(value = 100000, message = "El número de DNI debe tener 8 dígitos")
+    @Max(value = 99999999,  message = "El número de DNI debe tener 8 dígitos")
+    @Digits(integer = 8, fraction = 0,  message = "El número de DNI debe tener 8 dígitos")
     @Column(name = "dni")
     private int idusuarios;
     @Column(nullable = false)
     @NotBlank(message = "Este campo no puede estar vacío")
     @Size(max = 20, message = "Debe contener 20 caracteres como maximo")
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ'. ]+$", message = "Ingrese solo caracteres válidos")
     private String nombre;
     @Size(max = 20, message = "Debe contener 20 caracteres como maximo")
     @Column(nullable = false)
     @NotBlank(message = "Este campo no puede estar vacío")
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ'. ]+$", message = "Ingrese solo caracteres válidos")
     private String apellido;
     private String foto;
+    @Email(message = "Ingrese una dirección de email válida")
     @Column(nullable = false)
     @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
     @NotBlank(message = "Este campo no puede estar vacío")
@@ -45,7 +47,7 @@ public class Usuarios implements Serializable {
     @JsonIgnore
     private String password;
     @Positive
-    @Min(100000)
+    @Min(value = 100000, message = "Ingrese un número de telefono válido")
     @Digits(integer = 9, fraction=0, message = "Ingrese un número de celular válido")
     private int telefono;
     @ManyToOne
@@ -75,19 +77,9 @@ public class Usuarios implements Serializable {
         this.idusuarios=idusuarios;
     }
 
-    //@JsonIgnore
-    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "sede")
-    //private List<AsignadosSedes> asignadosSedes;
-
     public BindingResult validateUser(BindingResult bindingResult, int type, UsuariosRepository usuariosRepository){
         if(usuariosRepository.findByCorreoAndIdusuariosNot(this.getCorreo(),this.getIdusuarios())!=null){
             bindingResult.rejectValue("correo", "error.user", "Este correo ya está registrado.");
-        }
-        if(java.util.regex.Pattern.compile("[0-9]").matcher(this.getNombre()).find()){
-            bindingResult.rejectValue("nombre","error.user", "No ingrese valores numéricos");
-        }
-        if(Pattern.compile("[0-9]").matcher(this.getApellido()).find()){
-            bindingResult.rejectValue("apellido","error.user", "No ingrese valores numéricos");
         }
         if(type==1 && usuariosRepository.findById(this.getIdusuarios()).isPresent()){ //if new
             bindingResult.rejectValue("idusuarios","error.user","Este dni ya está registrado");
@@ -117,7 +109,7 @@ public class Usuarios implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.trim();
     }
 
     public String getApellido() {
@@ -125,7 +117,7 @@ public class Usuarios implements Serializable {
     }
 
     public void setApellido(String apellido) {
-        this.apellido = apellido;
+        this.apellido = apellido.trim();
     }
 
 
@@ -142,7 +134,7 @@ public class Usuarios implements Serializable {
     }
 
     public void setCorreo(String correo) {
-        this.correo = correo.replace(" ","");
+        this.correo = correo.trim();
     }
 
     public String getPassword() {
