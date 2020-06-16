@@ -55,26 +55,10 @@ public class ListaSedeGestorController {
                           @RequestParam("type") int type,
                           RedirectAttributes attr, Model model) {
 
-        if(usuariosRepository.findByCorreoAndIdusuariosNot(usuarios.getCorreo(),usuarios.getIdusuarios())!=null){
-            bindingResult.rejectValue("correo", "error.user", "Este correo ya está registrado.");
-        }
-
-        if(Pattern.compile("[0-9]").matcher(usuarios.getNombre()).find()){
-            bindingResult.rejectValue("nombre","error.user", "No ingrese valores numéricos");
-        }
-
-        if(Pattern.compile("[0-9]").matcher(usuarios.getApellido()).find()){
-            bindingResult.rejectValue("apellido","error.user", "No ingrese valores numéricos");
-        }
-
-        if(type==1 && usuariosRepository.findById(usuarios.getIdusuarios()).isPresent()){ //if new
-            bindingResult.rejectValue("idusuarios","error.user","Este dni ya está registrado");
-        }
-
-        if(bindingResult.hasErrors()){
-            model.addAttribute("formtype",Integer.toString(type));
-            model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
-            model.addAttribute("msgError", "ERROR");
+        if(usuarios.validateUser(bindingResult,type,usuariosRepository).hasErrors()){
+            model.addAttribute("formtype",Integer.toString(type))
+                .addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD))
+                .addAttribute("msgError", "ERROR");
             return "gestor/sedes";
         }
         else {
@@ -140,39 +124,21 @@ public class ListaSedeGestorController {
     @ResponseBody
     @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<List<HashMap<String,String>>>> hasItems(@RequestParam(value = "id") int id){
-        return new ResponseEntity<>(new ArrayList<List<HashMap<String, String>>>() {
-            {
-                add(
-                        new ArrayList<HashMap<String,String>>() {{
-                            Objects.requireNonNull(usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id).orElse(null)).getVentas().forEach((i)->
-                            {
-                                add(new HashMap<String, String>() {
-                                    {
+        return new ResponseEntity<>(new ArrayList<List<HashMap<String, String>>>() {{
+                add(new ArrayList<HashMap<String,String>>() {{
+                            Objects.requireNonNull(usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD,id).orElse(null)).getVentas().forEach((i)-> {
+                                add(new HashMap<String, String>() {{
                                         put("rucdni", i.getRucdni());
                                         put("cliente", i.getNombrecliente());
                                         put("vendedor", i.getVendedor().getNombre());
-                                    }
-                                });
-                            });
-                        }}
-                );
-                add(
-                        new ArrayList<HashMap<String,String>>() {{
-                            asignadosSedesRepository.findAsignadosSedesById_Sede_idusuarios(id).forEach((a)->
-                            {
-                                add(new HashMap<String, String>() {
-                                    {
+                                    }});});}});
+                add(new ArrayList<HashMap<String,String>>() {{
+                            asignadosSedesRepository.findAsignadosSedesById_Sede_idusuarios(id).forEach((a)-> {
+                                add(new HashMap<String, String>() {{
                                         put("sede", a.getId().getSede().getFullname());
                                         put("stock", Integer.toString(a.getStock()));
                                         put("vendedor", Integer.toString(a.getCantidadactual()));
-                                    }
-                                });
-                            });
-
-                        }}
-                );
-            }
-        },
+                                    }});});}}); }},
                 HttpStatus.OK);
     }
 

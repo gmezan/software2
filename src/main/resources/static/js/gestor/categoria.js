@@ -1,12 +1,10 @@
 const contextPath  = window.location.href;
 $(function() {$("#msgCategoria").text()==="ERROR" && $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
 }).on("click",".editar-Categoria", function(){let formModal =  $("#formModal");
-    $("#formModal  #codigo").val('');
-    $("#formModal  #nombre").val('');
+    formModal.find(" input").val('');
     $("#formModal  #type").val('0');
     $("#formModal  #formTitle").text('Editar Categoría');
-    $.ajax({
-        method:"GET", url:contextPath+"/get?id="+ $(this).data('id')
+    $.ajax({method:"GET", url:contextPath+"/get?id="+ $(this).data('id')
     }).done(function(cat){
         if (cat!=null){
             $("#formModal  #codigo").val(cat.codigo).prop("readonly", true);

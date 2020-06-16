@@ -1,29 +1,30 @@
 package com.example.sw2.entity;
 
 
+import com.example.sw2.repository.UsuariosRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "Usuarios")
 public class Usuarios implements Serializable {
 
     @Id
-    //@NotBlank
+    @Min(10000000)
+    @Max(99999999)
     @Digits(integer = 8, fraction = 0)
     @Column(name = "dni")
     private int idusuarios;
@@ -35,7 +36,6 @@ public class Usuarios implements Serializable {
     @Column(nullable = false)
     @NotBlank(message = "Este campo no puede estar vacío")
     private String apellido;
-
     private String foto;
     @Column(nullable = false)
     @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
@@ -45,6 +45,7 @@ public class Usuarios implements Serializable {
     @JsonIgnore
     private String password;
     @Positive
+    @Min(100000)
     @Digits(integer = 9, fraction=0, message = "Ingrese un número de celular válido")
     private int telefono;
     @ManyToOne
@@ -78,6 +79,21 @@ public class Usuarios implements Serializable {
     //@OneToMany(fetch = FetchType.LAZY, mappedBy = "sede")
     //private List<AsignadosSedes> asignadosSedes;
 
+    public BindingResult validateUser(BindingResult bindingResult, int type, UsuariosRepository usuariosRepository){
+        if(usuariosRepository.findByCorreoAndIdusuariosNot(this.getCorreo(),this.getIdusuarios())!=null){
+            bindingResult.rejectValue("correo", "error.user", "Este correo ya está registrado.");
+        }
+        if(java.util.regex.Pattern.compile("[0-9]").matcher(this.getNombre()).find()){
+            bindingResult.rejectValue("nombre","error.user", "No ingrese valores numéricos");
+        }
+        if(Pattern.compile("[0-9]").matcher(this.getApellido()).find()){
+            bindingResult.rejectValue("apellido","error.user", "No ingrese valores numéricos");
+        }
+        if(type==1 && usuariosRepository.findById(this.getIdusuarios()).isPresent()){ //if new
+            bindingResult.rejectValue("idusuarios","error.user","Este dni ya está registrado");
+        }
+        return bindingResult;
+    }
 
     public String generateNewPassword(){
         RandomString rs = new RandomString(8);

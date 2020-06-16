@@ -3,8 +3,7 @@ $(function() {($("#msgComunidad").text()==="ERROR") && $('#formModal').modal({sh
 }).on("click",".editar-Comunidad", function(){
     $("#formModal  #codigo").val('');$("#formModal  #nombre").val('');
     $("#formModal  #type").val('0');
-    $.ajax({
-        method:"GET", url:contextPath + "/get?id=" + $(this).data('id')
+    $.ajax({method:"GET", url:contextPath + "/get?id=" + $(this).data('id')
     }).done(function(com){
         if (com!=null){
             $("#formModal  #codigo").val(com.codigo).prop("readonly", true);

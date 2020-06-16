@@ -6,8 +6,7 @@ $(function() {($("#msgProducto").text()==="ERROR") && $('#formModal').modal({sho
     $("#formModal #codigodesc").val('');
     $("#formModal #descripcion").val('');
     $("#formModal  #type").val('0');
-    $.ajax({
-        method:"GET", url:contextPath +"/get?id=" + $(this).data('id')
+    $.ajax({method:"GET", url:contextPath +"/get?id=" + $(this).data('id')
     }).done(function(producto){
         if (producto!=null){
             $("#formModal #codigonom").val(producto.codigonom).prop("readonly", true);
