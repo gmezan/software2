@@ -1,5 +1,9 @@
 package com.example.sw2.constantes;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.*;
@@ -8,6 +12,11 @@ import java.util.*;
 public final class CustomConstants {
 
 
+    public  static File multipartToFile(MultipartFile multipart, String fileName) throws IllegalStateException, IOException {
+        File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+fileName);
+        multipart.transferTo(convFile);
+        return convFile;
+    }
 
 
     public final static String AWS_BUCKET_NAME = "mosqoy-sw2-bucket";

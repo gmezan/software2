@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.util.IOUtils;
 import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.entity.Inventario;
 import com.example.sw2.entity.RestBean;
@@ -16,6 +17,13 @@ import com.example.sw2.entity.Usuarios;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +32,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
+
+import static org.apache.http.entity.ContentType.DEFAULT_BINARY;
 
 public class UploadObject {
 
@@ -133,25 +143,42 @@ public class UploadObject {
 
     }
 
-    public static RestResponse uploadProfilePhoto(Usuarios u, MultipartFile multipartFile) throws JsonProcessingException {
+    public static RestResponse uploadProfilePhoto(Usuarios u, MultipartFile multipartFile) throws IOException {
         final String uri = "http://ec2-100-26-215-115.compute-1.amazonaws.com/saveProfile";
         String name = Integer.toString(u.getIdusuarios()* CustomConstants.BIGNUMBER).hashCode()+Integer.toString(u.getIdusuarios());
         return  sendFile(new RestBean(API_KEY, name, multipartFile), uri);
     }
 
-    public static RestResponse uploadProductPhoto(Inventario i, MultipartFile multipartFile) throws JsonProcessingException {
+    public static RestResponse uploadProductPhoto(Inventario i, MultipartFile multipartFile) throws IOException {
         final String uri = "http://ec2-100-26-215-115.compute-1.amazonaws.com/saveInventory";
         String name = i.getCodigoinventario();
         return sendFile(new RestBean(API_KEY, name, multipartFile), uri);
     }
 
-    private static RestResponse sendFile(RestBean data, String uri) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        RestTemplate restTemplate = new RestTemplate();
-        String someJsonString = mapper.writeValueAsString(data);
+    private static RestResponse sendFile(RestBean data, String uri) throws IOException {
+        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
+            File file = CustomConstants.multipartToFile(data.getFile(),data.getName());
+            HttpPost httpPost = new HttpPost(uri);
 
-        return restTemplate.postForObject(uri,mapper.readValue(someJsonString,RestBean.class), RestResponse.class);
+
+            FileBody fileBody = new FileBody(file, DEFAULT_BINARY);
+
+            MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+
+            entityBuilder.addPart("file", fileBody);
+            HttpEntity entity = entityBuilder.build();
+            httpPost.setEntity(entity);
+
+            HttpResponse response = client.execute(httpPost);
+            HttpEntity responseEntity = response.getEntity();
+            System.out.println(responseEntity.getContent().toString());
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new RestResponse();
     }
 }
 
