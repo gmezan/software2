@@ -1,6 +1,7 @@
 package com.example.sw2.controller.admin;
 
 import com.example.sw2.constantes.CustomConstants;
+import com.example.sw2.entity.RestResponse;
 import com.example.sw2.entity.Roles;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.repository.AsignadosSedesRepository;
@@ -80,7 +81,10 @@ public class GestoresController {
                 attr.addFlashAttribute("msgError", "Ocurrió un problema, no se pudo guardar");
                 return "redirect:/admin/gestor";
             }
-            UploadObject.uploadProfilePhoto(usuarios,multipartFile);
+            RestResponse rp = UploadObject.uploadProfilePhoto(usuarios,multipartFile);
+            if (rp.getStatus().equals("success")){
+                usuarios.setFoto(rp.getUrl());
+            }
             usuariosRepository.save(usuarios);
             attr.addFlashAttribute("msg", msg);
             return "redirect:/admin/gestor";

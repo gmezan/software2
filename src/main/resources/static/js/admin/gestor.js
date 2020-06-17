@@ -1,14 +1,12 @@
 const contextPath  = window.location.href;
 $(function() {($("#msgGestores").text()==="ERROR") && $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
 }).on("click",".edit-Gestor", function(){
-    console.log("Edit gestor");
     $("#formModal input").val('');
     $("#formModal  #type").val('0');
     $("#formModal  #formTitle").text('Editar Gestor');
     $.ajax({
         method:"GET", url:contextPath+"/get?id="+ $(this).data('id')
     }).done(function(gestor){
-
         if (gestor!=null){
             $("#formModal #idusuarios").val(gestor.idusuarios).prop("readonly", true);
             $("#formModal #nombre").val(gestor.nombre);
@@ -17,10 +15,7 @@ $(function() {($("#msgGestores").text()==="ERROR") && $('#formModal').modal({sho
             $("#formModal #telefono").val(gestor.telefono);
             $("#formModal #foto").attr("src",gestor.foto).attr("hidden",gestor.foto==="");
         }
-    }).fail(function (err) {
-        console.log(err);
-        $('#formModal').modal('hide');
-        alert("Ocurrió un error");
+    }).fail(function (err) {alert("Ocurrió un error");$('#formModal').modal({show: false});
     })
 }).on("click",".new-Gestor", function(){
     console.log("New gestor");
@@ -45,39 +40,21 @@ $(function() {($("#msgGestores").text()==="ERROR") && $('#formModal').modal({sho
         }
         else {
             $("#deleteModal #deleteModalBody #deleteModalBodyP").text("El gestor no se puede borrar, está asociada a los siguientes Ventas y/o Prodcutos Asignados");
-
-            let r = [], j = -1;
+            let r = '';
             if(data[0].length!==0){
-                for (let key=0, size=data[0].length; key<size; key++){
-                    r[++j] ='<tr><td>';
-                    r[++j] = data[0][key].rucdni;
-                    r[++j] = '</td><td>';
-                    r[++j] = data[0][key].cliente;
-                    r[++j] = '</td><td>';
-                    r[++j] = data[0][key].vendedor;
-                    r[++j] = '</td></tr>';
-                }
+                for (let key=0, size=data[0].length; key<size; key++)
+                    r+='<tr><td>'+data[0][key].rucdni+'</td><td>'+data[0][key].cliente+'</td><td>'+data[0][key].vendedor+'</td></tr>';
                 $("#deleteModal #deleteModalBody #tableModal1").prop("hidden",false);
-                $("#deleteModal #tbody").html(r.join(''));
+                $("#deleteModal #tbody").html(r);
             }
             if(data[1].length!==0){
-                r = []; j = -1;
-                for (let key=0, size=data[1].length; key<size; key++){
-                    r[++j] ='<tr><td>';
-                    r[++j] = data[1][key].gestor;
-                    r[++j] = '</td><td>';
-                    r[++j] = data[1][key].stock;
-                    r[++j] = '</td><td>';
-                    r[++j] = data[1][key].sede;
-                    r[++j] = '</td></tr>';
-                }
+                r = '';
+                for (let key=0, size=data[1].length; key<size; key++)
+                    r+='<tr><td>'+data[1][key].gestor+'</td><td>'+data[1][key].stock+'</td><td>'+data[1][key].sede+'</td></tr>';
                 $("#deleteModal #deleteModalBody #tableModal2").prop("hidden",false);
-                $("#deleteModal #tbody2").html(r.join(''));
+                $("#deleteModal #tbody2").html(r);
             }
         }
-    }).fail(function (err) {
-        console.log(err);
-        $('#deleteModal').modal('hide');
-        alert("Ocurrió un error");
+    }).fail(function (err) {alert("Ocurrió un error");$('#deleteModal').modal({show: false});
     });
 });

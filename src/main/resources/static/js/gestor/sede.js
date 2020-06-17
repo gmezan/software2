@@ -49,7 +49,7 @@ $(function() {($("#msgSedes").text()==="ERROR")&& $('#formModal').modal({show: t
                 for (let key=0, size=data[1].length; key<size; key++)
                     r+='<tr><td>'+data[1][key].sede+'</td><td>'+data[1][key].stock+'</td><td>'+data[1][key].vendedor+'</td></tr>';
                 $("#deleteModal #deleteModalBody #tableModal2").prop("hidden",false);
-                $("#deleteModal #tbody2").html(r.join(''));
+                $("#deleteModal #tbody2").html(r);
             }
         }
     }).fail(function (err) {alert("Ocurrió un error");$('#deleteModal').modal({show: false});});

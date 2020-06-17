@@ -5,21 +5,26 @@ import com.amazonaws.SdkClientException;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.AccessControlList;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.entity.Inventario;
+import com.example.sw2.entity.RestBean;
+import com.example.sw2.entity.RestResponse;
 import com.example.sw2.entity.Usuarios;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class UploadObject {
+
+    private final static String API_KEY = "80e50707-27f2-481a-96d5-23e61f4cd29c-r4nd0m";
 
     public static void main() throws IOException {
         Regions clientRegion = Regions.US_EAST_1;
@@ -125,29 +130,21 @@ public class UploadObject {
 
     }
 
-    public static void uploadProfilePhoto(Usuarios u, MultipartFile multipartFile){
-        if (multipartFile!=null && !multipartFile.isEmpty()){
-            try {
-                String name = Integer.toString(u.getIdusuarios()* CustomConstants.BIGNUMBER).hashCode()+Integer.toString(u.getIdusuarios());
-                //DeleteObjectNonVersionedBucket.deletePhoto(CustomConstants.PERFIL+"/"+name);
-                u.setFoto(UploadObject.uploadPhoto(name,multipartFile, CustomConstants.PERFIL));
-            }
-            catch (Exception ex){
-                ex.fillInStackTrace();
-            }
-        }
+    public static RestResponse uploadProfilePhoto(Usuarios u, MultipartFile multipartFile){
+        final String uri = "http://ec2-100-26-215-115.compute-1.amazonaws.com/saveProfile";
+        String name = Integer.toString(u.getIdusuarios()* CustomConstants.BIGNUMBER).hashCode()+Integer.toString(u.getIdusuarios());
+        return  sendFile(new RestBean(API_KEY, name, multipartFile), uri);
     }
 
-    public static void uploadProductPhoto(Inventario i, MultipartFile multipartFile){
-        if (multipartFile!=null && !multipartFile.isEmpty()){
-            try {
-                //DeleteObjectNonVersionedBucket.deletePhoto(CustomConstants.INVENTARIO+"/"+i.getCodigoinventario());
-                i.setFoto(UploadObject.uploadPhoto(i.getCodigoinventario(),multipartFile, CustomConstants.INVENTARIO));
-            }
-            catch (Exception ex){
-                ex.fillInStackTrace();
-            }
-        }
+    public static RestResponse uploadProductPhoto(Inventario i, MultipartFile multipartFile){
+        final String uri = "http://ec2-100-26-215-115.compute-1.amazonaws.com/saveInventory";
+        String name = i.getCodigoinventario();
+        return sendFile(new RestBean(API_KEY, name, multipartFile), uri);
+    }
+
+    private static RestResponse sendFile(RestBean data, String uri){
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.postForObject(uri,data, RestResponse.class);
     }
 
 
