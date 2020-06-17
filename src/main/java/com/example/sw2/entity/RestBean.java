@@ -1,5 +1,6 @@
 package com.example.sw2.entity;
 
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -7,13 +8,13 @@ import java.io.Serializable;
 public class RestBean implements Serializable {
     private String key;
     private String name;
-    private MultipartFile file;
+    private ByteArrayResource file;
 
     public RestBean(){
 
     }
 
-    public RestBean(String key, String name, MultipartFile file){
+    public RestBean(String key, String name, ByteArrayResource file){
         this.key = key;
         this.file = file;
         this.name = name;
@@ -35,11 +36,11 @@ public class RestBean implements Serializable {
         this.name = name;
     }
 
-    public MultipartFile getFile() {
+    public ByteArrayResource getFile() {
         return file;
     }
 
-    public void setFile(MultipartFile file) {
+    public void setFile(ByteArrayResource file) {
         this.file = file;
     }
 }

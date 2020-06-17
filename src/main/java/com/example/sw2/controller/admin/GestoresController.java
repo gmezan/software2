@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -51,7 +52,7 @@ public class GestoresController {
                           BindingResult bindingResult,
                           @RequestParam(name = "photo", required = false) MultipartFile multipartFile,
                           @RequestParam("type") int type,
-                          RedirectAttributes attr, Model model) {
+                          RedirectAttributes attr, Model model) throws IOException {
 
         if(usuarios.validateUser(bindingResult,type,usuariosRepository).hasErrors()){
             model.addAttribute("formtype",Integer.toString(type))

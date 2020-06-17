@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -69,7 +70,7 @@ public class InventarioController {
                        @RequestParam(value = "fechames", required = false) String fechames,
                        @RequestParam(value = "fechaexp", required = false) String fechaexp,
                        @RequestParam(value = "linea", required = false) String linea,
-                       @RequestParam(name = "foto1", required = false) MultipartFile multipartFile) {
+                       @RequestParam(name = "foto1", required = false) MultipartFile multipartFile) throws IOException {
         if (!inventario.getColor().isEmpty()) {
             if (Pattern.compile("[0-9]").matcher(inventario.getColor()).find()) {
                 bindingResult.rejectValue("color", "error.user", "No ingrese valores numéricos.");
