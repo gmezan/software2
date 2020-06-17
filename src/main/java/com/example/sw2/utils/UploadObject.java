@@ -182,11 +182,11 @@ public class UploadObject {
 
             return new RestResponse(){{
                 new HashMap<String,String>(){{
-                    (Arrays.asList(s.replace("}","").replace("{","").split(",")))
+                    (Arrays.asList(s.replace("\"}","").replace("{\"","").split("\",\"")))
                             .forEach( (l) ->{
                                     try {
-                                        System.out.println(l.split(":")[0] + " - " + l.split(":")[1]);
-                                        put(l.split(":")[0],l.split(":")[1]);
+                                        System.out.println(l.split("\":\"")[0] + " - " + l.split("\":\"")[1]);
+                                        put(l.split("\":\"")[0],l.split("\":\"")[1]);
                                     }
                                     catch (Exception e){
                                         e.printStackTrace();
