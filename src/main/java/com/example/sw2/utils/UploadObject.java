@@ -13,6 +13,9 @@ import com.example.sw2.entity.Inventario;
 import com.example.sw2.entity.RestBean;
 import com.example.sw2.entity.RestResponse;
 import com.example.sw2.entity.Usuarios;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -142,13 +145,13 @@ public class UploadObject {
         return sendFile(new RestBean(API_KEY, name, multipartFile), uri);
     }
 
-    private static RestResponse sendFile(RestBean data, String uri){
+    private static RestResponse sendFile(RestBean data, String uri) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForObject(uri,data, RestResponse.class);
+        String someJsonString = mapper.writeValueAsString(data);
+
+        return restTemplate.postForObject(uri,mapper.readValue(someJsonString,RestBean.class), RestResponse.class);
     }
-
-
-
-
 }
 
