@@ -8,7 +8,6 @@ import java.io.Serializable;
 public class RestBean implements Serializable {
     private String key;
     private String name;
-    @JsonSerialize
     private MultipartFile file;
 
     public RestBean(){

@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -160,11 +161,12 @@ public class UploadObject {
             File file = CustomConstants.multipartToFile(data.getFile(),data.getName());
             HttpPost httpPost = new HttpPost(uri);
 
-
             FileBody fileBody = new FileBody(file, DEFAULT_BINARY);
 
             MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
 
+            entityBuilder.addTextBody("key", API_KEY, ContentType.DEFAULT_BINARY);
+            entityBuilder.addTextBody("name", data.getName(), ContentType.DEFAULT_BINARY);
             entityBuilder.addPart("file", fileBody);
             HttpEntity entity = entityBuilder.build();
             httpPost.setEntity(entity);

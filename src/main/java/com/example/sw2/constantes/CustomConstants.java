@@ -18,7 +18,6 @@ public final class CustomConstants {
         return convFile;
     }
 
-
     public final static String AWS_BUCKET_NAME = "mosqoy-sw2-bucket";
     public final static String INVENTARIO = "inventario";
     public final static String PERFIL = "perfil";
