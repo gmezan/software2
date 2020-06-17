@@ -158,16 +158,14 @@ public class UploadObject {
 
     private static RestResponse sendFile(RestBean data, String uri) throws IOException {
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-            File file = CustomConstants.multipartToFile(data.getFile(),data.getName());
             HttpPost httpPost = new HttpPost(uri);
-
-            FileBody fileBody = new FileBody(file, DEFAULT_BINARY);
+            byte[] bytes = data.getFile().getBytes();
 
             MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
 
             entityBuilder.addTextBody("key", API_KEY, ContentType.DEFAULT_BINARY);
             entityBuilder.addTextBody("name", data.getName(), ContentType.DEFAULT_BINARY);
-            entityBuilder.addPart("file", fileBody);
+            entityBuilder.addBinaryBody("file", bytes, ContentType.DEFAULT_BINARY, data.getFile().getOriginalFilename());
             HttpEntity entity = entityBuilder.build();
             httpPost.setEntity(entity);
 
