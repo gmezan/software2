@@ -177,11 +177,14 @@ public class UploadObject {
             HttpResponse response = client.execute(httpPost);
             HttpEntity responseEntity = response.getEntity();
 
+            System.out.println(EntityUtils.toString(responseEntity));
+
             return new RestResponse(){{
                 new HashMap<String,String>(){{
                     (Arrays.asList(EntityUtils.toString(responseEntity).replace("}","")
                             .replace("{","").split(","))).forEach( (l) ->{
                                     try {
+                                        System.out.println(l.split(":")[0] + " - " + l.split(":")[1]);
                                         put(l.split(":")[0],l.split(":")[1]);
                                     }
                                     catch (Exception e){
