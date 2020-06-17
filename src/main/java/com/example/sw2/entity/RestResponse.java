@@ -1,6 +1,8 @@
 package com.example.sw2.entity;
 
-public class RestResponse {
+import java.io.Serializable;
+
+public class RestResponse implements Serializable {
 
     private String fileName;
     private String url;

@@ -2,7 +2,9 @@ package com.example.sw2.entity;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class RestBean {
+import java.io.Serializable;
+
+public class RestBean implements Serializable {
     private String key;
     private String name;
     private MultipartFile file;
