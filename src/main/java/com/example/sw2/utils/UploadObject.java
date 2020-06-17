@@ -177,12 +177,13 @@ public class UploadObject {
             HttpResponse response = client.execute(httpPost);
             HttpEntity responseEntity = response.getEntity();
 
-            System.out.println(EntityUtils.toString(responseEntity));
+            String s =EntityUtils.toString(responseEntity);
+            System.out.println(s);
 
             return new RestResponse(){{
                 new HashMap<String,String>(){{
-                    (Arrays.asList(EntityUtils.toString(responseEntity).replace("}","")
-                            .replace("{","").split(","))).forEach( (l) ->{
+                    (Arrays.asList(s.replace("}","").replace("{","").split(",")))
+                            .forEach( (l) ->{
                                     try {
                                         System.out.println(l.split(":")[0] + " - " + l.split(":")[1]);
                                         put(l.split(":")[0],l.split(":")[1]);
@@ -190,8 +191,7 @@ public class UploadObject {
                                     catch (Exception e){
                                         e.printStackTrace();
                                     }
-                            }
-                            );
+                            });
                     setFileName(this.getOrDefault("fileName", ""));
                     setUrl(this.getOrDefault("url", ""));
                     setStatus(this.getOrDefault("status",""));
