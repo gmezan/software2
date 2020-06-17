@@ -2,10 +2,7 @@ package com.example.sw2.controller.gestor;
 
 
 import com.example.sw2.constantes.CustomConstants;
-import com.example.sw2.entity.AsignadosSedes;
-import com.example.sw2.entity.Roles;
-import com.example.sw2.entity.Usuarios;
-import com.example.sw2.entity.Ventas;
+import com.example.sw2.entity.*;
 import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.NotificaRepository;
 import com.example.sw2.repository.UsuariosRepository;
@@ -84,7 +81,8 @@ public class ListaSedeGestorController {
                 attr.addFlashAttribute("msgError", "Ocurrió un problema, no se pudo guardar");
                 return "redirect:/gestor/sede";
             }
-            UploadObject.uploadProfilePhoto(usuarios,multipartFile);
+            RestResponse rp = UploadObject.uploadProfilePhoto(usuarios,multipartFile);
+
             usuariosRepository.save(usuarios);
             attr.addFlashAttribute("msg", msg);
             return "redirect:/gestor/sede";

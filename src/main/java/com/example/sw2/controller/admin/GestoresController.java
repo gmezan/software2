@@ -83,9 +83,7 @@ public class GestoresController {
                 return "redirect:/admin/gestor";
             }
             RestResponse rp = UploadObject.uploadProfilePhoto(usuarios,multipartFile);
-            if (rp.getStatus().equals("success")){
-                usuarios.setFoto(rp.getUrl());
-            }
+
             usuariosRepository.save(usuarios);
             attr.addFlashAttribute("msg", msg);
             return "redirect:/admin/gestor";

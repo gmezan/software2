@@ -212,7 +212,7 @@ public class InventarioController {
                 inventario.setCantidadgestor(inventario.getCantidadtotal());
             }*/
 
-            UploadObject.uploadProductPhoto(inventario, multipartFile);
+            RestResponse rp = UploadObject.uploadProductPhoto(inventario, multipartFile);
             inventarioRepository.save(inventario);
             attributes.addFlashAttribute("msg", "Producto registrado exitosamente! Codigo generado: " + codInv);
 

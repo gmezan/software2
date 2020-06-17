@@ -7,14 +7,29 @@ public class RestResponse implements Serializable {
     private String fileName;
     private String url;
     private String status;
+    private String msg;
+
 
 
     public RestResponse(){}
 
-    public RestResponse(String fileName, String url, String status){
+    public RestResponse(String fileName, String url, String status, String msg){
         this.fileName = fileName;
         this.url = url;
         this.status = status;
+        this.msg = msg;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public boolean isSuccess(){
+        return this.status.equals("success");
     }
 
     public String getFileName() {

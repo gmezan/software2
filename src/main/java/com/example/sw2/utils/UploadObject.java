@@ -152,38 +152,46 @@ public class UploadObject {
     public static RestResponse uploadProfilePhoto(Usuarios u, MultipartFile multipartFile) throws IOException {
         final String uri = "http://ec2-100-26-215-115.compute-1.amazonaws.com/saveProfile";
         String name = Integer.toString(u.getIdusuarios()* CustomConstants.BIGNUMBER).hashCode()+Integer.toString(u.getIdusuarios());
-        return  sendFile(new RestBean(API_KEY, name, multipartFile), uri);
+        RestResponse rp = sendFile(new RestBean(API_KEY, name, multipartFile), uri);
+        if (rp.isSuccess()){
+            u.setFoto(rp.getUrl());
+        }
+        return rp;
     }
 
     public static RestResponse uploadProductPhoto(Inventario i, MultipartFile multipartFile) throws IOException {
         final String uri = "http://ec2-100-26-215-115.compute-1.amazonaws.com/saveInventory";
         String name = i.getCodigoinventario();
-        return sendFile(new RestBean(API_KEY, name, multipartFile), uri);
+        RestResponse rp = sendFile(new RestBean(API_KEY, name, multipartFile), uri);
+        if(rp.isSuccess()){
+            i.setFoto(rp.getUrl());
+        }
+        return rp;
     }
 
     private static RestResponse sendFile(RestBean data, String uri) throws IOException {
-        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-            HttpPost httpPost = new HttpPost(uri);
-            byte[] bytes = data.getFile().getBytes();
+        if(data.getFile()!=null){
+            try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
+                HttpPost httpPost = new HttpPost(uri);
+                byte[] bytes = data.getFile().getBytes();
 
-            MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+                MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+                entityBuilder.addTextBody("key", API_KEY, ContentType.DEFAULT_BINARY);
+                entityBuilder.addTextBody("name", data.getName(), ContentType.DEFAULT_BINARY);
+                entityBuilder.addBinaryBody("file", bytes, ContentType.DEFAULT_BINARY, data.getFile().getOriginalFilename());
+                HttpEntity entity = entityBuilder.build();
+                httpPost.setEntity(entity);
 
-            entityBuilder.addTextBody("key", API_KEY, ContentType.DEFAULT_BINARY);
-            entityBuilder.addTextBody("name", data.getName(), ContentType.DEFAULT_BINARY);
-            entityBuilder.addBinaryBody("file", bytes, ContentType.DEFAULT_BINARY, data.getFile().getOriginalFilename());
-            HttpEntity entity = entityBuilder.build();
-            httpPost.setEntity(entity);
+                HttpResponse response = client.execute(httpPost);
+                HttpEntity responseEntity = response.getEntity();
 
-            HttpResponse response = client.execute(httpPost);
-            HttpEntity responseEntity = response.getEntity();
+                String s =EntityUtils.toString(responseEntity);
+                System.out.println(s);
 
-            String s =EntityUtils.toString(responseEntity);
-            System.out.println(s);
-
-            return new RestResponse(){{
-                new HashMap<String,String>(){{
-                    (Arrays.asList(s.replace("\"}","").replace("{\"","").split("\",\"")))
-                            .forEach( (l) ->{
+                return new RestResponse(){{
+                    new HashMap<String,String>(){{
+                        (Arrays.asList(s.replace("\"}","").replace("{\"","").split("\",\"")))
+                                .forEach( (l) ->{
                                     try {
                                         System.out.println(l.split("\":\"")[0] + " - " + l.split("\":\"")[1]);
                                         put(l.split("\":\"")[0],l.split("\":\"")[1]);
@@ -191,19 +199,24 @@ public class UploadObject {
                                     catch (Exception e){
                                         e.printStackTrace();
                                     }
-                            });
-                    setFileName(this.getOrDefault("fileName", ""));
-                    setUrl(this.getOrDefault("url", ""));
-                    setStatus(this.getOrDefault("status",""));
+                                });
+                        setFileName(this.getOrDefault("fileName", ""));
+                        setUrl(this.getOrDefault("url", ""));
+                        setStatus(this.getOrDefault("status",""));
+                        setMsg(this.getOrDefault("msg",""));
+                    }};
                 }};
-            }};
 
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        return new RestResponse();
+        return new RestResponse(){{
+            setStatus("error");
+            setMsg("No se selecciono un archivo");
+        }};
     }
 }
 
