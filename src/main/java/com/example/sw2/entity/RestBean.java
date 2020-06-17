@@ -1,6 +1,6 @@
 package com.example.sw2.entity;
 
-import org.springframework.core.io.ByteArrayResource;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -8,13 +8,14 @@ import java.io.Serializable;
 public class RestBean implements Serializable {
     private String key;
     private String name;
-    private ByteArrayResource file;
+    @JsonSerialize
+    private MultipartFile file;
 
     public RestBean(){
 
     }
 
-    public RestBean(String key, String name, ByteArrayResource file){
+    public RestBean(String key, String name, MultipartFile file){
         this.key = key;
         this.file = file;
         this.name = name;
@@ -36,11 +37,11 @@ public class RestBean implements Serializable {
         this.name = name;
     }
 
-    public ByteArrayResource getFile() {
+    public MultipartFile getFile() {
         return file;
     }
 
-    public void setFile(ByteArrayResource file) {
+    public void setFile(MultipartFile file) {
         this.file = file;
     }
 }

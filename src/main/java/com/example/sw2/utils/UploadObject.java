@@ -13,7 +13,6 @@ import com.example.sw2.entity.Inventario;
 import com.example.sw2.entity.RestBean;
 import com.example.sw2.entity.RestResponse;
 import com.example.sw2.entity.Usuarios;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -131,16 +130,16 @@ public class UploadObject {
 
     }
 
-    public static RestResponse uploadProfilePhoto(Usuarios u, MultipartFile multipartFile) throws IOException {
+    public static RestResponse uploadProfilePhoto(Usuarios u, MultipartFile multipartFile){
         final String uri = "http://ec2-100-26-215-115.compute-1.amazonaws.com/saveProfile";
         String name = Integer.toString(u.getIdusuarios()* CustomConstants.BIGNUMBER).hashCode()+Integer.toString(u.getIdusuarios());
-        return  sendFile(new RestBean(API_KEY, name, new ByteArrayResource(multipartFile.getBytes())), uri);
+        return  sendFile(new RestBean(API_KEY, name, multipartFile), uri);
     }
 
-    public static RestResponse uploadProductPhoto(Inventario i, MultipartFile multipartFile) throws IOException {
+    public static RestResponse uploadProductPhoto(Inventario i, MultipartFile multipartFile){
         final String uri = "http://ec2-100-26-215-115.compute-1.amazonaws.com/saveInventory";
         String name = i.getCodigoinventario();
-        return sendFile(new RestBean(API_KEY, name, new ByteArrayResource(multipartFile.getBytes())), uri);
+        return sendFile(new RestBean(API_KEY, name, multipartFile), uri);
     }
 
     private static RestResponse sendFile(RestBean data, String uri){
