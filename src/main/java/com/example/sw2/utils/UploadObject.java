@@ -34,6 +34,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -175,9 +177,23 @@ public class UploadObject {
             HttpResponse response = client.execute(httpPost);
             HttpEntity responseEntity = response.getEntity();
 
-            InputStream content = response.getEntity().getContent();
-
-            System.out.println(EntityUtils.toString(responseEntity));
+            return new RestResponse(){{
+                new HashMap<String,String>(){{
+                    (Arrays.asList(EntityUtils.toString(responseEntity).replace("}","")
+                            .replace("{","").split(","))).forEach( (l) ->{
+                                    try {
+                                        put(l.split(":")[0],l.split(":")[1]);
+                                    }
+                                    catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                            }
+                            );
+                    setFileName(this.getOrDefault("fileName", ""));
+                    setUrl(this.getOrDefault("url", ""));
+                    setStatus(this.getOrDefault("status",""));
+                }};
+            }};
 
         }
         catch (Exception e) {

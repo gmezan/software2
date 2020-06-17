@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class RestResponse implements Serializable {
 
-    private String fileName="";
-    private String url="";
-    private String status="";
+    private String fileName;
+    private String url;
+    private String status;
 
 
     public RestResponse(){}
