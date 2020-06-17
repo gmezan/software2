@@ -14,6 +14,7 @@ import com.example.sw2.entity.Inventario;
 import com.example.sw2.entity.RestBean;
 import com.example.sw2.entity.RestResponse;
 import com.example.sw2.entity.Usuarios;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -25,12 +26,14 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -171,7 +174,10 @@ public class UploadObject {
 
             HttpResponse response = client.execute(httpPost);
             HttpEntity responseEntity = response.getEntity();
-            System.out.println(responseEntity.getContent().toString());
+
+            InputStream content = response.getEntity().getContent();
+
+            System.out.println(EntityUtils.toString(responseEntity));
 
         }
         catch (Exception e) {
