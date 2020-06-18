@@ -1,7 +1,7 @@
 package com.example.sw2.controller.admin;
 
-import com.example.sw2.constantes.CustomConstants;
-import com.example.sw2.entity.RestResponse;
+import com.example.sw2.Dao.StorageServiceDao;
+import com.example.sw2.entity.StorageServiceResponse;
 import com.example.sw2.entity.Roles;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.repository.AsignadosSedesRepository;
@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -24,7 +23,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
-import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/admin/gestor")
@@ -40,6 +38,8 @@ public class GestoresController {
     CustomMailService customMailService;
     @Autowired
     NotificaRepository notificaRepository;
+    @Autowired
+    StorageServiceDao storageServiceDao;
 
     @GetMapping(value = {""})
     public String listaSede(@ModelAttribute("gestor")  Usuarios usuarios, Model model){
@@ -82,8 +82,7 @@ public class GestoresController {
                 attr.addFlashAttribute("msgError", "Ocurrió un problema, no se pudo guardar");
                 return "redirect:/admin/gestor";
             }
-            RestResponse rp = UploadObject.uploadProfilePhoto(usuarios,multipartFile);
-
+            StorageServiceResponse s2 = storageServiceDao.store(usuarios,multipartFile);
             usuariosRepository.save(usuarios);
             attr.addFlashAttribute("msg", msg);
             return "redirect:/admin/gestor";

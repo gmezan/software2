@@ -1,7 +1,7 @@
 package com.example.sw2.controller.gestor;
 
 
-import com.example.sw2.constantes.CustomConstants;
+import com.example.sw2.Dao.StorageServiceDao;
 import com.example.sw2.entity.*;
 import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.NotificaRepository;
@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,7 +22,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
-import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/gestor/sede")
@@ -39,6 +37,8 @@ public class ListaSedeGestorController {
     CustomMailService customMailService;
     @Autowired
     NotificaRepository notificaRepository;
+    @Autowired
+    StorageServiceDao storageServiceDao;
 
     @GetMapping(value = {""})
     public String listaSede(@ModelAttribute("sede") Usuarios usuarios, Model model){
@@ -81,8 +81,7 @@ public class ListaSedeGestorController {
                 attr.addFlashAttribute("msgError", "Ocurrió un problema, no se pudo guardar");
                 return "redirect:/gestor/sede";
             }
-            RestResponse rp = UploadObject.uploadProfilePhoto(usuarios,multipartFile);
-
+            StorageServiceResponse s2 = storageServiceDao.store(usuarios,multipartFile);
             usuariosRepository.save(usuarios);
             attr.addFlashAttribute("msg", msg);
             return "redirect:/gestor/sede";

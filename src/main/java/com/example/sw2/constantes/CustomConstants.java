@@ -11,13 +11,6 @@ import java.util.*;
 
 public final class CustomConstants {
 
-
-    public  static File multipartToFile(MultipartFile multipart, String fileName) throws IllegalStateException, IOException {
-        File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+fileName);
-        multipart.transferTo(convFile);
-        return convFile;
-    }
-
     public final static String AWS_BUCKET_NAME = "mosqoy-sw2-bucket";
     public final static String INVENTARIO = "inventario";
     public final static String PERFIL = "perfil";

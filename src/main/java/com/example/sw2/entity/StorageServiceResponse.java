@@ -2,7 +2,7 @@ package com.example.sw2.entity;
 
 import java.io.Serializable;
 
-public class RestResponse implements Serializable {
+public class StorageServiceResponse implements Serializable {
 
     private String fileName;
     private String url;
@@ -11,9 +11,9 @@ public class RestResponse implements Serializable {
 
 
 
-    public RestResponse(){}
+    public StorageServiceResponse(){}
 
-    public RestResponse(String fileName, String url, String status, String msg){
+    public StorageServiceResponse(String fileName, String url, String status, String msg){
         this.fileName = fileName;
         this.url = url;
         this.status = status;

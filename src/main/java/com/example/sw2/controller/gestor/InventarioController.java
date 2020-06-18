@@ -1,5 +1,6 @@
 package com.example.sw2.controller.gestor;
 
+import com.example.sw2.Dao.StorageServiceDao;
 import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.entity.*;
 import com.example.sw2.repository.*;
@@ -17,11 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.time.YearMonth;
 import java.util.Optional;
@@ -37,15 +36,14 @@ public class InventarioController {
     InventarioRepository inventarioRepository;
     @Autowired
     CategoriasRepository categoriasRepository;
-
     @Autowired
     ComunidadesRepository comunidadesRepository;
-
     @Autowired
     ProductosRepository productosRepository;
-
     @Autowired
     ArtesanosRepository artesanosRepository;
+    @Autowired
+    StorageServiceDao storageServiceDao;
 
 
     @GetMapping(value = {""})
@@ -212,7 +210,7 @@ public class InventarioController {
                 inventario.setCantidadgestor(inventario.getCantidadtotal());
             }*/
 
-            RestResponse rp = UploadObject.uploadProductPhoto(inventario, multipartFile);
+            StorageServiceResponse rp = storageServiceDao.store(inventario, multipartFile);
             inventarioRepository.save(inventario);
             attributes.addFlashAttribute("msg", "Producto registrado exitosamente! Codigo generado: " + codInv);
 

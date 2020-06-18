@@ -8,42 +8,15 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.util.IOUtils;
 import com.example.sw2.constantes.CustomConstants;
-import com.example.sw2.entity.Inventario;
-import com.example.sw2.entity.RestBean;
-import com.example.sw2.entity.RestResponse;
-import com.example.sw2.entity.Usuarios;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Objects;
 
-import static org.apache.http.entity.ContentType.DEFAULT_BINARY;
-
 public class UploadObject {
-
-    private final static String API_KEY = "80e50707-27f2-481a-96d5-23e61f4cd29c-p4ssw0rd-r4nd0m";
 
     public static void main() throws IOException {
         Regions clientRegion = Regions.US_EAST_1;
@@ -149,27 +122,28 @@ public class UploadObject {
 
     }
 
-    public static RestResponse uploadProfilePhoto(Usuarios u, MultipartFile multipartFile) throws IOException {
+    /*
+    public static StorageServiceResponse uploadProfilePhoto(Usuarios u, MultipartFile multipartFile) throws IOException {
         final String uri = "http://ec2-100-26-215-115.compute-1.amazonaws.com/saveProfile";
         String name = Integer.toString(u.getIdusuarios()* CustomConstants.BIGNUMBER).hashCode()+Integer.toString(u.getIdusuarios());
-        RestResponse rp = sendFile(new RestBean(API_KEY, name, multipartFile), uri);
+        StorageServiceResponse rp = sendFile(new StorageServiceBean(API_KEY, name, multipartFile), uri);
         if (rp.isSuccess()){
             u.setFoto(rp.getUrl());
         }
         return rp;
     }
 
-    public static RestResponse uploadProductPhoto(Inventario i, MultipartFile multipartFile) throws IOException {
+    public static StorageServiceResponse uploadProductPhoto(Inventario i, MultipartFile multipartFile) throws IOException {
         final String uri = "http://ec2-100-26-215-115.compute-1.amazonaws.com/saveInventory";
         String name = i.getCodigoinventario();
-        RestResponse rp = sendFile(new RestBean(API_KEY, name, multipartFile), uri);
+        StorageServiceResponse rp = sendFile(new StorageServiceBean(API_KEY, name, multipartFile), uri);
         if(rp.isSuccess()){
             i.setFoto(rp.getUrl());
         }
         return rp;
     }
 
-    private static RestResponse sendFile(RestBean data, String uri) throws IOException {
+    private static StorageServiceResponse sendFile(StorageServiceBean data, String uri) throws IOException {
         if(data.getFile()!=null){
             try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
                 HttpPost httpPost = new HttpPost(uri);
@@ -188,7 +162,7 @@ public class UploadObject {
                 String s =EntityUtils.toString(responseEntity);
                 System.out.println(s);
 
-                return new RestResponse(){{
+                return new StorageServiceResponse(){{
                     new HashMap<String,String>(){{
                         (Arrays.asList(s.replace("\"}","").replace("{\"","").split("\",\"")))
                                 .forEach( (l) ->{
@@ -213,10 +187,10 @@ public class UploadObject {
             }
         }
 
-        return new RestResponse(){{
+        return new StorageServiceResponse(){{
             setStatus("error");
             setMsg("No se selecciono un archivo");
         }};
-    }
+    }*/
 }
 
