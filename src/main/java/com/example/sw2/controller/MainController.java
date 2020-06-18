@@ -19,46 +19,5 @@ import java.io.IOException;
 @Controller
 public class MainController {
 
-    @Autowired
-    CustomMailService customMailService;
-
-    private final String FILE_NAME = "test.png";
-
-
-    @GetMapping("/file")
-    public String blankPageFile(){
-        return "blank";
-    }
-
-    @PostMapping("/upload")
-    public String uploadFile(@RequestParam("archivo") MultipartFile multipartFile){
-        try {
-            DeleteObjectNonVersionedBucket.deletePhoto(FILE_NAME);
-            File file = new File(FILE_NAME);
-            file.createNewFile();
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(multipartFile.getBytes());
-            fos.close();
-            UploadObject.uploadPhoto(FILE_NAME, file);
-            file.delete();
-        }
-        catch (Exception e){
-            System.out.println("error");
-        }
-        return "redirect:/file";
-    }
-
-    @ResponseBody
-    @GetMapping(value = "/testEmail",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> testEmail(){
-
-        try {
-            customMailService.sendTestEmailWithAtachment();
-            return new ResponseEntity<>("nice", HttpStatus.OK);
-        }
-        catch (IOException | MessagingException ex){
-            return new ResponseEntity<>(ex.toString(), HttpStatus.ACCEPTED);
-        }
-    }
 
 }

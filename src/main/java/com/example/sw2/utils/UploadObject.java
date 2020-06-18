@@ -43,7 +43,7 @@ import static org.apache.http.entity.ContentType.DEFAULT_BINARY;
 
 public class UploadObject {
 
-    private final static String API_KEY = "80e50707-27f2-481a-96d5-23e61f4cd29c-r4nd0m";
+    private final static String API_KEY = "80e50707-27f2-481a-96d5-23e61f4cd29c-p4ssw0rd-r4nd0m";
 
     public static void main() throws IOException {
         Regions clientRegion = Regions.US_EAST_1;
