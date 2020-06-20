@@ -92,7 +92,6 @@ public class GestoresController {
                 attr.addFlashAttribute("msgError", "Ocurrió un problema, no se pudo guardar");
                 return "redirect:/admin/gestor";
             }
-            StorageServiceResponse s2 = storageServiceDao.store(usuarios,multipartFile);
             usuariosRepository.save(usuarios);
             attr.addFlashAttribute("msg", msg);
             return "redirect:/admin/gestor";

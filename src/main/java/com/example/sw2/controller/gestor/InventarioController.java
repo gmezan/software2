@@ -192,7 +192,7 @@ public class InventarioController {
                 m.addAttribute("listProd", productosRepository.findAll());
                 return "gestor/inventarioGestorForm";
             }
-            // subida de foto
+            // subida de FOTO
             if(!multipartFile.isEmpty()){
                 StorageServiceResponse s2 = storageServiceDao.store(inventario,multipartFile);
                 if (!s2.isSuccess()){
