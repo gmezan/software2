@@ -73,7 +73,7 @@ public class AsignadoTiendaController {
         if(venta.getId().getNumerodocumento().equals("")){
             bindingResult.rejectValue("id.numerodocumento", "error.user","Este campo no puede estar vacío");
         }
-        if(venta.getFecha().equals(null)){
+        if(venta.getFecha() == null){
             bindingResult.rejectValue("fecha", "error.user","Tiene que asignar una fecha");
         }
         if(venta.getFecha().isBefore(aTienda.getFechaasignacion())){
