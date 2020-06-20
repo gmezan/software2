@@ -299,6 +299,7 @@
                                                 <div class="form-group">
                                                     <label for="foto1" class="col-form-label"><b>Foto:</b></label>
                                                     <input type="file" id="foto1" name="foto1">
+                                                    <div class="text-danger" th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}">Error</div>
                                                 </div>
                                             </div>
                                         </form>

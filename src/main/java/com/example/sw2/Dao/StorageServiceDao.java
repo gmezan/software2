@@ -38,7 +38,7 @@ public class StorageServiceDao {
             }
             else return new StorageServiceResponse(){{
                 setStatus("error");
-                setMsg("Error en transacción");
+                setMsg("Error en transacción de imagen");
             }};
 
         }
@@ -50,14 +50,13 @@ public class StorageServiceDao {
             String name = inventario.getCodigoinventario();
             StorageServiceResponse response = new RestTemplate().postForObject(BASE_URL+INVENTORY_PATH,
                     prepareEntity(multipartFile,name),StorageServiceResponse.class);
-
             if (response!=null){
                 inventario.setFoto(response.getUrl());
                 return response;
             }
             else return new StorageServiceResponse(){{
                 setStatus("error");
-                setMsg("Error en transacción");
+                setMsg("Error en transacción de imagen");
             }};
         }
         return null;

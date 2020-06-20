@@ -192,7 +192,18 @@ public class InventarioController {
                 m.addAttribute("listProd", productosRepository.findAll());
                 return "gestor/inventarioGestorForm";
             }
-            inventario.setFoto(".");
+            // subida de foto
+            if(!multipartFile.isEmpty()){
+                StorageServiceResponse s2 = storageServiceDao.store(inventario,multipartFile);
+                if (!s2.isSuccess()){
+                    bindingResult.rejectValue("foto","error.user",s2.getMsg());
+                    listasCamposInv(m);
+                    if (inventario.getComunidades() != null) {
+                        m.addAttribute("listArt", artesanosRepository.findArtesanosByComunidades_Codigo(inventario.getComunidades().getCodigo()));
+                    }
+                    return "gestor/inventarioGestorForm";
+                }
+            }
             inventario.setCodigoinventario(codInv);
             inventario.setFechacreacion(LocalDateTime.now());
             inventario.setCantidadgestor(inventario.getCantidadtotal());
@@ -210,7 +221,6 @@ public class InventarioController {
                 inventario.setCantidadgestor(inventario.getCantidadtotal());
             }*/
 
-            StorageServiceResponse rp = storageServiceDao.store(inventario, multipartFile);
             inventarioRepository.save(inventario);
             attributes.addFlashAttribute("msg", "Producto registrado exitosamente! Codigo generado: " + codInv);
 

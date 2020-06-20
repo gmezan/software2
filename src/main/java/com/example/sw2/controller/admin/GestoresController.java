@@ -61,6 +61,16 @@ public class GestoresController {
             return "admin/listaGestor";
         }
         else {
+            if(!multipartFile.isEmpty()){
+                StorageServiceResponse s2 = storageServiceDao.store(usuarios,multipartFile);
+                if (!s2.isSuccess()){
+                    bindingResult.rejectValue("foto","error.user",s2.getMsg());
+                    model.addAttribute("formtype",Integer.toString(type))
+                            .addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD))
+                            .addAttribute("msgError", "ERROR");
+                    return "gestor/sedes";
+                }
+            }
             String msg;
             Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD, usuarios.getIdusuarios());
             if (optionalUsuarios.isPresent() && (type==0) ) {

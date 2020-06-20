@@ -60,6 +60,16 @@ public class ListaSedeGestorController {
             return "gestor/sedes";
         }
         else {
+            if(!multipartFile.isEmpty()){
+                StorageServiceResponse s2 = storageServiceDao.store(usuarios,multipartFile);
+                if (!s2.isSuccess()){
+                    bindingResult.rejectValue("foto","error.user",s2.getMsg());
+                    model.addAttribute("formtype",Integer.toString(type))
+                            .addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD))
+                            .addAttribute("msgError", "ERROR");
+                    return "gestor/sedes";
+                }
+            }
             String msg;
             Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD, usuarios.getIdusuarios());
             if (optionalUsuarios.isPresent() && (type==0) ) {
@@ -81,7 +91,7 @@ public class ListaSedeGestorController {
                 attr.addFlashAttribute("msgError", "Ocurrió un problema, no se pudo guardar");
                 return "redirect:/gestor/sede";
             }
-            StorageServiceResponse s2 = storageServiceDao.store(usuarios,multipartFile);
+
             usuariosRepository.save(usuarios);
             attr.addFlashAttribute("msg", msg);
             return "redirect:/gestor/sede";
