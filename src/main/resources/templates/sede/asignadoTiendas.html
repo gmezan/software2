@@ -151,12 +151,6 @@
                         <input hidden id="vendedor" type="text" class="form-control" th:field="*{vendedor.idusuarios}">
 
                         <div class="form-group col">
-                            <label id="cant" class="col-form-label"><b>Cantidad</b></label>
-                            <input type="text" class="form-control" th:field="*{cantidad}">
-                            <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}">Error</div>
-                        </div>
-
-                        <div class="form-group col">
                             <label class="col-form-label"><b>Tipo de documento:</b></label>
                             <select class="form-control" th:field ="*{id.tipodocumento}" >
                                 <option th:each="t : ${tipodoc}"
@@ -171,6 +165,19 @@
                             <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}" th:errors="*{id.numerodocumento}">Error</div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-form-label">Fecha de venta:</label>
+                            <input type="date" class="form-control" th:field="*{fecha}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}">
+                                Error
+                            </div>
+                        </div>
+
+                        <div class="form-group col">
+                            <label id="cant" class="col-form-label"><b>Cantidad</b></label>
+                            <input type="text" class="form-control" th:field="*{cantidad}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}">Error</div>
+                        </div>
 
                         <div class="modal-footer">
                             <a type="button" th:href="@{/sede/AsignadoTienda}" class="btn btn-secondary" >Cancelar</a>

@@ -59,8 +59,10 @@ public class AsignadoTiendaController {
         Optional<Ventas> optVentas = ventasRepository.findById(venta.getId());
         AsignacionTiendas aTienda = optaTienda.get();
 
+        /*
         venta.setFecha(LocalDate.now());
-        venta.setFechacreacion(LocalDateTime.now());
+         */
+
 
         if(optVentas.isPresent()){
             bindingResult.rejectValue("id.numerodocumento", "error.user", "El número de documento ya ha sido registrado");
@@ -70,6 +72,12 @@ public class AsignadoTiendaController {
         }
         if(venta.getId().getNumerodocumento().equals("")){
             bindingResult.rejectValue("id.numerodocumento", "error.user","Este campo no puede estar vacío");
+        }
+        if(venta.getFecha().equals(null)){
+            bindingResult.rejectValue("fecha", "error.user","Tiene que asignar una fecha");
+        }
+        if(venta.getFecha().isBefore(aTienda.getFechaasignacion())){
+            bindingResult.rejectValue("fecha", "error.user","La fecha de venta no puede ser antes de la fecha de asignación");
         }
 
 
@@ -83,7 +91,7 @@ public class AsignadoTiendaController {
 
 
         }else{
-
+            venta.setFechacreacion(LocalDateTime.now());
             ventasRepository.save(venta);
             //actualizar stock(Asignados_sedes) cant_total(inventario)
             asignacionTiendasRepository.registrar_venta_tienda(aTienda.getAsignadosSedes().getId().getGestor().getIdusuarios(),
