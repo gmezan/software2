@@ -75,10 +75,12 @@ public class AsignadoTiendaController {
         }
         if(venta.getFecha() == null){
             bindingResult.rejectValue("fecha", "error.user","Tiene que asignar una fecha");
+        }else{
+            if(venta.getFecha().isBefore(aTienda.getFechaasignacion())){
+                bindingResult.rejectValue("fecha", "error.user","La fecha de venta no puede ser antes de la fecha de asignación");
+            }
         }
-        if(venta.getFecha().isBefore(aTienda.getFechaasignacion())){
-            bindingResult.rejectValue("fecha", "error.user","La fecha de venta no puede ser antes de la fecha de asignación");
-        }
+
 
 
         if(bindingResult.hasErrors()){
