@@ -7,8 +7,8 @@ $(document).on("click",".registar-Venta", function(){
         method:"GET", url:contextPath +"/get?id1=" +$(this).data('id1')
     }).done(function(ventas){
         if (ventas!=null){
+            $("#registrarModal  #fechaasignacion").text('Este producto se asignó el ' + ventas.fecha_asignacion)
             $("#registrarModal  #cant").text('Cantidad:  (Cantidad Disponible: ' + ventas.stock + ')');
-
             $("#registrarModal  #id1").val(ventas.idtiendas);
             $("#registrarModal  #rucdni").val(ventas.tienda.ruc);
             $("#registrarModal  #nombrecliente").val(ventas.tienda.nombre);

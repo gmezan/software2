@@ -81,8 +81,6 @@ public class AsignadoTiendaController {
             }
         }
 
-
-
         if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
             model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
@@ -118,13 +116,18 @@ public class AsignadoTiendaController {
         Optional<AsignacionTiendas> optAt = asignacionTiendasRepository.findById(idAstiendas);
         AsignacionTiendas at = optAt.get();
 
-
-
         if(v.getCantDevol() > at.getStock()){
             bindingResult.rejectValue("cantDevol", "error.user","La cantidad no puede ser mayor al stock actual de la tienda");
         }
         if(v.getCantDevol() == 0){
             bindingResult.rejectValue("cantDevol", "error.user","La cantidad tiene que ser mayor a 0");
+        }
+        if(v.getFecha() == null){
+            bindingResult.rejectValue("fecha", "error.user","Tiene que asignar una fecha");
+        }else{
+            if(v.getFecha().isBefore(at.getFechaasignacion())){
+                bindingResult.rejectValue("fecha", "error.user","La fecha de devolución no puede ser antes de la fecha de asignación");
+            }
         }
 
         if(bindingResult.hasErrors()){
@@ -149,9 +152,6 @@ public class AsignadoTiendaController {
             return "redirect:/sede/AsignadoTienda";
 
         }
-
-
-
 
         //AsignadosID = gestor - sede - inventario - estado - precio
         //sede - producto - estado
