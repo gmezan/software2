@@ -169,7 +169,7 @@ public class SedeController {
                                   @ModelAttribute("venta") Ventas venta,
                                   @RequestParam(value = "gestor") int idgestor,
                                   @RequestParam(value = "sede") int idsede,
-                                  @RequestParam(value = "producto_inventario") String idproductoinv,
+                                  @RequestParam(value = "inventario1") String idproductoinv,
                                   @RequestParam(value = "estadoasignacion") int idestadoasign,
                                   @RequestParam(value = "precioventa") Float idprecioventa,
                                   BindingResult bindingResult2,
@@ -200,7 +200,7 @@ public class SedeController {
             model.addAttribute("gestor", idgestor);
             model.addAttribute("sede", idsede);
             // model.addAttribute("codinv", idproductoinv);
-            model.addAttribute("producto_inventario", idproductoinv);
+            model.addAttribute("inventario1", idproductoinv);
             model.addAttribute("estadoasignacion", idestadoasign);
             model.addAttribute("precioventa", idprecioventa);
             model.addAttribute("venta", venta);

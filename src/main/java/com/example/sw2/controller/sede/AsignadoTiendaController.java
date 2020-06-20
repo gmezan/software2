@@ -59,11 +59,6 @@ public class AsignadoTiendaController {
         Optional<Ventas> optVentas = ventasRepository.findById(venta.getId());
         AsignacionTiendas aTienda = optaTienda.get();
 
-        /*
-        venta.setFecha(LocalDate.now());
-         */
-
-
         if(optVentas.isPresent()){
             bindingResult.rejectValue("id.numerodocumento", "error.user", "El número de documento ya ha sido registrado");
         }
@@ -94,15 +89,13 @@ public class AsignadoTiendaController {
             venta.setFechacreacion(LocalDateTime.now());
             ventasRepository.save(venta);
             //actualizar stock(Asignados_sedes) cant_total(inventario)
-            asignacionTiendasRepository.registrar_venta_tienda(aTienda.getAsignadosSedes().getId().getGestor().getIdusuarios(),
+            asignacionTiendasRepository.tienda_registra(aTienda.getAsignadosSedes().getId().getGestor().getIdusuarios(),
                     venta.getVendedor().getIdusuarios(), venta.getInventario().getCodigoinventario(),
                     2,venta.getPrecioventa(), venta.getCantidad(), idAstiendas);
 
             attr.addFlashAttribute("msg", "Venta registrada exitosamente");
             return "redirect:/sede/AsignadoTienda";
         }
-
-
     }
 
     @GetMapping("/devolucion")
@@ -140,21 +133,19 @@ public class AsignadoTiendaController {
         }else{
             AsignadosSedes as = at.getAsignadosSedes();
 
+            //AsignadosID = gestor - sede - inventario - estado - precio
             //restar stock(Asignado_Tienda) y sumar cantidadactual(Asigandos_sedes)
-
-            asignacionTiendasRepository.devol_tienda(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
+            //sumar lo devuelto a cant_gestor(inventario)
+            asignacionTiendasRepository.tienda_devolucion(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
                     as.getId().getProductoinventario().getCodigoinventario(), as.getId().getEstadoasignacion(),
                     as.getId().getPrecioventa(),v.getCantDevol(), at.getIdtiendas());
 
-            //sumar lo devuelto a cant_gestor del inventario
             attr.addFlashAttribute("msg","Producto devuelto exitosamente");
 
             return "redirect:/sede/AsignadoTienda";
 
         }
 
-        //AsignadosID = gestor - sede - inventario - estado - precio
-        //sede - producto - estado
     }
 
     //Web service
