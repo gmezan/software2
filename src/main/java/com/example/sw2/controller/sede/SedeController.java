@@ -69,6 +69,7 @@ public class SedeController {
 
         model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
         model.addAttribute("listaTiendas", tiendaRepository.findAll());
+
         return "sede/ListaProductosConfirmados";
     }
 
@@ -89,6 +90,11 @@ public class SedeController {
 
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
+
+        if (asignadosSedes.getCantidadactual()==0){
+            attr.addFlashAttribute("msgNoVenta", "No se puede registrar la venta de este producto, dado que la cantidad actual es 0.");
+            return "redirect:/sede/productosConfirmados";
+        }
 
         if (ventas.getCantidad() <= 0) {
             bindingResult.rejectValue("cantidad", "error.user", "Ingrese una cantidad valida");
@@ -182,6 +188,11 @@ public class SedeController {
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
 
+        if (asignadosSedes.getCantidadactual()==0){
+            attr.addFlashAttribute("msgNoAsignar", "No se puede asignar este producto, dado que la cantidad actual es 0.");
+            return "redirect:/sede/productosConfirmados";
+        }
+
         if (asignacionTiendas.getStock() <= 0) {
             bindingResult.rejectValue("stock", "error.user", "Ingrese una cantidad valida");
         } else {
@@ -190,7 +201,6 @@ public class SedeController {
                 bindingResult.rejectValue("stock", "error.user", "La cantidad asignada no puede ser mayor a la cantidad actual de la sede");
             }
         }
-
 
         if (bindingResult.hasErrors()) {
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
@@ -295,6 +305,11 @@ public class SedeController {
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
         System.out.println("Encontrado");
+
+        if (asignadosSedes.getCantidadactual()==0){
+            attr.addFlashAttribute("msgNoDevolucion", "No se puede devolver este producto, dado que la cantidad actual es 0.");
+            return "redirect:/sede/productosConfirmados";
+        }
 
         if (ventas.getCantDevol() <= 0) {
             bindingResult.rejectValue("cantDevol", "error.user", "Ingrese una cantidad valida");

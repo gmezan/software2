@@ -27,6 +27,8 @@
                             <h1 class="h3 mb-0 text-gray-800">Lista de productos confirmados</h1>
                         </div>
 
+                        <p class="mb-4">IMPORTANTE: Si la cantidad actual de algun producto es 0, no puede asignar, vender ni devolver</p>
+
                         <!-- Page Heading -->
                         <div id="msgVenta" th:if="${msgError_V != null}" th:text="${msgError_V}"
                              class="alert alert-danger py-1" role="alert"></div>
@@ -36,7 +38,12 @@
                              class="alert alert-danger py-1" role="alert"></div>
                         <div th:if="${msgExito != null}" th:text="${msgExito}"
                              class="alert alert-success py-1" role="alert"></div>
-
+                        <div th:if="${msgNoAsignar != null}" th:text="${msgNoAsignar}" class="alert alert-danger py-1"
+                             role="alert"></div>
+                        <div th:if="${msgNoVenta != null}" th:text="${msgNoVenta}" class="alert alert-danger py-1"
+                             role="alert"></div>
+                        <div th:if="${msgNoDevolucion != null}" th:text="${msgNoDevolucion}" class="alert alert-danger py-1"
+                             role="alert"></div>
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <!--div class="card-header py-3">
@@ -56,7 +63,7 @@
                                                 <th>Comunidad</th>
                                                 <th>Precio de venta (Soles)</th>
                                                 <th>Stock total</th>
-                                                <th>Stock (productos no asignados a una tienda)</th>
+                                                <th>Cantidad actual(productos no asignados)</th>
                                                 <th>Fecha de asignacion</th>
                                                 <th>Foto</th>
                                                 <th>Asignar a una tienda</th>
@@ -74,7 +81,7 @@
                                                 <th>Comunidad</th>
                                                 <th>Precio de venta (Soles)</th>
                                                 <th>Stock total</th>
-                                                <th>Stock (productos no asignados a una tienda)</th>
+                                                <th>Cantidad actual(productos no asignados)</th>
                                                 <th>Fecha de asignacion</th>
                                                 <th>Foto</th>
                                                 <th>Asignar a una tienda</th>
@@ -85,7 +92,7 @@
                                         <tbody>
 
                                             <tr th:each="prodConfirm, i : ${listaProductosConfirmados}"
-                                                th:if="${prodConfirm.getId().estadoasignacion==2}">
+                                                th:if="${prodConfirm.getId().estadoasignacion==2 && prodConfirm.stock!=0}">
                                                 <td th:text="${i.index + 1}">1</td>
                                                 <td th:text="${prodConfirm.id.productoinventario.codigoinventario}"></td>
                                                 <td th:text="${prodConfirm.id.productoinventario.productos.nombre}"></td>
@@ -104,7 +111,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <button th:attr="data-id1=${prodConfirm.id.gestor.idusuarios}, data-id2=${prodConfirm.id.sede.idusuarios},
+                                                    <button th:disabled="${prodConfirm.cantidadactual==0}" th:attr="data-id1=${prodConfirm.id.gestor.idusuarios}, data-id2=${prodConfirm.id.sede.idusuarios},
                                                      data-id3=${prodConfirm.id.productoinventario.codigoinventario},
                                                     data-id4=${prodConfirm.id.estadoasignacion}, data-id5=${prodConfirm.id.precioventa}"
                                                             type="button" class="asign-A-Tienda btn btn-warning"
@@ -112,7 +119,7 @@
                                                             class="fas fa-store"></i></button>
                                                 </td>
                                                 <td>
-                                                    <button th:attr="data-id12=${prodConfirm.id.gestor.idusuarios}, data-id22=${prodConfirm.id.sede.idusuarios},
+                                                    <button th:disabled="${prodConfirm.cantidadactual==0}" th:attr="data-id12=${prodConfirm.id.gestor.idusuarios}, data-id22=${prodConfirm.id.sede.idusuarios},
                                                     data-id32=${prodConfirm.id.productoinventario.codigoinventario},
                                                     data-id42=${prodConfirm.id.estadoasignacion}, data-id52=${prodConfirm.id.precioventa}"
                                                             type="button" class="regis-Venta btn btn-success"
@@ -121,7 +128,7 @@
                                                     </button>
                                                 </td>
                                                 <td>
-                                                    <button th:attr="data-id13=${prodConfirm.id.gestor.idusuarios}, data-id23=${prodConfirm.id.sede.idusuarios},
+                                                    <button th:disabled="${prodConfirm.cantidadactual==0}" th:attr="data-id13=${prodConfirm.id.gestor.idusuarios}, data-id23=${prodConfirm.id.sede.idusuarios},
                                                     data-id33=${prodConfirm.id.productoinventario.codigoinventario},
                                                     data-id43=${prodConfirm.id.estadoasignacion}, data-id53=${prodConfirm.id.precioventa}"
                                                             data-toggle="modal" data-target="#devolucionModal"
@@ -175,6 +182,7 @@
 
                             <div th:if="${msgBoleta != null}" th:text="${msgBoleta}" class="alert alert-danger py-1"
                                  role="alert"></div>
+
 
                             <input type="hidden" class="form-control" id="idgestor" name="idgestor" th:value="${idgestor!=null} ? ${idgestor}">
                             <input type="hidden" class="form-control" id="idestadoasign" name="idestadoasign" th:value="${idestadoasign!=null} ? ${idestadoasign}">

@@ -1,8 +1,6 @@
 var contextPath = window.location.href;
 
-$(document).on("click", ".asign-A-Tienda", function () {
-
-
+$(document).on( "click", ".asign-A-Tienda", function () {
 
 
     $("#AsignarProductoModal  #idgestor2").val($(this).data('id1'));
