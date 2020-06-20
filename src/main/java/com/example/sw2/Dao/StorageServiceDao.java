@@ -29,6 +29,12 @@ public class StorageServiceDao {
 
     public StorageServiceResponse store(Usuarios u, MultipartFile multipartFile) throws IOException {
         if(multipartFile!=null){
+            if (multipartFile.getSize()*0.00000095367432 > 2){
+                return new StorageServiceResponse(){{
+                    setStatus("error");
+                    setMsg("Imagen mayor a 2MB");
+                }};
+            }
             String name = Integer.toString(u.getIdusuarios()*CustomConstants.BIGNUMBER).hashCode()+Integer.toString(u.getIdusuarios());
             StorageServiceResponse response = new RestTemplate().postForObject(BASE_URL+USER_PATH,
                     prepareEntity(multipartFile,name),StorageServiceResponse.class);
@@ -47,6 +53,12 @@ public class StorageServiceDao {
 
     public StorageServiceResponse store(Inventario inventario, MultipartFile multipartFile) throws IOException {
         if(multipartFile!=null){
+            if (multipartFile.getSize()*0.00000095367432 > 2){
+                return new StorageServiceResponse(){{
+                    setStatus("error");
+                    setMsg("Imagen mayor a 2MB");
+                }};
+            }
             String name = inventario.getCodigoinventario();
             StorageServiceResponse response = new RestTemplate().postForObject(BASE_URL+INVENTORY_PATH,
                     prepareEntity(multipartFile,name),StorageServiceResponse.class);
