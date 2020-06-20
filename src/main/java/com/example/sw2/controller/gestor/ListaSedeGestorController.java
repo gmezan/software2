@@ -52,6 +52,7 @@ public class ListaSedeGestorController {
                           @RequestParam(name = "photo", required = false) MultipartFile multipartFile,
                           @RequestParam("type") int type,
                           RedirectAttributes attr, Model model) throws IOException {
+        StorageServiceResponse s2 = null;
 
         if(usuarios.validateUser(bindingResult,type,usuariosRepository).hasErrors()){
             model.addAttribute("formtype",Integer.toString(type))
@@ -61,7 +62,7 @@ public class ListaSedeGestorController {
         }
         else {
             if(!multipartFile.isEmpty()){
-                StorageServiceResponse s2 = storageServiceDao.store(usuarios,multipartFile);
+                s2 = storageServiceDao.store(usuarios,multipartFile);
                 if (!s2.isSuccess()){
                     bindingResult.rejectValue("foto","error.user",s2.getMsg());
                     model.addAttribute("formtype",Integer.toString(type))
@@ -73,7 +74,7 @@ public class ListaSedeGestorController {
             String msg;
             Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD, usuarios.getIdusuarios());
             if (optionalUsuarios.isPresent() && (type==0) ) {
-                usuarios = optionalUsuarios.get().updateFields(usuarios); // actualizar
+                usuarios = optionalUsuarios.get().updateFields(usuarios, s2); // actualizar
                 msg = "Sede actualizada exitosamente";
             }
             else if (type==1){

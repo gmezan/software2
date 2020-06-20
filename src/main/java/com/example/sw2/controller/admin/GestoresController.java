@@ -54,6 +54,8 @@ public class GestoresController {
                           @RequestParam("type") int type,
                           RedirectAttributes attr, Model model) throws IOException {
 
+        StorageServiceResponse s2 = null;
+
         if(usuarios.validateUser(bindingResult,type,usuariosRepository).hasErrors()){
             model.addAttribute("formtype",Integer.toString(type))
                 .addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD))
@@ -62,19 +64,19 @@ public class GestoresController {
         }
         else {
             if(!multipartFile.isEmpty()){
-                StorageServiceResponse s2 = storageServiceDao.store(usuarios,multipartFile);
+                s2 = storageServiceDao.store(usuarios,multipartFile);
                 if (!s2.isSuccess()){
                     bindingResult.rejectValue("foto","error.user",s2.getMsg());
                     model.addAttribute("formtype",Integer.toString(type))
                             .addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD))
                             .addAttribute("msgError", "ERROR");
-                    return "gestor/sedes";
+                    return "admin/listaGestor";
                 }
             }
             String msg;
             Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(ROL_CRUD, usuarios.getIdusuarios());
             if (optionalUsuarios.isPresent() && (type==0) ) {
-                usuarios = optionalUsuarios.get().updateFields(usuarios); // actualizar
+                usuarios = optionalUsuarios.get().updateFields(usuarios,s2); // actualizar
                 msg = "Gestor actualizado exitosamente";
             }
             else if (type==1){

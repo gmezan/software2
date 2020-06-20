@@ -207,5 +207,15 @@ public class Usuarios implements Serializable {
         return this;
     }
 
+    public Usuarios updateFields(Usuarios u2, StorageServiceResponse s2){
+        nombre = u2.getNombre();
+        apellido = u2.getApellido();
+        correo = u2.getCorreo();
+        telefono = u2.getTelefono();
+        if (s2!=null && s2.isSuccess()){
+            foto = u2.getFoto();
+        }
+        return this;
+    }
 
 }
