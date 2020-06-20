@@ -59,9 +59,6 @@ public class AsignadoTiendaController {
         Optional<Ventas> optVentas = ventasRepository.findById(venta.getId());
         AsignacionTiendas aTienda = optaTienda.get();
 
-        venta.setFecha(LocalDate.now());
-        venta.setFechacreacion(LocalDateTime.now());
-
         if(optVentas.isPresent()){
             bindingResult.rejectValue("id.numerodocumento", "error.user", "El número de documento ya ha sido registrado");
         }
@@ -71,7 +68,13 @@ public class AsignadoTiendaController {
         if(venta.getId().getNumerodocumento().equals("")){
             bindingResult.rejectValue("id.numerodocumento", "error.user","Este campo no puede estar vacío");
         }
-
+        if(venta.getFecha() == null){
+            bindingResult.rejectValue("fecha", "error.user","Tiene que asignar una fecha");
+        }else{
+            if(venta.getFecha().isBefore(aTienda.getFechaasignacion())){
+                bindingResult.rejectValue("fecha", "error.user","La fecha de venta no puede ser antes de la fecha de asignación");
+            }
+        }
 
         if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
@@ -83,18 +86,16 @@ public class AsignadoTiendaController {
 
 
         }else{
-
+            venta.setFechacreacion(LocalDateTime.now());
             ventasRepository.save(venta);
             //actualizar stock(Asignados_sedes) cant_total(inventario)
-            asignacionTiendasRepository.registrar_venta_tienda(aTienda.getAsignadosSedes().getId().getGestor().getIdusuarios(),
+            asignacionTiendasRepository.tienda_registra(aTienda.getAsignadosSedes().getId().getGestor().getIdusuarios(),
                     venta.getVendedor().getIdusuarios(), venta.getInventario().getCodigoinventario(),
                     2,venta.getPrecioventa(), venta.getCantidad(), idAstiendas);
 
             attr.addFlashAttribute("msg", "Venta registrada exitosamente");
             return "redirect:/sede/AsignadoTienda";
         }
-
-
     }
 
     @GetMapping("/devolucion")
@@ -108,13 +109,18 @@ public class AsignadoTiendaController {
         Optional<AsignacionTiendas> optAt = asignacionTiendasRepository.findById(idAstiendas);
         AsignacionTiendas at = optAt.get();
 
-
-
         if(v.getCantDevol() > at.getStock()){
             bindingResult.rejectValue("cantDevol", "error.user","La cantidad no puede ser mayor al stock actual de la tienda");
         }
         if(v.getCantDevol() == 0){
             bindingResult.rejectValue("cantDevol", "error.user","La cantidad tiene que ser mayor a 0");
+        }
+        if(v.getFecha() == null){
+            bindingResult.rejectValue("fecha", "error.user","Tiene que asignar una fecha");
+        }else{
+            if(v.getFecha().isBefore(at.getFechaasignacion())){
+                bindingResult.rejectValue("fecha", "error.user","La fecha de devolución no puede ser antes de la fecha de asignación");
+            }
         }
 
         if(bindingResult.hasErrors()){
@@ -127,24 +133,19 @@ public class AsignadoTiendaController {
         }else{
             AsignadosSedes as = at.getAsignadosSedes();
 
+            //AsignadosID = gestor - sede - inventario - estado - precio
             //restar stock(Asignado_Tienda) y sumar cantidadactual(Asigandos_sedes)
-
-            asignacionTiendasRepository.devol_tienda(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
+            //sumar lo devuelto a cant_gestor(inventario)
+            asignacionTiendasRepository.tienda_devolucion(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
                     as.getId().getProductoinventario().getCodigoinventario(), as.getId().getEstadoasignacion(),
                     as.getId().getPrecioventa(),v.getCantDevol(), at.getIdtiendas());
 
-            //sumar lo devuelto a cant_gestor del inventario
             attr.addFlashAttribute("msg","Producto devuelto exitosamente");
 
             return "redirect:/sede/AsignadoTienda";
 
         }
 
-
-
-
-        //AsignadosID = gestor - sede - inventario - estado - precio
-        //sede - producto - estado
     }
 
     //Web service

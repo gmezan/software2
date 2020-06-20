@@ -9,7 +9,7 @@ public interface DatosProductoVentaDto {
     String getNombreproducto();
     String getColorproducto();
     String getTamanhoproducto();
-    String getComunidadproducto ();
+    String getComunidadproducto();
     Date getFechaventa();
-    byte[] getFotoproducto();
+    String getFotoproducto();
 }

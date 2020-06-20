@@ -43,12 +43,12 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
 
 
 
-    @Procedure(name = "registrar_venta_tienda")
-    void registrar_venta_tienda(int dni_gestor, int dni_sede, String codigo,
+    @Procedure(name = "tienda_registra")
+    void tienda_registra(int dni_gestor, int dni_sede, String codigo,
                                 int estado, BigDecimal precio, int cant, int aTienda);
 
-    @Procedure(name = "devol_tienda")
-    void devol_tienda(int dni_gestor, int dni_sede, String codigo,
+    @Procedure(name = "tienda_devolucion")
+    void tienda_devolucion(int dni_gestor, int dni_sede, String codigo,
                       int estado, Float precio, int cant, int aTienda);
 
 
