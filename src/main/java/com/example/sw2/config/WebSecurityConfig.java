@@ -28,11 +28,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/processLogin")
                 .defaultSuccessUrl("/redirectByRole", true);
         http.authorizeRequests()
-                .antMatchers("/loginForm","/signup","/forgotpassword","/processForgotPassword").anonymous()
                 .antMatchers("/admin", "/admin/**").hasAnyAuthority("admin")
                 .antMatchers("/gestor", "/gestor/**").hasAnyAuthority("gestor")
                 .antMatchers("/sede", "/sede/**").hasAnyAuthority("sede")
                 .antMatchers("/notification", "/notification/**").hasAnyAuthority("admin","gestor","sede")
+                .antMatchers("/loginForm","/signup","/forgotpassword","/processForgotPassword").anonymous()
                 .anyRequest().permitAll()
                 ;
 

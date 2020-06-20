@@ -52,7 +52,7 @@ public class ListaSedeGestorController {
                           @RequestParam(name = "photo", required = false) MultipartFile multipartFile,
                           @RequestParam("type") int type,
                           RedirectAttributes attr, Model model) throws IOException {
-        StorageServiceResponse s2 = null;
+        StorageServiceResponse s2 = new StorageServiceResponse();
 
         if(usuarios.validateUser(bindingResult,type,usuariosRepository).hasErrors()){
             model.addAttribute("formtype",Integer.toString(type))
