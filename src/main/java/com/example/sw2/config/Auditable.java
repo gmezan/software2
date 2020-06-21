@@ -10,13 +10,12 @@ import javax.persistence.MappedSuperclass;
 
 import java.time.LocalDateTime;
 
-
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable {
 
     @CreatedDate
-    @Column(columnDefinition = "TIMESTAMP",name = "fecha_creacion", nullable = false)
+    @Column(columnDefinition = "TIMESTAMP",name = "fecha_creacion", nullable = false, updatable= false)
     protected LocalDateTime fechacreacion;
 
     @LastModifiedDate
