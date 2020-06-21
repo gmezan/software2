@@ -1,6 +1,7 @@
 package com.example.sw2.entity;
 
 
+import com.example.sw2.config.Auditable;
 import com.example.sw2.repository.UsuariosRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.bytebuddy.utility.RandomString;
@@ -19,7 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Table(name = "Usuarios")
-public class Usuarios implements Serializable {
+public class Usuarios extends Auditable implements Serializable {
 
     @Id
     @Min(value = 10000000, message = "El número de DNI debe tener 8 dígitos")
@@ -56,12 +57,6 @@ public class Usuarios implements Serializable {
     //@NotBlank
     @Column(nullable = false)
     private Boolean cuentaactivada=true;
-    @LastModifiedDate
-    @Column(name="fecha_modificacion")
-    private LocalDateTime fechamodificacion;
-    @CreatedDate
-    @Column(name="fecha_creacion",nullable =false)
-    private LocalDateTime fechacreacion=LocalDateTime.now();
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "vendedor")
@@ -89,7 +84,7 @@ public class Usuarios implements Serializable {
     public String generateNewPassword(){
         RandomString rs = new RandomString(8);
         int[] randomNum = {ThreadLocalRandom.current().nextInt(0, 9),ThreadLocalRandom.current().nextInt(0, 9)};
-        String newpassword = rs.nextString().toLowerCase()+ String.valueOf(randomNum[0])+ String.valueOf(randomNum[1]) ;
+        String newpassword = rs.nextString().toLowerCase()+ randomNum[0]+ randomNum[1] ;
         password = new BCryptPasswordEncoder().
                 encode(newpassword);
         return newpassword;
@@ -166,22 +161,6 @@ public class Usuarios implements Serializable {
 
     public void setCuentaactivada(Boolean cuentaactivada) {
         this.cuentaactivada = cuentaactivada;
-    }
-
-    public LocalDateTime getFechamodificacion() {
-        return fechamodificacion;
-    }
-
-    public void setFechamodificacion(LocalDateTime fechamodificacion) {
-        this.fechamodificacion = fechamodificacion;
-    }
-
-    public LocalDateTime getFechacreacion() {
-        return fechacreacion;
-    }
-
-    public void setFechacreacion(LocalDateTime fechacreacion) {
-        this.fechacreacion = fechacreacion;
     }
 
 

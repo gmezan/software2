@@ -1,4 +1,5 @@
 package com.example.sw2.entity;
+import com.example.sw2.config.Auditable;
 import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.CustomConstants;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="Asignados_sedes")
-public class AsignadosSedes implements Serializable {
+public class AsignadosSedes extends Auditable implements Serializable {
 
     @EmbeddedId
     private AsignadosSedesId id;
@@ -29,12 +30,7 @@ public class AsignadosSedes implements Serializable {
     private int stock;
     @Column(nullable = false)
     private int cantidadactual;
-    @LastModifiedDate
-    @Column(name="fecha_modificacion")
-    private LocalDateTime fechamodificacion;
-    @CreatedDate
-    @Column(name="fecha_creacion",nullable =false)
-    private LocalDateTime fechacreacion;
+
     private String mensaje;
 
 /*
@@ -60,7 +56,6 @@ public class AsignadosSedes implements Serializable {
         fechaenvio = as.getFechaenvio();
         stock = as.getStock();
         cantidadactual = as.getCantidadactual();
-        fechacreacion = LocalDateTime.now();
     }
 
 
@@ -94,22 +89,6 @@ public class AsignadosSedes implements Serializable {
 
     public void setCantidadactual(int cantidadactual) {
         this.cantidadactual = cantidadactual;
-    }
-
-    public LocalDateTime getFechamodificacion() {
-        return fechamodificacion;
-    }
-
-    public void setFechamodificacion(LocalDateTime fechamodificacion) {
-        this.fechamodificacion = fechamodificacion;
-    }
-
-    public LocalDateTime getFechacreacion() {
-        return fechacreacion;
-    }
-
-    public void setFechacreacion(LocalDateTime fechacreacion) {
-        this.fechacreacion = fechacreacion;
     }
 
     public String getMensaje() {

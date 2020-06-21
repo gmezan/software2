@@ -1,5 +1,6 @@
 package com.example.sw2.entity;
 
+import com.example.sw2.config.Auditable;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -17,7 +18,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="Artesanos")
-public class Artesanos implements Serializable {
+public class Artesanos extends Auditable implements Serializable {
 
     @Id
     @NotBlank(message = "Este campo no puede estar vacío")
@@ -39,12 +40,7 @@ public class Artesanos implements Serializable {
     @ManyToOne
     @JoinColumn(name="comunidad",nullable =false)
     private Comunidades comunidades;
-    @LastModifiedDate
-    @Column(name="fecha_modificacion")
-    private LocalDateTime fechamodificacion;
-    @CreatedDate
-    @Column(name="fecha_creacion",nullable =false)
-    private LocalDateTime fechacreacion;
+
 
 
     @JsonIgnore
@@ -101,22 +97,6 @@ public class Artesanos implements Serializable {
 
     public void setComunidades(Comunidades comunidades) {
         this.comunidades = comunidades;
-    }
-
-    public LocalDateTime getFechamodificacion() {
-        return fechamodificacion;
-    }
-
-    public void setFechamodificacion(LocalDateTime fechamodificacion) {
-        this.fechamodificacion = fechamodificacion;
-    }
-
-    public LocalDateTime getFechacreacion() {
-        return fechacreacion;
-    }
-
-    public void setFechacreacion(LocalDateTime fechacreacion) {
-        this.fechacreacion = fechacreacion;
     }
 
     public String getPartialFullname(){

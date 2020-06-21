@@ -1,6 +1,7 @@
 package com.example.sw2.entity;
 
 
+import com.example.sw2.config.Auditable;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="Asignacion_tienda")
-public class AsignacionTiendas implements Serializable {
+public class AsignacionTiendas extends Auditable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,12 +32,6 @@ public class AsignacionTiendas implements Serializable {
     @JoinColumn(name="tienda",nullable = false)
     @NotNull(message = "Seleccione una tienda de la lista.")
     private Tienda tienda;
-    @LastModifiedDate
-    @Column(name="fecha_modificacion")
-    private LocalDateTime fechamodificacion;
-    @CreatedDate
-    @Column(name="fecha_creacion",nullable =false)
-    private LocalDateTime fechacreacion;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumns({
@@ -78,22 +73,6 @@ public class AsignacionTiendas implements Serializable {
 
     public void setTienda(Tienda tienda) {
         this.tienda = tienda;
-    }
-
-    public LocalDateTime getFechamodificacion() {
-        return fechamodificacion;
-    }
-
-    public void setFechamodificacion(LocalDateTime fechamodificacion) {
-        this.fechamodificacion = fechamodificacion;
-    }
-
-    public LocalDateTime getFechacreacion() {
-        return fechacreacion;
-    }
-
-    public void setFechacreacion(LocalDateTime fechacreacion) {
-        this.fechacreacion = fechacreacion;
     }
 
     public AsignadosSedes getAsignadosSedes() {

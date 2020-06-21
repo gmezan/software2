@@ -1,6 +1,7 @@
 package com.example.sw2.entity;
 
 
+import com.example.sw2.config.Auditable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name="Categorias")
-public class Categorias implements Serializable {
+public class Categorias extends Auditable implements Serializable {
 
     @Id
     @NotBlank
@@ -27,12 +28,7 @@ public class Categorias implements Serializable {
     @Pattern(regexp = "^[A-Za-zÀ-ÿ'. ]+$", message = "Ingrese solo caracteres válidos")
     @Column(nullable = false)
     private String nombre;
-    @LastModifiedDate
-    @Column(name="fecha_modificacion")
-    private LocalDateTime fechamodificacion;
-    @CreatedDate
-    @Column(name="fecha_creacion",nullable =false)
-    private LocalDateTime fechacreacion;
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "categorias")
     private List<Inventario> inventario;
@@ -43,10 +39,6 @@ public class Categorias implements Serializable {
 
     public void setInventario(List<Inventario> inventario) {
         this.inventario = inventario;
-    }
-
-    public Categorias(){
-        this.fechacreacion=LocalDateTime.now();
     }
 
     public String getCodigo() {
@@ -65,19 +57,4 @@ public class Categorias implements Serializable {
         this.nombre = nombre.trim();
     }
 
-    public LocalDateTime getFechamodificacion() {
-        return fechamodificacion;
-    }
-
-    public void setFechamodificacion(LocalDateTime fechamodificacion) {
-        this.fechamodificacion = fechamodificacion;
-    }
-
-    public LocalDateTime getFechacreacion() {
-        return fechacreacion;
-    }
-
-    public void setFechacreacion(LocalDateTime fechacreacion) {
-        this.fechacreacion = fechacreacion;
-    }
 }

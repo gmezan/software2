@@ -1,6 +1,7 @@
 package com.example.sw2.entity;
 
 
+import com.example.sw2.config.Auditable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name="Comunidades")
-public class Comunidades implements Serializable {
+public class Comunidades extends Auditable implements Serializable {
 
     @Id
     @NotBlank
@@ -27,12 +28,6 @@ public class Comunidades implements Serializable {
     @Column(nullable = false)
     @Pattern(regexp = "^[A-Za-zÀ-ÿ'. ]+$", message = "Ingrese solo caracteres válidos")
     private String nombre;
-    @LastModifiedDate
-    @Column(name="fecha_modificacion")
-    private LocalDateTime fechamodificacion;
-    @CreatedDate
-    @Column(name="fecha_creacion",nullable =false)
-    private LocalDateTime fechacreacion;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "comunidades")
@@ -49,10 +44,6 @@ public class Comunidades implements Serializable {
         this.artesanos = artesanos;
     }
 
-    public Comunidades(){
-        this.fechacreacion=LocalDateTime.now();
-    }
-
     public String getCodigo() {
         return codigo;
     }
@@ -67,21 +58,5 @@ public class Comunidades implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre.trim();
-    }
-
-    public LocalDateTime getFechamodificacion() {
-        return fechamodificacion;
-    }
-
-    public void setFechamodificacion(LocalDateTime fechamodificacion) {
-        this.fechamodificacion = fechamodificacion;
-    }
-
-    public LocalDateTime getFechacreacion() {
-        return fechacreacion;
-    }
-
-    public void setFechacreacion(LocalDateTime fechacreacion) {
-        this.fechacreacion = fechacreacion;
     }
 }

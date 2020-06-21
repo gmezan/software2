@@ -1,5 +1,6 @@
 package com.example.sw2.entity;
 
+import com.example.sw2.config.Auditable;
 import com.example.sw2.constantes.VentasId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Ventas")
-public class Ventas implements Serializable {
+public class Ventas extends Auditable implements Serializable {
 
     @EmbeddedId
     private VentasId id;
@@ -44,12 +45,6 @@ public class Ventas implements Serializable {
     @Column(name="precio_venta",nullable = false)
     @NotNull(message = "Debe ingresar un precio de venta")
     private BigDecimal precioventa;
-    @LastModifiedDate
-    @Column(name="fecha_modificacion")
-    private LocalDateTime fechamodificacion;
-    @CreatedDate
-    @Column(name="fecha_creacion",nullable =false)
-    private LocalDateTime fechacreacion;
     @Transient
     private int cantDevol;
 
@@ -132,21 +127,5 @@ public class Ventas implements Serializable {
 
     public void setPrecioventa(BigDecimal precioventa) {
         this.precioventa = precioventa;
-    }
-
-    public LocalDateTime getFechamodificacion() {
-        return fechamodificacion;
-    }
-
-    public void setFechamodificacion(LocalDateTime fechamodificacion) {
-        this.fechamodificacion = fechamodificacion;
-    }
-
-    public LocalDateTime getFechacreacion() {
-        return fechacreacion;
-    }
-
-    public void setFechacreacion(LocalDateTime fechacreacion) {
-        this.fechacreacion = fechacreacion;
     }
 }

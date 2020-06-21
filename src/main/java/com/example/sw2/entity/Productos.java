@@ -1,5 +1,6 @@
 package com.example.sw2.entity;
 
+import com.example.sw2.config.Auditable;
 import com.example.sw2.constantes.CustomConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Range;
@@ -18,7 +19,7 @@ import java.util.List;
 @Entity
 @EnableJpaAuditing
 @Table(name = "Productos")
-public class Productos implements Serializable {
+public class Productos extends Auditable implements Serializable {
 
     @Id
     @NotBlank
@@ -40,12 +41,6 @@ public class Productos implements Serializable {
     @NotBlank
     @Column(name="linea",nullable = false)
     private String codigolinea;
-    @LastModifiedDate
-    @Column(name="fecha_modificacion")
-    private LocalDateTime fechamodificacion;
-    @CreatedDate
-    @Column(name="fecha_creacion",nullable =false)
-    private LocalDateTime fechacreacion;
 
 
     @JsonIgnore
@@ -61,10 +56,6 @@ public class Productos implements Serializable {
     }
 
 
-
-    public Productos(){
-        this.fechacreacion=LocalDateTime.now();
-    }
 
     public String getNombreLinea(){
         return CustomConstants.getLineas().get(this.codigolinea);
@@ -109,21 +100,5 @@ public class Productos implements Serializable {
 
     public String getCodigolinea() {
         return codigolinea;
-    }
-
-    public LocalDateTime getFechamodificacion() {
-        return fechamodificacion;
-    }
-
-    public void setFechamodificacion(LocalDateTime fechamodificacion) {
-        this.fechamodificacion = fechamodificacion;
-    }
-
-    public LocalDateTime getFechacreacion() {
-        return fechacreacion;
-    }
-
-    public void setFechacreacion(LocalDateTime fechacreacion) {
-        this.fechacreacion = fechacreacion;
     }
 }

@@ -149,7 +149,6 @@ public class SedeController {
                 return "sede/ListaProductosConfirmados";
 
             } else {
-                ventas.setFechacreacion(LocalDateTime.now());
                 ventasRepository.save(ventas);
 
                 int StockActual = asignadosSedes.getStock() - ventas.getCantidad();
@@ -222,7 +221,6 @@ public class SedeController {
             List<AsignacionTiendas> asignacionTiendasListOld = asignacionTiendasRepository.findAsignacionTiendasByTiendaAndAsignadosSedes(asignacionTiendas.getTienda(), asignacionTiendas.getAsignadosSedes());
             if (asignacionTiendasListOld.isEmpty()) {
                 asignacionTiendas.setAsignadosSedes(asignadosSedes);
-                asignacionTiendas.setFechacreacion(LocalDateTime.now());
                 asignacionTiendasRepository.save(asignacionTiendas);
             } else {
                 AsignacionTiendas asigTiendaOld = asignacionTiendasListOld.get(0);
@@ -250,7 +248,6 @@ public class SedeController {
             AsignadosSedes newAsignadosSedes = new AsignadosSedes(idNew, asignadosSedesOptional.get());
             attr.addFlashAttribute("msgExito", "Se ha registrado la recepcion correctamente");
             asignadosSedesRepository.save(newAsignadosSedes);
-            newAsignadosSedes.setFechacreacion(LocalDateTime.now());
             asignadosSedesRepository.deleteById(id);
 
         }
@@ -351,7 +348,6 @@ public class SedeController {
                 AsignadosSedes nuevoAs = new AsignadosSedes();
                 nuevoAs.setId(idNew);
                 nuevoAs.setFechaenvio(asignadosSedes.getFechaenvio());
-                nuevoAs.setFechacreacion(LocalDateTime.now());
                 nuevoAs.setCantidadactual(ventas.getCantDevol());
                 nuevoAs.setStock(ventas.getCantDevol());
                 asignadosSedesRepository.save(nuevoAs);

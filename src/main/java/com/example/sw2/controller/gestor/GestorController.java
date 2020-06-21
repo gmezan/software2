@@ -53,8 +53,6 @@ public class GestorController {
             Optional<Usuarios> optionalUsuarios = usuariosRepository.findById(usuarios.getIdusuarios());
             if (optionalUsuarios.isPresent()) {
                 Usuarios usu = optionalUsuarios.get();
-                usuarios.setFechamodificacion(LocalDateTime.now());
-                usuarios.setFechacreacion(usu.getFechacreacion());
                 usuarios.setFoto(usu.getFoto());
                 usuarios.setPassword(usu.getPassword());
                 usuarios.setCuentaactivada(usu.getCuentaactivada());

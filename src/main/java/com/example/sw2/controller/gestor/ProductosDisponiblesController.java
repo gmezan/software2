@@ -86,7 +86,6 @@ public class ProductosDisponiblesController {
             Usuarios usuarios = (Usuarios) session.getAttribute("usuario");
             ventas.setId(new VentasId(tipodocumento, documento));
             ventas.setVendedor(usuarios);
-            ventas.setFechacreacion(LocalDateTime.now());
             ventasRepository.save(ventas);
             attributes.addFlashAttribute("msg", "Venta de producto realizada");
             return "redirect:/gestor/productosDisponibles";
@@ -145,7 +144,6 @@ public class ProductosDisponiblesController {
             Usuarios sedes = optionalUsuarios.get();
             asignadosSedes.setId(new AsignadosSedesId(usuarios, sedes, inv,1,precio));
             asignadosSedes.setCantidadactual(asignadosSedes.getStock());
-            asignadosSedes.setFechacreacion(LocalDateTime.now());
             System.out.println( "La puta fecha sin asignar es " + asignadosSedes.getFechaenvio());
             asignadosSedesRepository.save(asignadosSedes);
 

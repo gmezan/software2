@@ -86,7 +86,6 @@ public class AsignadoTiendaController {
 
 
         }else{
-            venta.setFechacreacion(LocalDateTime.now());
             ventasRepository.save(venta);
             //actualizar stock(Asignados_sedes) cant_total(inventario)
             asignacionTiendasRepository.tienda_registra(aTienda.getAsignadosSedes().getId().getGestor().getIdusuarios(),

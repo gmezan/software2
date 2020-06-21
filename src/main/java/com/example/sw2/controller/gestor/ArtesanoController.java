@@ -62,14 +62,9 @@ public class ArtesanoController {
         else {
             Optional<Artesanos> optionalArtesanos = artesanosRepository.findById(artesanos.getCodigo());
             if (optionalArtesanos.isPresent() && type==0) {
-                Artesanos cat = optionalArtesanos.get();
-                System.out.println(cat.getCodigo());
-                artesanos.setFechamodificacion(LocalDateTime.now());
-                artesanos.setFechacreacion(cat.getFechacreacion());
                 attr.addFlashAttribute("msg", "Artesano actualizado exitosamente");
             }
             else if (type==1){
-                artesanos.setFechacreacion(LocalDateTime.now());
                 attr.addFlashAttribute("msg", "Artesano creado exitosamente");
             }else{
                 attr.addFlashAttribute("msgError", "Hubo un problema, no se pudo guardar");
