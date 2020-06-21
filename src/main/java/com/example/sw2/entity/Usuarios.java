@@ -22,9 +22,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Usuarios implements Serializable {
 
     @Id
-    @Min(value = 100000, message = "El número de DNI debe tener 8 dígitos")
+    @Min(value = 10000000, message = "El número de DNI debe tener 8 dígitos")
     @Max(value = 99999999,  message = "El número de DNI debe tener 8 dígitos")
-    @Digits(integer = 8, fraction = 0,  message = "El número de DNI debe tener 8 dígitos")
     @Column(name = "dni")
     private int idusuarios;
     @Column(nullable = false)
@@ -47,8 +46,8 @@ public class Usuarios implements Serializable {
     @JsonIgnore
     private String password;
     @Positive
-    @Min(value = 100000, message = "Ingrese un número de telefono válido")
-    @Digits(integer = 9, fraction=0, message = "Ingrese un número de celular válido")
+    @Min(value = 90000000, message = "Ingrese un número de telefono válido")
+    @Max(value = 99999999,  message = "Ingrese un número de telefono válido")
     private int telefono;
     @ManyToOne
     @JoinColumn(name = "rol",nullable = false)
