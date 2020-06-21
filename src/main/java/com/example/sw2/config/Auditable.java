@@ -27,15 +27,7 @@ public abstract class Auditable {
         return fechacreacion;
     }
 
-    public void setFechacreacion(LocalDateTime fechacreacion) {
-        this.fechacreacion = fechacreacion;
-    }
-
     public LocalDateTime getFechamodificacion() {
         return fechamodificacion;
-    }
-
-    public void setFechamodificacion(LocalDateTime fechamodificacion) {
-        this.fechamodificacion = fechamodificacion;
     }
 }

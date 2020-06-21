@@ -339,7 +339,7 @@ public class InventarioController {
                     invOld.setFechavencimientoconsignacion(inv.getFechavencimientoconsignacion());
                 }
                 inventarioRepository.save(invOld);
-                att.addFlashAttribute("msg", "Producto "+invOld.getCodigoinventario()+ " editado exitosamente!");
+                att.addFlashAttribute("msg", "Producto "+invOld.getCodigoinventario()+ " actualizado exitosamente!");
             }
 
         }
