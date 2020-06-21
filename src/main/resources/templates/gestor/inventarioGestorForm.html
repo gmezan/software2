@@ -266,7 +266,7 @@
                                                      id="vencimientoConsignacion" class="form-group col-4">
                                                     <label class="col-form-label"><b>Fecha de
                                                         vencimiento(consignación):</b></label>
-                                                    <input th:value="*{fechavencimientoconsignacion}" name="fechaexp" id="fechaexp" type="date"
+                                                    <input th:field="*{fechavencimientoconsignacion}"  type="date"
                                                            class="form-control">
                                                     <div class="text-danger"
                                                          th:if="${#fields.hasErrors('fechavencimientoconsignacion')}"
@@ -352,7 +352,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         <input type="button" class="btn btn-primary" value="Agregar">
-                        </input>
+                        
                     </div>
                 </div>
             </div>

@@ -45,12 +45,21 @@ public class InventarioController {
     @Autowired
     StorageServiceDao storageServiceDao;
 
+    @GetMapping(value = {"/"})
+    public String red() {
+        return "redirect:/gestor/inventario";
+    }
 
     @GetMapping(value = {""})
     public String listInv(@ModelAttribute("inventario") Inventario inventario, Model m) {
         m.addAttribute("listaInv", inventarioRepository.findAll());
 
         return "gestor/inventarioGestor";
+    }
+
+    @GetMapping(value = {"/form/"})
+    public String red2() {
+        return "redirect:/gestor/inventario/form";
     }
 
     @GetMapping(value = {"/form"})
@@ -66,7 +75,6 @@ public class InventarioController {
                        @RequestParam("conDia") String[] conDiastr,
                        @RequestParam(value = "fechadia", required = false) String fechadia,
                        @RequestParam(value = "fechames", required = false) String fechames,
-                       @RequestParam(value = "fechaexp", required = false) String fechaexp,
                        @RequestParam(value = "linea", required = false) String linea,
                        @RequestParam(name = "foto1", required = false) MultipartFile multipartFile) throws IOException {
         if (!inventario.getColor().isEmpty()) {
@@ -78,20 +86,13 @@ public class InventarioController {
 
             }
         }
-        if (!inventario.getFacilitador().isEmpty()) {
-            if (Pattern.compile("[0-9]").matcher(inventario.getFacilitador()).find()) {
-                bindingResult.rejectValue("facilitador", "error.user", "No ingrese valores numéricos.");
-            }
-            if (inventario.getFacilitador().trim().length() == 0) {
-                bindingResult.rejectValue("facilitador", "error.user", "Ingrese un nombre válido.");
-            }
-        }
+        validafacilitador(inventario, bindingResult);
+
 
         LocalDate fechadiaformat = null;
-        LocalDate fechaexpformat = null;
         YearMonth fechamesformat = null;
         LocalDate today = LocalDate.now();
-        Boolean conDia = conDiastr.length == 2;
+        Boolean conDia = (conDiastr.length == 2);
 
         if (conDia) {
             if (fechadia.isEmpty()) {
@@ -133,27 +134,26 @@ public class InventarioController {
             } else {
                 inventario.setComunidades(inventario.getArtesanos().getComunidades());
             }
-            if (fechaexp.isEmpty()) {
-                bindingResult.rejectValue("fechavencimientoconsignacion", "error.user", "Ingrese una fecha.");
-            } else {
-                try {
-                    DateTimeFormatter dateTimeFormat = DateTimeFormatter.ISO_DATE;
-                    fechaexpformat = LocalDate.parse(fechaexp, dateTimeFormat);
-                    inventario.setFechavencimientoconsignacion(fechaexpformat);
+
+            if (!bindingResult.hasFieldErrors("fechavencimientoconsignacion")) {
+                if (inventario.getFechavencimientoconsignacion() == null) {
+                    bindingResult.rejectValue("fechavencimientoconsignacion", "error.user", "Ingrese una fecha.");
+                }else{
                     if (fechadiaformat != null) {
-                        if (!fechaexpformat.isAfter(fechadiaformat)) {
+                        if (!inventario.getFechavencimientoconsignacion().isAfter(fechadiaformat)) {
                             bindingResult.rejectValue("fechavencimientoconsignacion", "error.user", "Debe ser posterior a la adquisición.");
                         }
                     }
                     if (fechamesformat != null) {
-                        if (!fechaexpformat.isAfter(fechamesformat.atEndOfMonth())) {
+                        if (!inventario.getFechavencimientoconsignacion().isAfter(fechamesformat.atEndOfMonth())) {
                             bindingResult.rejectValue("fechavencimientoconsignacion", "error.user", "Debe ser posterior a la adquisición.");
                         }
                     }
-                } catch (Exception e) {
-                    bindingResult.rejectValue("dia", "error.user", "Ingrese una fecha válida.");
+
                 }
             }
+
+
         }
 
         Optional<Inventario> optionalInventario = inventarioRepository.findInventariosByNumpedido(inventario.getNumpedido());
@@ -192,6 +192,7 @@ public class InventarioController {
                 m.addAttribute("listProd", productosRepository.findAll());
                 return "gestor/inventarioGestorForm";
             }
+
             // subida de FOTO
             if(!multipartFile.isEmpty()){
                 StorageServiceResponse s2 = storageServiceDao.store(inventario,multipartFile);
@@ -203,23 +204,11 @@ public class InventarioController {
                     }
                     return "gestor/inventarioGestorForm";
                 }
-            }
+            }//
+
             inventario.setCodigoinventario(codInv);
             inventario.setFechacreacion(LocalDateTime.now());
             inventario.setCantidadgestor(inventario.getCantidadtotal());
-            /*
-            //se necesita checar si hay un inventario idéntico para sumar
-            Optional<Inventario> optionalInventario =
-                    inventarioRepository.findById(inventario.getCodigoinventario());
-            if(optionalInventario.isPresent()){
-                Inventario inv = optionalInventario.get();
-                inv.setCantidadtotal(inv.getCantidadtotal()+inventario.getCantidadtotal());
-                inv.setCantidadgestor(inv.getCantidadgestor()+inventario.getCantidadtotal());
-                inventario = inv;
-            }
-            else {
-                inventario.setCantidadgestor(inventario.getCantidadtotal());
-            }*/
 
             inventarioRepository.save(inventario);
             attributes.addFlashAttribute("msg", "Producto registrado exitosamente! Codigo generado: " + codInv);
@@ -238,7 +227,7 @@ public class InventarioController {
 
         }
 
-        int cantInt = 0;
+        int cantInt;
         try {
             cantInt = Integer.parseInt(cant);
             if (cantInt < 0) {
@@ -255,7 +244,7 @@ public class InventarioController {
         Inventario inventario = opt.get();
         inventario.setCantidadtotal(cantInt + inventario.getCantidadtotal());
         inventario.setCantidadgestor(cantInt + inventario.getCantidadgestor());
-        attributes.addFlashAttribute("msg", "Producto añadido exitosamente!");
+        attributes.addFlashAttribute("msg", cantInt + " productos de código " + inventario.getCodigoinventario() + " añadidos exitosamente!");
 
 
         return "redirect:/gestor/inventario";
@@ -263,78 +252,99 @@ public class InventarioController {
 
 
     @PostMapping("/editInv")
-    public String editInv(@ModelAttribute("inventario") Inventario inv,
+    public String editInv(@ModelAttribute("inventario") @Valid Inventario inv,
                           BindingResult bindingResult,
-                          @RequestParam(name = "fechaexp", required = false) String fechavencimiento,
                           RedirectAttributes att,
                           Model m) {
         Optional<Inventario> opt = inventarioRepository.findById(inv.getCodigoinventario());
 
+
         if (!opt.isPresent()) {
             att.addFlashAttribute("msgError", "PRODUCTO NO ENCONTRADO");
-            return "redirect:/gestor/inventario";
+
+        } else {
+            Inventario invOld = opt.get();
+            validafacilitador(inv, bindingResult);
+            if (inv.getCodAdquisicion() == 1) {
+                if (inv.getFechavencimientoconsignacion() == null) {
+                    bindingResult.rejectValue("fechavencimientoconsignacion", "error.user", "Ingrese una fecha.");
+                }
+                if (!bindingResult.hasFieldErrors("fechavencimientoconsignacion")) {
+                    if (invOld.getDia() == 0) {
+                        DateTimeFormatter mesFormat = DateTimeFormatter.ofPattern("yyyy-MM");
+
+                        String fechames = invOld.getAnho() + "-";
+                        if (invOld.getMes() < 10) {
+                            fechames += "0" + invOld.getMes();
+                        } else {
+                            fechames += invOld.getMes();
+                        }
+
+                        YearMonth fechamesformat = YearMonth.parse(fechames, mesFormat);
+
+                        if (fechamesformat != null) {
+                            if (!inv.getFechavencimientoconsignacion().isAfter(fechamesformat.atEndOfMonth())) {
+                                bindingResult.rejectValue("fechavencimientoconsignacion", "error.user", "Debe ser posterior a la adquisición (" + fechamesformat + ")");
+                            }
+                        }
+                    } else {
+                        LocalDate fechadiaformat = invOld.getFechaadquisicion();
+                        if (fechadiaformat != null) {
+                            if (!inv.getFechavencimientoconsignacion().isAfter(fechadiaformat)) {
+                                bindingResult.rejectValue("fechavencimientoconsignacion", "error.user", "Debe ser posterior a la adquisición (" + fechadiaformat + ")");
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            if (bindingResult.hasFieldErrors("facilitador") || bindingResult.hasFieldErrors("costomosqoy") || bindingResult.hasFieldErrors("costotejedor") || bindingResult.hasFieldErrors("fechavencimientoconsignacion")) {
+                m.addAttribute("listaInv", inventarioRepository.findAll());
+                m.addAttribute("msgError", "ERROR DE EDICION");
+                m.addAttribute("msgError", "ERROR DE EDICION");
+                return "gestor/inventarioGestor";
+            } else {
+
+                invOld.setCostotejedor(inv.getCostotejedor());
+                invOld.setCostomosqoy(inv.getCostomosqoy());
+
+                invOld.setFacilitador(inv.getFacilitador());
+                if (inv.getCodAdquisicion() == 1) {
+                    invOld.setFechavencimientoconsignacion(inv.getFechavencimientoconsignacion());
+                }
+                inventarioRepository.save(invOld);
+                att.addFlashAttribute("msg", "Producto editado exitosamente!");
+            }
 
         }
+        return "redirect:/gestor/inventario";
+    }
+
+    private void validafacilitador(Inventario inv, BindingResult bindingResult) {
         if (!inv.getFacilitador().isEmpty()) {
             if (Pattern.compile("[0-9]").matcher(inv.getFacilitador()).find()) {
                 bindingResult.rejectValue("facilitador", "error.user", "No ingrese valores numéricos.");
             }
-            if (inv.getFacilitador().trim().length() == 0) {
-                bindingResult.rejectValue("facilitador", "error.user", "Ingrese un nombre válido.");
-            }
         }
-
-        if (inv.getCodAdquisicion() == 1) {
-            try {
-                DateTimeFormatter dateTimeFormat = DateTimeFormatter.ISO_DATE;
-                LocalDate fechavencimientoF = LocalDate.parse(fechavencimiento, dateTimeFormat);
-                inv.setFechavencimientoconsignacion(fechavencimientoF);
-
-            } catch (Exception e) {
-                bindingResult.rejectValue("facilitador", "error.user", "Ingrese un nombre válido.");
-                return "redirect:/gestor/inventario";
-
-            }
-        }
-
-
-
-        if (bindingResult.hasErrors()) {
-            m.addAttribute("listaInv", inventarioRepository.findAll());
-            m.addAttribute("msgError", "ERROR DE EDICION");
-
-            return "gestor/inventarioGestor";
-        }else {
-            Inventario invOld = opt.get();
-            invOld.setCostotejedor(inv.getCostotejedor());
-            invOld.setCostomosqoy(inv.getCostomosqoy());
-
-            invOld.setFacilitador(inv.getFacilitador());
-            if (inv.getCodAdquisicion() == 1) {
-                invOld.setFechavencimientoconsignacion(inv.getFechavencimientoconsignacion());
-            }
-            inventarioRepository.save(invOld);
-            att.addFlashAttribute("msg", "Producto editado exitosamente!");
-        }
-
-        return "redirect:/gestor/inventario";
     }
+
     @GetMapping("/delete")
     public String borrar(Model model,
                          @RequestParam("codDelete") String id,
                          RedirectAttributes attr) {
         Optional<Inventario> c = inventarioRepository.findById(id);
         if (c.isPresent()) {
-            try{
+            try {
                 inventarioRepository.deleteById(id);
-            }catch(Exception e){
-                attr.addFlashAttribute("msgError","El registro seleccionado no puede ser borrado");
+            } catch (Exception e) {
+                attr.addFlashAttribute("msgError", "El registro seleccionado no puede ser borrado");
                 return "redirect:/gestor/inventario";
             }
 
-            attr.addFlashAttribute("msg","Registro borrado exitosamente!");
-        }else{
-            attr.addFlashAttribute("msgError","El registro seleccionado no existe");
+            attr.addFlashAttribute("msg", "Registro borrado exitosamente!");
+        } else {
+            attr.addFlashAttribute("msgError", "El registro seleccionado no existe");
         }
         return "redirect:/gestor/inventario";
     }
@@ -372,7 +382,7 @@ public class InventarioController {
 
     //Web service
     @ResponseBody
-    @GetMapping(value = "/getInv", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/getInv", "/editInv/getInv"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<Inventario>> getInv(@RequestParam(value = "id") String cod) {
         return new ResponseEntity<>(inventarioRepository.findById(cod), HttpStatus.OK);
     }

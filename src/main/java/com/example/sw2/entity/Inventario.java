@@ -83,13 +83,13 @@ public class Inventario implements Serializable {
 
     @Column(nullable = false)
     @Digits(integer = 9, fraction = 2, message = "Costo no válido.")
-    @Positive()
+    @Positive(message = "Debe ser mayor a cero.")
     @NotNull(message = "Ingrese un costo.")
     private BigDecimal costotejedor;
 
     @Column(nullable = false)
     @Digits(integer = 9, fraction = 2, message = "Costo no válido.")
-    @Positive()
+    @Positive(message = "Debe ser mayor a cero.")
     @NotNull(message = "Ingrese un costo.")
     private BigDecimal costomosqoy;
 
@@ -224,6 +224,7 @@ public class Inventario implements Serializable {
     }
 
     public void setFechaMesFORMAT(YearMonth fechamesformat) {
+        this.setFechaadquisicion(fechamesformat.atEndOfMonth());
         this.setDia(0);
         this.setMes(fechamesformat.getMonthValue());
         this.setAnho(fechamesformat.getYear());

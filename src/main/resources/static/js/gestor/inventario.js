@@ -1,24 +1,26 @@
 var contextPath = window.location.href;
 
 $("#addForm #linea").on('change', function () {
+    let prodList = $("#addForm #productos");
     let option = this.value;
     if (option === "no") {
-        $("#addForm #productos").empty();
-        $("#addForm #productos").append("<option value=''>-Debe elegir una línea-</option>");
+
+        prodList.empty();
+        prodList.append("<option value=''>-Debe elegir una línea-</option>");
     } else {
         $.ajax({
             method: "GET", url: contextPath + "/getLinea?linea=" + option
         }).done(function (lista) {
             if (lista != null) {
                 let len = lista.length;
-                $("#addForm #productos").empty();
-                if (lista.length != 0) {
-                    $("#addForm #productos").append("<option value=''>--- Seleccionar ---</option>");
+                prodList.empty();
+                if (lista.length !== 0) {
+                    prodList.append("<option value=''>--- Seleccionar ---</option>");
                     for (let i = 0; i < len; i++) {
-                        $("#addForm #productos").append("<option value='" + lista[i].codigonom + "'>" + lista[i].nombre + "</option>");
+                        prodList.append("<option value='" + lista[i].codigonom + "'>" + lista[i].nombre + "</option>");
                     }
                 } else {
-                    $("#addForm #productos").append("<option value=''>--- No tiene productos ---</option>");
+                    prodList.append("<option value=''>--- No tiene productos ---</option>");
                 }
             }
         }).fail(function (err) {
@@ -51,24 +53,24 @@ $("#addForm #comunidades").on('change', function () {
 });
 
 function updateArtesanos(option) {
-
+    let artList = $("#addForm #artesanos");
     if (option === '') {
-        $("#addForm #artesanos").empty();
-        $("#addForm #artesanos").append("<option value=''>-Debe elegir una comunidad-</option>");
+        artList.empty();
+        artList.append("<option value=''>-Debe elegir una comunidad-</option>");
     } else {
         $.ajax({
             method: "GET", url: contextPath + "/getArtesanos?comunidad=" + option
         }).done(function (lista) {
             if (lista != null) {
                 let len = lista.length;
-                $("#addForm #artesanos").empty();
-                if (lista.length != 0) {
-                    $("#addForm #artesanos").append("<option value=''>--- Seleccionar ---</option>");
+                artList.empty();
+                if (lista.length !== 0) {
+                    artList.append("<option value=''>--- Seleccionar ---</option>");
                     for (let i = 0; i < len; i++) {
-                        $("#addForm #artesanos").append("<option value='" + lista[i].codigo + "'>" + lista[i].nombre + " " + lista[i].apellidopaterno + "</option>");
+                        artList.append("<option value='" + lista[i].codigo + "'>" + lista[i].nombre + " " + lista[i].apellidopaterno + "</option>");
                     }
                 } else {
-                    $("#addForm #artesanos").append("<option value=''>--- No tiene artesanos ---</option>");
+                    artList.append("<option value=''>--- No tiene artesanos ---</option>");
                 }
             }
 
@@ -103,26 +105,9 @@ $("#addForm #fechames").on('change', function () {
 
 });
 
-function setminfecha(fechasig) {
-    let month = fechasig.getMonth() + 1;
-    let fechastr = " ";
-    if (month < 10) {
-        fechastr = fechasig.getFullYear() + "-0" + month;
-    } else {
-        fechastr = fechasig.getFullYear() + "-" + month;
-    }
-    if (fechasig.getDate() < 10) {
-        fechastr = fechastr + "-0" + fechasig.getDate();
-    } else {
-        fechastr = fechastr + "-" + fechasig.getDate();
-    }
-    $("#addForm #fechaexp").prop("min", fechastr);
-}
-
 $(document).on("click", ".add-inventario", function () {
     $("#addModal #cant").val('1');
     $("#addModal #msgc").text('');
-    $("#addModal #codinvAdd").val('');
     $("#addModal #codinvAdd").val($(this).data('id'));
 });
 
@@ -131,19 +116,22 @@ $(document).ready(function () {
         //$('#formModal').modal('show');
         $('#addModal').modal({show: true, backdrop: 'static', keyboard: false});
     }
+
 });
 
 $(document).on("click", ".edit-inventario", function () {
     $("#editModal #costotejedor").val('');
     $("#editModal #costomosqoy").val('');
     $("#editModal #facilitador").val('');
-    $("#editModal #fechaexp").val('');
+    $("#editModal #fechavencimientoconsignacion").val('');
 
     $("#editModal #codAdquisicion").val('');
 
-    $("#editModal #codigoinventario").val('');
+
+    $("#editModal .errorInv").text('');
+    $("#editModal .modal-title").text("Editar " + $(this).data('id'));
     $("#editModal #codigoinventario").val($(this).data('id'));
-    $("#editModal #vencimientoConsignacion").prop("hidden",true);
+    $("#editModal #vencimientoConsignacion").prop("hidden", true);
 
 
     $.ajax({
@@ -154,18 +142,39 @@ $(document).on("click", ".edit-inventario", function () {
             $("#editModal #costotejedor").val(inv.costotejedor);
             $("#editModal #costomosqoy").val(inv.costomosqoy);
             $("#editModal #facilitador").val(inv.facilitador);
-            if (inv.codAdquisicion == 1) {
-                $("#editModal #vencimientoConsignacion").prop("hidden",false);
-                $("#editModal #fechaexp").val(inv.fechavencimientoconsignacion);
+            if (inv.codAdquisicion === 1) {
+                $("#editModal #vencimientoConsignacion").prop("hidden", false);
+                $("#editModal #fechavencimientoconsignacion").val(inv.fechavencimientoconsignacion);
+                let fechasig;
+                if (inv.dia === 0) {
+                    fechasig = new Date(inv.anho, inv.mes, 1);
+                } else {
+                    fechasig = new Date(inv.anho, inv.mes - 1, inv.dia);
+                    fechasig.setDate(fechasig.getDate() + 1);
+                }
+                setminfecha(fechasig);
             }
         }
     }).fail(function (err) {
         alert("Ocurrió un error");
         $('#editModal').modal('hide');
     })
-
-
 });
+
+function setminfecha(fechasig) {
+    let month = fechasig.getMonth() + 1;
+    if (month < 10) {
+        fechastr = fechasig.getFullYear() + "-0" + month;
+    } else {
+        fechastr = fechasig.getFullYear() + "-" + month;
+    }
+    if (fechasig.getDate() < 10) {
+        fechastr = fechastr + "-0" + fechasig.getDate();
+    } else {
+        fechastr = fechastr + "-" + fechasig.getDate();
+    }
+    $("#fechavencimientoconsignacion").prop("min", fechastr);
+}
 
 $(document).ready(function () {
     if ($("#msgError").text() === "ERROR DE EDICION") {
@@ -175,6 +184,27 @@ $(document).ready(function () {
 });
 
 $(document).on("click", ".delete-inventario", function () {
-    $("#deleteModal #codDelete").val('');
+
+    $("#deleteModal .modal-title").text("Borrar " + $(this).data('id'));
+
     $("#deleteModal #codDelete").val($(this).data('id'));
+});
+$(document).on("click", ".show-foto", function () {
+
+    $("#showFoto #fototitle").text($(this).data('id'));
+    let foto = $("#showFoto #fotoinv");
+    foto.attr("src", "");
+    foto.attr("alt", "Cargando foto...");
+    $.ajax({
+        method: "GET", url: contextPath + "/getInv?id=" + $(this).data('id')
+    }).done(function (inv) {
+        if (inv != null) {
+            foto.attr("src", inv.foto);
+            foto.attr("alt", "No se encuentra una foto :(");
+        }
+    }).fail(function (err) {
+        alert("Ocurrió un error");
+        $('#editModal').modal('hide');
+    })
+
 });
