@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -52,7 +53,7 @@ public class InventarioController {
 
     @GetMapping(value = {""})
     public String listInv(@ModelAttribute("inventario") Inventario inventario, Model m) {
-        m.addAttribute("listaInv", inventarioRepository.findAll());
+        m.addAttribute("listaInv", inventarioRepository.findAllByOrderByFechamodificacionDesc());
 
         return "gestor/inventarioGestor";
     }
@@ -138,7 +139,7 @@ public class InventarioController {
             if (!bindingResult.hasFieldErrors("fechavencimientoconsignacion")) {
                 if (inventario.getFechavencimientoconsignacion() == null) {
                     bindingResult.rejectValue("fechavencimientoconsignacion", "error.user", "Ingrese una fecha.");
-                }else{
+                } else {
                     if (fechadiaformat != null) {
                         if (!inventario.getFechavencimientoconsignacion().isAfter(fechadiaformat)) {
                             bindingResult.rejectValue("fechavencimientoconsignacion", "error.user", "Debe ser posterior a la adquisición.");
@@ -173,6 +174,10 @@ public class InventarioController {
             m.addAttribute("linea", linea);
             m.addAttribute("listProd", productosRepository.findProductosByCodigolinea(linea));
         }
+        /*
+        if (multipartFile.isEmpty()) {
+            bindingResult.rejectValue("foto", "error.user", "Debe subir una foto.");
+        }*/
 
         if (bindingResult.hasErrors()) {
             listasCamposInv(m);
@@ -193,25 +198,46 @@ public class InventarioController {
                 return "gestor/inventarioGestorForm";
             }
 
-            // subida de FOTO
-            if(!multipartFile.isEmpty()){
-                StorageServiceResponse s2 = storageServiceDao.store(inventario,multipartFile);
-                if (!s2.isSuccess()){
-                    bindingResult.rejectValue("foto","error.user",s2.getMsg());
+            /*/ subida de FOTO
+            try {
+                StorageServiceResponse s2 = storageServiceDao.store(inventario, multipartFile);
+                if (!s2.isSuccess()) {
+                    bindingResult.rejectValue("foto", "error.user", s2.getMsg());
                     listasCamposInv(m);
                     if (inventario.getComunidades() != null) {
                         m.addAttribute("listArt", artesanosRepository.findArtesanosByComunidades_Codigo(inventario.getComunidades().getCodigo()));
                     }
                     return "gestor/inventarioGestorForm";
                 }
-            }//
+            }catch (HttpClientErrorException e){
+                bindingResult.rejectValue("foto", "error.user", "Error en foto");
+                listasCamposInv(m);
+                if (inventario.getComunidades() != null) {
+                    m.addAttribute("listArt", artesanosRepository.findArtesanosByComunidades_Codigo(inventario.getComunidades().getCodigo()));
+                }
+                return "gestor/inventarioGestorForm";
+
+
+
+            }
+            /*/
+            inventario.setFoto(".");
 
             inventario.setCodigoinventario(codInv);
-            inventario.setFechacreacion(LocalDateTime.now());
+
             inventario.setCantidadgestor(inventario.getCantidadtotal());
 
-            inventarioRepository.save(inventario);
-            attributes.addFlashAttribute("msg", "Producto registrado exitosamente! Codigo generado: " + codInv);
+
+            try {
+                inventarioRepository.save(inventario);
+                attributes.addFlashAttribute("msg", "Producto registrado exitosamente! Codigo generado: " + codInv);
+
+            } catch (Exception e) {
+                attributes.addFlashAttribute("msgError", "ERROR DE REGISTRO");
+            }
+
+
+            //attributes.addFlashAttribute("msg", "Producto registrado exitosamente! Codigo generado: " + codInv);
 
             return "redirect:/gestor/inventario";
         }
@@ -300,8 +326,7 @@ public class InventarioController {
 
 
             if (bindingResult.hasFieldErrors("facilitador") || bindingResult.hasFieldErrors("costomosqoy") || bindingResult.hasFieldErrors("costotejedor") || bindingResult.hasFieldErrors("fechavencimientoconsignacion")) {
-                m.addAttribute("listaInv", inventarioRepository.findAll());
-                m.addAttribute("msgError", "ERROR DE EDICION");
+                m.addAttribute("listaInv", inventarioRepository.findAllByOrderByFechamodificacionDesc());
                 m.addAttribute("msgError", "ERROR DE EDICION");
                 return "gestor/inventarioGestor";
             } else {
@@ -314,7 +339,7 @@ public class InventarioController {
                     invOld.setFechavencimientoconsignacion(inv.getFechavencimientoconsignacion());
                 }
                 inventarioRepository.save(invOld);
-                att.addFlashAttribute("msg", "Producto editado exitosamente!");
+                att.addFlashAttribute("msg", "Producto "+invOld.getCodigoinventario()+ " editado exitosamente!");
             }
 
         }

@@ -1,10 +1,9 @@
 package com.example.sw2.entity;
 
+import com.example.sw2.config.Auditable;
 import com.example.sw2.constantes.CustomConstants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -13,12 +12,11 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.YearMonth;
 
 @Entity
 @Table(name = "Inventario")
-public class Inventario implements Serializable {
+public class Inventario extends Auditable implements Serializable {
 
     @Id
     @Column(name = "codigo_inventario")
@@ -102,13 +100,6 @@ public class Inventario implements Serializable {
     @Column(name = "fecha_vencimiento_consignacion")
     private LocalDate fechavencimientoconsignacion;
 
-    @LastModifiedDate
-    @Column(name = "fecha_modificacion")
-    private LocalDateTime fechamodificacion;
-
-    @CreatedDate
-    @Column(name = "fecha_creacion", nullable = false)
-    private LocalDateTime fechacreacion;
 
     public Inventario() {
     }
@@ -336,19 +327,4 @@ public class Inventario implements Serializable {
         this.fechavencimientoconsignacion = fechavencimientoconsignacion;
     }
 
-    public LocalDateTime getFechamodificacion() {
-        return fechamodificacion;
-    }
-
-    public void setFechamodificacion(LocalDateTime fechamodificacion) {
-        this.fechamodificacion = fechamodificacion;
-    }
-
-    public LocalDateTime getFechacreacion() {
-        return fechacreacion;
-    }
-
-    public void setFechacreacion(LocalDateTime fechacreacion) {
-        this.fechacreacion = fechacreacion;
-    }
 }
