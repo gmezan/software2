@@ -84,7 +84,7 @@ public class Usuarios extends Auditable implements Serializable {
     public String generateNewPassword(){
         RandomString rs = new RandomString(8);
         int[] randomNum = {ThreadLocalRandom.current().nextInt(0, 9),ThreadLocalRandom.current().nextInt(0, 9)};
-        String newpassword = rs.nextString().toLowerCase()+ randomNum[0]+ randomNum[1] ;
+        String newpassword = rs.nextString().toLowerCase()+ String.valueOf(randomNum[0])+ String.valueOf(randomNum[1]) ;
         password = new BCryptPasswordEncoder().
                 encode(newpassword);
         return newpassword;
