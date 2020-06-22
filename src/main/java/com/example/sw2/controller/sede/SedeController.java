@@ -81,8 +81,14 @@ public class SedeController {
                                  @RequestParam(value = "vendedor") int idsede,
                                  @RequestParam(value = "inventario") String idproductoinv,
                                  @RequestParam(value = "idestadoasign") int idestadoasign,
-                                 @RequestParam(value = "idprecioventa") Float idprecioventa,
+                                 @RequestParam(value = "precioventa") Float idprecioventa,
                                  RedirectAttributes attr, HttpSession session, Model model) {
+
+        System.out.println(idgestor);
+        System.out.println(idsede);
+        System.out.println(idproductoinv);
+        System.out.println(idestadoasign);
+        System.out.println(idprecioventa);
 
         AsignadosSedesId id = new AsignadosSedesId(usuariosRepository.findById(idgestor).get(), usuariosRepository.findById(idsede).get(),
                 inventarioRepository.findById(idproductoinv).get(),
@@ -91,9 +97,27 @@ public class SedeController {
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
 
-        if (asignadosSedes.getCantidadactual()==0){
+        if (asignadosSedes.getCantidadactual() == 0) {
             attr.addFlashAttribute("msgNoVenta", "No se puede registrar la venta de este producto, dado que la cantidad actual es 0.");
             return "redirect:/sede/productosConfirmados";
+        }
+
+        if (!ventas.getRucdni().isEmpty()) {
+            if (ventas.getRucdni().trim().length() == 9) {
+                bindingResult.rejectValue("rucdni", "error.user", "Ingrese un Ruc(11 dígitos) / DNI(8 dígitos) válido.");
+            }
+            if (ventas.getRucdni().trim().length() == 10) {
+                bindingResult.rejectValue("rucdni", "error.user", "Ingrese un Ruc(11 dígitos) / DNI(8 dígitos) válido.");
+            }
+            if (ventas.getRucdni().trim().length() < 8) {
+                bindingResult.rejectValue("rucdni", "error.user", "Ingrese un Ruc(11 dígitos) / DNI(8 dígitos) válido.");
+            }
+            if (ventas.getRucdni().trim().length() > 11) {
+                bindingResult.rejectValue("rucdni", "error.user", "Ingrese un Ruc(11 dígitos) / DNI(8 dígitos) válido.");
+            }
+            if (!Pattern.compile("[0-9]").matcher(ventas.getRucdni()).find()) {
+                bindingResult.rejectValue("rucdni", "error.user", "Ingrese solo valores numéricos.");
+            }
         }
 
         if (ventas.getCantidad() <= 0) {
@@ -126,14 +150,13 @@ public class SedeController {
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
 
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasFieldErrors("id") || bindingResult.hasFieldErrors("rucdni") || bindingResult.hasFieldErrors("nombrecliente") || bindingResult.hasFieldErrors("lugarventa") || bindingResult.hasFieldErrors("fecha") || bindingResult.hasFieldErrors("cantidad")   ) {
             model.addAttribute("venta", ventas);
             model.addAttribute("idgestor", idgestor);
             model.addAttribute("vendedor", idsede);
-           // model.addAttribute("codinv", idproductoinv);
             model.addAttribute("inventario", idproductoinv);
             model.addAttribute("idestadoasign", idestadoasign);
-            model.addAttribute("idprecioventa", idprecioventa);
+            model.addAttribute("precioventa", idprecioventa);
             model.addAttribute("listaTiendas", tiendaRepository.findAll());
             model.addAttribute("msgError_V", "ERROR");
             model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
@@ -164,7 +187,9 @@ public class SedeController {
                 attr.addFlashAttribute("msgExito", "Venta registrada exitosamente");
                 return "redirect:/sede/productosConfirmados";
             }
+
         }
+
     }
 
 
@@ -172,69 +197,56 @@ public class SedeController {
     public String asignarProducto(@ModelAttribute("asignaciontiendas") @Valid AsignacionTiendas asignacionTiendas,
                                   BindingResult bindingResult,
                                   @ModelAttribute("venta") Ventas venta,
-                                  @RequestParam(value = "gestor") int idgestor,
-                                  @RequestParam(value = "sede") int idsede,
-                                  @RequestParam(value = "inventario1") String idproductoinv,
-                                  @RequestParam(value = "estadoasignacion") int idestadoasign,
-                                  @RequestParam(value = "precioventa") Float idprecioventa,
-                                  BindingResult bindingResult2,
                                   RedirectAttributes attr, HttpSession session, Model model) {
 
-        AsignadosSedesId id = new AsignadosSedesId(usuariosRepository.findById(idgestor).get(), usuariosRepository.findById(idsede).get(),
-                inventarioRepository.findById(idproductoinv).get(),
-                idestadoasign, idprecioventa);
+        Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(asignacionTiendas.getAsignadosSedes().getId());
 
-        Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
-        AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
+        if (asignadosSedesOptional.isPresent()) {
+            AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
 
-        if (asignadosSedes.getCantidadactual()==0){
-            attr.addFlashAttribute("msgNoAsignar", "No se puede asignar este producto, dado que la cantidad actual es 0.");
-            return "redirect:/sede/productosConfirmados";
-        }
-
-        if (asignacionTiendas.getStock() <= 0) {
-            bindingResult.rejectValue("stock", "error.user", "Ingrese una cantidad valida");
-        } else {
-
-            if (asignacionTiendas.getStock() > asignadosSedes.getCantidadactual()) {
-                bindingResult.rejectValue("stock", "error.user", "La cantidad asignada no puede ser mayor a la cantidad actual de la sede");
+            if (asignadosSedes.getCantidadactual() == 0) {
+                attr.addFlashAttribute("msgNoAsignar", "No se puede asignar este producto, dado que la cantidad actual es 0.");
+                return "redirect:/sede/productosConfirmados";
             }
-        }
 
-        if (bindingResult.hasErrors()) {
-            Usuarios sede = (Usuarios) session.getAttribute("usuario");
-            model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
-            model.addAttribute("listaTiendas", tiendaRepository.findAll());
-            model.addAttribute("msgError_A", "ERROR");
-            model.addAttribute("gestor", idgestor);
-            model.addAttribute("sede", idsede);
-            // model.addAttribute("codinv", idproductoinv);
-            model.addAttribute("inventario1", idproductoinv);
-            model.addAttribute("estadoasignacion", idestadoasign);
-            model.addAttribute("precioventa", idprecioventa);
-            model.addAttribute("venta", venta);
-
-            return "sede/ListaProductosConfirmados";
-        } else {
-
-
-            List<AsignacionTiendas> asignacionTiendasListOld = asignacionTiendasRepository.findAsignacionTiendasByTiendaAndAsignadosSedes(asignacionTiendas.getTienda(), asignacionTiendas.getAsignadosSedes());
-            if (asignacionTiendasListOld.isEmpty()) {
-                asignacionTiendas.setAsignadosSedes(asignadosSedes);
-                asignacionTiendasRepository.save(asignacionTiendas);
+            if (asignacionTiendas.getStock() <= 0) {
+                bindingResult.rejectValue("stock", "error.user", "Ingrese una cantidad valida");
             } else {
-                AsignacionTiendas asigTiendaOld = asignacionTiendasListOld.get(0);
-                asigTiendaOld.setStock(asignacionTiendas.getStock() + asigTiendaOld.getStock());
-                asigTiendaOld.setFechaasignacion(asignacionTiendas.getFechaasignacion());
-                asigTiendaOld.setAsignadosSedes(asignadosSedes);
-                asignacionTiendasRepository.save(asigTiendaOld);
+                if (asignacionTiendas.getStock() > asignadosSedes.getCantidadactual()) {
+                    bindingResult.rejectValue("stock", "error.user", "La cantidad asignada no puede ser mayor a la cantidad actual de la sede");
+                }
             }
-            asignadosSedes.setCantidadactual(asignadosSedes.getCantidadactual() - asignacionTiendas.getStock());
-            asignadosSedesRepository.save(asignadosSedes);
-            attr.addFlashAttribute("msgExito", "Producto asignado exitosamente");
-            return "redirect:/sede/productosConfirmados";
+
+            if (bindingResult.hasErrors()) {
+
+                Usuarios sede = (Usuarios) session.getAttribute("usuario");
+                model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
+                model.addAttribute("listaTiendas", tiendaRepository.findAll());
+                model.addAttribute("msgError_A", "ERROR");
+                return "sede/ListaProductosConfirmados";
+
+            } else {
+
+                List<AsignacionTiendas> asignacionTiendasListOld = asignacionTiendasRepository.findAsignacionTiendasByTiendaAndAsignadosSedes(asignacionTiendas.getTienda(), asignacionTiendas.getAsignadosSedes());
+                if (asignacionTiendasListOld.isEmpty()) {
+                    asignacionTiendas.setAsignadosSedes(asignadosSedes);
+                    asignacionTiendasRepository.save(asignacionTiendas);
+                } else {
+                    AsignacionTiendas asigTiendaOld = asignacionTiendasListOld.get(0);
+                    asigTiendaOld.setStock(asignacionTiendas.getStock() + asigTiendaOld.getStock());
+                    asigTiendaOld.setFechaasignacion(asignacionTiendas.getFechaasignacion());
+                    //asigTiendaOld.setAsignadosSedes(asignadosSedes);
+                    asignacionTiendasRepository.save(asigTiendaOld);
+                }
+                asignadosSedes.setCantidadactual(asignadosSedes.getCantidadactual() - asignacionTiendas.getStock());
+                asignadosSedesRepository.save(asignadosSedes);
+                attr.addFlashAttribute("msgExito", "Producto asignado exitosamente");
+                return "redirect:/sede/productosConfirmados";
+            }
 
         }
+        attr.addFlashAttribute("msgE", "El producto no existe");
+        return "redirect:/sede/productosConfirmados";
     }
 
     @PostMapping("/confirmarRecepcion")
@@ -245,11 +257,26 @@ public class SedeController {
 
             AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
                     id.getProductoinventario(), CustomConstants.ESTADO_RECIBIDO_POR_SEDE, id.getPrecioventa());
-            AsignadosSedes newAsignadosSedes = new AsignadosSedes(idNew, asignadosSedesOptional.get());
-            attr.addFlashAttribute("msgExito", "Se ha registrado la recepcion correctamente");
-            asignadosSedesRepository.save(newAsignadosSedes);
-            asignadosSedesRepository.deleteById(id);
 
+            Optional<AsignadosSedes> asignadosSedesOldOpt = asignadosSedesRepository.findById(idNew);
+            AsignadosSedes asignadosSedesNew = asignadosSedesOptional.get();
+
+            if (asignadosSedesOldOpt.isPresent()) {
+
+                AsignadosSedes asignadosSedesOld = asignadosSedesOldOpt.get();
+                asignadosSedesOld.setStock(asignadosSedesOld.getStock() + asignadosSedesNew.getStock());
+                asignadosSedesOld.setCantidadactual(asignadosSedesOld.getCantidadactual() + asignadosSedesNew.getStock());
+                asignadosSedesOld.setFechaenvio(asignadosSedesNew.getFechaenvio());
+
+                asignadosSedesRepository.save(asignadosSedesOld);
+                asignadosSedesRepository.deleteById(id);
+
+            } else {
+                AsignadosSedes newAsignadosSedes = new AsignadosSedes(idNew, asignadosSedesNew);
+                attr.addFlashAttribute("msgExito", "Se ha registrado la recepcion correctamente");
+                asignadosSedesRepository.save(newAsignadosSedes);
+                asignadosSedesRepository.deleteById(id);
+            }
         }
         return "redirect:/sede/productosPorConfirmar";
     }
@@ -285,8 +312,8 @@ public class SedeController {
 
     @PostMapping("/devolucion")
     public String devolucionSede(@ModelAttribute("asignaciontiendas") AsignacionTiendas asignacionTiendas,
+                                 @ModelAttribute("venta") @Valid Ventas ventas,
                                  BindingResult bindingResult,
-                                 @ModelAttribute("venta") Ventas ventas,
                                  @RequestParam(value = "id13") int idgestor,
                                  @RequestParam(value = "id23") int idsede,
                                  @RequestParam(value = "id33") String idproductoinv,
@@ -303,26 +330,26 @@ public class SedeController {
         AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
         System.out.println("Encontrado");
 
-        if (asignadosSedes.getCantidadactual()==0){
+        if (asignadosSedes.getCantidadactual() == 0) {
             attr.addFlashAttribute("msgNoDevolucion", "No se puede devolver este producto, dado que la cantidad actual es 0.");
             return "redirect:/sede/productosConfirmados";
+
         }
 
-        if (ventas.getCantDevol() <= 0) {
-            bindingResult.rejectValue("cantDevol", "error.user", "Ingrese una cantidad valida");
-        } else {
-
+        if (ventas.getCantDevol()<0) {
+            bindingResult.rejectValue("cantDevol", "error.user", "Ingrese un numero valido");
+        }else{
             if (ventas.getCantDevol() > asignadosSedes.getCantidadactual()) {
                 bindingResult.rejectValue("cantDevol", "error.user", "La cantidad devuelta no puede ser mayor a la cantidad actual de la sede");
             }
         }
 
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasFieldErrors("cantDevol")) {
 
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
             model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
             model.addAttribute("listaTiendas", tiendaRepository.findAll());
-            model.addAttribute("msgError_D", "ERROR");
+            model.addAttribute("msgErrorD", "ERROR");
 
             model.addAttribute("venta", ventas);
             model.addAttribute("id13", idgestor);
@@ -330,8 +357,11 @@ public class SedeController {
             model.addAttribute("id33", idproductoinv);
             model.addAttribute("id43", idestadoasign);
             model.addAttribute("id53", idprecioventa);
-
+            return "sede/ListaProductosConfirmados";
         } else {
+
+
+
             AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
                     id.getProductoinventario(), CustomConstants.ESTADO_DEVUELTO_POR_SEDE, id.getPrecioventa());
             Optional<AsignadosSedes> asignSedes = asignadosSedesRepository.findById(idNew);

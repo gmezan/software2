@@ -1,33 +1,57 @@
 package com.example.sw2.entity;
 
+import com.example.sw2.config.Auditable;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 @Entity
 @Table(name = "Notificaciones")
-public class Notifica implements Serializable {
+public class Notifica extends Auditable implements Serializable {
 
     @Id
     private int idnotificaciones;
     @ManyToOne
     @JoinColumn(name = "usuario",nullable = false)
-    private Usuarios usuarios;
+    private Usuarios usuario;
     @Column(nullable = false)
     private String mensaje;
     @Column(nullable = false)
-    private LocalDateTime datetime;
-
-    private int state;
-
+    private int estado;
+    @Column(nullable = false)
     private int ntype;
 
-    public int getState() {
-        return state;
+    @Transient
+    private String beautifiedDatetime;
+
+    public void createBeautifiedDatetime(){
+        /*
+            menos de 1 hora -> hace x minutos
+            mas o 1 horas -> hoy a las hh:mm
+            otro día en la misma semana -> nombre del día
+            otro día de otra semana -> dd de Mes
+        */
+        String s = super.getFechacreacion().toLocalTime().toString()+" - ";
+        s+=super.getFechacreacion().toLocalDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
+        beautifiedDatetime = s;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public String getBeautifiedDatetime() {
+        return beautifiedDatetime;
+    }
+
+    public void setBeautifiedDatetime(String beautifiedDatetime) {
+        this.beautifiedDatetime = beautifiedDatetime;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
 
     public int getNtype() {
@@ -38,14 +62,6 @@ public class Notifica implements Serializable {
         this.ntype = ntype;
     }
 
-    public LocalDateTime getDatetime() {
-        return datetime;
-    }
-
-    public void setDatetime(LocalDateTime datetime) {
-        this.datetime = datetime;
-    }
-
     public int getIdnotificaciones() {
         return idnotificaciones;
     }
@@ -54,12 +70,12 @@ public class Notifica implements Serializable {
         this.idnotificaciones = idnotificaciones;
     }
 
-    public Usuarios getUsuarios() {
-        return usuarios;
+    public Usuarios getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarios(Usuarios usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuario(Usuarios usuario) {
+        this.usuario = usuario;
     }
 
     public String getMensaje() {
