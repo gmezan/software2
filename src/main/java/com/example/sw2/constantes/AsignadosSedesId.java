@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Embeddable
@@ -22,14 +23,14 @@ public class AsignadosSedesId implements Serializable {
     @JoinColumn(name= "producto_inventario")
     private Inventario productoinventario;
     @Column(name = "estadoasignacion")
-    private int estadoasignacion;
+    private Integer estadoasignacion;
     @Column(name = "precioventa")
     private Float precioventa;
 
 
     public AsignadosSedesId(){}
 
-    public AsignadosSedesId(Usuarios gestor, Usuarios sede, Inventario inventario, int estadoasignacion, Float precioventa){
+    public AsignadosSedesId(Usuarios gestor, Usuarios sede, Inventario inventario, Integer estadoasignacion, Float precioventa){
         this.gestor=gestor;
         this.sede=sede;
         this.productoinventario=inventario;
@@ -65,11 +66,11 @@ public class AsignadosSedesId implements Serializable {
         this.productoinventario = productoinventario;
     }
 
-    public int getEstadoasignacion() {
+    public Integer getEstadoasignacion() {
         return estadoasignacion;
     }
 
-    public void setEstadoasignacion(int estadoasignacion) {
+    public void setEstadoasignacion(Integer estadoasignacion) {
         this.estadoasignacion = estadoasignacion;
     }
 

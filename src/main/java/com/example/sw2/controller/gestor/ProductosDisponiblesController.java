@@ -1,6 +1,7 @@
 package com.example.sw2.controller.gestor;
 
 import com.example.sw2.constantes.AsignadosSedesId;
+import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.constantes.VentasId;
 import com.example.sw2.entity.AsignadosSedes;
 import com.example.sw2.entity.Inventario;
@@ -97,8 +98,9 @@ public class ProductosDisponiblesController {
     public String asignarProducto(@ModelAttribute("asignadosSedes") AsignadosSedes asignadosSedes ,Model model, @RequestParam("x") String x){
         Optional<Inventario> optionalInventario = inventarioRepository.findById(x);
         if ( optionalInventario.isPresent()){
-            Inventario inventario=optionalInventario.get();
-            model.addAttribute("inv", inventario);
+            asignadosSedes = new AsignadosSedes(new AsignadosSedesId(null,null,optionalInventario.get(),null,null));
+            //Inventario inventario=optionalInventario.get();
+            model.addAttribute("asignadosSedes", asignadosSedes);
             model.addAttribute("listasedes",usuariosRepository.findUsuariosByRoles_IdrolesOrderByApellido(3));
             return "gestor/productosDisponiblesAsignar";
         }
@@ -108,45 +110,65 @@ public class ProductosDisponiblesController {
 
 
     @PostMapping("/resgistrarasignacion")
-    public String registrarAsignacionProducto(@RequestParam("sede") int sede,
-                                              @RequestParam("precioventa") String precioventa,
-                                              @RequestParam("inventario") String inventario,
-                                              @ModelAttribute("asignadosSedes") @Valid AsignadosSedes asignadosSedes, BindingResult bindingResult,
+    public String registrarAsignacionProducto(@ModelAttribute("asignadosSedes") @Valid AsignadosSedes asignadosSedes, BindingResult bindingResult,
                                               Model model, RedirectAttributes attributes,
                                               HttpSession session) {
-        Optional<Inventario> optionalInventario = inventarioRepository.findById(inventario);
-        Inventario inv = optionalInventario.get();
+        Optional<Inventario> optionalInventario = inventarioRepository.findInventarioByCodigoinventarioAndCantidadgestorIsGreaterThan(
+                asignadosSedes.getId().getProductoinventario().getCodigoinventario(),0
+        );
 
-        boolean fechavalida = true;
-        if(asignadosSedes.getFechaenvio()!=null) {
-            if (asignadosSedes.getFechaenvio().isBefore(inv.getFechaadquisicion())) {
-                fechavalida = false;
-            }
-        }
+        Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(3,
+                asignadosSedes.getId().getSede().getIdusuarios());
 
-        Boolean validacion = true;
-        Float precio = Float.valueOf(0);
-        try { precio = Float.parseFloat(precioventa);} catch (NumberFormatException exception){ validacion = false;}
+        // Se verifica que el producto de Inventario
+        if(!optionalInventario.isPresent()){
+            attributes.addFlashAttribute("msg", "Hubo un error");
+            return "redirect:/gestor/productosDisponibles";
+        } else
+            asignadosSedes.getId().setProductoinventario(optionalInventario.get());
 
-        if ((bindingResult.hasErrors()) || (asignadosSedes.getStock() > inv.getCantidadgestor()) || (validacion == false) || (fechavalida==false)) {
-            model.addAttribute("inv", inv);
-            model.addAttribute("listasedes",usuariosRepository.findUsuariosByRoles_idroles(3));
-            if(validacion == false){ model.addAttribute("msg1", "Debe ingresar un precio de venta valido"); }
-            if(asignadosSedes.getStock() > inv.getCantidadgestor()){ model.addAttribute("msg2", "No hay suficientes productos para asignar");}
-            if(fechavalida==false){ model.addAttribute("msg3", "La fecha debe ser igual o posterior a la  fecha de aquisision del producto"); }
+        //Se verifica la sede
+        if(!optionalUsuarios.isPresent())
+            bindingResult.rejectValue("id.sede","error.user","Escoja una sede");
+        else
+            asignadosSedes.getId().setSede(optionalUsuarios.get());
+
+        //Se verifica la fecha de envio
+        if ((asignadosSedes.getFechaenvio()!=null) && asignadosSedes.getFechaenvio().isBefore(asignadosSedes.getId().getProductoinventario().getFechaadquisicion()))
+            bindingResult.rejectValue("fechaenvio","error.user","La fecha debe ser después del :"+asignadosSedes.getId().getProductoinventario().getFechaadquisicion().toString());
+
+        //Se verfica el precio de venta
+        if (!((asignadosSedes.getId().getPrecioventa()!=null) && asignadosSedes.getId().getPrecioventa()>0.0))
+            bindingResult.rejectValue("id.precioventa","error.user","Ingrese un precio válido");
+
+        //Se verifica la cantidad asignada
+        if((asignadosSedes.getStock()!=null) && (optionalInventario.get().getCantidadgestor()<asignadosSedes.getStock()))
+            bindingResult.rejectValue("stock","error.user","La cantidad asignada es mayor a la cantidad disponible");
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("asignadosSedes", asignadosSedes);
+            model.addAttribute("listasedes",usuariosRepository.findUsuariosByRoles_IdrolesOrderByApellido(3));
             return "gestor/productosDisponiblesAsignar";
-
         } else {
+            asignadosSedes.getId().setGestor((Usuarios)session.getAttribute("usuario"));
+
+            asignadosSedes.getId().getProductoinventario().subtractCantidad(asignadosSedes.getStock());
+            inventarioRepository.save(asignadosSedes.getId().getProductoinventario());
+            asignadosSedes.getId().setEstadoasignacion(CustomConstants.ESTADO_ENVIADO_A_SEDE);
+            asignadosSedes.setCantidadactual(asignadosSedes.getStock());
+            asignadosSedesRepository.save(asignadosSedes);
+
+            /*
             inv.setCantidadgestor(inv.getCantidadgestor()-asignadosSedes.getStock());
             inventarioRepository.save(inv);
-            Usuarios usuarios = (Usuarios) session.getAttribute("usuario");
+            Usuarios usuarios = (Usuarios)session.getAttribute("usuario") ;
             Optional<Usuarios> optionalUsuarios = usuariosRepository.findById(sede);
             Usuarios sedes = optionalUsuarios.get();
             asignadosSedes.setId(new AsignadosSedesId(usuarios, sedes, inv,1,precio));
             asignadosSedes.setCantidadactual(asignadosSedes.getStock());
             System.out.println( "La puta fecha sin asignar es " + asignadosSedes.getFechaenvio());
             asignadosSedesRepository.save(asignadosSedes);
-
+*/
             attributes.addFlashAttribute("msg", "Producto asignado exitosamente");
             return "redirect:/gestor/productosDisponibles";
         }
