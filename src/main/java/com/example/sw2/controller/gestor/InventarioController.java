@@ -78,17 +78,6 @@ public class InventarioController {
                        @RequestParam(value = "fechames", required = false) String fechames,
                        @RequestParam(value = "linea", required = false) String linea,
                        @RequestParam(name = "foto1", required = false) MultipartFile multipartFile) throws IOException {
-        if (!inventario.getColor().isEmpty()) {
-            if (Pattern.compile("[0-9]").matcher(inventario.getColor()).find()) {
-                bindingResult.rejectValue("color", "error.user", "No ingrese valores numéricos.");
-            }
-            if (inventario.getColor().trim().length() == 0) {
-                bindingResult.rejectValue("color", "error.user", "No ingrese espacios.");
-
-            }
-        }
-        validafacilitador(inventario, bindingResult);
-
 
         LocalDate fechadiaformat = null;
         YearMonth fechamesformat = null;
@@ -174,11 +163,11 @@ public class InventarioController {
             m.addAttribute("linea", linea);
             m.addAttribute("listProd", productosRepository.findProductosByCodigolinea(linea));
         }
-        /*
+/*
         if (multipartFile.isEmpty()) {
             bindingResult.rejectValue("foto", "error.user", "Debe subir una foto.");
-        }*/
-
+        }
+*/
         if (bindingResult.hasErrors()) {
             listasCamposInv(m);
             if (inventario.getComunidades() != null) {
@@ -197,8 +186,8 @@ public class InventarioController {
                 m.addAttribute("listProd", productosRepository.findAll());
                 return "gestor/inventarioGestorForm";
             }
-
-            /*/ subida de FOTO
+/*
+            // subida de FOTO
             try {
                 StorageServiceResponse s2 = storageServiceDao.store(inventario, multipartFile);
                 if (!s2.isSuccess()) {
@@ -209,21 +198,18 @@ public class InventarioController {
                     }
                     return "gestor/inventarioGestorForm";
                 }
-            }catch (HttpClientErrorException e){
+            } catch (HttpClientErrorException e) {
                 bindingResult.rejectValue("foto", "error.user", "Error en foto");
                 listasCamposInv(m);
                 if (inventario.getComunidades() != null) {
                     m.addAttribute("listArt", artesanosRepository.findArtesanosByComunidades_Codigo(inventario.getComunidades().getCodigo()));
                 }
                 return "gestor/inventarioGestorForm";
-
-
-
             }
-            /*/
-            inventario.setFoto(".");
 
+*/
             inventario.setCodigoinventario(codInv);
+            inventario.setFoto(".");
 
             inventario.setCantidadgestor(inventario.getCantidadtotal());
 
@@ -291,7 +277,6 @@ public class InventarioController {
 
         } else {
             Inventario invOld = opt.get();
-            validafacilitador(inv, bindingResult);
             if (inv.getCodAdquisicion() == 1) {
                 if (inv.getFechavencimientoconsignacion() == null) {
                     bindingResult.rejectValue("fechavencimientoconsignacion", "error.user", "Ingrese una fecha.");
@@ -340,20 +325,13 @@ public class InventarioController {
                     invOld.setFechavencimientoconsignacion(inv.getFechavencimientoconsignacion());
                 }
                 inventarioRepository.save(invOld);
-                att.addFlashAttribute("msg", "Producto "+invOld.getCodigoinventario()+ " actualizado exitosamente!");
+                att.addFlashAttribute("msg", "Producto " + invOld.getCodigoinventario() + " actualizado exitosamente!");
             }
 
         }
         return "redirect:/gestor/inventario";
     }
 
-    private void validafacilitador(Inventario inv, BindingResult bindingResult) {
-        if (!inv.getFacilitador().isEmpty()) {
-            if (Pattern.compile("[0-9]").matcher(inv.getFacilitador()).find()) {
-                bindingResult.rejectValue("facilitador", "error.user", "No ingrese valores numéricos.");
-            }
-        }
-    }
 
     @GetMapping("/delete")
     public String borrar(Model model,
@@ -408,7 +386,7 @@ public class InventarioController {
 
     //Web service
     @ResponseBody
-    @GetMapping(value = {"/getInv", "/editInv/getInv"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/getInv", "/editInv/getInv","/addInv/getInv"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<Inventario>> getInv(@RequestParam(value = "id") String cod) {
         return new ResponseEntity<>(inventarioRepository.findById(cod), HttpStatus.OK);
     }

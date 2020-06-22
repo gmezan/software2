@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" th:href="@{/img/mosqoyRed1.png}">
+        <link rel="shortcut icon" href="https://static.wixstatic.com/media/92186a_2c8f7f731ce548f9b69f6d4daed6e3d9%7Emv2_d_1916_1355_s_2.png/v1/fill/w_32%2Ch_32%2Clg_1%2Cusm_0.66_1.00_0.01/92186a_2c8f7f731ce548f9b69f6d4daed6e3d9%7Emv2_d_1916_1355_s_2.png">
         <title th:text="${title}"></title>
         
         <!-- Custom fonts for this template-->
@@ -39,87 +39,12 @@
             
         </style-->
         
-        
-        <style>
-            th, .d-sm-inline-block {
-                white-space: nowrap;
-            }
-            
-            #showFoto .modal-content {
-                width: 150%;
-            }
-            
-            #content-wrapper {
-                background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.46)), fixed no-repeat url(https://cdn.pixabay.com/photo/2016/11/19/15/38/craftsman-1839920_960_720.jpg);
-                background-size: cover;
-                
-            }
-            
-            .topbar.navbar-light .navbar-nav .nav-item .nav-link {
-                color: #515785;
-            }
-            
-            .card {
-                font-size: .78rem;
-            }
-            
-            .h3 {
-                font-weight: bold !important;
-            }
-            
-            p {
-                font-size: .9rem;
-            }
-            
-            .sidebar .nav-item .collapse .collapse-inner .collapse-item.active, .sidebar .nav-item .collapsing .collapse-inner .collapse-item.active {
-                color: #211b1b !important;
-                font-weight: 800 !important;
-            }
-            
-            .btn {
-                padding: .3rem 0.6rem !important;
-                font-size: .8rem !important;
-            }
-            
-            thead, tfoot {
-                background-color: #5b5b5be6;
-                color: #ffffff;
-                position: sticky;
-            }
-            
-            .bg-gradient-gestor {
-                background-color: #ffffff;
-                background-image: linear-gradient(180deg, #562528 10%, #79504c 100%);
-                background-size: cover;
-            }
-            
-            .bg-gestor {
-                background-color: #ffffff59 !important;
-            }
-            
-            @media (min-width: 768px) {
-                .sidebar .nav-item .nav-link span {
-                    font-size: 0.82rem !important;
-                    display: inline !important;
-                }
-                
-                .sidebar.toggled .nav-item .nav-link span {
-                    font-size: .65rem !important;
-                    display: block !important;
-                }
-                
-                .sidebar {
-                    width: 13.6rem !important;
-                }
-            }
-        
-        </style>
-        
         <!-- Custom styles for this template-->
         <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
         <!-- Custom styles for this page -->
         <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-    
+        <!-- Custom styles for mosqoy-->
+        <link th:href="@{/css/mosqoy.css}" rel="stylesheet">
     </head>
     <body>
         
@@ -389,7 +314,7 @@
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Cerrar sesión</button>
+                            <button type="submit" class="btn btn-info">Cerrar sesión</button>
                         </div>
                     
                     </form>

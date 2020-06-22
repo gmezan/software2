@@ -74,6 +74,7 @@ public class Inventario extends Auditable implements Serializable {
     private int anho;
 
     @Size(max = 45, message = "Máximo 45 caracteres.")
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ ]*$", message = "Ingrese solo caracteres alfabéticos")
     private String color;
 
     @Column(nullable = false)
@@ -93,6 +94,7 @@ public class Inventario extends Auditable implements Serializable {
 
     @Column(nullable = false)
     @Size(max = 45, message = "Máximo 45 caracteres.")
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ', ]*$", message = "Ingrese solo caracteres alfabéticos")
     @NotBlank(message = "Ingrese un facilitador.")
     private String facilitador;
 
