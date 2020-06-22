@@ -106,8 +106,8 @@ public class Inventario extends Auditable implements Serializable {
     public Inventario() {
     }
 
-    public Inventario(String ci) {
-        this.setCodigoinventario(ci);
+    public Inventario(String codigoinventario) {
+        this.setCodigoinventario(codigoinventario);
     }
 
     public String getCodigoinventario() {
