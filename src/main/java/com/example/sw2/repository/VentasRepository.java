@@ -3,6 +3,7 @@ import com.example.sw2.constantes.VentasId;
 import com.example.sw2.dto.DatosClientesVentaDto;
 import com.example.sw2.dto.DatosGestorVentasDto;
 import com.example.sw2.dto.DatosProductoVentaDto;
+import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -34,5 +35,8 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
             "INNER JOIN Productos p ON (i.producto = p.codigonom)",
             nativeQuery = true)
     List<DatosGestorVentasDto> obtenerDatosGestorVentas();
+
+    @Query(value="SELECT ven.* FROM Ventas ven WHERE vendedor = ?1",nativeQuery=true)
+    List<Ventas> buscarPorGestor(int gestor);
 
 }

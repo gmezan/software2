@@ -1,7 +1,9 @@
 package com.example.sw2.controller.gestor;
 
 import com.example.sw2.constantes.VentasId;
+import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
+import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.repository.VentasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -25,10 +28,16 @@ public class VentasGestorController {
     @Autowired
     VentasRepository ventasRepository;
 
+    @Autowired
+    UsuariosRepository usuariosRepository;
+
 
     @GetMapping(value = {"", "/"})
-    public String listVen(@ModelAttribute("venta") Ventas ven, Model model) {
-        model.addAttribute("lista", ventasRepository.findAll());
+    public String listVen(@ModelAttribute("venta") Ventas ven,
+                          Model model,
+                          HttpSession session) {
+        Usuarios gestor = (Usuarios) session.getAttribute("usuario");
+        model.addAttribute("lista", ventasRepository.buscarPorGestor(gestor.getIdusuarios()));
         return "gestor/ventas";
     }
 

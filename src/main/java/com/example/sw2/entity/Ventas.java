@@ -5,6 +5,7 @@ import com.example.sw2.constantes.VentasId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -20,7 +21,7 @@ public class Ventas extends Auditable implements Serializable {
     @EmbeddedId
     private VentasId id;
     //@Size(min= 8, max = 11, message = "El Ruc/Dni debe contener 8 o 11 caracteres")
-    @Column(name="ruc_dni")
+    @Column(name = "ruc_dni")
     private String rucdni;
     @NotBlank(message = "Este campo no puede estar vacío")
     @Size(max = 45, message = "El nombre debe contener 45 caracteres")
@@ -30,23 +31,31 @@ public class Ventas extends Auditable implements Serializable {
     @NotBlank(message = "Este campo no puede estar vacío")
     private String lugarventa;
     @ManyToOne
-    @JoinColumn(name="productoinventario",nullable = false)
+    @JoinColumn(name = "productoinventario", nullable = false)
     private Inventario inventario;
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
     @ManyToOne
-    @JoinColumn(name="vendedor",nullable = false)
+    @JoinColumn(name = "vendedor", nullable = false)
     private Usuarios vendedor;
     @NotNull
     @Min(value = 1, message = "La cantidad debe ser mayor a 0")
     @Column(nullable = false)
     private int cantidad;
-    @Column(name="precio_venta",nullable = false)
+    @Column(name = "precio_venta", nullable = false)
     @NotNull(message = "Debe ingresar un precio de venta")
     private BigDecimal precioventa;
+    @LastModifiedDate
+    @Column(name="fecha_modificacion")
+    private LocalDateTime fechamodificacion;
+    @CreatedDate
+    @Column(name="fecha_creacion",nullable =false)
+    private LocalDateTime fechacreacion;
     @Transient
     private int cantDevol;
+
+
 
     public int getCantDevol() {
         return cantDevol;
@@ -127,5 +136,21 @@ public class Ventas extends Auditable implements Serializable {
 
     public void setPrecioventa(BigDecimal precioventa) {
         this.precioventa = precioventa;
+    }
+
+    public LocalDateTime getFechamodificacion() {
+        return fechamodificacion;
+    }
+
+    public void setFechamodificacion(LocalDateTime fechamodificacion) {
+        this.fechamodificacion = fechamodificacion;
+    }
+
+    public LocalDateTime getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(LocalDateTime fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
 }
