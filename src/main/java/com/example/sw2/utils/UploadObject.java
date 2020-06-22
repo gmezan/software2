@@ -1,5 +1,6 @@
 package com.example.sw2.utils;
 
+/*
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.regions.Regions;
@@ -15,9 +16,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
-
+*/
 public class UploadObject {
-
+    /*
     public static void main() throws IOException {
         Regions clientRegion = Regions.US_EAST_1;
         String bucketName = "test-bucket-sw2";
@@ -122,7 +123,7 @@ public class UploadObject {
 
     }
 
-    /*
+
     public static StorageServiceResponse uploadProfilePhoto(Usuarios u, MultipartFile multipartFile) throws IOException {
         final String uri = "http://ec2-100-26-215-115.compute-1.amazonaws.com/saveProfile";
         String name = Integer.toString(u.getIdusuarios()* CustomConstants.BIGNUMBER).hashCode()+Integer.toString(u.getIdusuarios());
