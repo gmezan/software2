@@ -65,9 +65,11 @@
                                                 <th>Código de nombre</th>
                                                 <th>Nombre</th>
                                                 <th>Código de descripción</th>
-                                                <th>Descripcion</th>
+                                                <th>Descripción</th>
                                                 <th>Línea</th>
-                                                <th>Editar/Eliminar Producto</th>
+                                                <th>Fecha de creación</th>
+                                                <th>Última modificación</th>
+                                                <th>Editar/Eliminar</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -76,9 +78,11 @@
                                                 <th>Código de nombre</th>
                                                 <th>Nombre</th>
                                                 <th>Código de descripción</th>
-                                                <th>Descripcion</th>
+                                                <th>Descripción</th>
                                                 <th>Línea</th>
-                                                <th>Editar/Eliminar Producto</th>
+                                                <th>Fecha de creación</th>
+                                                <th>Última modificación</th>
+                                                <th>Editar/Eliminar</th>
                                             </tr>
                                         </tfoot>
                                         
@@ -90,6 +94,10 @@
                                                 <td th:text="${l.codigodesc}"></td>
                                                 <td th:text="${l.descripcion}"></td>
                                                 <td th:text="${l.getNombreLinea()}"></td>
+                                                <td th:text="${l.fechacreacion.toLocalDate()}"></td>
+                                                <td th:if="${l.fechamodificacion!=null}"
+                                                    th:text="${l.fechamodificacion.toLocalDate()}"></td>
+                                                <td th:if="${l.fechamodificacion==null}">-</td>
                                                 <td>
                                                     <button th:attr="data-id=${l.codigonom}" data-toggle="modal"
                                                             data-target="#formModal"
@@ -234,7 +242,7 @@
                             <table hidden class="table" id="tableModal">
                                 <thead>
                                     <tr>
-                                        <th>Codigo</th>
+                                        <th>Código</th>
                                         <th>Comunidad</th>
                                         <th>Categoría</th>
                                     </tr>
