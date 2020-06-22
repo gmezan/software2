@@ -37,7 +37,7 @@
                                 <div class="d-sm-flex align-items-center justify-content-between ">
                 
                                     <p class="text-black-50 mr-5 mt-3 mb-0 ">Aquí puedes gestionar los artesanos de
-                                        las distintas comunidades.
+                                        las distintas <a th:href="@{/gestor/comunidad}">comunidades</a>.
                                     </p>
     
                                     <button data-toggle="modal" data-target="#editModal" type="button"
@@ -66,6 +66,8 @@
                                                 <th>Apellido paterno</th>
                                                 <th>Apellido materno</th>
                                                 <th>Comunidad a la que pertenece</th>
+                                                <th>Fecha de creación</th>
+                                                <th>Última modificación</th>
                                                 <th>Editar/Borrar</th>
                                             </tr>
                                         </thead>
@@ -77,6 +79,8 @@
                                                 <th>Apellido paterno</th>
                                                 <th>Apellido materno</th>
                                                 <th>Comunidad a la que pertenece</th>
+                                                <th>Fecha de creación</th>
+                                                <th>Última modificación</th>
                                                 <th>Editar/Borrar</th>
                                             </tr>
                                         </tfoot>
@@ -89,6 +93,10 @@
                                                 <td th:text="${item.apellidopaterno}"></td>
                                                 <td th:text="${item.apellidomaterno==null}? '-': ${item.apellidomaterno}"></td>
                                                 <td th:text="${item.comunidades.nombre}"></td>
+                                                <td th:text="${item.fechacreacion.toLocalDate()}"></td>
+                                                <td th:if="${item.fechamodificacion!=null}"
+                                                    th:text="${item.fechamodificacion.toLocalDate()}"></td>
+                                                <td th:if="${item.fechamodificacion==null}">-</td>
                                                 <td>
                                                     <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#editModal"
                                                             class="edit-Artesano btn btn-datatable btn-icon btn-info mr-2"><i

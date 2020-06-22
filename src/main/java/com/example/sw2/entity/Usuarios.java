@@ -47,8 +47,8 @@ public class Usuarios extends Auditable implements Serializable {
     @JsonIgnore
     private String password;
     @Positive
-    @Min(value = 90000000, message = "Ingrese un número de telefono válido")
-    @Max(value = 99999999,  message = "Ingrese un número de telefono válido")
+    @Min(value = 900000000, message = "Ingrese un número de telefono válido")
+    @Max(value = 999999999,  message = "Ingrese un número de telefono válido")
     private int telefono;
     @ManyToOne
     @JoinColumn(name = "rol",nullable = false)
