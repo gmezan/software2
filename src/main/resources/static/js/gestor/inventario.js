@@ -109,6 +109,8 @@ $(document).on("click", ".add-inventario", function () {
     $("#addModal #cant").val('1');
     $("#addModal #msgc").text('');
     $("#addModal #codinvAdd").val($(this).data('id'));
+    $("#addModal #addTitle").text("Añadir "+$(this).data('id'));
+
 });
 
 $(document).ready(function () {
@@ -190,21 +192,12 @@ $(document).on("click", ".delete-inventario", function () {
     $("#deleteModal #codDelete").val($(this).data('id'));
 });
 $(document).on("click", ".show-foto", function () {
-
+    let showfoto = $("#showFoto #fotoinv");
+    showfoto.attr("src", "");
     $("#showFoto #fototitle").text($(this).data('id'));
-    let foto = $("#showFoto #fotoinv");
-    foto.attr("src", "");
-    foto.attr("alt", "Cargando foto...");
-    $.ajax({
-        method: "GET", url: contextPath + "/getInv?id=" + $(this).data('id')
-    }).done(function (inv) {
-        if (inv != null) {
-            foto.attr("src", inv.foto);
-            foto.attr("alt", "No se encuentra una foto :(");
-        }
-    }).fail(function (err) {
-        alert("Ocurrió un error");
-        $('#editModal').modal('hide');
-    })
+    let id='#'+$(this).data('id')+'photo';
+    let url= $(id).attr('src');
+    showfoto.attr("src", url);
+
 
 });
