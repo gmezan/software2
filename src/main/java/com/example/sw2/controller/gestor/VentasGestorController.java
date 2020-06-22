@@ -32,7 +32,7 @@ public class VentasGestorController {
     UsuariosRepository usuariosRepository;
 
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {""})
     public String listVen(@ModelAttribute("venta") Ventas ven,
                           Model model,
                           HttpSession session) {
@@ -41,11 +41,17 @@ public class VentasGestorController {
         return "gestor/ventas";
     }
 
+    @GetMapping(value = {"/"})
+    public String listVen2() {
+        return "redirect:/gestor/venta";
+    }
+
     @PostMapping("/save")
     public String editVen(@ModelAttribute("venta") @Valid Ventas ventas,
                           BindingResult bindingResult, RedirectAttributes attr, Model model,
                           @RequestParam("id1") String id1,
-                          @RequestParam("id2") int id2) {
+                          @RequestParam("id2") int id2,
+                          HttpSession session) {
 
         if (!ventas.getRucdni().isEmpty()) {
             if (ventas.getRucdni().trim().length() == 9) {
@@ -74,8 +80,10 @@ public class VentasGestorController {
             }
         }
 
+        Usuarios gestor = (Usuarios) session.getAttribute("usuario");
+
         if (bindingResult.hasErrors()) {
-            model.addAttribute("lista", ventasRepository.findAll());
+            model.addAttribute("lista", ventasRepository.buscarPorGestor(gestor.getIdusuarios()));
             model.addAttribute("msgError", "ERROR");
             return "gestor/ventas";
         } else {
@@ -85,6 +93,7 @@ public class VentasGestorController {
                 Ventas ven = optionalVentas.get();
                 ven.setRucdni(ventas.getRucdni());
                 ven.setNombrecliente(ventas.getNombrecliente());
+                //ven.setCantidad(ventas.getCantidad());
                 /*
                 ventas.setId(new VentasId(id2,id1));
                 ventas.setFechamodificacion(LocalDateTime.now());
