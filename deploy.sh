@@ -9,12 +9,6 @@ sudo systemctl enable sw2.service
 sudo systemctl start sw2.service
 echo "Script finished"
 sudo systemctl status sw2.service
-echo "Wait...1"
-sleep 6
-sudo systemctl status sw2.service
-echo "Wait...2"
-sleep 6
-sudo systemctl status sw2.service
-echo "Wait...3"
+echo "Wait..."
 sleep 6
 sudo systemctl status sw2.service
