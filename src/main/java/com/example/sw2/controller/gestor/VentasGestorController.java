@@ -1,7 +1,9 @@
 package com.example.sw2.controller.gestor;
 
 import com.example.sw2.constantes.VentasId;
+import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
+import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.repository.VentasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -25,18 +28,30 @@ public class VentasGestorController {
     @Autowired
     VentasRepository ventasRepository;
 
+    @Autowired
+    UsuariosRepository usuariosRepository;
 
-    @GetMapping(value = {"", "/"})
-    public String listVen(@ModelAttribute("venta") Ventas ven, Model model) {
-        model.addAttribute("lista", ventasRepository.findAll());
+
+    @GetMapping(value = {""})
+    public String listVen(@ModelAttribute("venta") Ventas ven,
+                          Model model,
+                          HttpSession session) {
+        Usuarios gestor = (Usuarios) session.getAttribute("usuario");
+        model.addAttribute("lista", ventasRepository.buscarPorGestor(gestor.getIdusuarios()));
         return "gestor/ventas";
+    }
+
+    @GetMapping(value = {"/"})
+    public String listVen2() {
+        return "redirect:/gestor/venta";
     }
 
     @PostMapping("/save")
     public String editVen(@ModelAttribute("venta") @Valid Ventas ventas,
                           BindingResult bindingResult, RedirectAttributes attr, Model model,
                           @RequestParam("id1") String id1,
-                          @RequestParam("id2") int id2) {
+                          @RequestParam("id2") int id2,
+                          HttpSession session) {
 
         if (!ventas.getRucdni().isEmpty()) {
             if (ventas.getRucdni().trim().length() == 9) {
@@ -65,8 +80,10 @@ public class VentasGestorController {
             }
         }
 
+        Usuarios gestor = (Usuarios) session.getAttribute("usuario");
+
         if (bindingResult.hasErrors()) {
-            model.addAttribute("lista", ventasRepository.findAll());
+            model.addAttribute("lista", ventasRepository.buscarPorGestor(gestor.getIdusuarios()));
             model.addAttribute("msgError", "ERROR");
             return "gestor/ventas";
         } else {
@@ -76,6 +93,7 @@ public class VentasGestorController {
                 Ventas ven = optionalVentas.get();
                 ven.setRucdni(ventas.getRucdni());
                 ven.setNombrecliente(ventas.getNombrecliente());
+                //ven.setCantidad(ventas.getCantidad());
                 /*
                 ventas.setId(new VentasId(id2,id1));
                 ventas.setFechamodificacion(LocalDateTime.now());

@@ -78,11 +78,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-
+        <!--
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-aws</artifactId>
-        </dependency><!--
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-aws-jdbc</artifactId>
@@ -106,6 +106,7 @@
 
     </dependencies>
 
+    <!--
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -117,7 +118,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
+    -->
     <build>
         <plugins>
             <plugin>

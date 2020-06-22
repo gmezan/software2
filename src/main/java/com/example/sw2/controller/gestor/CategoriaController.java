@@ -85,17 +85,6 @@ public class CategoriaController {
         return new ResponseEntity<>(categoriasRepository.findById(id), HttpStatus.OK);
     }
 
-    @ResponseBody
-    @GetMapping(value = "/uploadFile",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> uploadFile(){
-        try {
-            UploadObject.main();
-            return new ResponseEntity<>("nice", HttpStatus.OK);
-        }
-        catch (IOException ex){
-            return new ResponseEntity<>(ex.toString(), HttpStatus.ACCEPTED);
-        }
-    }
 
     //Has items
     @ResponseBody
