@@ -1,5 +1,6 @@
 package com.example.sw2.controller;
 
+import com.example.sw2.entity.Notifica;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.repository.NotificaRepository;
 import com.example.sw2.repository.UsuariosRepository;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/notification")
@@ -24,11 +26,24 @@ public class NotificationController {
     @Autowired
     NotificaRepository notificaRepository;
 
-    @GetMapping("")
-    public String  listNotf(Model model, HttpSession session){
-        Usuarios u = (Usuarios) session.getAttribute("usuario");
-        model.addAttribute("lista", notificaRepository.findNotificasByUsuarios_Idusuarios(u.getIdusuarios()));
-        return "notification";
+    private final int LIMIT_SHORT_LIST = 3;
+
+    @ResponseBody
+    @GetMapping("/list")
+    public ResponseEntity<List<Notifica>> listNotf(Model model, HttpSession session){
+        List<Notifica> list =
+        notificaRepository.findNotificasByUsuario_Idusuarios(((Usuarios)session.getAttribute("usuario")).getIdusuarios());
+        list.forEach(Notifica::createBeautifiedDatetime);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping("/shortList")
+    public ResponseEntity<List<Notifica>> shortListNotf(Model model, HttpSession session){
+        List<Notifica> list =
+        notificaRepository.shortList(((Usuarios)session.getAttribute("usuario")).getIdusuarios(), LIMIT_SHORT_LIST);
+        list.forEach(Notifica::createBeautifiedDatetime);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @ResponseBody
@@ -39,6 +54,7 @@ public class NotificationController {
                 HttpStatus.OK
         );
     }
+
 
 
 }

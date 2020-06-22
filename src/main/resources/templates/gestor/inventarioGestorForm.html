@@ -24,7 +24,7 @@
                         
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-900">Inventario</h1>
+                            <h1 class="h3 mb-0 text-white">Inventario</h1>
                         
                         </div>
                         <div id="msg" th:if="${msg != null}" th:text="${msg}" class="alert alert-warning py-1"
@@ -309,8 +309,8 @@
                                     <div class="modal-footer">
                                         <a class="btn btn-secondary " th:href="@{/gestor/inventario}">Cancelar</a>
                                         
-                                        <input form="addForm" type="submit" class="btn btn-primary" value="Agregar">
-                                        <a hidden type="submit" class="btn btn-primary" href="#" data-toggle="modal" data-target="#confirmModal">Agregar</a>
+                                        <input form="addForm" type="submit" class="btn btn-info" value="Agregar">
+                                        <a hidden type="submit" class="btn btn-info" href="#" data-toggle="modal" data-target="#confirmModal">Agregar</a>
                                     
                                     </div>
                                 
