@@ -256,12 +256,13 @@ public class InventarioController {
         int cantInt;
         try {
             cantInt = Integer.parseInt(cant);
-            if (cantInt < 0) {
+            if (cantInt < 1) {
                 throw new Exception("");
             }
         } catch (Exception e) {
             attributes.addFlashAttribute("cantError", "Cantidad no válida.");
             attributes.addFlashAttribute("cant", cant);
+            attributes.addFlashAttribute("codinv", codinv);
             attributes.addFlashAttribute("msgError", "ERROR DE CANTIDAD");
             return "redirect:/gestor/inventario";
         }

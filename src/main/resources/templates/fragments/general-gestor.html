@@ -2,47 +2,144 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head th:fragment="gestor-head(title)">
-
+        
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-
+        <link rel="icon" th:href="@{/img/mosqoyRed1.png}">
         <title th:text="${title}"></title>
-
+        
         <!-- Custom fonts for this template-->
         <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
               rel="stylesheet">
-
+        <!--style>
+            #content-wrapper {
+                background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)),fixed no-repeat url(https://t2.ev.ltmcdn.com/es/posts/0/2/2/por_que_el_cielo_es_azul_1220_orig.jpg);
+                background-size: cover;
+        
+            }
+            #content-wrapper {
+                background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)),fixed no-repeat url(https://www.colibriess.com/wp-content/uploads/2019/05/Caracter%C3%ADsticas-f%C3%ADsicas-de-los-colibr%C3%ADes.jpg);
+                background-size: cover;
+        
+            }
+            #content-wrapper {
+                background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)),fixed no-repeat url([[@{/img/comunidad.jpg}]]);
+                background-size: cover;
+        
+            }
+    #content-wrapper {
+                background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.46)),fixed no-repeat url(https://cdn.pixabay.com/photo/2014/09/09/16/06/angora-440161_960_720.jpg);
+                background-size: cover;
+        
+            }
+            
+        </style-->
+        
+        
+        <style>
+            th, .d-sm-inline-block {
+                white-space: nowrap;
+            }
+            
+            #showFoto .modal-content {
+                width: 150%;
+            }
+            
+            #content-wrapper {
+                background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.46)), fixed no-repeat url(https://cdn.pixabay.com/photo/2016/11/19/15/38/craftsman-1839920_960_720.jpg);
+                background-size: cover;
+                
+            }
+            
+            .topbar.navbar-light .navbar-nav .nav-item .nav-link {
+                color: #515785;
+            }
+            
+            .card {
+                font-size: .78rem;
+            }
+            
+            .h3 {
+                font-weight: bold !important;
+            }
+            
+            p {
+                font-size: .9rem;
+            }
+            
+            .sidebar .nav-item .collapse .collapse-inner .collapse-item.active, .sidebar .nav-item .collapsing .collapse-inner .collapse-item.active {
+                color: #211b1b !important;
+                font-weight: 800 !important;
+            }
+            
+            .btn {
+                padding: .3rem 0.6rem !important;
+                font-size: .8rem !important;
+            }
+            
+            thead, tfoot {
+                background-color: #5b5b5be6;
+                color: #ffffff;
+                position: sticky;
+            }
+            
+            .bg-gradient-gestor {
+                background-color: #ffffff;
+                background-image: linear-gradient(180deg, #562528 10%, #79504c 100%);
+                background-size: cover;
+            }
+            
+            .bg-gestor {
+                background-color: #ffffff59 !important;
+            }
+            
+            @media (min-width: 768px) {
+                .sidebar .nav-item .nav-link span {
+                    font-size: 0.82rem !important;
+                    display: inline !important;
+                }
+                
+                .sidebar.toggled .nav-item .nav-link span {
+                    font-size: .65rem !important;
+                    display: block !important;
+                }
+                
+                .sidebar {
+                    width: 13.6rem !important;
+                }
+            }
+        
+        </style>
+        
         <!-- Custom styles for this template-->
         <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
         <!-- Custom styles for this page -->
         <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-
+    
     </head>
     <body>
-
+        
         <!-- Topbar -->
-        <nav th:fragment="topbar" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
+        <nav th:fragment="topbar" class="navbar navbar-expand navbar-dark bg-gestor topbar mb-4 static-top shadow">
+            
             <!-- Sidebar Toggle (Topbar) -->
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                 <i class="fa fa-bars"></i>
             </button>
-
-
-
+            
+            
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
-
-
-
+                
+                
                 <!-- Nav Item - Alerts -->
                 <li class="nav-item dropdown no-arrow mx-1">
                     <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       style="color: #2b1b1bcc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-bell fa-fw"></i>
                         <!-- Counter - Alerts -->
                         <span class="badge badge-danger badge-counter">3+</span>
@@ -86,18 +183,23 @@
                                 Spending Alert: We've noticed unusually high spending for your account.
                             </div>
                         </a>
-                        <a class="dropdown-item text-center small text-gray-500" href="notificaGestor.html">Show All Alerts</a>
+                        <a class="dropdown-item text-center small text-gray-500" href="notificaGestor.html">Show All
+                            Alerts</a>
                     </div>
                 </li>
-
+                
                 <div class="topbar-divider d-none d-sm-block"></div>
-
+                
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.usuario.getFullname()}"></span>
-                        <img th:if="session.usuario.foto!=''" class="img-profile rounded-circle" th:src="${session.usuario.foto}">
+                        <span class="mr-2 d-lg-inline font-weight-bold "
+                              style="font-size: 0.9rem;color: #2b1b1bcc;"
+
+                              th:text=" ${session.usuario.getFullname()}"></span>
+                        <img th:if="session.usuario.foto!=''" class="img-profile rounded-circle"
+                             th:src="${session.usuario.foto}">
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -114,32 +216,28 @@
                         </a>
                     </div>
                 </li>
-
+            
             </ul>
-
+        
         </nav>
         <!-- End of Topbar -->
-
+        
         <!-- Footer -->
-        <footer th:fragment="footer" class="sticky-footer bg-white">
+        <footer th:fragment="footer" class="sticky-footer bg-gestor">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
                     <em><small><span>@Software para telecomunicaciones 2 &copy; Mosqoy - 2020</span></small></em>
                 </div>
             </div>
+        
         </footer>
         <!-- End of Footer -->
-
-
+        
+        
         <!-- Sidebar -->
-        <!--
-        style="top: 0px; width: 100%; object-position: 50% 50%; background-size: cover; background-position: center center; background-repeat: no-repeat;
-  transform: translate3d(0px, 0px, 0px);
-  background-image: url(https://static.wixstatic.com/media/61652e_edeefa4f2e424501bb4dabf1649c670d~mv2_d_5219_3479_s_4_2.jpg/v1/fill/w_1920,h_1280,al_c,q_85,usm_0.66_1.00_0.01/61652e_edeefa4f2e424501bb4dabf1649c670d~mv2_d_5219_3479_s_4_2.webp)"
-                -->
         <ul th:fragment="gestor-sidebar(param1,param2)"
-            class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
-
+            class="navbar-nav bg-gradient-gestor sidebar sidebar-dark accordion" id="accordionSidebar">
+            
             <!--li>
                 <img class="sidebar-brand-text mx-5"
                      type="image" style="width:155px;height:72px;top:0;left:0"
@@ -147,40 +245,41 @@
             </li>
 
             <hr class="sidebar-divider my-0"-->
-
+            
             <li class="nav-item " th:classappend="${param1=='Inventario'}? active : ''">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/gestor/inventario}">
-                <i class="fas fa-hard-hat"></i>
-                <div class="sidebar-brand-text mx-3">Gestor Principal</div>
-            </a>
+                <a class="sidebar-brand d-flex align-items-center justify-content-center"
+                   th:href="@{/gestor/inventario}">
+                    <i class="fas fa-hard-hat"></i>
+                    <div class="sidebar-brand-text mx-3">Gestor Principal</div>
+                </a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
+            
             <!-- Nav Item - Dashboard
             <li class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>-->
-
+            
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Heading -->
             <div class="sidebar-heading">
                 Inventario
             </div>
-
+            
             <!-- Nav Item - Inventario -->
             <li class="nav-item" th:classappend="${param1=='Inventario'}? active : ''">
                 <a class="nav-link" th:href="@{/gestor/inventario}">
                     <i class="fas fa-fw fa-file"></i>
                     <span>Inventario</span></a>
             </li>
-
+            
             <!-- Nav Item - Campos Collapse Menu -->
             <li class="nav-item" th:classappend="${param1=='Campos'}? active : ''">
-                <a class="nav-link " th:classappend="${param1=='Campos'}?  '' : collapsed" href="#"
+                <a class="nav-link " th:classappend="${param1=='Campos'}?  '' : collapsed" href=""
                    data-toggle="collapse" data-target="#collapseInv" aria-expanded="true" aria-controls="collapseInv">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Campos del Inventario</span>
@@ -205,7 +304,7 @@
                     <i class="fas fa-fw fa-boxes"></i>
                     <span>Productos Disponibles</span></a>
             </li>
-
+            
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Heading -->
@@ -218,7 +317,7 @@
                     <i class="fas fa-fw fa-user"></i>
                     <span>Lista de Sedes</span></a>
             </li>
-
+            
             <!-- Nav Item - Productos Asignados -->
             <li class="nav-item" th:classappend="${param1=='Asignados'}? active : ''">
                 <a class="nav-link" th:href="@{/gestor/asignado}">
@@ -231,23 +330,23 @@
             <div class="sidebar-heading">
                 Ventas
             </div>
-
+            
             <!-- Nav Item - Ventas -->
             <li class="nav-item" th:classappend="${param1=='Ventas'}? active : ''">
-                <a th:href="@{/gestor/venta}" class="nav-link" >
+                <a th:href="@{/gestor/venta}" class="nav-link">
                     <i class="fas fa-fw fa-dollar-sign"></i>
                     <span>Mis ventas</span></a>
             </li>
-
-
+            
+            
             <!-- Nav Item - Ventas -->
             <li class="nav-item" th:classappend="${param1=='Devoluciones'}? active : ''">
-                <a th:href="@{/gestor/devoluciones}" class="nav-link" >
+                <a th:href="@{/gestor/devoluciones}" class="nav-link">
                     <i class="fas fa-fw fa-dollar-sign"></i>
                     <span>Devoluciones</span></a>
             </li>
-
-
+            
+            
             <!-- Divider -->
             <hr class="sidebar-divider ">
             <!-- Heading -->
@@ -260,20 +359,20 @@
                     <i class="fas fa-fw fa-file-download"></i>
                     <span>Reportes</span></a>
             </li>
-
-
+            
+            
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-
+            
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
+        
         </ul>
         <!-- End of Sidebar -->
-
-
+        
+        
         <!--Logout Modal -->
         <div th:fragment="logout-modal" class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -286,17 +385,18 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body">Seleccione "Cerrar sesión" si está listo para cerrar su sesión actual.</div>
+                        <div class="modal-body">Seleccione "Cerrar sesión" si está listo para cerrar su sesión actual.
+                        </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary" >Cerrar sesión</button>
+                            <button type="submit" class="btn btn-primary">Cerrar sesión</button>
                         </div>
-
+                    
                     </form>
                 </div>
             </div>
         </div>
-
-
+    
+    
     </body>
 </html>
