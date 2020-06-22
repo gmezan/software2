@@ -34,7 +34,7 @@
                              class="alert alert-danger py-1" role="alert"></div>
                         <div id="msgAsign" th:if="${msgError_A != null}" th:text="${msgError_A}"
                              class="alert alert-danger py-1" role="alert"></div>
-                        <div id="msgDevolucion" th:if="${msgError_D != null}" th:text="${msgError_D}"
+                        <div id="msgDevolucion" th:if="${msgErrorD != null}" th:text="${msgErrorD}"
                              class="alert alert-danger py-1" role="alert"></div>
                         <div th:if="${msgExito != null}" th:text="${msgExito}"
                              class="alert alert-success py-1" role="alert"></div>
@@ -43,6 +43,8 @@
                         <div th:if="${msgNoVenta != null}" th:text="${msgNoVenta}" class="alert alert-danger py-1"
                              role="alert"></div>
                         <div th:if="${msgNoDevolucion != null}" th:text="${msgNoDevolucion}" class="alert alert-danger py-1"
+                             role="alert"></div>
+                        <div th:if="${msgE != null}" th:text="${msgE}" class="alert alert-danger py-1"
                              role="alert"></div>
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
@@ -183,10 +185,9 @@
                             <div th:if="${msgBoleta != null}" th:text="${msgBoleta}" class="alert alert-danger py-1"
                                  role="alert"></div>
 
-
                             <input type="hidden" class="form-control" id="idgestor" name="idgestor" th:value="${idgestor!=null} ? ${idgestor}">
                             <input type="hidden" class="form-control" id="idestadoasign" name="idestadoasign" th:value="${idestadoasign!=null} ? ${idestadoasign}">
-                            <input type="hidden" class="form-control" id="idprecioventa" name="idprecioventa" th:value="${idprecioventa!=null} ? ${idprecioventa}">
+                            <input type="hidden" class="form-control" id="idprecioventa" name="precioventa" th:value="${precioventa!=null} ? ${precioventa}">
                             <input type="hidden" class="form-control" id="idsede" name="vendedor" th:value="${vendedor!=null} ? ${vendedor}">
                             <input type="hidden" class="form-control" id="idproductoinvinput" name="inventario" th:value="${inventario!=null} ? ${inventario}">
 
@@ -248,13 +249,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">Precio de venta:</label>
-                                <input type="number" step="0.01" class="form-control" th:field="*{precioventa}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('precioventa')}"
-                                     th:errors="*{precioventa}">Error
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-form-label">Cantidad:</label>
                                 <input type="number" class="form-control" th:field="*{cantidad}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}"
@@ -287,11 +281,11 @@
                     <div class="modal-body">
                         <form method="post" th:action="@{/sede/asignar}" th:object="${asignaciontiendas}">
 
-                            <input type="hidden" class="form-control" id="idgestor2" name="gestor" th:value="${gestor!=null} ? ${gestor}">
-                            <input type="hidden" class="form-control" id="idproductoinventario2" name="inventario1" th:value="${inventario1!=null} ? ${inventario1}">
-                            <input type="hidden" class="form-control" id="idestadoasign2" name="estadoasignacion" th:value="${estadoasignacion!=null} ? ${estadoasignacion}">
-                            <input type="hidden" class="form-control" id="idprecioventa2" name="precioventa" th:value="${precioventa!=null} ? ${precioventa}">
-                            <input type="hidden" class="form-control" id="idsede2" name="sede" th:value="${sede!=null} ? ${sede}">
+                            <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.gestor}" >
+                            <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.productoinventario}">
+                            <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.estadoasignacion}">
+                            <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.precioventa}">
+                            <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.sede}">
 
                             <div class="form-group">
                                 <label class="col-form-label">Nombre de la tienda:</label>
