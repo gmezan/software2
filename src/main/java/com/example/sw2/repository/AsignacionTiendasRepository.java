@@ -39,7 +39,7 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
 
     List<AsignacionTiendas> buscarPorSede(int sede);
 
-    List<AsignacionTiendas> findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id(int a, Usuarios sede);
+    List<AsignacionTiendas> findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id_Sede(int a, Usuarios sede);
     List<AsignacionTiendas> findAsignacionTiendasByTiendaAndAsignadosSedes(Tienda tienda,AsignadosSedes as);
 
     //Optional<AsignacionTiendas> findByTiendaAndAsignadosSedes_Id_Precioventa(int tienda, BigDecimal precio);

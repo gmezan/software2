@@ -44,7 +44,7 @@ public class AsignadoTiendaController {
                                          HttpSession session,
                                          Model model){
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
-        model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id(0,sede));
+        model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id_Sede(0,sede));
         model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
         return "sede/asignadoTiendas";
     }
@@ -78,7 +78,7 @@ public class AsignadoTiendaController {
 
         if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
-            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id(0,sede));
+            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id_Sede(0,sede));
             model.addAttribute("id1", idAstiendas);
             model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
             model.addAttribute("msgErrorRegistrar", "ERROR");
@@ -124,7 +124,7 @@ public class AsignadoTiendaController {
     
         if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
-            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id(0,sede));
+            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id_Sede(0,sede));
             model.addAttribute("id2", idAstiendas);
             model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
             model.addAttribute("msgErrorDevolucion", "ERROR");
