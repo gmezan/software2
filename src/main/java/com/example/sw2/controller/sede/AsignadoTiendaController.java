@@ -59,17 +59,6 @@ public class AsignadoTiendaController {
         Optional<Ventas> optVentas = ventasRepository.findById(venta.getId());
         AsignacionTiendas aTienda = optaTienda.get();
 
-        System.out.println(venta.getPrecioventa());
-        System.out.println(venta.getNombrecliente());
-        System.out.println(venta.getLugarventa());
-        System.out.println(venta.getInventario().getCodigoinventario());
-        System.out.println(venta.getFecha());
-        System.out.println(venta.getId().getNumerodocumento());
-        System.out.println(venta.getId().getTipodocumento());
-        System.out.println(venta.getCantidad());
-        System.out.println(venta.getRucdni());
-        System.out.println(venta.getVendedor().getIdusuarios());
-
         if(optVentas.isPresent()){
             bindingResult.rejectValue("id.numerodocumento", "error.user", "El número de documento ya ha sido registrado");
         }
