@@ -22,7 +22,6 @@ public class AsignacionTiendas extends Auditable implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idtiendas;
     @Digits(integer = 6, fraction = 0, message = "Ingrese un número entero.")
-    @Positive(message = "Ingrese una cantidad válida.")
     @Column(nullable = false)
     private int stock;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
