@@ -47,7 +47,7 @@ public class DevolucionesController {
 
         int estado = CustomConstants.ESTADO_DEVUELTO_POR_SEDE;
         Usuarios gestor = (Usuarios) session.getAttribute("usuario");
-        model.addAttribute("devueltos", asignadosSedesRepository.DatosDevolucion(estado, gestor.getIdusuarios()));
+        model.addAttribute("devueltos", asignadosSedesRepository.findById_Gestor_IdusuariosAndId_Estadoasignacion(gestor.getIdusuarios(),estado));
         return "gestor/devoluciones";
     }
 

@@ -77,17 +77,17 @@
                                             <tbody>
                                             <tr th:each="d, index : ${devueltos}">
                                                 <td th:text="${index.count}"></td>
-                                                <td th:text="${d.fecha}"></td>
-                                                <td th:text="${d.codigo}"></td>
-                                                <td th:text="${d.nombreproducto}"></td>
-                                                <td th:text="${d.cantidad}"></td>
-                                                <td th:text="${d.nombre} + ' ' + ${d.apellido}"></td>
+                                                <td th:text="${d.fechaenvio}"></td>
+                                                <td th:text="${d.id.productoinventario.codigoinventario}"></td>
+                                                <td th:text="${d.id.productoinventario.productos.nombre}"></td>
+                                                <td th:text="${d.stock}"></td>
+                                                <td th:text="${d.id.sede.nombre} + ' ' + ${d.id.sede.apellido}"></td>
                                                 <td>
-                                                    <button th:attr="data-id1=${d.dniSede},data-id2=${d.codigo},data-id3=${d.precio}, data-id4=${d.fecha}" data-toggle="modal"
+                                                    <button th:attr="data-id1=${d.id.sede.idusuarios},data-id2=${d.id.productoinventario.codigoinventario},data-id3=${d.id.precioventa}, data-id4=${d.fechaenvio}" data-toggle="modal"
                                                             data-target="#confirmarModal" class="confirmar btn btn-datatable btn-icon btn-success"><i class="fas fa-check"></i></button>
-                                                    <button th:attr="data-id1=${d.dniSede},data-id2=${d.codigo},data-id3=${d.precio}, data-id4=${d.fecha}" data-toggle="modal"
+                                                    <button th:attr="data-id1=${d.id.sede.idusuarios},data-id2=${d.id.productoinventario.codigoinventario},data-id3=${d.id.precioventa}, data-id4=${d.fechaenvio}" data-toggle="modal"
                                                             data-target="#rechazarModal" class="rechazar btn btn-datatable btn-icon btn-warning"><i class="fas fa-times"></i></button>
-                                                    <button th:attr="data-id=${d.dniSede}" data-toggle="modal" data-target="#infoModal"
+                                                    <button th:attr="data-id=${d.id.sede.idusuarios}" data-toggle="modal" data-target="#infoModal"
                                                             class="info-Sede btn btn-datatable btn-icon btn-danger"><i class="fas fa-phone"></i></button>
                                                 </td>
                                             </tr>
