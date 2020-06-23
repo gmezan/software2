@@ -82,8 +82,6 @@ public class ProductosDisponiblesController {
 
             //PRUEBA
             System.out.println(ventas.getCantidad());
-            System.out.println(ventas.getId().getTipodocumento());
-            System.out.println(ventas.getId().getNumerodocumento());
             System.out.println(ventas.getFecha());
             System.out.println(ventas.getInventario().getCodigoinventario());
             System.out.println(ventas.getLugarventa());
@@ -167,8 +165,12 @@ public class ProductosDisponiblesController {
             inventarioRepository.save(asignadosSedes.getId().getProductoinventario());
             asignadosSedes.getId().setEstadoasignacion(CustomConstants.ESTADO_ENVIADO_A_SEDE);
             asignadosSedes.setCantidadactual(asignadosSedes.getStock());
-            asignadosSedesRepository.save(asignadosSedes);
-
+            Optional<AsignadosSedes> optional = asignadosSedesRepository.findById(asignadosSedes.getId());
+            if(optional.isPresent()){
+                AsignadosSedes asignadosSedesTemp = optional.get();
+                asignadosSedesTemp.setStock(asignadosSedesTemp.getStock()+  asignadosSedes.getStock());
+                asignadosSedesRepository.save(asignadosSedesTemp);
+            }else{ asignadosSedesRepository.save(asignadosSedes); }
             /*
             inv.setCantidadgestor(inv.getCantidadgestor()-asignadosSedes.getStock());
             inventarioRepository.save(inv);
