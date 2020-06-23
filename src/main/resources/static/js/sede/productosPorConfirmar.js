@@ -23,6 +23,14 @@ $(document).on("click",".conf-Produc", function(){
         //+ $(this).data('id1') + "&idsede=" + $(this).data('id2')
         //+ "&idproductoinv=" + $(this).data('id3') + "&idfechaenvio=" + $(this).data('id4');
 
+    var data = {
+        gestor: parseInt($(this).data('id1')),
+        sede: parseInt($(this).data('id2')),
+        productoinventario: $(this).data('id3'),
+        estadoasignacion: $(this).data('id4'),
+        precioventa: $(this).data('id5')};
+
+    console.log(data);
     $.ajax({
         async: false,
         dataType : "json",
@@ -31,13 +39,7 @@ $(document).on("click",".conf-Produc", function(){
             'Content-Type': 'application/json'
         },
         method:"POST", url:url,
-        data: JSON.stringify({
-            gestor: parseInt($(this).data('id1')),
-            sede: parseInt($(this).data('id2')),
-            productoinventario: $(this).data('id3'),
-            estadoasignacion: $(this).data('id4'),
-            precioventa: $(this).data('id5'),
-        })
+        data: data
     }).done(function(asignsede){
         if (asignsede!=null){
             console.log(asignsede);
