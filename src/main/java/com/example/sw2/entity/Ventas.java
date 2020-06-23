@@ -33,7 +33,7 @@ public class Ventas extends Auditable implements Serializable {
     private String nombrecliente;
     @Column(nullable = false)
     @NotBlank(message = "Este campo no puede estar vacío")
-    @Pattern(regexp = "^[A-Za-zÀ-ÿ ]*$", message = "Ingrese solo caracteres alfabéticos")
+    @Pattern(regexp = "^[0-9A-Za-zÀ-ÿ ]*$", message = "No puede ingresar caracteres especiales")
     private String lugarventa;
     @ManyToOne
     @JoinColumn(name = "productoinventario", nullable = false)

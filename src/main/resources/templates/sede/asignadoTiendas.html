@@ -162,7 +162,7 @@
 
                     <div class="modal-body">
                         <form method="post" th:action="@{/sede/AsignadoTienda/registrar}" th:object="${ventas}">
-                            <p id="fechaasignacion" name="fechaasignacion">text</p>
+                            <p id="fechaasignacion" name="fechaasignacion"></p>
                             <input hidden id="id1" name="id1" type="text" class="form-control"
                                    th:value="${id1!=null}? ${id1}">
 
