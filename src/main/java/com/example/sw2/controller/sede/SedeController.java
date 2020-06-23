@@ -170,8 +170,6 @@ public class SedeController {
 
             attr.addFlashAttribute("msgExito", "Venta registrada exitosamente");
             return "redirect:/sede/productosConfirmados";
-
-
         }
 
     }
