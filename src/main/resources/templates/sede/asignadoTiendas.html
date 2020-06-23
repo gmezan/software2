@@ -166,12 +166,25 @@
                             <input hidden id="id1" name="id1" type="text" class="form-control"
                                    th:value="${id1!=null}? ${id1}">
 
-                            <input hidden gittype="text" class="form-control" th:field="*{rucdni}">
-                            <input hidden type="text" class="form-control" th:field="*{nombrecliente}">
-                            <input hidden type="text" class="form-control" th:field="*{lugarventa}">
-                            <input hidden id="codigoinventario" type="text" class="form-control"
+                            <input gi gittype="text" class="form-control" th:field="*{rucdni}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('rucdni')}"
+                                 th:errors="*{rucdni}">Error
+                            </div>
+                            <input  type="text" class="form-control" th:field="*{nombrecliente}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('nombrecliente')}"
+                                 th:errors="*{nombrecliente}">Error
+                            </div>
+                            <input  type="text" class="form-control" th:field="*{lugarventa}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('lugarventa')}"
+                                 th:errors="*{lugarventa}">Error
+                            </div>
+                            <input  id="codigoinventario" type="text" class="form-control"
                                    th:field="*{inventario.codigoinventario}">
-                            <input hidden type="text" class="form-control" th:field="*{precioventa}">
+
+                            <input  type="text" class="form-control" th:field="*{precioventa}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('precioventa')}"
+                                 th:errors="*{precioventa}">Error
+                            </div>
                             <input hidden id="vendedor" type="text" class="form-control"
                                    th:field="*{vendedor.idusuarios}">
 
