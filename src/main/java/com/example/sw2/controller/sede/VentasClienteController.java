@@ -50,22 +50,24 @@ public class VentasClienteController {
         Optional<Ventas> optVenta = ventasRepository.findById(new VentasId(tipodoc,numdoc));
         if (optVenta.isPresent()) {
             Ventas v = optVenta.get(); //Se obtiene la venta
-
+            System.out.println("1");
             Optional<Tienda> optTienda = tiendaRepository.findByNombreAndDireccionAndRuc(v.getNombrecliente(),
                     v.getLugarventa(),v.getRucdni());
-
+            System.out.println("2");
             AsignadosSedes as = asignadosSedesRepository.findById_Productoinventario_CodigoinventarioAndId_Precioventa(v.getInventario().getCodigoinventario(), v.getPrecioventa());
-
+            System.out.println("3");
             //Se verifica si la venta es de una tienda
             if(optTienda.isPresent()){
                 //Se obtiene la tienda
                 Tienda t = optTienda.get();
                 Optional<AsignacionTiendas> optAt = asignacionTiendasRepository.findByTiendaAndAsignadosSedes_Id_Precioventa(t.getIdtienda(), v.getPrecioventa());
                 //Verificación si aún existe la fila en Asignados a Tienda
+                System.out.println("4");
                 if(optAt.isPresent()){
                     AsignacionTiendas at = optAt.get();
                     asignacionTiendasRepository.borrar_venta_tienda(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
                             as.getId().getProductoinventario().getCodigoinventario(), as.getId().getEstadoasignacion(),as.getId().getPrecioventa(),v.getCantidad(), at.getIdtiendas());
+                    System.out.println("5");
                 }
             //Si la venta no es una tienda se retorna el stock a Productos Confirmados
             }else{
