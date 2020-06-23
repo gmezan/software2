@@ -33,12 +33,12 @@
 
                     <div class="card-body">
                         <form method="post" th:action="@{'/gestor/productosDisponibles/registrarventa'}" th:object="${venta}">
-                            <div hidden="" class="form-group">
+                            <div hidden class="form-group">
                                 <label class="col-form-label">Código de producto:</label>
                                 <input type="text" class="form-control" th:field="*{inventario.codigoinventario}" readonly>
                             </div>
 
-                            <div hidden="" class="form-group">
+                            <div  class="form-group">
                                 <label for="inventario" class="col-form-label">Código de producto:</label>
                                 <input type="text" class="form-control" th:value="*{inventario.codigoinventario}" readonly>
                             </div>
