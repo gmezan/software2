@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @GetMapping(value = {"/",""}) public String init(){
-        return "redirect:/admin/gestor";}
+    @GetMapping(value = {"/",""}) public String init(){ return "redirect:/admin/gestor";}
 
+    @GetMapping(value = "/reportes")
+    public String listaReportes(){
+        return "admin/Reportes";
+    }
 }
