@@ -59,16 +59,16 @@ public class AsignadoTiendaController {
         Optional<Ventas> optVentas = ventasRepository.findById(venta.getId());
         AsignacionTiendas aTienda = optaTienda.get();
 
-        System.out.println(v.getPrecioventa());
-        System.out.println(v.getNombrecliente());
-        System.out.println(v.getLugarventa());
-        System.out.println(v.getInventario().getCodigoinventario());
-        System.out.println(v.getFecha());
-        System.out.println(v.getId().getNumerodocumento());
-        System.out.println(v.getId().getTipodocumento());
-        System.out.println(v.getCantidad());
-        System.out.println(v.getRucdni());
-        System.out.println(v.getVendedor().getIdusuarios());
+        System.out.println(venta.getPrecioventa());
+        System.out.println(venta.getNombrecliente());
+        System.out.println(venta.getLugarventa());
+        System.out.println(venta.getInventario().getCodigoinventario());
+        System.out.println(venta.getFecha());
+        System.out.println(venta.getId().getNumerodocumento());
+        System.out.println(venta.getId().getTipodocumento());
+        System.out.println(venta.getCantidad());
+        System.out.println(venta.getRucdni());
+        System.out.println(venta.getVendedor().getIdusuarios());
 
         if(optVentas.isPresent()){
             bindingResult.rejectValue("id.numerodocumento", "error.user", "El número de documento ya ha sido registrado");
