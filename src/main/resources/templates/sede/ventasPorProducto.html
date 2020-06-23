@@ -82,11 +82,24 @@
                                                 <td th:text="${producto.tamanhoproducto}"></td>
                                                 <td th:text="${producto.fechaventa}"></td>
                                                 <td>
-                                                    <div class="progress mx-auto" style="height: 100px;width: 100px;">
-                                                        <img class="mx-auto my-auto mh-100 img-fluid"
-                                                             th:src="${producto.fotoproducto}"
-                                                             alt="">
-                                                    </div>
+                                                    <button th:attr="data-id=${producto.codigoproducto}"
+                                                            data-toggle="modal" data-target="#showFoto"
+                                                            class="show-foto btn ">
+    
+    
+    
+    
+                                                        <div class="progress mx-auto" style="height: 100px;width: 100px;">
+                                                            <img class="mx-auto my-auto mh-100 img-fluid"
+                                                                 th:id="${producto.codigoproducto} +'photo'"
+                                                                 th:src="${producto.fotoproducto}"
+                                                                 alt="">
+                                                        </div>
+                                                        
+                                                        
+                                                    </button>
+                                                    
+                                                    
                                                 </td>
                                                 <td th:text="${producto.cantidadventa}"></td>
                                             </tr>
@@ -116,6 +129,36 @@
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
+        <!-- Modal Foto -->
+        <div id="showFoto" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="fototitle"></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body" style="    position: relative;
+                                                        flex: 1 1 auto;
+                                                        padding: 1rem;
+                                                        height: 488px;">
+                        <img id="fotoinv"
+                    
+                             alt="Foto no disponible:(" style=" position: absolute;
+                                                    top: 0;
+                                                    left: 0;
+                                                    bottom: 0;
+                                                    right: 0;
+                                                    margin: auto;
+                                                    width: auto;
+                                                    height: auto;
+                                                    max-width: 100%;
+                                                    max-height: 100%;"
+                             src="">
+                    </div>
+            
+                </div>
+            </div>
+        </div>
 
         <!-- Logout Modal-->
         <div th:replace="fragments/general-sede.html :: logout-modal"></div>

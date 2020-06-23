@@ -91,10 +91,21 @@
                                                 <td th:text="${l.correo}"></td>
                                                 <td th:text="${l.telefono}"></td>
                                                 <td>
-                                                    <div class="progress mx-auto" style="height: 100px;width: 100px;">
-                                                        <img class="mx-auto my-auto mh-100 img-fluid" th:src="${l.foto}"
-                                                             alt="">
-                                                    </div>
+                                                    <button th:attr="data-id=${l.idusuarios}"
+                                                            data-toggle="modal" data-target="#showFoto"
+                                                            class="show-foto btn ">
+                                                        <div class="progress mx-auto" style="height: 100px;width: 100px;">
+                                                            <img th:id="${l.idusuarios} +'photo'" class="mx-auto my-auto mh-100 img-fluid" th:src="${l.foto}"
+                                                                 alt="">
+
+                                                        </div>
+                                                        
+                                                    </button>
+                                                    
+                                                    
+                                                    
+                                                    
+                                                   
                                                 </td>
                                                 <td>
                                                     <button th:attr="data-id=${l.idusuarios}" data-toggle="modal"
@@ -272,6 +283,37 @@
                                     style="color:white;text-decoration:none">Borrar</a></button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Modal Foto -->
+        <div id="showFoto" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="fototitle"></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body" style="    position: relative;
+                                                        flex: 1 1 auto;
+                                                        padding: 1rem;
+                                                        height: 488px;">
+                        <img id="fotoinv"
+                    
+                             alt="Foto no disponible:(" style=" position: absolute;
+                                                    top: 0;
+                                                    left: 0;
+                                                    bottom: 0;
+                                                    right: 0;
+                                                    margin: auto;
+                                                    width: auto;
+                                                    height: auto;
+                                                    max-width: 100%;
+                                                    max-height: 100%;"
+                             src="">
+                    </div>
+            
                 </div>
             </div>
         </div>
