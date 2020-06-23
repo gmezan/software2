@@ -65,8 +65,9 @@ public class VentasClienteController {
                 System.out.println("4");
                 if(optAt.isPresent()){
                     AsignacionTiendas at = optAt.get();
-                    asignacionTiendasRepository.borrar_venta_tienda(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
-                            as.getId().getProductoinventario().getCodigoinventario(), as.getId().getEstadoasignacion(),as.getId().getPrecioventa(),v.getCantidad(), at.getIdtiendas());
+                    asignacionTiendasRepository.borrar_venta_tienda(as.getId().getGestor().getIdusuarios(),
+                            as.getId().getSede().getIdusuarios(), as.getId().getProductoinventario().getCodigoinventario(),
+                            as.getId().getEstadoasignacion(),as.getId().getPrecioventa(),v.getCantidad(), at.getIdtiendas());
                     System.out.println("5");
                 }
             //Si la venta no es una tienda se retorna el stock a Productos Confirmados
