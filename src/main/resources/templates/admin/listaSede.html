@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/general-admin.html ::admin-head(title='Sedes')">
+    <head th:replace="fragments/general-admin.html ::admin-head(title='Usuarios Sede')">
     </head>
     
     <body id="page-top">
@@ -24,7 +24,7 @@
                     <div class="container-fluid">
                         
                         <!-- Page Heading -->
-                        <h1 class="h3 mb-2 text-gray-800">Sedes</h1>
+                        <h1 class="h3 mb-2 text-gray-800">Usuarios Sede</h1>
                         <br>
                         <!--
                         <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For
@@ -78,14 +78,14 @@
                                         <tbody>
                                             <tr th:each="l : ${lista}">
                                                 <td th:text="${l.idusuarios}"></td>
-                                                <td th:text="${l.nombre}"></td>
-                                                <td th:text="${l.apellido}"></td>
+                                                <td th:id="${l.idusuarios} +'name'" th:text="${l.nombre}"></td>
+                                                <td th:id="${l.idusuarios} +'last'" th:text="${l.apellido}"></td>
                                                 <td th:text="${l.correo}"></td>
                                                 <td th:text="${l.telefono}"></td>
                                                 <td>
                                                     <button th:attr="data-id=${l.idusuarios}"
-                                                            data-toggle="modal" data-target="#showFoto"
-                                                            class="show-foto btn ">
+                                                            data-toggle="modal" data-target="#showFotoU"
+                                                            class="show-fotoU btn ">
                                                         
                                                         <img th:id="${l.idusuarios} +'photo'" alt="" width=100
                                                              style="height: auto;" th:src="${l.foto}"
@@ -121,7 +121,7 @@
         </a>
         
         <!-- Modal Foto -->
-        <div id="showFoto" class="modal fade">
+        <div id="showFotoU" class="modal fade">
             <div class="modal-dialog modal-confirm">
                 <div class="modal-content">
                     <div class="modal-header">

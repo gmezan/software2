@@ -25,7 +25,7 @@
                         
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-900">Gestores principales</h1>
+                            <h1 class="h3 mb-2 text-gray-800">Gestores principales</h1>
                         
                         </div>
                         
@@ -86,14 +86,14 @@
                                         <tbody>
                                             <tr th:each="l : ${lista}">
                                                 <td th:text="${l.idusuarios}"></td>
-                                                <td th:text="${l.nombre}"></td>
-                                                <td th:text="${l.apellido}"></td>
+                                                <td th:id="${l.idusuarios} +'name'" th:text="${l.nombre}"></td>
+                                                <td th:id="${l.idusuarios} +'last'" th:text="${l.apellido}"></td>
                                                 <td th:text="${l.correo}"></td>
                                                 <td th:text="${l.telefono}"></td>
                                                 <td>
                                                     <button th:attr="data-id=${l.idusuarios}"
-                                                            data-toggle="modal" data-target="#showFoto"
-                                                            class="show-foto btn ">
+                                                            data-toggle="modal" data-target="#showFotoU"
+                                                            class="show-fotoU btn ">
                                                         <div class="progress mx-auto" style="height: 100px;width: 100px;">
                                                             <img th:id="${l.idusuarios} +'photo'" class="mx-auto my-auto mh-100 img-fluid" th:src="${l.foto}"
                                                                  alt="">
@@ -288,7 +288,7 @@
         </div>
     
         <!-- Modal Foto -->
-        <div id="showFoto" class="modal fade">
+        <div id="showFotoU" class="modal fade">
             <div class="modal-dialog modal-confirm">
                 <div class="modal-content">
                     <div class="modal-header">

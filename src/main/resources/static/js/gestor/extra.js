@@ -32,6 +32,18 @@ $(document).ready(function () {
 
 
     });
+    $(document).on("click", ".show-fotoU", function () {
+        let showfoto = $("#showFotoU #fotoinv");
+        showfoto.attr("src", "");
+        let idname='#'+$(this).data('id')+'name';
+        let idlast='#'+$(this).data('id')+'last';
+        $("#showFotoU #fototitle").text($(idname).text()+" "+$(idlast).text());
+        let id='#'+$(this).data('id')+'photo';
+        let url= $(id).attr('src');
+        showfoto.attr("src", url);
+
+
+    });
 
 
 

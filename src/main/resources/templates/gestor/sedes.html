@@ -1,53 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/general-gestor.html ::gestor-head(title='Sedes')">
+    <head th:replace="fragments/general-gestor.html ::gestor-head(title='Usuarios Sede')">
     </head>
     <body id="page-top">
-
+        
         <!-- Page Wrapper -->
         <div id="wrapper">
-
+            
             <!-- Sidebar -->
             <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='Sedes',param2='...')"></div>
             <!-- End of Sidebar -->
-
+            
             <!-- Content Wrapper -->
             <div id="content-wrapper" class="d-flex flex-column">
-
+                
                 <!-- Main Content -->
                 <div id="content">
-
+                    
                     <div th:replace="fragments/general-gestor.html :: topbar"></div>
-
+                    
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-
+                        
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-white">Sedes</h1>
-
+                            <h1 class="h3 mb-0 text-white">Usuarios Sede</h1>
+                        
                         </div>
-
-
+                        
+                        
                         <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1"
                              role="alert"></div>
-
+                        
                         <div id="msgSedes" th:if="${msgError != null}" th:text="${msgError}"
                              class="alert alert-danger py-1" role="alert"></div>
-
-
+                        
+                        
                         <!-- Database Table -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <div class="d-sm-flex align-items-center justify-content-between ">
-
-                                    <p class="text-black-50 mr-5 mt-3 mb-0 ">Aquí puede ver las sedes registradas. Para asignar productos a una
+                                    
+                                    <p class="text-black-50 mr-5 mt-3 mb-0 ">Aquí puede ver los usuarios sede
+                                        registrados. Para asignar productos a una
                                         sede, revise la lista de <a
-                                                class="text-black-50 font-weight-bold" th:href="@{/gestor/productosDisponibles}">productos disponibles</a>.
+                                                class="text-black-50 font-weight-bold"
+                                                th:href="@{/gestor/productosDisponibles}">productos disponibles</a>.
                                         <br>Para ver el estado de las asignaciones a sedes, revise la lista de <a
-                                                class="text-black-50 font-weight-bold" th:href="@{/gestor/asignado}">productos asignados</a>.
+                                                class="text-black-50 font-weight-bold" th:href="@{/gestor/asignado}">productos
+                                            asignados</a>.
                                     </p>
-
+                                    
                                     <button data-toggle="modal" data-target="#formModal" type="button"
                                             class="new-Gestor d-none d-sm-inline-block btn btn-sm btn-info shadow-sm"><i
                                             class="fas fa-user-plus fa-sm text-white-50"></i> Nueva sede
@@ -92,23 +95,22 @@
                                         <tbody>
                                             <tr th:each="l : ${lista}">
                                                 <td th:text="${l.idusuarios}"></td>
-                                                <td th:text="${l.nombre}"></td>
-                                                <td th:text="${l.apellido}"></td>
+                                                <td th:id="${l.idusuarios} +'name'" th:text="${l.nombre}"></td>
+                                                <td th:id="${l.idusuarios} +'last'" th:text="${l.apellido}"></td>
                                                 <td th:text="${l.correo}"></td>
                                                 <td th:text="${l.telefono}"></td>
                                                 <td>
                                                     <button th:attr="data-id=${l.idusuarios}"
-                                                            data-toggle="modal" data-target="#showFoto"
-                                                            class="show-foto btn ">
+                                                            data-toggle="modal" data-target="#showFotoU"
+                                                            class="show-fotoU btn ">
                                                         <img th:id="${l.idusuarios} +'photo'"
                                                              th:src="${l.foto}"
                                                              alt="" width=100 style="height: auto;">
                                                     </button>
-                                                    
-                                                    
-                                                    
-                                                   </td>
-
+                                                
+                                                
+                                                </td>
+                                                
                                                 <td th:text="${l.fechacreacion.toLocalDate()}">
                                                 <td th:if="${l.fechamodificacion!=null}"
                                                     th:text="${l.fechamodificacion.toLocalDate()}"></td>
@@ -130,55 +132,55 @@
                                 <div id="newtablefoot" class="dataTables_wrapper mt-3"></div>
                             </div>
                         </div>
-
-
+                    
+                    
                     </div>
                     <!-- /.container-fluid -->
                 </div>
                 <!-- End of Main Content -->
-
+                
                 <div th:replace="fragments/general-gestor.html :: footer"></div>
-
+            
             </div>
             <!-- End of Content Wrapper -->
-
+        
         </div>
         <!-- End of Page Wrapper -->
-
+        
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-
+        
         <!-- Logout Modal-->
         <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
-
+        
         <!-- Bootstrap core JavaScript-->
         <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
         <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
+        
         <!-- Core plugin JavaScript-->
         <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
-
+        
         <!-- Custom scripts for all pages-->
         <script th:src="@{/js/sb-admin-2.min.js}"></script>
-
+        
         <!-- Page level plugins -->
         <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
-
+        
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/chart-area-demo.js}"></script>
         <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
-
+        
         <!-- Page level plugins -->
         <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
         <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
-
+        
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
         <script th:src="@{/js/gestor/sede.js}"></script>
         <script th:src="@{/js/gestor/extra.js}"></script>
-
+        
         <!-- Modal Add Edit-->
         <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -253,7 +255,7 @@
                 </div>
             </div>
         </div>
-
+        
         <!-- Modal Delete -->
         <div id="deleteModal" class="modal fade">
             <div class="modal-dialog modal-confirm">
@@ -276,7 +278,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
-
+                                
                                 </tbody>
                             </table>
                             <table hidden class="table" id="tableModal2">
@@ -297,14 +299,14 @@
                             <button id="buttonDelete" type="submit" class="btn btn-danger"><a
                                     style="color:white;text-decoration:none">Borrar</a></button>
                         </div>
-
+                    
                     </form>
                 </div>
             </div>
         </div>
-    
+        
         <!-- Modal Foto -->
-        <div id="showFoto" class="modal fade">
+        <div id="showFotoU" class="modal fade">
             <div class="modal-dialog modal-confirm">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -316,7 +318,7 @@
                                                         padding: 1rem;
                                                         height: 488px;">
                         <img id="fotoinv"
-                    
+                        
                              alt="Foto no disponible:(" style=" position: absolute;
                                                     top: 0;
                                                     left: 0;
@@ -329,7 +331,7 @@
                                                     max-height: 100%;"
                              src="">
                     </div>
-            
+                
                 </div>
             </div>
         </div>
