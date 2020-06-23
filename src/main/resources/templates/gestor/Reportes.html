@@ -27,19 +27,19 @@
                     <h1 class="h3 mb-0 text-white">Reportes</h1>
                 </div>
 
-                <div class="row">
+                <div class="row mt-5">
 
 
-                    <div class="col-lg-9 ml-4">
+                    <div class="col-lg-9 mx-auto">
 
                         <!-- Collapsable Card Example -->
                         <div class="card shadow mb-4">
                             <!-- Card Header - Accordion -->
-                            <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                            <a href="#collapseCardExample1" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardExample1">
                                 <h6 class="m-0 font-weight-bold text-primary">Venta Mensual</h6>
                             </a>
                             <!-- Card Content - Collapse -->
-                            <div class="collapse show" id="collapseCardExample">
+                            <div class="collapse" id="collapseCardExample1">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
@@ -112,11 +112,11 @@
 
                         <div class="card shadow mb-4">
                             <!-- Card Header - Accordion -->
-                            <a href="#collapseVentaTrimestral" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                            <a href="#collapseVentaTrimestral" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseVentaTrimestral">
                                 <h6 class="m-0 font-weight-bold text-primary">Venta Trimestral</h6>
                             </a>
                             <!-- Card Content - Collapse -->
-                            <div class="collapse show" id="collapseVentaTrimestral">
+                            <div class="collapse" id="collapseVentaTrimestral">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
@@ -189,11 +189,11 @@
 
                         <div class="card shadow mb-4">
                             <!-- Card Header - Accordion -->
-                            <a href="#collapseVentaAnual" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                            <a href="#collapseVentaAnual" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseVentaAnual">
                                 <h6 class="m-0 font-weight-bold text-primary">Venta Anual</h6>
                             </a>
                             <!-- Card Content - Collapse -->
-                            <div class="collapse show" id="collapseVentaAnual">
+                            <div class="collapse" id="collapseVentaAnual">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
@@ -290,195 +290,6 @@
 <!-- Logout Modal-->
 <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
 
-
-<!-- Modal Add-->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addTitle" th:text="|Añadir ${codinv}|">Añadir producto de Inventario</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <form id="add" method="post" th:action="@{/gestor/inventario/addInv}">
-                    <input type="text" hidden id="codinvAdd" name="codinv" th:value="${codinv}">
-                    <div class="form-group">
-                        <label for="cant" class="col-form-label">Cantidad a adicionar:</label>
-                        <input type="number" min="0" class="form-control" id="cant" name="cant"
-                               th:value="${cant}">
-                        <div class="text-danger" id="msgc" th:text="${cantError}">Error</div>
-                    </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button form="add" type="submit" class="btn btn-success"><a
-                        style="color:white;text-decoration:none">Añadir</a></button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal Edit-->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form id="edit" method="post" th:action="@{/gestor/inventario/editInv}"
-                  th:object="${inventario}">
-                <div class="modal-header">
-                    <h5 class="modal-title" th:text="|Editar *{codigoinventario}|"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <input type="text" hidden th:field="*{codigoinventario}">
-                    <input type="text" hidden th:field="*{codAdquisicion}">
-
-                    <div class="form-row">
-                        <label class="col-form-label"><b>Costos unitarios:</b></label>
-                    </div>
-
-
-                    <div class="form-row">
-
-                        <div class="form-group col-6">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text text-body">S/.</div>
-                                </div>
-                                <input th:field="*{costotejedor}" type="number"
-                                       step='0.01' min="0.01"
-                                       class="form-control"
-                                       placeholder="000.00">
-                                <div class="input-group-append">
-                                    <div class="input-group-text text-body">(Tejedor)</div>
-                                </div>
-                            </div>
-                            <div class="errorInv text-danger"
-                                 th:if="${#fields.hasErrors('costotejedor')}"
-                                 th:errors="*{costotejedor}">Error
-                            </div>
-
-                        </div>
-
-                        <div class="form-group col-6">
-
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text text-body">S/.</div>
-                                </div>
-                                <input th:field="*{costomosqoy}" type="number" min="0.01"
-                                       step='0.01'
-                                       class="form-control"
-                                       placeholder="000.00">
-                                <div class="input-group-append">
-                                    <div class="input-group-text text-body">(Mosqoy)</div>
-                                </div>
-                            </div>
-                            <div class="errorInv text-danger"
-                                 th:if="${#fields.hasErrors('costomosqoy')}"
-
-                                 th:errors="*{costomosqoy}">Error
-                            </div>
-
-
-                        </div>
-                    </div>
-                    <div class="form-row ">
-                        <div class="form-group col-6">
-                            <label class="col-form-label"><b>Facilitador:</b></label>
-                            <input th:field="*{facilitador}" type="text" class="form-control">
-                            <div class="errorInv text-danger" th:if="${#fields.hasErrors('facilitador')}"
-                                 th:errors="*{facilitador}">Error
-                            </div>
-
-                        </div>
-                    </div>
-
-
-                    <div class="form-row">
-
-                        <div class="form-group col-6">
-
-
-                            <div th:hidden="${inventario.codAdquisicion!=1}"
-                                 id="vencimientoConsignacion" class="form-group">
-                                <label class="col-form-label"><b>Fecha de
-                                    vencimiento:</b></label>
-                                <input th:field="*{fechavencimientoconsignacion}"
-                                       type="date"
-                                       class="form-control">
-                                <div class="errorInv text-danger"
-                                     th:if="${#fields.hasErrors('fechavencimientoconsignacion')}"
-                                     th:errors="*{fechavencimientoconsignacion}">Error
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button form="edit" type="submit" class="btn btn-info"><a
-                            style="color:white;text-decoration:none">Guardar cambios</a></button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Delete -->
-<div id="deleteModal" class="modal fade">
-    <div class="modal-dialog modal-confirm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Borrar Registro</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>¿Seguro que desea borrar este registro del inventario? Esta acción no se puede deshacer.</p>
-            </div>
-            <div class="modal-footer">
-                <form method="get" th:action="@{/gestor/inventario/delete} ">
-                    <input id="codDelete" hidden name="codDelete">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger"><a
-                            style="color:white;text-decoration:none">Borrar</a></button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Delete -->
-<div id="showFoto" class="modal fade">
-    <div class="modal-dialog modal-confirm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="fototitle"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <img id="fotoinv"
-
-                     alt="" style="max-height: 100%;max-width: 100%;" src="">
-            </div>
-
-        </div>
-    </div>
-</div>
 
 <!-- Bootstrap core JavaScript-->
 <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
