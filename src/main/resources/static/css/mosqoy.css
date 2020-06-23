@@ -3,9 +3,16 @@ th, .d-sm-inline-block {
 }
 
 #showFoto .modal-content {
-    width: 150%;
-}
+    width: auto;
+    height: auto;
 
+}
+@media(min-width: 576px){
+.modal-dialog {
+    max-width: 583px;
+    margin: 1.75rem auto;
+}
+}
 .topbar.navbar-light .navbar-nav .nav-item .nav-link {
     color: #515785;
 }
