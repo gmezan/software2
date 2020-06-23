@@ -65,7 +65,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="documento" class="col-form-label">Número de Documento Físico:</label>
-                                <input type="number" class="form-control" th:field="*{id.numerodocumento}">
+                                <input type="text" class="form-control" th:field="*{id.numerodocumento}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}" th:errors="*{id.numerodocumento}" ></div>
                             </div>
                             <div class="form-group">
