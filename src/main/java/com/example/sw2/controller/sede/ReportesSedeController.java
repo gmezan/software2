@@ -10,7 +10,7 @@ public class ReportesSedeController {
 
     @GetMapping(value = "")
     public String listaReportes(){
-//        return "sede/Reportes";
+//        return "sede/reportesSede";
         return "sede/reportesSedeEnConstruccion";
     }
 }

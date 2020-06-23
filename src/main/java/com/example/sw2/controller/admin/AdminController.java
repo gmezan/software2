@@ -11,8 +11,4 @@ public class AdminController {
 
     @GetMapping(value = {"/",""}) public String init(){ return "redirect:/admin/gestor";}
 
-    @GetMapping(value = "/reportes")
-    public String listaReportes(){
-        return "admin/Reportes";
-    }
 }
