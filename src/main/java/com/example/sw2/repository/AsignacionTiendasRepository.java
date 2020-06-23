@@ -42,7 +42,7 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
     List<AsignacionTiendas> findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id_Sede(int a, Usuarios sede);
     List<AsignacionTiendas> findAsignacionTiendasByTiendaAndAsignadosSedes(Tienda tienda,AsignadosSedes as);
 
-    Optional<AsignacionTiendas> findByIdtiendasAndAsignadosSedes_Id_Precioventa(int tienda, Float precio);
+    Optional<AsignacionTiendas> findByTienda_IdtiendaAndAsignadosSedes_Id_Precioventa(int tienda, Float precio);
 
     @Procedure(name = "tienda_registra")
     void tienda_registra(int dni_gestor, int dni_sede, String codigo,

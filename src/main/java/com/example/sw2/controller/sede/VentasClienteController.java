@@ -60,7 +60,7 @@ public class VentasClienteController {
             if(optTienda.isPresent()){
                 //Se obtiene la tienda
                 Tienda t = optTienda.get();
-                Optional<AsignacionTiendas> optAt = asignacionTiendasRepository.findByIdtiendasAndAsignadosSedes_Id_Precioventa(t.getIdtienda(), v.getPrecioventa().floatValue());
+                Optional<AsignacionTiendas> optAt = asignacionTiendasRepository.findByTienda_IdtiendaAndAsignadosSedes_Id_Precioventa(t.getIdtienda(), v.getPrecioventa().floatValue());
                 System.out.println(t.getIdtienda());
                 System.out.println(v.getPrecioventa().floatValue());
                 //Verificación si aún existe la fila en Asignados a Tienda
