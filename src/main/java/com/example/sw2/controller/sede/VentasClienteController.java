@@ -52,7 +52,7 @@ public class VentasClienteController {
             Optional<Tienda> optTienda = tiendaRepository.findByNombreAndDireccionAndRuc(v.getNombrecliente(),
                     v.getLugarventa(),v.getRucdni());
 
-                AsignadosSedes as = asignadosSedesRepository.findById_Productoinventario_CodigoinventarioAndId_PrecioventaAndId_Estadoasignacion(v.getInventario().getCodigoinventario(), v.getPrecioventa().floatValue(),2);
+                AsignadosSedes as = asignadosSedesRepository.findById_Productoinventario_CodigoinventarioAndId_PrecioventaAndId_EstadoasignacionAndId_Sede_Idusuarios(v.getInventario().getCodigoinventario(), v.getPrecioventa().floatValue(),2, v.getVendedor().getIdusuarios());
 
             //Se verifica si la venta es de una tienda
             if(optTienda.isPresent()){
