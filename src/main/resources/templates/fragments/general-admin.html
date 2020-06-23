@@ -40,10 +40,10 @@
 <nav th:fragment="topbar" class="navbar navbar-expand navbar-light bg-top topbar mb-4 static-top shadow">
 
     <!-- Sidebar Toggle (Topbar) -->
-    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+    <button id="sidebarToggleTop" style="color: #2b1b1bcc;" class=" btn btn-link d-md-none rounded-circle">
         <i class="fa fa-bars"></i>
     </button>
-
+    <div class="ml-3  font-weight-bold " style="font-size: 1.1rem;font-style: italic;color: #2b1b1bcc;">Administrador</div>
     <!-- Topbar Search
     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
         <div class="input-group">
@@ -59,27 +59,7 @@
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
 
-        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-        <li class="nav-item dropdown no-arrow d-sm-none">
-            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-            </a>
-            <!-- Dropdown - Messages -->
-            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </li>
-
-
+        
         <div th:replace="fragments/notification.html :: notification-center"></div>
 
         <div class="topbar-divider d-none d-sm-block"></div>
@@ -101,7 +81,7 @@
                 <div class="dropdown-divider"></div-->
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
+                    Cerrar Sesión
                 </a>
             </div>
         </li>
@@ -126,8 +106,8 @@
 <ul th:fragment="admin-sidebar(param1,param2)" class="navbar-nav bg-gradient-admin sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/admin}">
-        <i class="fas fa-code"></i>
-        <div class="sidebar-brand-text mx-3">Administrador</div>
+        <i class="fas"> <img style="width: 88%;height: 88%;" th:src="@{/img/colibriiiii.png}" alt="."></i>
+        <div class="sidebar-brand-text ml-0"><img style="width: 103%;height: 103%;" th:src="@{/img/mosqLOGO-min.png}" alt="."></div>
     </a>
 
     <!-- Divider -->
@@ -166,7 +146,7 @@
     <!-- Nav Item - Inventario -->
     <li class="nav-item" th:classappend="${param1=='Inventario'}? active : ''">
         <a class="nav-link" th:href="@{/admin/inventario}">
-            <i class="fas fa-fw fa-file"></i>
+            <i class="fas fa-fw fa-clipboard-list"></i>
             <span>Inventario</span></a>
     </li>
 
@@ -213,7 +193,7 @@
                 <div class="modal-body">Seleccione "Cerrar sesión" si está listo para cerrar su sesión actual.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" >Cerrar sesión</button>
+                    <button type="submit" class="btn btn-info" >Cerrar sesión</button>
                 </div>
 
             </form>
