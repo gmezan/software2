@@ -45,10 +45,14 @@ thead, tfoot {
 }
 .bg-gradient-sede {
     background-color: #ffffff;
-    background-image: linear-gradient(180deg, #c8593e 50%, #f6c23e 100%);
+    background-image: linear-gradient(180deg, #c8593e 50%, #dca415 100%);
     background-size: cover;
 }
-
+.bg-gradient-admin {
+    background-color: #ffffff;
+    background-image: linear-gradient(180deg, #763a5dfa 50%, #661d3d 100%);
+    background-size: cover;
+}
 .bg-top {
     background-color: #ffffff96 ;
 }
