@@ -145,9 +145,17 @@
                                                 <td th:text="${inv.artesanos!=null? inv.artesanos.nombre +' ' + inv.artesanos.apellidopaterno : '---' }">
                                                     Angela Ccana
                                                 </td>
-                                                <td><img
-                                                        th:src="${inv.foto}"
-                                                        alt="" height=100 width=100></td>
+                                                <td>
+                                                    <button th:attr="data-id=${inv.codigoinventario}"
+                                                            data-toggle="modal" data-target="#showFoto"
+                                                            class="show-foto btn ">
+        
+                                                        <img th:id="${inv.codigoinventario} +'photo'" alt="" height=100 width=100 th:src="${inv.foto}"
+                                                        >
+                                                    </button>
+                                                    
+                                                    
+                                                    </td>
                                                 
                                                 <td style="text-align: right">
                                                     <span th:text="${inv.fechacreacion.toLocalDate()}"></span>
@@ -191,6 +199,37 @@
         
         <!-- Logout Modal-->
         <div th:replace="fragments/general-admin.html :: logout-modal"></div>
+    
+        <!-- Modal Foto -->
+        <div id="showFoto" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="fototitle"></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body" style="    position: relative;
+                                                        flex: 1 1 auto;
+                                                        padding: 1rem;
+                                                        height: 488px;">
+                        <img id="fotoinv"
+                    
+                             alt="Foto no disponible:(" style=" position: absolute;
+                                                    top: 0;
+                                                    left: 0;
+                                                    bottom: 0;
+                                                    right: 0;
+                                                    margin: auto;
+                                                    width: auto;
+                                                    height: auto;
+                                                    max-width: 100%;
+                                                    max-height: 100%;"
+                             src="">
+                    </div>
+            
+                </div>
+            </div>
+        </div>
         
         <!-- Bootstrap core JavaScript-->
         <script th:src="@{/vendor/jquery/jquery.min.js}"></script>

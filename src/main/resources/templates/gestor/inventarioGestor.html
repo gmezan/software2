@@ -67,7 +67,8 @@
                                 
                                 <div class="table-responsive">
                                     
-                                    <table class="table table-striped table-bordered table-hover" id="dataTable" width="100%"
+                                    <table class="table table-striped table-bordered table-hover" id="dataTable"
+                                           width="100%"
                                            cellspacing="0">
                                         
                                         <thead>
@@ -95,7 +96,7 @@
                                                 
                                                 <th rowspan="2">Registrado en:</th>
                                                 <th rowspan="2">Última modificación</th>
-                                                <th rowspan="2" >Editar / Borrar</th>
+                                                <th rowspan="2">Editar / Borrar</th>
                                             </tr>
                                             <tr>
                                                 <th>Nombre</th>
@@ -263,7 +264,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addTitle" th:text="|Añadir ${codinv}|">Añadir producto de Inventario</h5>
+                        <h5 class="modal-title" id="addTitle" th:text="|Añadir ${codinv}|">Añadir producto de
+                            Inventario</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -428,7 +430,7 @@
             </div>
         </div>
         
-        <!-- Modal Delete -->
+        <!-- Modal Foto -->
         <div id="showFoto" class="modal fade">
             <div class="modal-dialog modal-confirm">
                 <div class="modal-content">
@@ -436,10 +438,23 @@
                         <h4 class="modal-title" id="fototitle"></h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="    position: relative;
+                                                        flex: 1 1 auto;
+                                                        padding: 1rem;
+                                                        height: 488px;">
                         <img id="fotoinv"
                         
-                             alt="" style="max-height: 100%;max-width: 100%;" src="">
+                             alt="Foto no disponible:(" style=" position: absolute;
+                                                    top: 0;
+                                                    left: 0;
+                                                    bottom: 0;
+                                                    right: 0;
+                                                    margin: auto;
+                                                    width: auto;
+                                                    height: auto;
+                                                    max-width: 100%;
+                                                    max-height: 100%;"
+                             src="">
                     </div>
                 
                 </div>
@@ -464,9 +479,9 @@
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
         
         <script th:src="@{/js/gestor/inventario.js}"></script>
-    
+        
         <script th:src="@{/js/gestor/extra.js}"></script>
-
+        
         <script th:src="@{/js/notification.js}"></script>
     </body>
 </html>

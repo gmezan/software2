@@ -1,48 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+    
     <head th:replace="fragments/general-sede.html ::sede-head(title='Lista de ventas por cliente')">
     </head>
-
+    
     <body id="page-top">
-
+        
         <!-- Page Wrapper -->
         <div id="wrapper">
-
+            
             <!-- Sidebar -->
             <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='Ventas',param2='VentasPorCliente')"></div>
             <!-- End of Sidebar -->
-
+            
             <!-- Content Wrapper -->
             <div id="content-wrapper" class="d-flex flex-column">
-
+                
                 <!-- Main Content -->
                 <div id="content">
-
+                    
                     <div th:replace="fragments/general-sede.html :: topbar"></div>
-
+                    
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-
+                        
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-900">Lista de ventas por cliente</h1>
                         </div>
                         <!-- Page Heading -->
                         <div th:if="${msgBorrado != null}" th:text="${msgBorrado}" class="alert alert-success    py-1"
                              role="alert"></div>
-
+                        
                         <div class="card shadow mb-4">
                             <div class="card-header ">
                                 <div class="d-sm-flex align-items-center justify-content-between ">
-
-                                    <p class="text-black-50 mr-5 mt-3 mb-0 ">Lista y detalle de las ventas generadas. En caso de registrar un dato erroneo,
+                                    
+                                    <p class="text-black-50 mr-5 mt-3 mb-0 ">Lista y detalle de las ventas generadas. En
+                                        caso de registrar un dato erroneo,
                                         puede borrar la venta y generar una nueva.
                                     </p>
-
-
+                                
+                                
                                 </div>
-
-
+                            
+                            
                             </div>
                             <div class="card-body pt-0 ">
                                 <div id="newFilterLength" class="dataTables_wrapper mt-3"></div>
@@ -91,7 +92,7 @@
                                                 <th>Borrar</th>
                                             </tr>
                                         </tfoot>
-
+                                        
                                         <tbody>
                                             <tr th:each="product : ${listaVentas}">
                                                 <td th:text="${product.nombrecliente}"></td>
@@ -107,15 +108,29 @@
                                                 <td th:text="${product.precioventa}"></td>
                                                 <td th:text="${product.cantidad}"></td>
                                                 <td th:text="${product.cantidad * product.precioventa}"></td>
-                                                <td><img
-                                                        src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                                                        height=100 style="width: auto">
+                                                <td>
+                                                    <button th:attr="data-id=${product.inventario.codigoinventario}"
+                                                            data-toggle="modal" data-target="#showFoto"
+                                                            class="show-foto btn ">
+                                                        
+                                                        <div class="progress mx-auto"
+                                                             style="height: 100px;width: 100px;">
+                                                            <img th:id="${product.inventario.codigoinventario} +'photo'"
+                                                                 class="mx-auto my-auto mh-100 img-fluid"
+                                                                 th:src="${product.inventario.foto}"
+                                                                 alt="">
+                                                        </div>
+                                                    
+                                                    
+                                                    </button>
+                                                
                                                 </td>
                                                 <td>
                                                     <button th:attr="data-id1=${product.id.numerodocumento}, data-id2=${product.id.tipodocumento}"
                                                             data-toggle="modal" data-target="#deleteModal"
                                                             class="borrar-VentasCliente btn btn-datatable btn-icon btn-danger">
-                                                        Borrar
+                                                        <i
+                                                                class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </td>
                                                 <!--th:src="${product.fotoproducto}"-->
@@ -128,51 +143,51 @@
                         </div>
                     </div>
                     <!-- /.container-fluid -->
-
+                
                 </div>
                 <!-- End of Main Content -->
-
+                
                 <div th:replace="fragments/general-sede.html :: footer"></div>
-
+            
             </div>
             <!-- End of Content Wrapper -->
-
+        
         </div>
         <!-- End of Page Wrapper -->
-
+        
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-
-
+        
+        
         <!-- Logout Modal-->
         <div th:replace="fragments/general-sede.html :: logout-modal"></div>
-
+        
         <!-- Bootstrap core JavaScript-->
         <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
         <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
+        
         <!-- Core plugin JavaScript-->
         <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
-
+        
         <!-- Custom scripts for all pages-->
         <script th:src="@{/js/sb-admin-2.min.js}"></script>
-
+        
         <!-- Page level plugins -->
         <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
         <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
         <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
-
+        
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/chart-area-demo.js}"></script>
         <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
         <script th:src="@{/js/sede/ventasCliente.js}"></script>
         <script th:src="@{/js/gestor/extra.js}"></script>
-
+        
         <!-- Modal Delete -->
-
+        
         <div id="deleteModal" class="modal fade">
             <div class="modal-dialog modal-confirm">
                 <div class="modal-content">
@@ -184,7 +199,7 @@
                         <div class="modal-body">
                             <input hidden type="text" class="form-control" id="id1" name="id1">
                             <input hidden type="text" class="form-control" id="id2" name="id2">
-
+                            
                             <p>¿Seguro que desea eliminar esta venta? Esta acción no se puede deshacer.</p>
                         </div>
                         <div class="modal-footer">
@@ -196,7 +211,37 @@
                 </div>
             </div>
         </div>
-
+        <!-- Modal Foto -->
+        <div id="showFoto" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="fototitle"></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body" style="    position: relative;
+                                                        flex: 1 1 auto;
+                                                        padding: 1rem;
+                                                        height: 488px;">
+                        <img id="fotoinv"
+                        
+                             alt="Foto no disponible:(" style=" position: absolute;
+                                                    top: 0;
+                                                    left: 0;
+                                                    bottom: 0;
+                                                    right: 0;
+                                                    margin: auto;
+                                                    width: auto;
+                                                    height: auto;
+                                                    max-width: 100%;
+                                                    max-height: 100%;"
+                             src="">
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    
     </body>
 
 </html>
