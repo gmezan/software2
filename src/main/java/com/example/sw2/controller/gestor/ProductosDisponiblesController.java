@@ -82,8 +82,6 @@ public class ProductosDisponiblesController {
 
             //PRUEBA
             System.out.println(ventas.getCantidad());
-            System.out.println(ventas.getId().getTipodocumento());
-            System.out.println(ventas.getId().getNumerodocumento());
             System.out.println(ventas.getFecha());
             System.out.println(ventas.getInventario().getCodigoinventario());
             System.out.println(ventas.getLugarventa());
