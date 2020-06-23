@@ -2,11 +2,7 @@ var contextPath  = window.location.href;
 
 $(document).on("click",".conf-Produc", function(){
 
-    $("#confirmarRecepcionModal  #idgestor").val('');
-    $("#confirmarRecepcionModal  #idsede").val('');
-    $("#confirmarRecepcionModal  #idproductoinv").val('');
-    $("#confirmarRecepcionModal  #idestadoasign").val('');
-    $("#confirmarRecepcionModal  #idprecioventa").val('');
+    $("#confirmarRecepcionModal  input").val('');
 
     $("#confirmarRecepcionModal #codinv").text('');
     $("#confirmarRecepcionModal  #producto").text('');
