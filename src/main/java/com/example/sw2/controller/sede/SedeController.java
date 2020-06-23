@@ -51,6 +51,11 @@ public class SedeController {
         return "redirect:/sede/productosPorConfirmar";
     }
 
+    @GetMapping("reportes")
+    public String reportes() {
+        return "sede/reportesSede";
+    }
+
     @GetMapping("productosPorConfirmar")
     public String productosPorConfirmar(HttpSession session, Model model) {
 
@@ -200,7 +205,7 @@ public class SedeController {
                 }
             }
 
-            if (bindingResult.hasErrors()) {
+            if (bindingResult.hasErrors() ) {
                 Usuarios sede = (Usuarios) session.getAttribute("usuario");
                 model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
                 model.addAttribute("listaTiendas", tiendaRepository.findAll());

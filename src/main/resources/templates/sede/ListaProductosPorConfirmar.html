@@ -29,17 +29,34 @@
                         </div>
 
                         <!-- Page Heading -->
-                        <div  th:if="${msgExito != null}" th:text="${msgExito}"
-                              class="alert alert-success py-1" role="alert"></div>
+                        <div th:if="${msgExito != null}" th:text="${msgExito}"
+                             class="alert alert-success py-1" role="alert"></div>
 
                         <!-- DataTales Example -->
+
+
                         <div class="card shadow mb-4">
-                            <!--div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Lista de productos confirmados</h6>
-                            </div-->
-                            <div class="card-body">
+                            <div class="card-header ">
+                                <div class="d-sm-flex align-items-center justify-content-between ">
+
+                                    <p class="text-black-50 mr-5 mt-3 mb-0 ">Lista de productos enviados desde sede, puede confirmar la recepción de
+                                        productos o registrar un problema de algun producto.
+                                    </p>
+
+
+                                </div>
+
+
+                            </div>
+                            <div class="card-body pt-0 ">
+                                <div id="newFilterLength" class="dataTables_wrapper mt-3"></div>
+                                <div class="fakescroll"
+                                     style="overflow-x: auto;overflow-y: hidden;">
+                                    <div style="height: 8px;">&nbsp;</div>
+                                </div>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-hover" id="dataTable" width="100%"
+                                    <table class="table table-striped table-bordered table-hover" id="dataTable"
+                                           width="100%"
                                            cellspacing="0">
                                         <thead>
                                             <tr>
@@ -86,7 +103,8 @@
                                                 <td th:text="${prodPorConfirm.stock}"></td>
                                                 <td th:text="${prodPorConfirm.fechaenvio}"></td>
                                                 <td>
-                                                    <div class="progress mx-auto" style="height: 100px;width: 100px;">
+                                                    <div class="progress mx-auto"
+                                                         style="height: 100px;width: 100px;">
                                                         <img class="mx-auto my-auto mh-100 img-fluid"
                                                              th:src="${prodPorConfirm.id.productoinventario.foto}"
                                                              alt="">
@@ -96,15 +114,18 @@
                                                     <button th:attr="data-id1=${prodPorConfirm.id.gestor.idusuarios}, data-id2=${prodPorConfirm.id.sede.idusuarios},
                                                      data-id3=${prodPorConfirm.id.productoinventario.codigoinventario},
                                                      data-id4=${prodPorConfirm.id.estadoasignacion}, data-id5=${prodPorConfirm.id.precioventa}"
-                                                            type="button" class="conf-Produc btn btn-success "
-                                                            data-toggle="modal" data-target="#confirmarRecepcionModal">
+                                                            type="button"
+                                                            class="conf-Produc btn btn-success "
+                                                            data-toggle="modal"
+                                                            data-target="#confirmarRecepcionModal">
                                                         <i class="fas fa-check-circle"></i></button>
                                                 </td>
                                                 <td>
                                                     <button th:attr="data-id12=${prodPorConfirm.id.gestor.idusuarios}, data-id22=${prodPorConfirm.id.sede.idusuarios},
                                                      data-id32=${prodPorConfirm.id.productoinventario.codigoinventario},
                                                      data-id42=${prodPorConfirm.id.estadoasignacion}, data-id52=${prodPorConfirm.id.precioventa}"
-                                                            type="button" class="problem-Produc btn btn-danger "
+                                                            type="button"
+                                                            class="problem-Produc btn btn-danger "
                                                             data-toggle="modal"
                                                             data-target="#problemaModal"><i
                                                             class="fas fa-times"></i></button>
@@ -113,6 +134,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div id="newtablefoot" class="dataTables_wrapper mt-3"></div>
                             </div>
                         </div>
 
@@ -144,40 +166,50 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="confirmarRecepcionModalLabel">¿Esta seguro que desea confirmar la
+                        <h4 class="modal-title" id="confirmarRecepcionModalLabel">¿Esta seguro que desea
+                            confirmar la
                             recepcion del producto?</h4>
-                        <a type="button" th:href="@{/sede/productosPorConfirmar}" class="close" aria-label="Close">
+                        <a type="button" th:href="@{/sede/productosPorConfirmar}" class="close"
+                           aria-label="Close">
                             <span aria-hidden="true">x</span>
                         </a>
                     </div>
                     <div class="modal-body">
                         <form method="post" th:action="@{/sede/confirmarRecepcion}">
 
-                            <input type="hidden" class="form-control" id="idgestor" name="gestor">
-                            <input type="hidden" class="form-control" id="idsede" name="sede">
-                            <input type="hidden" class="form-control" id="idproductoinv" name="productoinventario">
-                            <input type="hidden" class="form-control" id="idestadoasign" name="estadoasignacion">
-                            <input type="hidden" class="form-control" id="idprecioventa" name="precioventa">
+                            <input type="hidden" class="form-control" id="idgestor" name="idgestor">
+                            <input type="hidden" class="form-control" id="idsede" name="idsede">
+                            <input type="hidden" class="form-control" id="idproductoinv"
+                                   name="idproductoinv">
+                            <input type="hidden" class="form-control" id="idestadoasign"
+                                   name="idestadoasign">
+                            <input type="hidden" class="form-control" id="idprecioventa"
+                                   name="idprecioventa">
 
-                            <h6><b>Antes de confirmar, se recomienda verificar todos los datos del producto</b>
+                            <h6><b>Antes de confirmar, se recomienda verificar todos los datos del
+                                producto</b>
                             </h6></br>
 
-                            <label><b>Codigo del inventario: </b><span><label id="codinv"></label></span></label></br>
+                            <label><b>Codigo del inventario: </b><span><label
+                                    id="codinv"></label></span></label></br>
                             <label><b>Nombre: </b><span><label id="producto"></label></span></label></br>
                             <label><b>Color: </b><span><label id="color"></label></span></label></br>
                             <label><b>Tamaño: </b><span><label id="tamanho"></label></span></label></br>
-                            <label><b>Comunidad: </b><span><label id="comunidades"></label></span></label></br>
+                            <label><b>Comunidad: </b><span><label
+                                    id="comunidades"></label></span></label></br>
                             <label><b>Precio de venta: </b><span><label> S/.</label><label
                                     id="precioventa"></label></span></label></br>
                             <label><b>Stock: </b><span><label id="stock"></label></span></label></br>
-                            <label><b>Fecha de recepcion: </b><span><label id="fechaenvio"></label></span></label></br>
+                            <label><b>Fecha de recepcion: </b><span><label
+                                    id="fechaenvio"></label></span></label></br>
                             <label><b>Foto:</b></label></br>
                             <div class="form-group">
                                 <img id="foto" class="rounded-pill" width="100" style="height: auto;">
                             </div>
 
                             <div class="modal-footer">
-                                <a type="button" class="btn btn-danger" th:href="@{/sede/productosPorConfirmar}">Cancelar</a>
+                                <a type="button" class="btn btn-danger"
+                                   th:href="@{/sede/productosPorConfirmar}">Cancelar</a>
                                 <button type="submit" class="btn btn-primary"><a
                                         style="color:white;text-decoration:none">Confirmar</a></button>
                             </div>
@@ -195,7 +227,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title" id="exampleModalLabel2">
                             <b>Descripcion del problema:</b></h4>
-                        <a th:href="@{/sede/productosPorConfirmar}" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <a th:href="@{/sede/productosPorConfirmar}" type="button" class="close"
+                           data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </a>
                     </div>
@@ -203,13 +236,18 @@
                         <form method="post" th:action="@{/sede/registrarProblema}">
                             <input type="hidden" class="form-control" id="idgestor12" name="idgestor1">
                             <input type="hidden" class="form-control" id="idsede22" name="idsede1">
-                            <input type="hidden" class="form-control" id="idproductoinv32" name="idproductoinv1">
-                            <input type="hidden" class="form-control" id="idestadoasign42" name="idestadoasign1">
-                            <input type="hidden" class="form-control" id="idprecioventa52" name="idprecioventa1">
+                            <input type="hidden" class="form-control" id="idproductoinv32"
+                                   name="idproductoinv1">
+                            <input type="hidden" class="form-control" id="idestadoasign42"
+                                   name="idestadoasign1">
+                            <input type="hidden" class="form-control" id="idprecioventa52"
+                                   name="idprecioventa1">
 
-                            <textarea type="text" class="form-control" name="mensaje" th:value="${mensaje}"></textarea>
+                            <textarea type="text" class="form-control" name="mensaje"
+                                      th:value="${mensaje}"></textarea>
                             <div class="modal-footer">
-                                <a type="button" class="btn btn-danger" th:href="@{/sede/productosPorConfirmar}">Cancelar</a>
+                                <a type="button" class="btn btn-danger"
+                                   th:href="@{/sede/productosPorConfirmar}">Cancelar</a>
                                 <button type="submit" class="btn btn-primary"><a
                                         style="color:white;text-decoration:none">Confirmar</a></button>
                             </div>
@@ -239,7 +277,7 @@
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
         <script th:src="@{/js/sede/productosPorConfirmar.js}"></script>
         <script th:src="@{/js/sede/registrarProblema.js}"></script>
-
+        <script th:src="@{/js/gestor/extra.js}"></script>
     </body>
 
 </html>
