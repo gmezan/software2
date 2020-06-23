@@ -50,11 +50,11 @@ public class VentasClienteController {
         Optional<Ventas> optVenta = ventasRepository.findById(new VentasId(tipodoc,numdoc));
         if (optVenta.isPresent()) {
             Ventas v = optVenta.get(); //Se obtiene la venta
-            System.out.println("1");
+
             Optional<Tienda> optTienda = tiendaRepository.findByNombreAndDireccionAndRuc(v.getNombrecliente(),
                     v.getLugarventa(),v.getRucdni());
-            System.out.println("2");
-            AsignadosSedes as = asignadosSedesRepository.findById_Productoinventario_CodigoinventarioAndId_Precioventa(v.getInventario().getCodigoinventario(), v.getPrecioventa());
+
+            AsignadosSedes as = asignadosSedesRepository.findById_Productoinventario_CodigoinventarioAndId_Precioventa(v.getInventario().getCodigoinventario(), v.getPrecioventa().floatValue());
             System.out.println("3");
             //Se verifica si la venta es de una tienda
             if(optTienda.isPresent()){
