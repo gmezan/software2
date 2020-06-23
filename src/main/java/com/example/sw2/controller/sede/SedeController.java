@@ -405,8 +405,14 @@ public class SedeController {
     //Web service
     @ResponseBody
     @PostMapping(value = "/productosPorConfirmar/post", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HashMap<String, String>> getAsignsedePost(@RequestBody AsignadosSedesId asignadosSedesId) {
+    public ResponseEntity<HashMap<String, String>> getAsignsedePost(@RequestParam("gestor") Integer gestor,
+                                                                    @RequestParam("sede") Integer sede,
+                                                                    @RequestParam("productoinventario") String inv,
+                                                                    @RequestParam("estadoasignacion") Integer estadoasignacion,
+                                                                    @RequestParam("precioventa") Float precioventa) {
 
+        AsignadosSedesId asignadosSedesId = new
+                AsignadosSedesId(gestor,sede,inv,estadoasignacion,precioventa);
         return new ResponseEntity<>(new HashMap<String, String>() {{
             asignadosSedesId.setProductoinventario(inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
             asignadosSedesRepository.findAll();
