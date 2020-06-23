@@ -65,12 +65,7 @@ public class AsignadoTiendaController {
         if(venta.getCantidad() > aTienda.getStock()){
             bindingResult.rejectValue("cantidad", "error.user","La cantidad no puede ser mayor al stock de la tienda");
         }
-        if(venta.getId().getNumerodocumento().equals("")){
-            bindingResult.rejectValue("id.numerodocumento", "error.user","Este campo no puede estar vacío");
-        }
-        if(venta.getFecha() == null){
-            bindingResult.rejectValue("fecha", "error.user","Tiene que asignar una fecha");
-        }else{
+        if(venta.getFecha() != null){
             if(venta.getFecha().isBefore(aTienda.getFechaasignacion())){
                 bindingResult.rejectValue("fecha", "error.user","La fecha de venta no puede ser antes de la fecha de asignación");
             }
