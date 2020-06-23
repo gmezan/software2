@@ -186,14 +186,14 @@
                     <div class="modal-body">
                         <form method="post" th:action="@{/sede/confirmarRecepcion}">
 
-                            <input type="hidden" class="form-control" id="idgestor" name="idgestor">
-                            <input type="hidden" class="form-control" id="idsede" name="idsede">
-                            <input type="hidden" class="form-control" id="idproductoinv"
-                                   name="idproductoinv">
-                            <input type="hidden" class="form-control" id="idestadoasign"
-                                   name="idestadoasign">
-                            <input type="hidden" class="form-control" id="idprecioventa"
-                                   name="idprecioventa">
+                            <input hidden class="form-control" id="idgestor" name="gestor">
+                            <input hidden class="form-control" id="idsede" name="sede">
+                            <input hidden class="form-control" id="idproductoinv"
+                                        name="productoinventario">
+                            <input hidden class="form-control" id="idestadoasign"
+                                        name="estadoasignacion">
+                            <input hidden class="form-control" id="idprecioventa"
+                                         name="precioventa">
 
                             <h6><b>Antes de confirmar, se recomienda verificar todos los datos del
                                 producto</b>
@@ -257,7 +257,7 @@
                             <div class="modal-footer">
                                 <a type="button" class="btn btn-danger"
                                    th:href="@{/sede/productosPorConfirmar}">Cancelar</a>
-                                <button type="submit" class="btn btn-primary"><a
+                                <button type="submit" class="btn btn-info"><a
                                         style="color:white;text-decoration:none">Confirmar</a></button>
                             </div>
                         </form>

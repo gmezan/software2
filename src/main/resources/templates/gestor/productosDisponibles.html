@@ -71,11 +71,11 @@
                                         <tfoot>
                                             <tr>
                                                 <th># de Pedido</th>
+                                                <th>Código</th>
                                                 <th>Nombre</th>
-                                                <th>Descripción</th>
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
-                                                <th>Cantidad sin Asignar</th>
+                                                <th>Cantidad disponible</th>
                                                 <th>Color</th>
                                                 <th>Costo Unitario(S/.)</th>
                                                 <th>Asignar a una sede</th>
@@ -85,8 +85,8 @@
                                         <tbody>
                                             <tr th:each="inv:${listainventario}" th:if="${inv.getCantidadgestor() > 0}">
                                                 <td th:text="${inv.numpedido}">1</td>
+                                                <td th:text="${inv.codigoinventario}"></td>
                                                 <td th:text="${inv.productos.nombre}">Lliklla</td>
-                                                <td th:text="${inv.productos.descripcion}">Blanket/Manta</td>
                                                 <td th:text="${inv.tamanho}">One-Size</td>
                                                 <td th:text="${inv.comunidades.nombre}">Amaru</td>
                                                 <td th:text="${inv.cantidadgestor}">10</td>

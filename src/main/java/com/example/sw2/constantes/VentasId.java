@@ -3,6 +3,8 @@ package com.example.sw2.constantes;
 import com.example.sw2.constantes.CustomConstants;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -11,8 +13,11 @@ import java.io.Serializable;
 public class VentasId implements Serializable {
 
 
+    @Max(value = 4,message = "Ingrese un valor válido de tipo de documento")
+    @Min(value = 1,message = "Ingrese un valor válido de tipo de documento")
+    @NotNull(message = "Ingrese un tipo de documento")
     @Column(name = "tipodocumento")
-    private int tipodocumento;
+    private Integer tipodocumento;
     @NotBlank(message = "Este campo no puede estar vacío")
     @Column(name = "numerodocumento")
     private String numerodocumento;
@@ -22,13 +27,13 @@ public class VentasId implements Serializable {
         return CustomConstants.getTiposDocumento().get(this.tipodocumento);
     }
 
-    public int getTipodocumento(){return tipodocumento; }
+    public Integer getTipodocumento(){return tipodocumento; }
 
     public VentasId(){
 
     }
 
-    public VentasId(int x, String y){
+    public VentasId(Integer x, String y){
         this.setTipodocumento(x);
         this.setNumerodocumento(y);
     }
@@ -37,7 +42,7 @@ public class VentasId implements Serializable {
         return CustomConstants.getTiposDocumento().get(this.tipodocumento);
     }
 
-    public void setTipodocumento(int tipodocumento) {
+    public void setTipodocumento(Integer tipodocumento) {
         this.tipodocumento = tipodocumento;
     }
 

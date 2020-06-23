@@ -22,7 +22,7 @@ import java.io.IOException;
 public class StorageServiceDao {
 
     private final String USER_PATH = "saveProfile";
-    private final String INVENTORY_PATH = "saveInventory";
+    private final String INVENTORY_PATH = "saveInventory" ;
 
     private final String BASE_URL = "https://storage-service.mosqoy.dns-cloud.net/";
     private final String API_KEY = "80e50707-27f2-481a-96d5-23e61f4cd29c-p4ssw0rd-r4nd0m";
@@ -59,7 +59,8 @@ public class StorageServiceDao {
                     setMsg("Imagen mayor a 2MB");
                 }};
             }
-            String name = inventario.getCodigoinventario();
+            String name = inventario.getCodigoinventario().toLowerCase().trim();
+            System.out.println(name);
             StorageServiceResponse response = new RestTemplate().postForObject(BASE_URL+INVENTORY_PATH,
                     prepareEntity(multipartFile,name),StorageServiceResponse.class);
             if (response!=null){

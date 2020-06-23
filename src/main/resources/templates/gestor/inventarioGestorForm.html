@@ -43,7 +43,7 @@
                                     
                                     <div class="modal-body">
                                         <form id="addForm" method="post" th:action="@{/gestor/inventario/save}"
-                                              enctype="multipart/form-data" th:object="${inventario}">
+                                              th:object="${inventario}" enctype="multipart/form-data">
                                             <div class="form-row ml-5 mr-5">
                                                 <div class="form-group col-4">
                                                     <label class="col-form-label"><b>Pedido:</b></label>

@@ -24,6 +24,7 @@ public class AsignacionTiendas extends Auditable implements Serializable {
     @Digits(integer = 6, fraction = 0, message = "Ingrese un número entero.")
     @Column(nullable = false)
     private int stock;
+    @NotNull(message = "Seleccione una fecha de asignacion.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name="fecha_asignacion", nullable = false)
     private LocalDate fechaasignacion;

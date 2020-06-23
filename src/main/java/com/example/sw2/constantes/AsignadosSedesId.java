@@ -38,6 +38,7 @@ public class AsignadosSedesId implements Serializable {
         this.precioventa=precioventa;
     }
 
+
     public String getNombreEstado(){
         return CustomConstants.getEstadoAsignacion().get(estadoasignacion);
     }

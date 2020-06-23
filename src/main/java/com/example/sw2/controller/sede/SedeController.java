@@ -233,7 +233,7 @@ public class SedeController {
     }
 
     @PostMapping("/confirmarRecepcion")
-    public String confirmarRecepcion(AsignadosSedesId id, RedirectAttributes attr) {
+    public String confirmarRecepcion( AsignadosSedesId id, RedirectAttributes attr) {
 
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         if (asignadosSedesOptional.isPresent()) {
@@ -260,6 +260,8 @@ public class SedeController {
                 asignadosSedesRepository.save(newAsignadosSedes);
                 asignadosSedesRepository.deleteById(id);
             }
+        }else {
+            attr.addFlashAttribute("msgErrorD", "Hubo un problema, no se encontro el producto");
         }
         return "redirect:/sede/productosPorConfirmar";
     }
@@ -295,7 +297,7 @@ public class SedeController {
 
     @PostMapping("/devolucion")
     public String devolucionSede(@ModelAttribute("asignaciontiendas") AsignacionTiendas asignacionTiendas,
-                                 @ModelAttribute("venta") @Valid Ventas ventas,
+                                 @ModelAttribute("venta") Ventas ventas,
                                  BindingResult bindingResult,
                                  @RequestParam(value = "idgestor") int idgestor,
                                  @RequestParam(value = "idsede") int idsede,
@@ -320,12 +322,15 @@ public class SedeController {
                 return "redirect:/sede/productosConfirmados";
 
             } else {
-                if (!bindingResult.hasFieldErrors("cantDevol")) {
+                if (!bindingResult.hasErrors()) {
                     if (ventas.getCantDevol() < 0) {
                         bindingResult.rejectValue("cantDevol", "error.user", "Ingrese un numero valido");
                     } else {
                         if (ventas.getCantDevol() > asignadosSedes.getCantidadactual()) {
                             bindingResult.rejectValue("cantDevol", "error.user", "La cantidad devuelta no puede ser mayor a la cantidad actual de la sede");
+                        }
+                        if(ventas.getCantDevol() == 0){
+                            bindingResult.rejectValue("cantDevol", "error.user", "Ingrese un numero valido");
                         }
                     }
                 }
