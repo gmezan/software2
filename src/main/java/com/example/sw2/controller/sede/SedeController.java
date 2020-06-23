@@ -233,7 +233,7 @@ public class SedeController {
     }
 
     @PostMapping("/confirmarRecepcion")
-    public String confirmarRecepcion(AsignadosSedesId id, RedirectAttributes attr) {
+    public String confirmarRecepcion( AsignadosSedesId id, RedirectAttributes attr) {
 
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         if (asignadosSedesOptional.isPresent()) {
@@ -260,6 +260,8 @@ public class SedeController {
                 asignadosSedesRepository.save(newAsignadosSedes);
                 asignadosSedesRepository.deleteById(id);
             }
+        }else {
+            attr.addFlashAttribute("msgErrorD", "Hubo un problema, no se encontro el producto");
         }
         return "redirect:/sede/productosPorConfirmar";
     }
