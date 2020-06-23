@@ -24,15 +24,12 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-900">Venta</h1>
+                    <h1 class="h3 mb-0 text-white">Registrar Venta</h1>
 
                 </div>
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Resgistrar Venta</h6>
-                    </div>
 
                     <div class="card-body">
                         <form method="post" th:action="@{'/gestor/productosDisponibles/registrarventa'}" th:object="${ventas}">
@@ -86,8 +83,8 @@
                                 <div class="text-danger" th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}" ></div>
                                 <div class="text-danger" th:if="${msg1 != null}" th:text="${msg1}" ></div>
                             </div>
-                            <a th:href="@{'/gestor/productosDisponibles'}" class="btn btn-danger">Cancelar</a>
-                            <button type="submit" class="btn btn-primary">Registrar</button>
+                            <a th:href="@{'/gestor/productosDisponibles'}" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-info">Registrar</button>
                         </form>
                     </div>
                 </div>

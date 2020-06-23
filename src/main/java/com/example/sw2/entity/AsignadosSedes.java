@@ -24,12 +24,12 @@ public class AsignadosSedes extends Auditable implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Selecione una fecha")
     private LocalDate fechaenvio;
-    @NotNull
+    @NotNull(message = "Ingrese una cantidad")
     @Min(value = 1, message = "La cantidad debe ser mayor a 0")
     @Column(nullable = false)
-    private int stock;
+    private Integer stock;
     @Column(nullable = false)
-    private int cantidadactual;
+    private Integer cantidadactual;
 
     private String mensaje;
 
@@ -50,6 +50,11 @@ public class AsignadosSedes extends Auditable implements Serializable {
     public AsignadosSedes(){
 
     }
+
+    public AsignadosSedes(AsignadosSedesId id){
+        this.id = id;
+    }
+
 
     public AsignadosSedes(AsignadosSedesId id,AsignadosSedes as){
         this.id = id;
@@ -75,19 +80,19 @@ public class AsignadosSedes extends Auditable implements Serializable {
         this.fechaenvio = fechaenvio;
     }
 
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
-    public int getCantidadactual() {
+    public Integer getCantidadactual() {
         return cantidadactual;
     }
 
-    public void setCantidadactual(int cantidadactual) {
+    public void setCantidadactual(Integer cantidadactual) {
         this.cantidadactual = cantidadactual;
     }
 

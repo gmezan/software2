@@ -11,7 +11,10 @@ import java.util.Optional;
 @Repository
 public interface InventarioRepository extends JpaRepository<Inventario,String> {
     List<Inventario> findAllByOrderByFechamodificacionDesc();
+    List<Inventario> findAllByOrderByNumpedidoDesc();
     List<Inventario> findInventariosByArtesanos_Codigo(String codigo);
     Inventario findByCodigoinventario(String cod);
     Optional<Inventario> findInventariosByNumpedido(int num);
+
+    Optional<Inventario> findInventarioByCodigoinventarioAndCantidadgestorIsGreaterThan(String cod, int num);
 }

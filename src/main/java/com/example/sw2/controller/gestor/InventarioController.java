@@ -66,6 +66,8 @@ public class InventarioController {
     @GetMapping(value = {"/form"})
     public String form(@ModelAttribute("inventario") Inventario inventario, Model m) {
         listasCamposInv(m);
+        List<Inventario> listaordenada = inventarioRepository.findAllByOrderByNumpedidoDesc();
+        inventario.setNumpedido(listaordenada.get(0).getNumpedido()+1);
         return "gestor/inventarioGestorForm";
     }
 

@@ -199,9 +199,9 @@
                                                     <span th:text="${inv.fechacreacion.toLocalTime()}"></span>
                                                 </td>
                                                 <td style="text-align: right">
-                                                    <span th:text="${inv.fechamodificacion.toLocalDate()}"></span>
+                                                    <span th:text="${inv.fechamodificacion!=null? inv.fechamodificacion.toLocalDate():'---'}"></span>
                                                     <br>
-                                                    <span th:text="${inv.fechamodificacion.toLocalTime()}"></span>
+                                                    <span th:text="${inv.fechamodificacion!=null? inv.fechamodificacion.toLocalTime():'---'}"></span>
                                                 </td>
                                                 
                                                 <td>
@@ -467,6 +467,6 @@
     
         <script th:src="@{/js/gestor/extra.js}"></script>
 
-        <!--<script th:src="@{/js/notification.js}"></script>-->
+        <script th:src="@{/js/notification.js}"></script>
     </body>
 </html>
