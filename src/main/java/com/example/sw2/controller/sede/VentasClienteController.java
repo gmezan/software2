@@ -55,7 +55,7 @@ public class VentasClienteController {
                     v.getLugarventa(),v.getRucdni());
 
             AsignadosSedes as = asignadosSedesRepository.findById_Productoinventario_CodigoinventarioAndId_Precioventa(v.getInventario().getCodigoinventario(), v.getPrecioventa().floatValue());
-            System.out.println("3");
+
             //Se verifica si la venta es de una tienda
             if(optTienda.isPresent()){
                 //Se obtiene la tienda
