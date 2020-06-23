@@ -121,8 +121,6 @@ public class SedeController {
                     if (ventas.getCantidad() > asignadosSedes.getCantidadactual()) {
                         bindingResult.rejectValue("cantidad", "error.user", "La cantidad vendida no puede ser mayor a la cantidad actual de la sede");
                     }
-                }else{
-                    bindingResult.rejectValue("cantidad", "error.user", "La cantidad no es válida.");
                 }
             } else {
                 attr.addFlashAttribute("msgNoVenta", "Error al encontrar el producto");
@@ -191,7 +189,7 @@ public class SedeController {
                 return "redirect:/sede/productosConfirmados";
             }
 
-            if (asignacionTiendas.getStock() <= 0) {
+            if (asignacionTiendas.getStock() < 0) {
                 bindingResult.rejectValue("stock", "error.user", "Ingrese una cantidad valida");
             } else {
                 if (asignacionTiendas.getStock() > asignadosSedes.getCantidadactual()) {
