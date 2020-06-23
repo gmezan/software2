@@ -26,7 +26,8 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-white">Productos asignados a Sedes</h1>
                         </div>
-
+                        <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1"
+                             role="alert"></div>
                         
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -54,7 +55,7 @@
                                                 <th>Precio de Venta</th>
                                                 <th>Estado</th>
                                                 <th>Cantidad vendida</th>
-
+                                                <th>Descartar envío</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -66,7 +67,7 @@
                                                 <th>Precio de Venta</th>
                                                 <th>Estado</th>
                                                 <th>Cantidad vendida</th>
-
+                                                <th>Descartar envío</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -78,6 +79,12 @@
                                                 <td th:text="${asig.id.precioventa}">20</td>
                                                 <td th:text="${asig.id.getNombreEstado()}">Recibido por sede</td>
                                                 <td th:text="${asig.stock - asig.cantidadactual}">20</td>
+                                                <td th:if="${asig.id.getEstadoasignacion() != 4}"></td>
+                                                <td th:if="${asig.id.getEstadoasignacion() == 4}">
+                                                    <button th:attr="data-msg=${asig.mensaje}, data-gestor=${asig.id.gestor.idusuarios}, data-sede=${asig.id.sede.idusuarios}, data-inventario=${asig.id.productoinventario.codigoinventario},
+                                                                data-estado=${asig.id.estadoasignacion}, data-precio=${asig.id.precioventa}, data-stock=${asig.stock}"
+                                                            type="button" class="btn btn-danger" data-toggle="modal" id="DescartarBoton" data-target="#DescartarModal"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -132,7 +139,49 @@
         <!-- Page level custom scripts -->
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
         <script th:src="@{/js/gestor/extra.js}"></script>
-    
-    
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="DescartarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Descartar Envío</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="mensajemodal"></p>
+                        <form method="post" th:action="@{'/gestor/asignado/descartar'}">
+                            <input type="hidden" name="gestor" id="gestor"/>
+                            <input type="hidden" name="sede" id="sede"/>
+                            <input type="hidden" name="inventario" id="inventario"/>
+                            <input type="hidden" name="estado" id="estado"/>
+                            <input type="hidden" name="precio" id="precio"/>
+                            <input type="hidden" name="stock" id="stock"/>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-danger">Descartar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
+
+<script>
+    $(document).ready()
+    .on('click','#DescartarBoton',function () {
+        $("#DescartarModal #mensajemodal").text( $(this).data('msg'));
+        $("#DescartarModal #gestor").val($(this).data('gestor'));
+        $("#DescartarModal #sede").val($(this).data('sede'));
+        $("#DescartarModal #inventario").val($(this).data('inventario'));
+        $("#DescartarModal #estado").val($(this).data('estado'));
+        $("#DescartarModal #precio").val($(this).data('precio'));
+        $("#DescartarModal #stock").val($(this).data('stock'));
+    });
+</script>
 </html>

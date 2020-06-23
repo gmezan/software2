@@ -191,13 +191,3 @@ $(document).on("click", ".delete-inventario", function () {
 
     $("#deleteModal #codDelete").val($(this).data('id'));
 });
-$(document).on("click", ".show-foto", function () {
-    let showfoto = $("#showFoto #fotoinv");
-    showfoto.attr("src", "");
-    $("#showFoto #fototitle").text($(this).data('id'));
-    let id='#'+$(this).data('id')+'photo';
-    let url= $(id).attr('src');
-    showfoto.attr("src", url);
-
-
-});

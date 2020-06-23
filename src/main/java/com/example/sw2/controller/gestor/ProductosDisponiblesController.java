@@ -78,6 +78,15 @@ public class ProductosDisponiblesController {
             if(documento == "") { model.addAttribute("msg", "Debe ingresar un número de documento"); }
             if(fechavalida==false){model.addAttribute("msg1", "La fecha debe ser igual o posterior a la  fecha de aquisision del producto");}
             if(ventas.getCantidad() > ventas.getInventario().getCantidadgestor()){model.addAttribute("msg2", "No hay suficientes productos en stock");}
+
+
+            //PRUEBA
+            System.out.println(ventas.getCantidad());
+            System.out.println(ventas.getFecha());
+            System.out.println(ventas.getInventario().getCodigoinventario());
+            System.out.println(ventas.getLugarventa());
+            System.out.println(ventas.getNombrecliente());
+            System.out.println(ventas.getPrecioventa());
             return "gestor/productosDisponiblesForm";
         }else {
             Inventario inventario = ventas.getInventario();
