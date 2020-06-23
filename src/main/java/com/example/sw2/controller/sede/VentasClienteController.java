@@ -1,10 +1,7 @@
 package com.example.sw2.controller.sede;
 
 import com.example.sw2.constantes.VentasId;
-import com.example.sw2.entity.AsignacionTiendas;
-import com.example.sw2.entity.AsignadosSedes;
-import com.example.sw2.entity.Tienda;
-import com.example.sw2.entity.Ventas;
+import com.example.sw2.entity.*;
 import com.example.sw2.repository.AsignacionTiendasRepository;
 import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.TiendaRepository;
@@ -15,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -34,9 +32,9 @@ public class VentasClienteController {
 
     @GetMapping(value = {"", "/"})
     public String ListVentasCliente(@ModelAttribute("ventas") Ventas ventas,
-                                    Model model){
-
-        model.addAttribute("listaVentas", ventasRepository.findAll());
+                                    Model model, HttpSession session){
+        Usuarios sede = (Usuarios) session.getAttribute("usuario");
+        model.addAttribute("listaVentas", ventasRepository.findByVendedor_Idusuarios(sede.getIdusuarios()));
         return "sede/ventasPorCliente";
     }
 

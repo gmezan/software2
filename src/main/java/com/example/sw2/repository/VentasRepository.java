@@ -40,5 +40,7 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
     @Query(value="SELECT ven.* FROM Ventas ven WHERE vendedor = ?1",nativeQuery=true)
     List<Ventas> buscarPorGestor(int gestor);
 
+    List<Ventas> findByVendedor_Idusuarios(int dni);
+
 
 }
