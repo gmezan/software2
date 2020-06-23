@@ -42,6 +42,10 @@ public class AsignacionTiendas extends Auditable implements Serializable {
     })
     private AsignadosSedes asignadosSedes;
 
+    public AsignacionTiendas(){}
+
+
+
     public int getIdtiendas() {
         return idtiendas;
     }
