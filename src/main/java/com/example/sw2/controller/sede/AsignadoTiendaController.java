@@ -59,6 +59,17 @@ public class AsignadoTiendaController {
         Optional<Ventas> optVentas = ventasRepository.findById(venta.getId());
         AsignacionTiendas aTienda = optaTienda.get();
 
+        System.out.println(v.getPrecioventa());
+        System.out.println(v.getNombrecliente());
+        System.out.println(v.getLugarventa());
+        System.out.println(v.getInventario().getCodigoinventario());
+        System.out.println(v.getFecha());
+        System.out.println(v.getId().getNumerodocumento());
+        System.out.println(v.getId().getTipodocumento());
+        System.out.println(v.getCantidad());
+        System.out.println(v.getRucdni());
+        System.out.println(v.getVendedor().getIdusuarios());
+
         if(optVentas.isPresent()){
             bindingResult.rejectValue("id.numerodocumento", "error.user", "El número de documento ya ha sido registrado");
         }
@@ -102,17 +113,6 @@ public class AsignadoTiendaController {
 
         Optional<AsignacionTiendas> optAt = asignacionTiendasRepository.findById(idAstiendas);
         AsignacionTiendas at = optAt.get();
-        System.out.println(v.getPrecioventa());
-        System.out.println(v.getNombrecliente());
-        System.out.println(v.getLugarventa());
-        System.out.println(v.getInventario().getCodigoinventario());
-        System.out.println(v.getFecha());
-        System.out.println(v.getId().getNumerodocumento());
-        System.out.println(v.getId().getTipodocumento());
-        System.out.println(v.getCantidad());
-        System.out.println(v.getRucdni());
-        System.out.println(v.getVendedor().getIdusuarios());
-
 
         if(v.getCantDevol() > at.getStock()){
             bindingResult.rejectValue("cantDevol", "error.user","La cantidad no puede ser mayor al stock actual de la tienda");
