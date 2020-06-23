@@ -51,10 +51,6 @@ public class SedeController {
         return "redirect:/sede/productosPorConfirmar";
     }
 
-    @GetMapping("reportes")
-    public String reportes() {
-        return "sede/reportesSede";
-    }
 
     @GetMapping("productosPorConfirmar")
     public String productosPorConfirmar(HttpSession session, Model model) {
