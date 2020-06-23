@@ -85,3 +85,12 @@ thead, tfoot {
     background-color: #36b9cc;
     border-color: #36b9cc;
 }
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #36b9cc;
+}
+.btn-link {
+    color: #b13c43;
+}
+.btn-link:hover {
+    color: #6b302a;
+}
