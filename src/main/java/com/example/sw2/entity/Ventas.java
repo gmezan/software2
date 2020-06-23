@@ -22,22 +22,27 @@ public class Ventas extends Auditable implements Serializable {
     private VentasId id;
     //@Size(min= 8, max = 11, message = "El Ruc/Dni debe contener 8 o 11 caracteres")
     @Column(name = "ruc_dni")
+    @Pattern(regexp = "^[0-9]*$", message = "Ingrese solo caracteres numéricos")
     private String rucdni;
     @NotBlank(message = "Este campo no puede estar vacío")
     @Size(max = 45, message = "El nombre debe contener 45 caracteres")
     @Column(nullable = false)
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ ]*$", message = "Ingrese solo caracteres alfabéticos")
     private String nombrecliente;
     @Column(nullable = false)
     @NotBlank(message = "Este campo no puede estar vacío")
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ ]*$", message = "Ingrese solo caracteres alfabéticos")
     private String lugarventa;
     @ManyToOne
     @JoinColumn(name = "productoinventario", nullable = false)
+    @NotNull()
     private Inventario inventario;
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
     @ManyToOne
     @JoinColumn(name = "vendedor", nullable = false)
+    @NotNull()
     private Usuarios vendedor;
     @NotNull
     @Min(value = 1, message = "La cantidad debe ser mayor a 0")
