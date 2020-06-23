@@ -224,8 +224,6 @@ public class InventarioController {
                 }
             }
 
-            inventario.setFoto(".");
-
             inventario.setCantidadgestor(inventario.getCantidadtotal());
 
 
