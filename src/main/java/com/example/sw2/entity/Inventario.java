@@ -103,16 +103,10 @@ public class Inventario extends Auditable implements Serializable {
     private LocalDate fechavencimientoconsignacion;
 
 
-    public Inventario() {
+    public void subtractCantidad(int c) {
+        this.cantidadgestor -= c;
     }
 
-    public void subtractCantidad(int c){
-        this.cantidadgestor -=c;
-    }
-
-    public Inventario(String codigoinventario) {
-        this.setCodigoinventario(codigoinventario);
-    }
 
     public String getCodigoinventario() {
         return codigoinventario;

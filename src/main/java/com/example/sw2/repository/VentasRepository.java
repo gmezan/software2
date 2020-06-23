@@ -3,6 +3,7 @@ import com.example.sw2.constantes.VentasId;
 import com.example.sw2.dto.DatosClientesVentaDto;
 import com.example.sw2.dto.DatosGestorVentasDto;
 import com.example.sw2.dto.DatosProductoVentaDto;
+import com.example.sw2.entity.Tienda;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,5 +39,6 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     @Query(value="SELECT ven.* FROM Ventas ven WHERE vendedor = ?1",nativeQuery=true)
     List<Ventas> buscarPorGestor(int gestor);
+
 
 }

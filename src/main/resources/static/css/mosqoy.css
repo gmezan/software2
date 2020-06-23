@@ -6,11 +6,6 @@ th, .d-sm-inline-block {
     width: 150%;
 }
 
-#content-wrapper {
-    background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.46)), fixed no-repeat url(https://cdn.pixabay.com/photo/2016/11/19/15/38/craftsman-1839920_960_720.jpg);
-    background-size: cover;
-}
-
 .topbar.navbar-light .navbar-nav .nav-item .nav-link {
     color: #515785;
 }
@@ -48,9 +43,18 @@ thead, tfoot {
     background-image: linear-gradient(180deg, #b13c43 10%, #6b302a 100%);
     background-size: cover;
 }
-
-.bg-gestor {
-    background-color: #ffffff59 ;
+.bg-gradient-sede {
+    background-color: #ffffff;
+    background-image: linear-gradient(180deg, #c8593e 50%, #dca415 100%);
+    background-size: cover;
+}
+.bg-gradient-admin {
+    background-color: #ffffff;
+    background-image: linear-gradient(180deg, #763a5dfa 50%, #661d3d 100%);
+    background-size: cover;
+}
+.bg-top {
+    background-color: #ffffff96 ;
 }
 @media (min-width: 768px) {
     .sidebar .nav-item .nav-link span {
@@ -66,6 +70,9 @@ thead, tfoot {
     .sidebar {
         width: 13.6rem!important ;
     }
+}
+.sidebar .nav-item .collapse .collapse-inner, .sidebar .nav-item .collapsing .collapse-inner {
+    font-size: 0.8rem;
 }
 .page-link {
     color: #36b9cc;
