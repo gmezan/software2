@@ -71,6 +71,13 @@ public class ProductosDisponiblesController {
         } else
             venta.setInventario(optionalInventario.get());
 
+        //Se verifica DNI o RUC
+        if (venta.getRucdni().length() != 8 && venta.getRucdni().length() != 11 && venta.getRucdni().length() != 0 ) {
+            System.out.println("es incorrecto el dni o ruc");
+            bindingResult.rejectValue("rucdni", "error.user", "La Cantidad de dígitos debe ser 8 o 11");
+        }
+
+
         // Se verifica fecha
         if((venta.getFecha()!=null) && venta.getFecha().isBefore(venta.getInventario().getFechaadquisicion()))
             bindingResult.rejectValue("fecha", "error.user", "La fecha debe ser después de: "+ venta.getInventario().getFechaadquisicion().toString());
