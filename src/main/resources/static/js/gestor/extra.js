@@ -22,6 +22,7 @@ $(document).ready(function () {
     $(".card-body").on('click', function () {
         updatefakeScroll();
     });
+    $('.show-foto').removeAttr('disabled');
     $(document).on("click", ".show-foto", function () {
         let showfoto = $("#showFoto #fotoinv");
         showfoto.attr("src", "");
@@ -32,6 +33,7 @@ $(document).ready(function () {
 
 
     });
+    $('.show-fotoU').removeAttr('disabled');
     $(document).on("click", ".show-fotoU", function () {
         let showfoto = $("#showFotoU #fotoinv");
         showfoto.attr("src", "");

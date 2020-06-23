@@ -100,7 +100,7 @@
                                                 <td th:text="${l.correo}"></td>
                                                 <td th:text="${l.telefono}"></td>
                                                 <td>
-                                                    <button th:attr="data-id=${l.idusuarios}"
+                                                    <button disabled th:attr="data-id=${l.idusuarios}"
                                                             data-toggle="modal" data-target="#showFotoU"
                                                             class="show-fotoU btn ">
                                                         <img th:id="${l.idusuarios} +'photo'"

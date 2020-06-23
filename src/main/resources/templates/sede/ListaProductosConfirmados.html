@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/general-sede.html ::sede-head(title='Lista de productos confirmados')">
+    <head th:replace="fragments/general-sede.html ::sede-head(title='Productos confirmados')">
     </head>
 
     <body id="page-top">
@@ -121,7 +121,7 @@
                                                 <td th:text="${prodConfirm.fechaenvio}"></td>
                                                 <td>
     
-                                                    <button th:attr="data-id=${prodConfirm.id.productoinventario.codigoinventario}"
+                                                    <button disabled th:attr="data-id=${prodConfirm.id.productoinventario.codigoinventario}"
                                                             data-toggle="modal" data-target="#showFoto"
                                                             class="show-foto btn ">
                                                         <div class="progress mx-auto" style="height: 100px;width: 100px;">
