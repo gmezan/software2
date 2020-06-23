@@ -69,10 +69,23 @@ public class VentasClienteController {
                     asignacionTiendasRepository.borrar_venta_tienda(as.getId().getGestor().getIdusuarios(),
                             as.getId().getSede().getIdusuarios(), as.getId().getProductoinventario().getCodigoinventario(),
                             as.getId().getEstadoasignacion(),as.getId().getPrecioventa(),v.getCantidad(), at.getIdtiendas());
-                    System.out.println("5");
+                    System.out.println(as.getId().getSede().getIdusuarios());
+                    System.out.println(as.getId().getGestor().getIdusuarios());
+                    System.out.println(as.getId().getProductoinventario().getCodigoinventario());
+                    System.out.println(as.getId().getEstadoasignacion());
+                    System.out.println(as.getId().getPrecioventa());
+                    System.out.println(v.getCantidad());
+
                 }
             //Si la venta no es una tienda se retorna el stock a Productos Confirmados
             }else{
+                System.out.println(as.getId().getSede().getIdusuarios());
+                System.out.println(as.getId().getGestor().getIdusuarios());
+                System.out.println(as.getId().getProductoinventario().getCodigoinventario());
+                System.out.println(as.getId().getEstadoasignacion());
+                System.out.println(as.getId().getPrecioventa());
+                System.out.println(v.getCantidad());
+
                 asignacionTiendasRepository.borrar_venta_as(as.getId().getGestor().getIdusuarios(),
                         as.getId().getSede().getIdusuarios(), as.getId().getProductoinventario().getCodigoinventario(),
                         as.getId().getEstadoasignacion(),as.getId().getPrecioventa(),v.getCantidad());
