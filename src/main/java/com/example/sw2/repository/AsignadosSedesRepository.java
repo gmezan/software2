@@ -48,6 +48,6 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
 
     List<AsignadosSedes> findAllByOrderByFechacreacionDesc();
 
-    AsignadosSedes findById_Productoinventario_CodigoinventarioAndId_Precioventa(String codigo, Float precio);
+    AsignadosSedes findById_Productoinventario_CodigoinventarioAndId_PrecioventaAndId_Estadoasignacion(String codigo, Float precio, int estado);
 
 }
