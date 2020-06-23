@@ -44,7 +44,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="rucdni" class="col-form-label">Número RUC o DNI (opcional)</label>
+                                <label for="rucdni" class="col-form-label">Número RUC o DNI del cliente (opcional)</label>
                                 <input type="text" class="form-control" th:field="*{rucdni}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('rucdni')}" th:errors="*{rucdni}" ></div>
                             </div>
@@ -64,7 +64,7 @@
                                 <div class="text-danger" th:if="${#fields.hasErrors('id.tipodocumento')}" th:errors="*{id.tipodocumento}" ></div>
                             </div>
                             <div class="form-group">
-                                <label for="documento" class="col-form-label">Número de Documento Físico:</label>
+                                <label for="documento" class="col-form-label">Número de Documento Físico de la venta:</label>
                                 <input type="text" class="form-control" th:field="*{id.numerodocumento}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}" th:errors="*{id.numerodocumento}" ></div>
                             </div>
@@ -79,7 +79,7 @@
                                 <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}" ></div>
                             </div>
                             <div class="form-group">
-                                <label for="precioventa" class="col-form-label" th:text="'Precio de venta: S/. (Precio Ref. S/.'+*{inventario.costomosqoy} +')'">Precio de venta: S/.</label>
+                                <label for="precioventa" class="col-form-label" th:text="'Precio de venta: S/. (Precio Ref. Precio Mosqoy S/.'+*{inventario.costomosqoy} +')'">Precio de venta: S/.</label>
                                 <input type="text" class="form-control" th:field="*{precioventa}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('precioventa')}" th:errors="*{precioventa}" ></div>
                             </div>
