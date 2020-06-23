@@ -165,8 +165,12 @@ public class ProductosDisponiblesController {
             inventarioRepository.save(asignadosSedes.getId().getProductoinventario());
             asignadosSedes.getId().setEstadoasignacion(CustomConstants.ESTADO_ENVIADO_A_SEDE);
             asignadosSedes.setCantidadactual(asignadosSedes.getStock());
-            asignadosSedesRepository.save(asignadosSedes);
-
+            Optional<AsignadosSedes> optional = asignadosSedesRepository.findById(asignadosSedes.getId());
+            if(optional.isPresent()){
+                AsignadosSedes asignadosSedesTemp = optional.get();
+                asignadosSedesTemp.setStock(asignadosSedesTemp.getStock()+  asignadosSedes.getStock());
+                asignadosSedesRepository.save(asignadosSedesTemp);
+            }else{ asignadosSedesRepository.save(asignadosSedes); }
             /*
             inv.setCantidadgestor(inv.getCantidadgestor()-asignadosSedes.getStock());
             inventarioRepository.save(inv);
