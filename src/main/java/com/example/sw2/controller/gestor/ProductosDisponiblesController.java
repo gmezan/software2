@@ -46,57 +46,48 @@ public class ProductosDisponiblesController {
 
 
     @GetMapping(value="venta")
-    public String ventasDeProductos(@ModelAttribute("ventas") Ventas ventas, Model model, @RequestParam("x") String x){
+    public String ventasDeProductos(@ModelAttribute("venta") Ventas venta, Model model, @RequestParam("x") String x, HttpSession session){
         Optional<Inventario> optionalInventario = inventarioRepository.findById(x);
         if ( optionalInventario.isPresent()){
-            Inventario inventario=optionalInventario.get();
-            model.addAttribute("inv", inventario);
+            venta = new Ventas((Usuarios)session.getAttribute("usuario"),optionalInventario.get());
+            model.addAttribute("venta", venta);
             return "gestor/productosDisponiblesForm";
         }
         return "redirect:/gestor/productosDisponibles";
     }
 
     @PostMapping("/registrarventa")
-    public String registrarventa(@RequestParam("tipodocumento") int tipodocumento,
-                                 @RequestParam("documento") String documento,
-                                 @ModelAttribute("ventas") @Valid Ventas ventas, BindingResult bindingResult,
+    public String registrarventa(@ModelAttribute("venta") @Valid Ventas venta, BindingResult bindingResult,
                                  Model model, RedirectAttributes attributes,
                                  HttpSession session) {
 
-        boolean fechavalida = true;
-        if(ventas.getFecha()!=null) {
+        Optional<Inventario> optionalInventario = inventarioRepository.findInventarioByCodigoinventarioAndCantidadgestorIsGreaterThan(
+                venta.getInventario().getCodigoinventario(),0
+        );
 
-            if (ventas.getFecha().isBefore(ventas.getInventario().getFechaadquisicion())){
-                fechavalida=false;
-            }
-        }else{
-            bindingResult.rejectValue("fecha", "error.user", "Ingrese una fecha");
-        }
+        if(!optionalInventario.isPresent()){
+            attributes.addFlashAttribute("msg", "Hubo un error");
+            return "redirect:/gestor/productosDisponibles";
+        } else
+            venta.setInventario(optionalInventario.get());
 
-        if ((bindingResult.hasErrors()) || (documento=="") || (ventas.getCantidad() > ventas.getInventario().getCantidadgestor()) || (fechavalida==false) ) {
-            model.addAttribute("inv", ventas.getInventario());
-            if(documento == "") { model.addAttribute("msg", "Debe ingresar un número de documento"); }
-            if(fechavalida==false){model.addAttribute("msg1", "La fecha debe ser igual o posterior a la  fecha de aquisision del producto");}
-            if(ventas.getCantidad() > ventas.getInventario().getCantidadgestor()){model.addAttribute("msg2", "No hay suficientes productos en stock");}
+        // Se verifica fecha
+        if((venta.getFecha()!=null) && venta.getFecha().isBefore(venta.getInventario().getFechaadquisicion()))
+            bindingResult.rejectValue("fecha", "error.user", "La fecha debe ser después de: "+ venta.getInventario().getFechaadquisicion().toString());
 
+        // Se verifica cantidad
+        if(venta.getInventario().getCantidadgestor()<venta.getCantidad())
+            bindingResult.rejectValue("cantidad", "error.user", "Cantidad mayor a la disponible");
 
-            //PRUEBA
-            System.out.println(ventas.getCantidad());
-            System.out.println(ventas.getFecha());
-            System.out.println(ventas.getInventario().getCodigoinventario());
-            System.out.println(ventas.getLugarventa());
-            System.out.println(ventas.getNombrecliente());
-            System.out.println(ventas.getPrecioventa());
+        if ((bindingResult.hasErrors())) {
+            model.addAttribute("venta", venta);
             return "gestor/productosDisponiblesForm";
         }else {
-            Inventario inventario = ventas.getInventario();
-            inventario.setCantidadgestor( inventario.getCantidadgestor() - ventas.getCantidad());
-            inventario.setCantidadtotal( inventario.getCantidadtotal() - ventas.getCantidad());
-            inventarioRepository.save(inventario);
-            Usuarios usuarios = (Usuarios) session.getAttribute("usuario");
-            ventas.setId(new VentasId(tipodocumento, documento));
-            ventas.setVendedor(usuarios);
-            ventasRepository.save(ventas);
+            venta.getInventario().setCantidadgestor(venta.getInventario().getCantidadgestor()-venta.getCantidad());
+            venta.getInventario().setCantidadtotal(venta.getInventario().getCantidadtotal()-venta.getCantidad());
+            inventarioRepository.save(venta.getInventario());
+            venta.setVendedor((Usuarios) session.getAttribute("usuario"));
+            ventasRepository.save(venta);
             attributes.addFlashAttribute("msg", "Venta de producto realizada");
             return "redirect:/gestor/productosDisponibles";
         }
