@@ -210,6 +210,8 @@ public class InventarioController {
                 return "gestor/inventarioGestorForm";
             }
 */
+            inventario.setCodigoinventario(codInv);
+
             if(!multipartFile.isEmpty()){
                 s2 = storageServiceDao.store(inventario,multipartFile);
                 if (!s2.isSuccess()) {
@@ -222,7 +224,6 @@ public class InventarioController {
                 }
             }
 
-            inventario.setCodigoinventario(codInv);
             inventario.setFoto(".");
 
             inventario.setCantidadgestor(inventario.getCantidadtotal());
