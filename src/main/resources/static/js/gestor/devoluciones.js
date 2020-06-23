@@ -1,4 +1,4 @@
-var contextPath  = window.location.href+"get?id=";
+var contextPath  = window.location.href+"/get?id=";
 
 $(document).on("click",".info-Sede", function(){
     $("#infoModal #id").val($(this).data('id'));
