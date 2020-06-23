@@ -218,7 +218,6 @@ public class SedeController {
             }
 
             if (bindingResult.hasErrors()) {
-
                 Usuarios sede = (Usuarios) session.getAttribute("usuario");
                 model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
                 model.addAttribute("listaTiendas", tiendaRepository.findAll());
