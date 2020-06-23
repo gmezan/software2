@@ -95,7 +95,7 @@
                                                 <th>Comunidad</th>
                                                 <th>Precio de venta (Soles)</th>
                                                 <th>Stock total</th>
-                                                <th>Cantidad actual(productos no asignados)</th>
+                                                <th>Cantidad actual(no asignado)</th>
                                                 <th>Fecha de asignacion</th>
                                                 <th>Foto</th>
                                                 <th>Asignar a una tienda</th>
@@ -306,7 +306,7 @@
                         <form method="post" th:action="@{/sede/asignar}" th:object="${asignaciontiendas}">
 
                             <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.gestor}" >
-                            <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.productoinventario}">
+                            <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.productoinventario.codigoinventario}">
                             <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.estadoasignacion}">
                             <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.precioventa}">
                             <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.sede}">
