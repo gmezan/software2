@@ -61,8 +61,9 @@ public class VentasClienteController {
                 //Se obtiene la tienda
                 Tienda t = optTienda.get();
                 Optional<AsignacionTiendas> optAt = asignacionTiendasRepository.findByIdtiendasAndAsignadosSedes_Id_Precioventa(t.getIdtienda(), v.getPrecioventa().floatValue());
+                System.out.println(t.getIdtienda());
+                System.out.println(v.getPrecioventa().floatValue());
                 //Verificación si aún existe la fila en Asignados a Tienda
-                System.out.println("4");
                 if(optAt.isPresent()){
                     AsignacionTiendas at = optAt.get();
                     asignacionTiendasRepository.borrar_venta_tienda(as.getId().getGestor().getIdusuarios(),
