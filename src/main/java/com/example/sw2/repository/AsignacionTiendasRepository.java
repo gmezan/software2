@@ -42,7 +42,7 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
     List<AsignacionTiendas> findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id_Sede(int a, Usuarios sede);
     List<AsignacionTiendas> findAsignacionTiendasByTiendaAndAsignadosSedes(Tienda tienda,AsignadosSedes as);
 
-    //Optional<AsignacionTiendas> findByTiendaAndAsignadosSedes_Id_Precioventa(int tienda, BigDecimal precio);
+    Optional<AsignacionTiendas> findByTienda_IdtiendaAndAsignadosSedes_Id_Precioventa(int tienda, Float precio);
 
     @Procedure(name = "tienda_registra")
     void tienda_registra(int dni_gestor, int dni_sede, String codigo,
@@ -52,5 +52,12 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
     void tienda_devolucion(int dni_gestor, int dni_sede, String codigo,
                       int estado, Float precio, int cant, int aTienda);
 
+    @Procedure(name = "borrar_venta_tienda")
+    void borrar_venta_tienda(int dni_gestor, int dni_sede, String codigo,
+                         int estado, Float precio, int cant, int aTienda);
+
+    @Procedure(name = "borrar_venta_as")
+    void borrar_venta_as(int dni_gestor, int dni_sede, String codigo,
+                             int estado, Float precio, int cant);
 
 }
