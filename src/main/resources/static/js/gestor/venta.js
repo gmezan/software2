@@ -1,8 +1,8 @@
 var contextPath  = window.location.href;
 
 $(document).on("click",".editar-Venta", function(){
-    $("#formModal  #id12").val($(this).data('id1'));
-    $("#formModal  #id21").val($(this).data('id2'));
+    $("#formModal  #id\\.numerodocumento").val($(this).data('id1'));
+    $("#formModal  #id\\.tipodocumento").val($(this).data('id2'));
 
     $.ajax({
         method:"GET", url:contextPath + "/get?id1=" + $(this).data('id1') + "&id2=" + $(this).data('id2')

@@ -49,8 +49,8 @@ public class VentasGestorController {
     @PostMapping("/save")
     public String editVen(@ModelAttribute("venta") @Valid Ventas ventas,
                           BindingResult bindingResult, RedirectAttributes attr, Model model,
-                          @RequestParam("id1") String id1,
-                          @RequestParam("id2") int id2,
+                          //@RequestParam("id1") String id1,
+                          //@RequestParam("id2") int id2,
                           HttpSession session) {
 
         if (!ventas.getRucdni().isEmpty()) {
@@ -82,13 +82,13 @@ public class VentasGestorController {
 
         Usuarios gestor = (Usuarios) session.getAttribute("usuario");
 
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasFieldErrors("rucdni")||bindingResult.hasFieldErrors("nombrecliente")) {
             model.addAttribute("lista", ventasRepository.buscarPorGestor(gestor.getIdusuarios()));
             model.addAttribute("msgError", "ERROR");
             return "gestor/ventas";
         } else {
 
-            Optional<Ventas> optionalVentas = ventasRepository.findById(new VentasId(id2, id1));
+            Optional<Ventas> optionalVentas = ventasRepository.findById(ventas.getId());
             if (optionalVentas.isPresent()) {
                 Ventas ven = optionalVentas.get();
                 ven.setRucdni(ventas.getRucdni());

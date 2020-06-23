@@ -183,12 +183,10 @@
                     <div class="modal-body">
                         <form method="post" th:action="@{/gestor/venta/save}" th:object="${venta}">
 
-                                <input type="text" hidden class="form-control" id="id12" name="id1" >
-                                <input type="text" hidden class="form-control" id="id21" name="id2" >
-                            <!--input type="text" class="form-control" th:field="*{id.numerodocumento}">
-                            <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}" th:errors="*{id.numerodocumento}">Error</div>
-                            <input type="text" class="form-control" th:field="*{id.tipodocumento}">
-                            <div class="text-danger" th:if="${#fields.hasErrors('id.tipodocumento')}" th:errors="*{id.tipodocumento}">Error</div-->
+                                <!--input type="text" hidden class="form-control" id="id12" name="id1" >
+                                <input type="text" hidden class="form-control" id="id21" name="id2" -->
+                            <input hidden type="text" class="form-control" th:field="*{id.numerodocumento}">
+                            <input hidden type="text" class="form-control" th:field="*{id.tipodocumento}">
                             <div class="form-group">
                                 <label  class="col-form-label">Ruc/Dni:</label>
                                 <input type="text" class="form-control" th:field="*{rucdni}">
