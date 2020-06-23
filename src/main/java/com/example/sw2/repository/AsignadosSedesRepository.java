@@ -6,11 +6,13 @@ import com.example.sw2.dto.DatosClientesVentaDto;
 import com.example.sw2.dto.DevolucionDto;
 import com.example.sw2.entity.AsignadosSedes;
 import com.example.sw2.entity.Usuarios;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,5 +47,7 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
     void rechazar_devol_sede(int cant_devol, int gestor, int sede, String codigo, int estado, Float precio);
 
     List<AsignadosSedes> findAllByOrderByFechacreacionDesc();
+
+    AsignadosSedes findById_Productoinventario_CodigoinventarioAndId_Precioventa(String codigo, BigDecimal precio);
 
 }

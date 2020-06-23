@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface TiendaRepository extends JpaRepository<Tienda,Integer> {
 
-    //Optional<Tienda> findByNombreAndDireccionAndRuc(String n, String d, String ruc);
+    Optional<Tienda> findByNombreAndDireccionAndRuc(String n, String d, String ruc);
 }

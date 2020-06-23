@@ -51,7 +51,7 @@
                                                 <th>Cantidad</th>
                                                 <th>Precio total</th>
                                                 <th>Foto</th>
-                                                <!-- th>Borrar</th-->
+                                                <th>Borrar</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -69,7 +69,7 @@
                                                 <th>Precio de venta (Dolar)</th>
                                                 <th>Cantidad</th>
                                                 <th>Foto</th>
-                                                <!-- th>Borrar</th -->
+                                                <th>Borrar</th>
                                             </tr>
                                         </tfoot>
 
@@ -91,12 +91,10 @@
                                                 <td><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
                                                          height=100 style="width: auto" >
                                                 </td>
-                                                <!-- d>
-                                                    <button th:attr="data-id1=${product.id.numerodocumento}, data-id2=${product.id.tipodocumento}
-                                                    ,data-id3=${product.nombrecliente}, data-id4=${product.lugarventa} ,data-id5=${product.rucdni}
-                                                    ,data-id6=${product.cantidad}, data-id7=${product.precioventa}"
+                                                <td>
+                                                    <button th:attr="data-id1=${product.id.numerodocumento}, data-id2=${product.id.tipodocumento}"
                                                             data-toggle="modal" data-target="#deleteModal"
-                                                            class="borrar-VentasCliente btn btn-datatable btn-icon btn-danger">Borrar</button></td-->
+                                                            class="borrar-VentasCliente btn btn-datatable btn-icon btn-danger">Borrar</button></td>
                                                 <!--th:src="${product.fotoproducto}"-->
                                             </tr>
                                         </tbody>
@@ -158,14 +156,10 @@
                         <h4 class="modal-title">Eliminar venta</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <!-- form method="get" th:action="@{ventasCliente/borrar}"-->
+                    <form method="get" th:action="@{ventasCliente/borrar}">
                         <div class="modal-body">
                             <input hidden type="text" class="form-control" id="id1" name="id1">
                             <input hidden type="text" class="form-control" id="id2" name="id2">
-                            <input hidden type="text" class="form-control" id="id3" name="id3">
-                            <input hidden type="text" class="form-control" id="id4" name="id4">
-                            <input hidden type="text" class="form-control" id="id5" name="id5">
-                            <input hidden type="text" class="form-control" id="id6" name="id6">
 
                             <p>¿Seguro que desea eliminar esta venta? Esta acción no se puede deshacer.</p>
                         </div>
