@@ -12,9 +12,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTiendas,Integer> {
@@ -37,11 +39,10 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
 
     List<AsignacionTiendas> buscarPorSede(int sede);
 
-    List<AsignacionTiendas> findAsignacionTiendasByAsignadosSedes_Id_Sede(Usuarios sede);
+    List<AsignacionTiendas> findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id(int a, Usuarios sede);
     List<AsignacionTiendas> findAsignacionTiendasByTiendaAndAsignadosSedes(Tienda tienda,AsignadosSedes as);
 
-
-
+    //Optional<AsignacionTiendas> findByTiendaAndAsignadosSedes_Id_Precioventa(int tienda, BigDecimal precio);
 
     @Procedure(name = "tienda_registra")
     void tienda_registra(int dni_gestor, int dni_sede, String codigo,

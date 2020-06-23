@@ -44,7 +44,7 @@ public class AsignadoTiendaController {
                                          HttpSession session,
                                          Model model){
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
-        model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
+        model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id(0,sede));
         model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
         return "sede/asignadoTiendas";
     }
@@ -78,7 +78,7 @@ public class AsignadoTiendaController {
 
         if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
-            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
+            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id(0,sede));
             model.addAttribute("id1", idAstiendas);
             model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
             model.addAttribute("msgErrorRegistrar", "ERROR");
@@ -121,10 +121,10 @@ public class AsignadoTiendaController {
                 bindingResult.rejectValue("fecha", "error.user","La fecha de devolución no puede ser antes de la fecha de asignación");
             }
         }
-
+    
         if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
-            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByAsignadosSedes_Id_Sede(sede));
+            model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id(0,sede));
             model.addAttribute("id2", idAstiendas);
             model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
             model.addAttribute("msgErrorDevolucion", "ERROR");
@@ -133,7 +133,7 @@ public class AsignadoTiendaController {
             AsignadosSedes as = at.getAsignadosSedes();
 
             //AsignadosID = gestor - sede - inventario - estado - precio
-            //restar stock(Asignado_Tienda) y sumar cantidadactual(Asigandos_sedes)
+            //restar stock(Asignado_Tienda) y sumar cantidadactual(Asigandos_sed    es)
             //sumar lo devuelto a cant_gestor(inventario)
             asignacionTiendasRepository.tienda_devolucion(as.getId().getGestor().getIdusuarios(), as.getId().getSede().getIdusuarios(),
                     as.getId().getProductoinventario().getCodigoinventario(), as.getId().getEstadoasignacion(),
