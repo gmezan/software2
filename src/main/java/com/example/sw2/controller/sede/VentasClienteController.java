@@ -1,10 +1,7 @@
 package com.example.sw2.controller.sede;
 
 import com.example.sw2.constantes.VentasId;
-import com.example.sw2.entity.AsignacionTiendas;
-import com.example.sw2.entity.AsignadosSedes;
-import com.example.sw2.entity.Tienda;
-import com.example.sw2.entity.Ventas;
+import com.example.sw2.entity.*;
 import com.example.sw2.repository.AsignacionTiendasRepository;
 import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.TiendaRepository;
@@ -15,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -34,9 +32,9 @@ public class VentasClienteController {
 
     @GetMapping(value = {"", "/"})
     public String ListVentasCliente(@ModelAttribute("ventas") Ventas ventas,
-                                    Model model){
-
-        model.addAttribute("listaVentas", ventasRepository.findAll());
+                                    Model model, HttpSession session){
+        Usuarios sede = (Usuarios) session.getAttribute("usuario");
+        model.addAttribute("listaVentas", ventasRepository.findByVendedor_Idusuarios(sede.getIdusuarios()));
         return "sede/ventasPorCliente";
     }
 
@@ -54,7 +52,7 @@ public class VentasClienteController {
             Optional<Tienda> optTienda = tiendaRepository.findByNombreAndDireccionAndRuc(v.getNombrecliente(),
                     v.getLugarventa(),v.getRucdni());
 
-            AsignadosSedes as = asignadosSedesRepository.findById_Productoinventario_CodigoinventarioAndId_Precioventa(v.getInventario().getCodigoinventario(), v.getPrecioventa().floatValue());
+                AsignadosSedes as = asignadosSedesRepository.findById_Productoinventario_CodigoinventarioAndId_PrecioventaAndId_EstadoasignacionAndId_Sede_Idusuarios(v.getInventario().getCodigoinventario(), v.getPrecioventa().floatValue(),2, v.getVendedor().getIdusuarios());
 
             //Se verifica si la venta es de una tienda
             if(optTienda.isPresent()){
@@ -69,10 +67,13 @@ public class VentasClienteController {
                     asignacionTiendasRepository.borrar_venta_tienda(as.getId().getGestor().getIdusuarios(),
                             as.getId().getSede().getIdusuarios(), as.getId().getProductoinventario().getCodigoinventario(),
                             as.getId().getEstadoasignacion(),as.getId().getPrecioventa(),v.getCantidad(), at.getIdtiendas());
-                    System.out.println("5");
+
+
                 }
             //Si la venta no es una tienda se retorna el stock a Productos Confirmados
             }else{
+
+
                 asignacionTiendasRepository.borrar_venta_as(as.getId().getGestor().getIdusuarios(),
                         as.getId().getSede().getIdusuarios(), as.getId().getProductoinventario().getCodigoinventario(),
                         as.getId().getEstadoasignacion(),as.getId().getPrecioventa(),v.getCantidad());

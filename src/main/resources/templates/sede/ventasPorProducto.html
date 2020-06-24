@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-    <head th:replace="fragments/general-sede.html ::sede-head(title='Lista de ventas por producto')">
+    <head th:replace="fragments/general-sede.html ::sede-head(title='Ventas por producto')">
     </head>
 
     <body id="page-top">
@@ -82,7 +82,7 @@
                                                 <td th:text="${producto.tamanhoproducto}"></td>
                                                 <td th:text="${producto.fechaventa}"></td>
                                                 <td>
-                                                    <button th:attr="data-id=${producto.codigoproducto}"
+                                                    <button disabled th:attr="data-id=${producto.codigoproducto}"
                                                             data-toggle="modal" data-target="#showFoto"
                                                             class="show-foto btn ">
     

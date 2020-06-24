@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     
-    <head th:replace="fragments/general-sede.html ::sede-head(title='Lista de ventas por cliente')">
+    <head th:replace="fragments/general-sede.html ::sede-head(title='Ventas por cliente')">
     </head>
     
     <body id="page-top">
@@ -109,7 +109,7 @@
                                                 <td th:text="${product.cantidad}"></td>
                                                 <td th:text="${product.cantidad * product.precioventa}"></td>
                                                 <td>
-                                                    <button th:attr="data-id=${product.inventario.codigoinventario}"
+                                                    <button disabled th:attr="data-id=${product.inventario.codigoinventario}"
                                                             data-toggle="modal" data-target="#showFoto"
                                                             class="show-foto btn ">
                                                         

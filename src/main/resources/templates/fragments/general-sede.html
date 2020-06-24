@@ -8,8 +8,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="shortcut icon"
-              href="https://static.wixstatic.com/media/92186a_2c8f7f731ce548f9b69f6d4daed6e3d9%7Emv2_d_1916_1355_s_2.png/v1/fill/w_32%2Ch_32%2Clg_1%2Cusm_0.66_1.00_0.01/92186a_2c8f7f731ce548f9b69f6d4daed6e3d9%7Emv2_d_1916_1355_s_2.png">
-    
+              th:href="@{/img/colibriSede.png}" >
         <title th:text="${title}"></title>
         
         <!-- Custom fonts for this template-->
@@ -93,7 +92,7 @@
         <ul th:fragment="sede-sidebar(param1,param2)"
             class="navbar-nav bg-gradient-sede sidebar sidebar-dark accordion" id="accordionSidebar">
             
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/sede/productosPorConfirmar}">
                 <i class="fas"> <img style="width: 88%;height: 88%;" th:src="@{/img/colibriiiii.png}" alt="."></i>
                 <div class="sidebar-brand-text ml-0"><img style="width: 103%;height: 103%;" th:src="@{/img/mosqLOGO-min.png}" alt="."></div>
             </a>
