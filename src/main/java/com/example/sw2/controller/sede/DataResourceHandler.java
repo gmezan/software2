@@ -26,13 +26,11 @@ public class DataResourceHandler {
         HSSFSheet firstSheet = workbook.createSheet("FIRST SHEET");
 
         int n = 0;
-        List<DatosProductoVentaDto> listProduct
+        List<DatosProductoVentaDto> listProduct = null;
         if (a == 1){
             listProduct = ventasRepository.obtenerDatosPorProductoUltimoMes();
         }else if (a == 2){
             listProduct = ventasRepository.obtenerDatosPorProductoUltimoTrimestre();
-        }else if (a == 3){
-
         }
 
         for (DatosProductoVentaDto product : listProduct){

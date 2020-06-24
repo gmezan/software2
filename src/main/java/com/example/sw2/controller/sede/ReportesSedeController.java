@@ -24,7 +24,7 @@ public class ReportesSedeController {
 
     @GetMapping("/excel")
     public String generarExcel(RedirectAttributes attr){
-        dataResourceHandler.ReportLastMonth();
+        dataResourceHandler.ReportLastMonth(1);
         attr.addFlashAttribute("msg","  Excel creado");
         System.out.println("llego al final");
         return "redirect:/sede/reportes";
