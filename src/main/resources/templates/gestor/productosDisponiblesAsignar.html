@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="precioventa" class="col-form-label" th:text="'Precio de venta: S/. (Precio Ref. S/.'+*{id.productoinventario.costomosqoy} +')'">Precio de venta: S/.</label>
-                                <input type="number" class="form-control" th:field="*{id.precioventa}">
+                                <input type="text" class="form-control" th:field="*{id.precioventa}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('id.precioventa')}" th:errors="*{id.precioventa}"></div>
                             </div>
                             <div class="form-group">

@@ -85,6 +85,7 @@ public class InventarioController {
         YearMonth fechamesformat = null;
         LocalDate today = LocalDate.now();
         Boolean conDia = (conDiastr.length == 2);
+        StorageServiceResponse s2 = null;
 
         if (conDia) {
             if (fechadia.isEmpty()) {
@@ -208,10 +209,20 @@ public class InventarioController {
                 }
                 return "gestor/inventarioGestorForm";
             }
-
 */
             inventario.setCodigoinventario(codInv);
-            inventario.setFoto(".");
+
+            if(!multipartFile.isEmpty()){
+                s2 = storageServiceDao.store(inventario,multipartFile);
+                if (!s2.isSuccess()) {
+                    bindingResult.rejectValue("foto", "error.user", s2.getMsg());
+                    listasCamposInv(m);
+                    if (inventario.getComunidades() != null) {
+                        m.addAttribute("listArt", artesanosRepository.findArtesanosByComunidades_Codigo(inventario.getComunidades().getCodigo()));
+                    }
+                    return "gestor/inventarioGestorForm";
+                }
+            }
 
             inventario.setCantidadgestor(inventario.getCantidadtotal());
 

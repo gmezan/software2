@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 public class Ventas extends Auditable implements Serializable {
 
     @EmbeddedId
+    @Valid
     private VentasId id;
     //@Size(min= 8, max = 11, message = "El Ruc/Dni debe contener 8 o 11 caracteres")
     @Column(name = "ruc_dni")
@@ -31,36 +33,41 @@ public class Ventas extends Auditable implements Serializable {
     private String nombrecliente;
     @Column(nullable = false)
     @NotBlank(message = "Este campo no puede estar vacío")
-    @Pattern(regexp = "^[A-Za-zÀ-ÿ ]*$", message = "Ingrese solo caracteres alfabéticos")
+    @Pattern(regexp = "^[0-9A-Za-zÀ-ÿ ]*$", message = "No puede ingresar caracteres especiales")
     private String lugarventa;
     @ManyToOne
     @JoinColumn(name = "productoinventario", nullable = false)
     @NotNull()
     private Inventario inventario;
     @Column(nullable = false)
+    @NotNull(message = "Ingrese una fecha")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
     @ManyToOne
     @JoinColumn(name = "vendedor", nullable = false)
-    @NotNull()
     private Usuarios vendedor;
-    @NotNull
+    @NotNull(message = "Ingrese una cantidad")
     @Min(value = 1, message = "La cantidad debe ser mayor a 0")
     @Column(nullable = false)
     private int cantidad;
     @Column(name = "precio_venta", nullable = false)
     @NotNull(message = "Debe ingresar un precio de venta")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Ingrese un precio válido")
+    @Digits(integer=10, fraction=2, message = "El precio debe tener 2 decimales y 10 dígitos como máximo")
     private BigDecimal precioventa;
-    @LastModifiedDate
-    @Column(name="fecha_modificacion")
-    private LocalDateTime fechamodificacion;
-    @CreatedDate
-    @Column(name="fecha_creacion",nullable =false)
-    private LocalDateTime fechacreacion;
+
     @Transient
     private int cantDevol;
 
 
+    public Ventas(){
+
+    }
+
+    public Ventas(Usuarios vendedor, Inventario producto){
+        this.vendedor = vendedor;
+        this.inventario = producto;
+    }
 
     public int getCantDevol() {
         return cantDevol;

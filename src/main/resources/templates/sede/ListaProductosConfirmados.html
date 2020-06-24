@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/general-sede.html ::sede-head(title='Lista de productos confirmados')">
+    <head th:replace="fragments/general-sede.html ::sede-head(title='Productos confirmados')">
     </head>
 
     <body id="page-top">
@@ -75,14 +75,15 @@
                                                 <th>Color</th>
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
-                                                <th>Precio de venta (Soles)</th>
+                                                <th>Precio de venta (S/.)</th>
                                                 <th>Stock total</th>
-                                                <th>Cantidad actual(productos no asignados)</th>
-                                                <th>Fecha de asignacion</th>
+                                                <th>Cantidad actual<br>
+                                                    (no asignado)</th>
+                                                <th>Fecha asignacion</th>
                                                 <th>Foto</th>
-                                                <th>Asignar a una tienda</th>
+                                                <th>Asignar a tienda</th>
                                                 <th>Registrar venta</th>
-                                                <th>Devolver producto al Gestor</th>
+                                                <th>Devolver al Gestor</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -93,14 +94,15 @@
                                                 <th>Color</th>
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
-                                                <th>Precio de venta (Soles)</th>
+                                                <th>Precio de venta (S/.)</th>
                                                 <th>Stock total</th>
-                                                <th>Cantidad actual(productos no asignados)</th>
-                                                <th>Fecha de asignacion</th>
+                                                <th>Cantidad actual<br>
+                                                    (no asignado)</th>
+                                                <th>Fecha asignacion</th>
                                                 <th>Foto</th>
-                                                <th>Asignar a una tienda</th>
+                                                <th>Asignar a tienda</th>
                                                 <th>Registrar venta</th>
-                                                <th>Devolver producto al Gestor</th>
+                                                <th>Devolver al Gestor</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -119,7 +121,7 @@
                                                 <td th:text="${prodConfirm.fechaenvio}"></td>
                                                 <td>
     
-                                                    <button th:attr="data-id=${prodConfirm.id.productoinventario.codigoinventario}"
+                                                    <button disabled th:attr="data-id=${prodConfirm.id.productoinventario.codigoinventario}"
                                                             data-toggle="modal" data-target="#showFoto"
                                                             class="show-foto btn ">
                                                         <div class="progress mx-auto" style="height: 100px;width: 100px;">
@@ -305,11 +307,11 @@
                     <div class="modal-body">
                         <form method="post" th:action="@{/sede/asignar}" th:object="${asignaciontiendas}">
 
-                            <input type="text" class="form-control" th:field="*{asignadosSedes.id.gestor}" >
-                            <input type="text" class="form-control" th:field="*{asignadosSedes.id.productoinventario}">
-                            <input type="text" class="form-control" th:field="*{asignadosSedes.id.estadoasignacion}">
-                            <input type="text" class="form-control" th:field="*{asignadosSedes.id.precioventa}">
-                            <input type="text" class="form-control" th:field="*{asignadosSedes.id.sede}">
+                            <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.gestor}" >
+                            <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.productoinventario}">
+                            <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.estadoasignacion}">
+                            <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.precioventa}">
+                            <input type="hidden" class="form-control" th:field="*{asignadosSedes.id.sede}">
 
                             <div class="form-group">
                                 <label class="col-form-label">Nombre de la tienda:</label>

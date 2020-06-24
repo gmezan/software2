@@ -121,8 +121,6 @@ public class SedeController {
                     if (ventas.getCantidad() > asignadosSedes.getCantidadactual()) {
                         bindingResult.rejectValue("cantidad", "error.user", "La cantidad vendida no puede ser mayor a la cantidad actual de la sede");
                     }
-                }else{
-                    bindingResult.rejectValue("cantidad", "error.user", "La cantidad no es válida.");
                 }
             } else {
                 attr.addFlashAttribute("msgNoVenta", "Error al encontrar el producto");
@@ -170,8 +168,6 @@ public class SedeController {
 
             attr.addFlashAttribute("msgExito", "Venta registrada exitosamente");
             return "redirect:/sede/productosConfirmados";
-
-
         }
 
     }
@@ -193,7 +189,7 @@ public class SedeController {
                 return "redirect:/sede/productosConfirmados";
             }
 
-            if (asignacionTiendas.getStock() <= 0) {
+            if (asignacionTiendas.getStock() < 0) {
                 bindingResult.rejectValue("stock", "error.user", "Ingrese una cantidad valida");
             } else {
                 if (asignacionTiendas.getStock() > asignadosSedes.getCantidadactual()) {
@@ -233,7 +229,7 @@ public class SedeController {
     }
 
     @PostMapping("/confirmarRecepcion")
-    public String confirmarRecepcion(AsignadosSedesId id, RedirectAttributes attr) {
+    public String confirmarRecepcion( AsignadosSedesId id, RedirectAttributes attr) {
 
         Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
         if (asignadosSedesOptional.isPresent()) {
@@ -260,6 +256,8 @@ public class SedeController {
                 asignadosSedesRepository.save(newAsignadosSedes);
                 asignadosSedesRepository.deleteById(id);
             }
+        }else {
+            attr.addFlashAttribute("msgErrorD", "Hubo un problema, no se encontro el producto");
         }
         return "redirect:/sede/productosPorConfirmar";
     }
@@ -295,7 +293,7 @@ public class SedeController {
 
     @PostMapping("/devolucion")
     public String devolucionSede(@ModelAttribute("asignaciontiendas") AsignacionTiendas asignacionTiendas,
-                                 @ModelAttribute("venta") @Valid Ventas ventas,
+                                 @ModelAttribute("venta") Ventas ventas,
                                  BindingResult bindingResult,
                                  @RequestParam(value = "idgestor") int idgestor,
                                  @RequestParam(value = "idsede") int idsede,
@@ -320,12 +318,15 @@ public class SedeController {
                 return "redirect:/sede/productosConfirmados";
 
             } else {
-                if (!bindingResult.hasFieldErrors("cantDevol")) {
+                if (!bindingResult.hasErrors()) {
                     if (ventas.getCantDevol() < 0) {
                         bindingResult.rejectValue("cantDevol", "error.user", "Ingrese un numero valido");
                     } else {
                         if (ventas.getCantDevol() > asignadosSedes.getCantidadactual()) {
                             bindingResult.rejectValue("cantDevol", "error.user", "La cantidad devuelta no puede ser mayor a la cantidad actual de la sede");
+                        }
+                        if(ventas.getCantDevol() == 0){
+                            bindingResult.rejectValue("cantDevol", "error.user", "Ingrese un numero valido");
                         }
                     }
                 }
@@ -402,8 +403,14 @@ public class SedeController {
     //Web service
     @ResponseBody
     @PostMapping(value = "/productosPorConfirmar/post", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HashMap<String, String>> getAsignsedePost(@RequestBody AsignadosSedesId asignadosSedesId) {
+    public ResponseEntity<HashMap<String, String>> getAsignsedePost(@RequestParam(value = "gestor") Integer gestor,
+                                                                    @RequestParam(value = "sede") Integer sede,
+                                                                    @RequestParam(value = "productoinventario") String inv,
+                                                                    @RequestParam(value = "estadoasignacion") Integer estadoasignacion,
+                                                                    @RequestParam(value = "precioventa") Float precioventa) {
 
+        AsignadosSedesId asignadosSedesId = new
+                AsignadosSedesId(gestor,sede,inv,estadoasignacion,precioventa);
         return new ResponseEntity<>(new HashMap<String, String>() {{
             asignadosSedesId.setProductoinventario(inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
             asignadosSedesRepository.findAll();

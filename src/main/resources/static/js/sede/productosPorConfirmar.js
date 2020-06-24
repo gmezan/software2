@@ -2,11 +2,7 @@ var contextPath  = window.location.href;
 
 $(document).on("click",".conf-Produc", function(){
 
-    $("#confirmarRecepcionModal  #idgestor").val('');
-    $("#confirmarRecepcionModal  #idsede").val('');
-    $("#confirmarRecepcionModal  #idproductoinv").val('');
-    $("#confirmarRecepcionModal  #idestadoasign").val('');
-    $("#confirmarRecepcionModal  #idprecioventa").val('');
+    $("#confirmarRecepcionModal  input").val('');
 
     $("#confirmarRecepcionModal #codinv").text('');
     $("#confirmarRecepcionModal  #producto").text('');
@@ -23,21 +19,19 @@ $(document).on("click",".conf-Produc", function(){
         //+ $(this).data('id1') + "&idsede=" + $(this).data('id2')
         //+ "&idproductoinv=" + $(this).data('id3') + "&idfechaenvio=" + $(this).data('id4');
 
+    let data = {
+        gestor: parseInt($(this).data('id1')),
+        sede: parseInt($(this).data('id2')),
+        productoinventario: $(this).data('id3'),
+        estadoasignacion: parseInt($(this).data('id4')),
+        precioventa: parseFloat($(this).data('id5'))
+    };
+
+    console.log(data);
     $.ajax({
-        async: false,
-        dataType : "json",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        method:"POST", url:url,
-        data: JSON.stringify({
-            gestor: parseInt($(this).data('id1')),
-            sede: parseInt($(this).data('id2')),
-            productoinventario: $(this).data('id3'),
-            estadoasignacion: $(this).data('id4'),
-            precioventa: $(this).data('id5'),
-        })
+        method:"POST",
+        data: data,
+        url:url
     }).done(function(asignsede){
         if (asignsede!=null){
             console.log(asignsede);

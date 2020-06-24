@@ -38,6 +38,20 @@ public class AsignadosSedesId implements Serializable {
         this.precioventa=precioventa;
     }
 
+    public AsignadosSedesId(int gestor, int sede, String productoinventario, Integer estadoasignacion, Float precioventa){
+        this.gestor=new Usuarios(gestor);
+        this.sede=new Usuarios(sede);
+        this.productoinventario=new Inventario();
+        this.productoinventario.setCodigoinventario(productoinventario);
+        this.estadoasignacion=estadoasignacion;
+        this.precioventa=precioventa;
+    }
+
+
+    /*
+
+     */
+
     public String getNombreEstado(){
         return CustomConstants.getEstadoAsignacion().get(estadoasignacion);
     }
