@@ -34,6 +34,11 @@
                 <div class="row mt-5">
 
 
+                    <a th:href="@{/sede/reportes/excel}" class="btn btn-secondary">Generar excel de prueba</a>
+                    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+
+
+
                     <div class="col-lg-9 mx-auto">
 
                         <!-- Collapsable Card Example -->
