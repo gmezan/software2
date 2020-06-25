@@ -2,6 +2,7 @@ package com.example.sw2.entity;
 
 import com.example.sw2.config.Auditable;
 import com.example.sw2.constantes.CustomConstants;
+import com.example.sw2.constantes.ProductoId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
@@ -9,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -21,11 +23,9 @@ import java.util.List;
 @Table(name = "Productos")
 public class Productos extends Auditable implements Serializable {
 
-    @Id
-    @NotBlank
-    @Size(max = 3, message = "El codigo debe contener máximo 3 caracteres")
-    @Pattern(regexp = "^[A-Za-zÀ-ÿ]+$", message = "Ingrese solo caracteres válidos")
-    private String codigonom;
+    @Valid
+    @EmbeddedId
+    private ProductoId id;
     @Column(nullable = false)
     @NotBlank
     @Pattern(regexp = "^[A-Za-zÀ-ÿ'. ]+$", message = "Ingrese solo caracteres válidos")
@@ -38,15 +38,11 @@ public class Productos extends Auditable implements Serializable {
     @Size(max = 3, message = "El codigo debe contener máximo 3 caracteres")
     @Pattern(regexp = "^[A-Za-zÀ-ÿ]+$", message = "Ingrese solo caracteres válidos")
     private String codigodesc;
-    @NotBlank
-    @Column(name="linea",nullable = false)
-    private String codigolinea;
 
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productos")
     private List<Inventario> inventario;
-
 
     public List<Inventario> getInventario() {
         return inventario;
@@ -56,19 +52,36 @@ public class Productos extends Auditable implements Serializable {
     }
 
 
+    public ProductoId getId() {
+        return id;
+    }
 
-    public String getNombreLinea(){
-        return CustomConstants.getLineas().get(this.codigolinea);
+    public void setId(ProductoId id) {
+        this.id = id;
+    }
+
+
+    public void setCodigolinea(String codigolinea) {
+        this.id.setCodigolinea(codigolinea.trim());
+    }
+
+    public String getCodigolinea() {
+        return id.getCodigolinea();
     }
 
 
     public String getCodigonom() {
-        return codigonom;
+        return id.getCodigonom();
     }
 
     public void setCodigonom(String codigonom) {
-        this.codigonom = codigonom.toUpperCase();
+        this.id.setCodigonom(codigonom.toUpperCase().trim());
     }
+
+    public String getNombreLinea(){
+        return CustomConstants.getLineas().get(this.id.getCodigolinea());
+    }
+
 
     public String getNombre() {
         return nombre;
@@ -94,11 +107,4 @@ public class Productos extends Auditable implements Serializable {
         this.codigodesc = codigodesc.toUpperCase();
     }
 
-    public void setCodigolinea(String codigolinea) {
-        this.codigolinea = codigolinea;
-    }
-
-    public String getCodigolinea() {
-        return codigolinea;
-    }
 }

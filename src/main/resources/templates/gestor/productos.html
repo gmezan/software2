@@ -89,21 +89,21 @@
                                         <tbody>
                                             <tr th:each="l,item : ${lista}">
                                                 <td th:text="${item.count}"></td>
-                                                <td th:text="${l.codigonom}"></td>
+                                                <td th:text="${l.id.codigonom}"></td>
                                                 <td th:text="${l.nombre}"></td>
                                                 <td th:text="${l.codigodesc}"></td>
                                                 <td th:text="${l.descripcion}"></td>
-                                                <td th:text="${l.getNombreLinea()}"></td>
+                                                <td th:text="${l.id.getNombreLinea()}"></td>
                                                 <td th:text="${l.fechacreacion.toLocalDate()}"></td>
                                                 <td th:if="${l.fechamodificacion!=null}"
                                                     th:text="${l.fechamodificacion.toLocalDate()}"></td>
                                                 <td th:if="${l.fechamodificacion==null}">-</td>
                                                 <td>
-                                                    <button th:attr="data-id=${l.codigonom}" data-toggle="modal"
+                                                    <button th:attr="data-id1=${l.id.codigonom},data-id2=${l.id.codigolinea}" data-toggle="modal"
                                                             data-target="#formModal"
                                                             class="edit-Producto btn btn-datatable btn-icon btn-info mr-2">
                                                         <i class="fa fa-edit"></i></button>
-                                                    <button th:attr="data-id=${l.codigonom}" data-toggle="modal"
+                                                    <button th:attr="data-id1=${l.id.codigonom},data-id2=${l.id.codigolinea}" data-toggle="modal"
                                                             data-target="#deleteModal"
                                                             class="delete-Producto btn btn-datatable btn-icon btn-danger">
                                                         <i class="fas fa-trash-alt"></i></button>
@@ -176,10 +176,10 @@
                             <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                             <div class="form-group">
                                 <label class="col-form-label">Codigo Nombre: (máximo 3 caracteres)</label>
-                                <input th:readonly="${producto.codigonom!=null && !#fields.hasErrors('codigonom')}"
-                                       type="text" class="form-control" th:field="*{codigonom}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('codigonom')}"
-                                     th:errors="*{codigonom}">Error
+                                <input th:readonly="${producto.id!=null && producto.id.codigonom!=null && !#fields.hasErrors('id.codigonom')}"
+                                       type="text" class="form-control" th:field="*{id.codigonom}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('id.codigonom')}"
+                                     th:errors="*{id.codigonom}">Error
                                 </div>
                             </div>
                             <div class="form-group">
@@ -205,12 +205,12 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Línea del producto:</label>
-                                <select class="form-control" th:field="*{codigolinea}">
+                                <select class="form-control" th:field="*{id.codigolinea}">
                                     <option th:each="item : ${lineas}" th:value="${item.key}"
                                             th:text="${item.value}"></option>
                                 </select>
-                                <div class="text-danger" th:if="${#fields.hasErrors('codigolinea')}"
-                                     th:errors="*{codigolinea}">Error
+                                <div class="text-danger" th:if="${#fields.hasErrors('id.codigolinea')}"
+                                     th:errors="*{id.codigolinea}">Error
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -237,7 +237,8 @@
                     <form method="get" th:action="@{/gestor/producto/delete}" th:object="${producto}">
                         <!-- -->
                         <div id="deleteModalBody" class="modal-body">
-                            <input hidden type="text" class="form-control" th:field="*{codigonom}">
+                            <input hidden type="text" class="form-control" th:field="*{id.codigonom}">
+                            <input hidden type="text" class="form-control" th:field="*{id.codigolinea}">
                             <p id="deleteModalBodyP"></p>
                             <table hidden class="table" id="tableModal">
                                 <thead>

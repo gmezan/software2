@@ -4,7 +4,6 @@ import com.example.sw2.Dao.StorageServiceDao;
 import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.entity.*;
 import com.example.sw2.repository.*;
-import com.example.sw2.utils.UploadObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,20 +12,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.time.YearMonth;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 //REPLANTEAR inventario entity
 
@@ -164,7 +160,7 @@ public class InventarioController {
             bindingResult.rejectValue("cantidadgestor", "error.user", "Seleccione una línea de la lista.");
         } else {
             m.addAttribute("linea", linea);
-            m.addAttribute("listProd", productosRepository.findProductosByCodigolinea(linea));
+            m.addAttribute("listProd", productosRepository.findProductosByIdCodigolinea(linea));
         }
 /*
         if (multipartFile.isEmpty()) {
@@ -408,7 +404,7 @@ public class InventarioController {
     @ResponseBody
     @GetMapping(value = {"/form/getLinea", "/save/getLinea"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Productos>> getCom(@RequestParam(value = "linea") String linea) {
-        return new ResponseEntity<>(productosRepository.findProductosByCodigolinea(linea), HttpStatus.OK);
+        return new ResponseEntity<>(productosRepository.findProductosByIdCodigolinea(linea), HttpStatus.OK);
     }
 
     //Web service
