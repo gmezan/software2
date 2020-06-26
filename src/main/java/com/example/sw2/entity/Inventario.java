@@ -33,7 +33,9 @@ public class Inventario extends Auditable implements Serializable {
     private Categorias categorias;
 
     @ManyToOne
-    @JoinColumn(name = "producto", nullable = false)
+    @JoinColumns({
+        @JoinColumn(name = "producto", nullable = false),
+        @JoinColumn(name = "linea", nullable = false)})
     @NotNull(message = "Seleccione un producto de la lista.")
     private Productos productos;
 
