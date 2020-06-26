@@ -1,6 +1,6 @@
 package com.example.sw2.dtoReportes;
 
-public interface ReporteAnualXxProducto {
+public interface ReporteVenta {
 
     String getRuc_dni();
     String getNombrecliente();
@@ -10,8 +10,8 @@ public interface ReporteAnualXxProducto {
     String getProductoinventario();
     String getFecha();
     String getVendedor();
-    String getCantidad();
-    String getPrecio_venta();
+    Integer getCantidad();
+    Double getPrecio_venta();
     String getFecha_modificacion();
     String getFecha_creacion();
 }

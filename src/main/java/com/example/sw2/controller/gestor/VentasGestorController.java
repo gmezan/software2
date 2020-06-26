@@ -5,7 +5,10 @@ import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
 import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.repository.VentasRepository;
+import com.example.sw2.service.ServiceAnual;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -24,6 +28,9 @@ import java.util.regex.Pattern;
 @Controller
 @RequestMapping("/gestor/venta")
 public class VentasGestorController {
+
+    @Autowired
+    ServiceAnual serviceAnual;
 
     @Autowired
     VentasRepository ventasRepository;
@@ -134,4 +141,21 @@ public class VentasGestorController {
     public ResponseEntity<Optional<Ventas>> getVen(@RequestParam(value = "id1") String id1, @RequestParam(value = "id2") int id2) {
         return new ResponseEntity<>(ventasRepository.findById(new VentasId(id2, id1)), HttpStatus.OK);
     }
+
+    //EXCEL
+
+    @GetMapping(value = {"/excelAnual2020"})
+    public ResponseEntity<InputStreamResource> exportAllData() throws Exception{
+
+        ByteArrayInputStream stream = serviceAnual.exportAllData();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition","attachment; filename=ventasAnual.xls");
+
+        return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
+    }
+
+
+
+
 }
