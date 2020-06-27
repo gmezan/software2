@@ -3,6 +3,7 @@ package com.example.sw2.service;
 import com.example.sw2.dtoReportes.AnhosDtos;
 import com.example.sw2.dtoReportes.ReporteVenta;
 import com.example.sw2.dtoReportes.SedesDtos;
+import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.repository.VentasRepository;
 import com.example.sw2.repository.VentasRepositoryXxSedesNClientes;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -22,6 +23,8 @@ public class ReportesService2222 implements ServiceReportes2222 {
 
     @Autowired
     VentasRepositoryXxSedesNClientes ventasRepositoryXxSedesNClientes;
+    @Autowired
+    UsuariosRepository usuariosRepository;
 
     @Override
     public ByteArrayInputStream SedeOrClienteXxAnual_TrimesterOrMonth(int mes, int trimestre, int anho, int orderBy, int type) throws Exception {
@@ -61,10 +64,20 @@ public class ReportesService2222 implements ServiceReportes2222 {
             Intro = Intro2;
         }
 
+        System.out.println("Esta vacio o no: " + sedesDtos.isEmpty());
+        System.out.println(sedesDtos.toArray());
+        System.out.println("Guack");
 
         for(SedesDtos sedes : sedesDtos){
 
-            int sede = sedes.getSedeOrCliente();
+            int sede;
+            if (orderBy == 2){
+                sede = sedes.getVendedor();
+                System.out.println("Guack2");
+            }else /*if(orderBy == 5)*/{
+                sede = sedes.getRuc_dni();
+                System.out.println("Guack3");
+            }
 
 
             Row row = sheet.createRow(fila);

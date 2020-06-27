@@ -1,8 +1,7 @@
 package com.example.sw2.repository;
 
-import com.example.sw2.entity.AsignadosSedes;
+import com.example.sw2.dtoReportes.SedesDtos;
 import com.example.sw2.entity.Usuarios;
-import com.example.sw2.entity.Ventas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;

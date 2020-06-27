@@ -14,7 +14,7 @@ public interface VentasRepositoryXxSedesNClientes extends JpaRepository<Ventas, 
 
 
     //SEDES
-    @Query(value="SELECT DISTINCT(sede) FROM (SELECT u.dni AS \"sede\" FROM mosqoy.Usuarios u where u.rol = 2) sub",nativeQuery=true)
+    @Query(value="select distinct v.vendedor from mosqoy.Ventas v inner join mosqoy.Usuarios u on (v.vendedor = u.dni) where u.rol=2;",nativeQuery=true)
     List<SedesDtos> obtenerSedes();
 
     @Query(value="SELECT ven.* FROM mosqoy.Ventas ven WHERE YEAR(ven.fecha) = ?1 AND ven.vendedor = ?2",nativeQuery=true)

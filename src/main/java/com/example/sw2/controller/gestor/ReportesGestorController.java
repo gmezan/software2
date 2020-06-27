@@ -63,6 +63,8 @@ public class ReportesGestorController {
             trimester = 0;
             mes = Select;
         }
+
+        System.out.println("El orderBy es: " + orderBy);
         ByteArrayInputStream stream = serviceReportes2222.SedeOrClienteXxAnual_TrimesterOrMonth(mes, trimester, anho, orderBy, type);
 
         HttpHeaders headers = new HttpHeaders();
