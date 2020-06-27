@@ -5,6 +5,11 @@ import java.io.ByteArrayInputStream;
 public interface ServiceReportes {
 
 
+    ////// VENTAS GENERALES POR ANHO
+    ByteArrayInputStream obtenerVentasGENERALESPorAnho(int anho) throws Exception;
+    //////
+
+
     ////// VENTAS DE COMUNIDAD POR ANHO
     ByteArrayInputStream obtenerVentasDeComunidadPorAnho(int anho) throws Exception;
     //////

@@ -30,6 +30,98 @@ public class ReportesService implements ServiceReportes{
     @Autowired
     ProductosRepository productosRepository;
 
+    @Override
+    public ByteArrayInputStream obtenerVentasGENERALESPorAnho(int anho) throws Exception {
+
+        String[] columns = {"RUC_DNI","Nombre Cliente","Tipo Documento","Número Documento","Lugar Venta","Producto Inventario","Fecha","Vendedor","Cantidad","Precio de Venta","Fecha Modificacion","Fecha Creación"};
+
+        Workbook workbook = new HSSFWorkbook();
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+        Sheet sheet = workbook.createSheet("obtenerVentasGENERALESPorAnho");
+
+        sheet.setColumnWidth(0, 10000);
+        sheet.setColumnWidth(1, 5500);
+        sheet.setColumnWidth(2, 5500);
+        sheet.setColumnWidth(3, 5500);
+        sheet.setColumnWidth(4, 5500);
+        sheet.setColumnWidth(5, 8000);
+        sheet.setColumnWidth(6, 5500);
+        sheet.setColumnWidth(7, 5500);
+        sheet.setColumnWidth(8, 5500);
+        sheet.setColumnWidth(9, 5500);
+        sheet.setColumnWidth(10, 8000);
+        sheet.setColumnWidth(11, 8000);
+
+        int fila = 0;
+
+
+        //List<Comunidades> comunidadesList = comunidadesRepository.findAll();
+
+        //String idComunidad = com.getCodigo();
+        //String idComunidad = com.getCodigo();
+        //String idComunidad = com.getCodigo();
+
+
+        Row row = sheet.createRow(fila);
+
+        //row = sheet.createRow(fila);
+        row.createCell(0).setCellValue("VENTAS TOTALES EN EL " + anho);
+        fila++;
+        fila++;
+
+        List<ReporteVenta> ventas = ventasRepository.obtenerVentasGENERALESPorAnho(anho);
+
+        if(ventas.isEmpty()){
+
+            row = sheet.createRow(fila);
+
+            row.createCell(0).setCellValue("Sin ventas :(");
+            fila=fila+4;
+
+        }else{
+            row = sheet.createRow(fila);
+
+            for(int i=0; i<columns.length; i++){
+
+                Cell cell = row.createCell(i);
+                cell.setCellValue(columns[i]);
+            }
+
+            fila++;
+
+            for(ReporteVenta ven : ventas){
+
+                row = sheet.createRow(fila);
+
+                row.createCell(0).setCellValue(ven.getRuc_dni());
+                row.createCell(1).setCellValue(ven.getNombrecliente());
+                row.createCell(2).setCellValue(ven.getTipodocumento());
+                row.createCell(3).setCellValue(ven.getNumerodocumento());
+                row.createCell(4).setCellValue(ven.getLugarventa());
+                row.createCell(5).setCellValue(ven.getProductoinventario());
+                row.createCell(6).setCellValue(ven.getFecha());
+                row.createCell(7).setCellValue(ven.getVendedor());
+                row.createCell(8).setCellValue(ven.getCantidad());
+                row.createCell(9).setCellValue(ven.getPrecio_venta());
+                row.createCell(10).setCellValue(ven.getFecha_modificacion());
+                row.createCell(11).setCellValue(ven.getFecha_creacion());
+
+                fila++;
+
+            }
+
+            //fila=fila+4;
+        }
+
+        workbook.write(stream);
+        workbook.close();
+
+        return new ByteArrayInputStream(stream.toByteArray());
+
+    }
+
 
     @Override
     public ByteArrayInputStream obtenerVentasDeComunidadPorAnho(int anho) throws Exception {

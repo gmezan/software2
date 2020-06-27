@@ -84,6 +84,13 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     /////////// ventas de una comunidad por anho especifico
 
+    @Query(value="SELECT * FROM mosqoy.Ventas ven WHERE YEAR(ven.fecha) = ?1",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasGENERALESPorAnho(int anho);
+
+    /////////// FIN ventas de una comunidad por anho especifico
+
+    /////////// ventas de una comunidad por anho especifico
+
     @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv, mosqoy.Comunidades com WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
     List<ReporteVenta> obtenerVentasDeComunidadPorAnho(String comunidadId, int anho);
 
