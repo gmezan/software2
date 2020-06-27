@@ -1,5 +1,6 @@
 package com.example.sw2.controller.gestor;
 
+import com.example.sw2.service.ServiceReportes;
 import com.example.sw2.service.ServiceVentaAnualXxProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -14,6 +15,11 @@ import java.io.ByteArrayInputStream;
 @Controller
 @RequestMapping("/gestor/reportes")
 public class ReportesGestorController {
+
+
+    @Autowired
+    ServiceReportes serviceReportes;
+
 
     @Autowired
     ServiceVentaAnualXxProducto serviceVentaAnualXxProducto;
