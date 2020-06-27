@@ -81,4 +81,170 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
             "AND MONTH(fecha) <= MONTH(CURRENT_DATE - INTERVAL 1 MONTH) and month(fecha) >= month(current_date - interval 3 month) group by v.productoinventario", nativeQuery = true)
     List<DatosProductoVentaDto> obtenerDatosPorProductoUltimoTrimestre();
 
+
+    /////////// ventas de una comunidad por anho especifico
+
+    @Query(value="SELECT * FROM mosqoy.Ventas ven WHERE YEAR(ven.fecha) = ?1",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasGENERALESPorAnho(int anho);
+
+    /////////// FIN ventas de una comunidad por anho especifico
+
+    /////////// ventas de una comunidad por anho especifico
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv, mosqoy.Comunidades com WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadPorAnho(String comunidadId, int anho);
+
+    /////////// FIN ventas de una comunidad por anho especifico
+
+    /////////// ventas de una comunidad por TRIMESTRE especifico en un anho especifico
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv, mosqoy.Comunidades com WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) > 0 AND MONTH(ven.fecha) < 4 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDelPRIMERTrimestre(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv, mosqoy.Comunidades com WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) > 3 AND MONTH(ven.fecha) < 7 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDelSEGUNDOTrimestre(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv, mosqoy.Comunidades com WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) > 6 AND MONTH(ven.fecha) < 10 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDelTERCERTrimestre(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv, mosqoy.Comunidades com WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) > 9 AND MONTH(ven.fecha) < 13 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDelCUARTOTrimestre(String comunidadId, int anho);
+
+    /////////// FIN ventas de una comunidad por TRIMESTRE especifico en un anho especifico
+
+    /////////// ventas de una comunidad por MES especifico en un anho especifico
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) = 1 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDeENERO(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) = 2 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDeFEBRERO(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) = 3 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDeMARZO(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) = 4 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDeABRIL(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) = 5 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDeMAYO(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) = 6 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDeJUNIO(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) = 7 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDeJULIO(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) = 8 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDeAGOSTO(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) = 9 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDeSETIEMBRE(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) = 10 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDeOCTUBRE(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) = 11 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDeNOVIEMBRE(String comunidadId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.comunidad = ?1 AND MONTH(ven.fecha) = 12 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeComunidadDeDICIEMBRE(String comunidadId, int anho);
+
+    /////////// FIN ventas de una comunidad por MES especifico en un anho especifico
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /////////// ventas de un producto por anho especifico
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoPorAnho(String productoId, int anho);
+
+    /////////// FIN ventas de un producto por anho especifico
+
+    /////////// ventas de una producto por TRIMESTRE especifico en un anho especifico
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) > 0 AND MONTH(ven.fecha) < 4",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDelPRIMERTrimestre(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) > 3 AND MONTH(ven.fecha) < 7",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDelSEGUNDOTrimestre(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) > 6 AND MONTH(ven.fecha) < 10",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDelTERCERTrimestre(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) > 9 AND MONTH(ven.fecha) < 13",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDelCUARTOTrimestre(String productoId, int anho);
+
+    /////////// FIN ventas de un producto por TRIMESTRE especifico en un anho especifico
+
+    /////////// ventas de un producto por MES especifico en un anho especifico
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) = 1",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDeENERO(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) = 2",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDeFEBRERO(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) = 3",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDeMARZO(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) = 4",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDeABRIL(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) = 5",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDeMAYO(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) = 6",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDeJUNIO(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) = 7",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDeJULIO(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) = 8",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDeAGOSTO(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) = 9",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDeSETIEMBRE(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) = 10",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDeOCTUBRE(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) = 11",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDeNOVIEMBRE(String productoId, int anho);
+
+    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven, mosqoy.Inventario inv WHERE ven.productoinventario = inv.codigo_inventario AND inv.producto = ?1 AND YEAR(ven.fecha) = ?2 AND MONTH(ven.fecha) = 12",nativeQuery=true)
+    List<ReporteVenta> obtenerVentasDeProductoDeDICIEMBRE(String productoId, int anho);
+
+    /////////// FIN ventas de un producto por MES especifico en un anho especifico
+
+
+
+
+
+
+
 }

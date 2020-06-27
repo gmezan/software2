@@ -26,6 +26,7 @@ public class ReportesGestorController {
     @Autowired
     ServiceReportes2222 serviceReportes2222;
 
+    //////inicio prueba excel
     @Autowired
     ServiceVentaAnualXxProducto serviceVentaAnualXxProducto;
 
@@ -45,6 +46,9 @@ public class ReportesGestorController {
 
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
     }
+    //fin rpueba excel
+
+
 
     @PostMapping(value = "/save")
     public ResponseEntity<InputStreamResource> printExcel(@RequestParam("ordenar") int orderBy, @RequestParam("tipo") int type,
