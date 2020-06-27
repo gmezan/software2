@@ -21,6 +21,7 @@ public class ReportesGestorController {
     ServiceReportes serviceReportes;
 
 
+    //////inicio prueba excel
     @Autowired
     ServiceVentaAnualXxProducto serviceVentaAnualXxProducto;
 
@@ -40,6 +41,9 @@ public class ReportesGestorController {
 
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
     }
+    //fin rpueba excel
+
+
 
 
 }
