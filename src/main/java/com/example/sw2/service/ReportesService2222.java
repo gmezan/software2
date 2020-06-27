@@ -24,7 +24,7 @@ public class ReportesService2222 implements ServiceReportes2222 {
     VentasRepositoryXxSedesNClientes ventasRepositoryXxSedesNClientes;
 
     @Override
-    public ByteArrayInputStream SedeOrClienteXxAnual(int mes, int trimestre, int anho, int orderBy, int type) throws Exception {
+    public ByteArrayInputStream SedeOrClienteXxAnual_TrimesterOrMonth(int mes, int trimestre, int anho, int orderBy, int type) throws Exception {
 
         String[] columns = {"RUC_DNI","Nombre Cliente","Tipo Documento","Número Documento","Lugar Venta","Producto Inventario","Fecha","Vendedor","Cantidad","Precio de Venta","Fecha Modificacion","Fecha Creación"};
 
@@ -139,5 +139,5 @@ public class ReportesService2222 implements ServiceReportes2222 {
 
         return new ByteArrayInputStream(stream.toByteArray());
     }
-    
+
 }
