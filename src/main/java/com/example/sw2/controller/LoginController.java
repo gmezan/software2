@@ -53,7 +53,7 @@ public class LoginController {
     }
 
     @GetMapping("/forgotPassword")
-    public String forgotPassword(){ return "forgot-passwordEnConstruccion";}
+    public String forgotPassword(){ return "forgot-password";}
 
     @GetMapping("/processForgotPassword")
     public String processForgotPassword(Model model, @RequestParam(value = "username", required = false) String email){
