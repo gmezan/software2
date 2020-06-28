@@ -84,7 +84,6 @@ public class ReportesService2222 implements ServiceReportes2222 {
 
     private void llenarReporteTotal(Workbook workbook, Reportes reportes){
 
-<<<<<<< HEAD
         String[] columns = {"Documento","Numero","Cliente","RUC_DNI","Vendedor","DNI vendedor"};
 
         Sheet sheet= workbook.createSheet("reporte total " + LocalDate.now().toString());
@@ -128,8 +127,6 @@ public class ReportesService2222 implements ServiceReportes2222 {
 
 
 
-=======
->>>>>>> 243655e310d2487ee7a4720c808d4a7331cd0950
     }
 
     private void llenarReporteSede(Workbook workbook, Reportes reportes){
