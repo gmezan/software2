@@ -296,4 +296,19 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     // FIN TOTAL FER
 
+    /*----------------------------------- QUERIES PARA SEDES -----------------------------------*/
+
+    //TOTAL ALEX
+
+    @Query(value="SELECT ven.ruc_dni, ven.nombrecliente, ven.tipodocumento, ven.numerodocumento, ven.lugarventa, ven.productoinventario, ven.fecha, ven.cantidad, CONCAT(usu.nombre, \" \",usu.apellido) AS \"vendedor\", usu.dni AS \"dnivendedor\" FROM mosqoy.Ventas ven, mosqoy.Usuarios usu WHERE YEAR(ven.fecha) = ?1 AND ven.vendedor = usu.dni",nativeQuery=true)
+    List<ReportesTotalDto> obtenerReporteAnualTotal(int anho, int idusuario);
+
+    @Query(value="SELECT ven.ruc_dni, ven.nombrecliente, ven.tipodocumento, ven.numerodocumento, ven.lugarventa, ven.productoinventario, ven.fecha, ven.cantidad, CONCAT(usu.nombre, \" \",usu.apellido) AS \"vendedor\", usu.dni AS \"dnivendedor\" FROM mosqoy.Ventas ven, mosqoy.Usuarios usu WHERE QUARTER(ven.fecha) = ?1 AND YEAR(ven.fecha) = ?2 AND ven.vendedor = usu.dni",nativeQuery=true)
+    List<ReportesTotalDto> obtenerReporteTrimestralTotal(int trimestre, int anho, int idusuario);
+
+    @Query(value="SELECT ven.ruc_dni, ven.nombrecliente, ven.tipodocumento, ven.numerodocumento, ven.lugarventa, ven.productoinventario, ven.fecha, ven.cantidad, CONCAT(usu.nombre, \" \",usu.apellido) AS \"vendedor\", usu.dni AS \"dnivendedor\" FROM mosqoy.Ventas ven, mosqoy.Usuarios usu WHERE MONTH(ven.fecha) = ?1 AND YEAR(ven.fecha) = ?2 AND ven.vendedor = usu.dni",nativeQuery=true)
+    List<ReportesTotalDto> obtenerReporteMensualTotal(int mes, int anho, int idusuario);
+
+    // FIN TOTAL ALEX
+
 }
