@@ -3,6 +3,7 @@ import com.example.sw2.constantes.VentasId;
 import com.example.sw2.dto.DatosGestorVentasDto;
 import com.example.sw2.dto.DatosProductoVentaDto;
 import com.example.sw2.dtoReportes.ReportesClienteDto;
+import com.example.sw2.dtoReportes.ReportesComunidadDto;
 import com.example.sw2.dtoReportes.ReportesSedesDto;
 import com.example.sw2.dtoReportes.ReportesTotalDto;
 import com.example.sw2.entity.Ventas;
@@ -259,7 +260,16 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     // FIN SEDES ALEX
 
+    //COMUNIDAD
 
+    @Query(value="",nativeQuery=true)
+    List<ReportesComunidadDto> obtenerReporteAnualComunidad(int anho);
+
+    @Query(value="SELECT CONCAT(u.nombre,' ',u.apellido) as nombre, u.dni, u.correo, u.telefono, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v inner join Usuarios u ON (v.vendedor = u.dni) WHERE QUARTER(v.fecha) = ?1 AND YEAR(v.fecha) = ?2 AND u.rol = 2 group by v.vendedor",nativeQuery=true)
+    List<ReportesComunidadDto> obtenerReporteTrimestralComunidad(int trimestre, int anho);
+
+    @Query(value="SELECT CONCAT(u.nombre,' ',u.apellido) as nombre, u.dni, u.correo, u.telefono, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v inner join Usuarios u ON (v.vendedor = u.dni) WHERE MONTH(v.fecha) = ?1 AND YEAR(v.fecha) = ?2 AND u.rol = 2 group by v.vendedor ",nativeQuery=true)
+    List<ReportesComunidadDto> obtenerReporteMensualComunidad(int mes, int anho);
 
 
 
