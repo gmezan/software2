@@ -9,9 +9,7 @@ public interface ReportesTotalDto {
     String getLugarventa();
     String getProductoinventario();
     String getFecha();
-    String getVendedor();
     Integer getCantidad();
-    Double getPrecio_venta();
-    String getFecha_modificacion();
-    String getFecha_creacion();
+    String getVendedor();
+    Integer getDnivendedor();
 }

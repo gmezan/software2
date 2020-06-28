@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.ByteArrayInputStream;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/gestor/reportes")
@@ -34,11 +35,7 @@ public class ReportesGestorController {
     }
 
 
-    //fin rpueba excel
-
-
-
-    @PostMapping(value = "/save")
+    @PostMapping(value = "/generate")
     public ResponseEntity<InputStreamResource> printExcel(@RequestParam("ordenar") Integer orderBy, @RequestParam("tipo") Integer type,
                                                           @RequestParam("years") Integer anho, @RequestParam("tipoSelect") Integer Select)
                                                             throws Exception{
@@ -46,10 +43,9 @@ public class ReportesGestorController {
         ByteArrayInputStream stream = serviceReportes2222.generarReporte(new Reportes(orderBy,type,anho,Select));
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition","attachment; filename=ventasProducto.xls");
+        headers.add("Content-Disposition","attachment; filename=reporte "+LocalDate.now().toString() +".xls");
 
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
     }
-
 
 }

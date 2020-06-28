@@ -63,7 +63,12 @@ public class InventarioController {
     public String form(@ModelAttribute("inventario") Inventario inventario, Model m) {
         listasCamposInv(m);
         List<Inventario> listaordenada = inventarioRepository.findAllByOrderByNumpedidoDesc();
-        inventario.setNumpedido(listaordenada.get(0).getNumpedido()+1);
+        int num;
+        if (listaordenada.isEmpty())
+            num = 0;
+        else
+            num = listaordenada.get(0).getNumpedido()+1;
+        inventario.setNumpedido(num);
         return "gestor/inventarioGestorForm";
     }
 
@@ -162,6 +167,12 @@ public class InventarioController {
             m.addAttribute("linea", linea);
             m.addAttribute("listProd", productosRepository.findProductosByIdCodigolinea(linea));
         }
+
+        //Gustavo lo puso :
+        System.out.println(linea);
+        inventario.getProductos().setCodigolinea(linea);
+        inventario.setProductos(productosRepository.findById(inventario.getProductos().getId()).orElse(null));
+
 /*
         if (multipartFile.isEmpty()) {
             bindingResult.rejectValue("foto", "error.user", "Debe subir una foto.");
@@ -221,7 +232,7 @@ public class InventarioController {
             }
 
             inventario.setCantidadgestor(inventario.getCantidadtotal());
-
+            System.out.println(inventario.getCodigoinventario());
 
             try {
                 inventarioRepository.save(inventario);

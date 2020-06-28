@@ -2,6 +2,7 @@ package com.example.sw2.service;
 
 import com.example.sw2.dtoReportes.ReportesArticuloDto;
 import com.example.sw2.dtoReportes.ReportesClienteDto;
+import com.example.sw2.dtoReportes.ReportesComunidadDto;
 import com.example.sw2.dtoReportes.ReportesTotalDto;
 import com.example.sw2.dtoReportes.ReportesSedesDto;
 import com.example.sw2.entity.Reportes;
@@ -80,8 +81,48 @@ public class ReportesService2222 implements ServiceReportes2222 {
 
     private void llenarReporteTotal(Workbook workbook, Reportes reportes){
 
+        String[] columns = {"Documento","Numero","Cliente","RUC_DNI","Vendedor","DNI vendedor"};
+
         Sheet sheet= workbook.createSheet("reporte total " + LocalDate.now().toString());
         setcolumnwidths(sheet,reportes.getOrderBy());
+
+        List<ReportesTotalDto> reportesTotales;
+        switch (reportes.getType()){
+            case 1:
+                reportesTotales = ventasRepository.obtenerReporteAnualTotal(reportes.getYear());
+                break;
+            case 2:
+                reportesTotales = ventasRepository.obtenerReporteTrimestralTotal(reportes.getSelected(),reportes.getYear());
+                break;
+            case 3:
+                reportesTotales = ventasRepository.obtenerReporteMensualTotal(reportes.getSelected(),reportes.getYear());
+                break;
+            default:
+                reportesTotales = new ArrayList<>();
+        }
+
+        if(reportesTotales.isEmpty()){
+            sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
+
+        }else{
+            Row row = sheet.createRow(1);
+            for(int i=1; i<columns.length + 1; i++){
+                row.createCell(i).setCellValue(columns[i]);
+            }
+            int fila = 1;
+            for(ReportesTotalDto reportesTotalDto : reportesTotales){
+                row = sheet.createRow(++fila);
+                row.createCell(1).setCellValue(reportesTotalDto.getTipodocumento());
+                row.createCell(2).setCellValue(reportesTotalDto.getNumerodocumento());
+                row.createCell(3).setCellValue(reportesTotalDto.getNombrecliente());
+                row.createCell(4).setCellValue(reportesTotalDto.getRuc_dni());
+                row.createCell(5).setCellValue(reportesTotalDto.getVendedor());
+                row.createCell(6).setCellValue(reportesTotalDto.getDnivendedor());
+            }
+        }
+
+
+
 
     }
 
@@ -161,9 +202,41 @@ public class ReportesService2222 implements ServiceReportes2222 {
         }
     }
     private void llenarReporteComunidad(Workbook workbook, Reportes reportes){
-
+        String[] columns = {"Nombre","Código","Cantidad Artesanos","Suma Ventas","Cantidad Productos Vendidos"};
         Sheet sheet= workbook.createSheet("reporte comunidad " + LocalDate.now().toString());
         setcolumnwidths(sheet,reportes.getOrderBy());
+        List<ReportesComunidadDto> reportesComunidad;
+        switch (reportes.getType()){
+            case 1:
+                reportesComunidad = ventasRepository.obtenerReporteAnualComunidad(reportes.getYear());
+                break;
+            case 2:
+                reportesComunidad = ventasRepository.obtenerReporteTrimestralComunidad(reportes.getSelected(),reportes.getYear());
+                break;
+            case 3:
+                reportesComunidad = ventasRepository.obtenerReporteMensualComunidad(reportes.getSelected(),reportes.getYear());
+                break;
+            default:
+                reportesComunidad = new ArrayList<>();
+        }
+        if(reportesComunidad.isEmpty()){
+            sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
+
+        }else{
+            Row row = sheet.createRow(1);
+            for(int i=1; i<columns.length + 1; i++){
+                row.createCell(i).setCellValue(columns[i]);
+            }
+            int fila = 1;
+            for(ReportesComunidadDto reportesComunidadDto : reportesComunidad){
+                row = sheet.createRow(++fila);
+                row.createCell(1).setCellValue(reportesComunidadDto.getNombre());
+                row.createCell(2).setCellValue(reportesComunidadDto.getCodigo());
+                row.createCell(3).setCellValue(reportesComunidadDto.getCantidadartesanos());
+                row.createCell(4).setCellValue(reportesComunidadDto.getSumaventas());
+                row.createCell(5).setCellValue(reportesComunidadDto.getCantidadvendidos());
+            }
+        }
 
 
     }
@@ -228,6 +301,11 @@ public class ReportesService2222 implements ServiceReportes2222 {
                 sheet.setColumnWidth(5, 5500);
                 break;
             case 4:
+                sheet.setColumnWidth(1, 5500);
+                sheet.setColumnWidth(2, 5500);
+                sheet.setColumnWidth(3, 5500);
+                sheet.setColumnWidth(4, 5500);
+                sheet.setColumnWidth(5, 5500);
                 break;
             case 5:
                 sheet.setColumnWidth(1, 5500);

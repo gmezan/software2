@@ -138,7 +138,7 @@ public class VentasGestorController {
         return new ResponseEntity<>(ventasRepository.findById(new VentasId(id2, id1)), HttpStatus.OK);
     }
 
-    //EXCEL
+    /*
 
 /*    @GetMapping(value = {"/excelAnual2020"})
     public ResponseEntity<InputStreamResource> exportAllData() throws Exception{
