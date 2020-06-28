@@ -27,8 +27,6 @@ import java.util.regex.Pattern;
 @RequestMapping("/gestor/venta")
 public class VentasGestorController {
 
-    @Autowired
-    ServiceAnual serviceAnual;
 
     @Autowired
     VentasRepository ventasRepository;
@@ -142,7 +140,7 @@ public class VentasGestorController {
 
     //EXCEL
 
-    @GetMapping(value = {"/excelAnual2020"})
+/*    @GetMapping(value = {"/excelAnual2020"})
     public ResponseEntity<InputStreamResource> exportAllData() throws Exception{
 
         ByteArrayInputStream stream = serviceAnual.exportAllData();
@@ -151,7 +149,7 @@ public class VentasGestorController {
         headers.add("Content-Disposition","attachment; filename=ventasAnual.xls");
 
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
-    }
+    }*/
 
 
 
