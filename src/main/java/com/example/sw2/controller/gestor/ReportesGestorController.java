@@ -34,11 +34,15 @@ public class ReportesGestorController {
 
     @PostMapping(value = "/generate")
     public ResponseEntity<InputStreamResource> printExcel(@RequestParam("ordenar") Integer orderBy, @RequestParam("tipo") Integer type,
-                                                          @RequestParam("years") Integer anho, @RequestParam("tipoSelect") Integer Select)
+                                                          @RequestParam("years") Integer anho, @RequestParam("tipoSelect") Integer select)
                                                             throws Exception{
 
-        ByteArrayInputStream stream = serviceReportes2222.generarReporte(new Reportes(orderBy,type,anho,Select));
+        ByteArrayInputStream stream = serviceReportes2222.generarReporte(new Reportes(orderBy,type,anho,select));
 
+        System.out.println("ordenar: "+ orderBy);
+        System.out.println("tipo: "+type);
+        System.out.println("years: "+ anho);
+        System.out.println("tipoSelect: "+ select);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition","attachment; filename=reporte "+LocalDate.now().toString() +".xls");
 
