@@ -258,7 +258,7 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     // FIN CLIENTES ALEX
 
-    //COMUNIDAD
+    //COMUNIDAD FER
 
     @Query(value="SELECT comu.codigo, comu.nombre, artesanos.cantidadartesanos, cantidades.cantidadvendidos, cantidades.sumaventas FROM mosqoy.Comunidades comu, (SELECT com.codigo, SUM(ven.cantidad) AS \"cantidadvendidos\", SUM(ven.precio_venta) AS \"sumaventas\" FROM mosqoy.Ventas ven, mosqoy.Comunidades com, mosqoy.Inventario inv WHERE YEAR(ven.fecha) = ?1 AND ven.productoinventario = inv.codigo_inventario AND inv.comunidad = com.codigo GROUP BY com.codigo) cantidades, (SELECT com.codigo, SUM(art.codigo) AS \"cantidadartesanos\" FROM mosqoy.Comunidades com, mosqoy.Artesanos art WHERE com.codigo = art.comunidad GROUP BY com.codigo) artesanos WHERE comu.codigo = cantidades.codigo AND comu.codigo = artesanos.codigo",nativeQuery=true)
     List<ReportesComunidadDto> obtenerReporteAnualComunidad(int anho);
@@ -268,6 +268,8 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     @Query(value="SELECT comu.codigo, comu.nombre, artesanos.cantidadartesanos, cantidades.cantidadvendidos, cantidades.sumaventas FROM mosqoy.Comunidades comu, (SELECT com.codigo, SUM(ven.cantidad) AS \"cantidadvendidos\", SUM(ven.precio_venta) AS \"sumaventas\" FROM mosqoy.Ventas ven, mosqoy.Comunidades com, mosqoy.Inventario inv WHERE MONTH(ven.fecha) = ?1 AND YEAR(ven.fecha) = ?2 AND ven.productoinventario = inv.codigo_inventario AND inv.comunidad = com.codigo GROUP BY com.codigo) cantidades, (SELECT com.codigo, SUM(art.codigo) AS \"cantidadartesanos\" FROM mosqoy.Comunidades com, mosqoy.Artesanos art WHERE com.codigo = art.comunidad GROUP BY com.codigo) artesanos WHERE comu.codigo = cantidades.codigo AND comu.codigo = artesanos.codigo",nativeQuery=true)
     List<ReportesComunidadDto> obtenerReporteMensualComunidad(int mes, int anho);
+
+    //FIN COMUNIDAD FER
 
     //ARTICULOS FER
 
