@@ -42,7 +42,7 @@ public class ReportesSedeController {
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
 
-        ByteArrayInputStream stream = IReporteSedeService.generarReporte(new Reportes(orderBy,type,anho,Select), sede.getIdusuarios());
+        ByteArrayInputStream stream = IReporteSedeService.generarReporte(new Reportes(orderBy,anho,type,Select), sede.getIdusuarios());
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition","attachment; filename=ventasProducto.xls");
