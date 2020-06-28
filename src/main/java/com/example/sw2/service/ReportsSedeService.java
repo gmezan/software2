@@ -1,5 +1,6 @@
 package com.example.sw2.service;
 
+import com.example.sw2.dtoReportes.ReportesClienteDto;
 import com.example.sw2.dtoReportes.ReportesTotalDto;
 import com.example.sw2.dtoReportes.ReportesComunidadDto;
 import com.example.sw2.entity.Reportes;
@@ -89,12 +90,12 @@ public class ReportsSedeService implements ServiceReportsSede{
             case 3:
                 //nos referimos a la comunidad
 
-                llenarReporteComunidad( workbook, reportes);
+                llenarReporteComunidad( workbook, reportes,idusuario);
                 break;
             case 4:
                 //nos referimos al cliente
 
-                llenarReporteCliente(workbook, reportes);
+                llenarReporteCliente(workbook, reportes,idusuario);
 
                 break;
 
@@ -110,20 +111,20 @@ public class ReportsSedeService implements ServiceReportsSede{
 
     private void llenarReporteProducto(Workbook workbook, Reportes reportes){}
 
-    private void llenarReporteComunidad(Workbook workbook, Reportes reportes){
+    private void llenarReporteComunidad(Workbook workbook, Reportes reportes, Integer idusuario){
         String[] columns = {"Nombre","Código","Cantidad Artesanos","Suma Ventas","Cantidad Productos Vendidos"};
         Sheet sheet= workbook.createSheet("reporte comunidad " + LocalDate.now().toString());
         setcolumnwidths(sheet,reportes.getOrderBy());
         List<ReportesComunidadDto> reportesComunidad;
         switch (reportes.getType()){
             case 1:
-                reportesComunidad = ventasRepository.obtenerReporteAnualComunidad(reportes.getYear());
+                reportesComunidad = ventasRepository.obtenerReporteSedeAnualComunidad(reportes.getYear(),idusuario);
                 break;
             case 2:
-                reportesComunidad = ventasRepository.obtenerReporteTrimestralComunidad(reportes.getSelected(),reportes.getYear());
+                reportesComunidad = ventasRepository.obtenerReporteSedeTrimestralComunidad(reportes.getSelected(),reportes.getYear(),idusuario);
                 break;
             case 3:
-                reportesComunidad = ventasRepository.obtenerReporteMensualComunidad(reportes.getSelected(),reportes.getYear());
+                reportesComunidad = ventasRepository.obtenerReporteSedeMensualComunidad(reportes.getSelected(),reportes.getYear(),idusuario);
                 break;
             default:
                 reportesComunidad = new ArrayList<>();
@@ -148,7 +149,44 @@ public class ReportsSedeService implements ServiceReportsSede{
         }
     }
 
-    private void llenarReporteCliente(Workbook workbook, Reportes reportes){}
+    private void llenarReporteCliente(Workbook workbook, Reportes reportes,Integer idusuario){
+        String[] columns = {"Nombre","DNI o RUC","Producto más comprado","Suma Ventas","Cantidad Productos Vendidos"};
+        Sheet sheet= workbook.createSheet("reporte de clientes " + LocalDate.now().toString());
+        setcolumnwidths(sheet,reportes.getOrderBy());
+        List<ReportesClienteDto> reportesClientes;
+        switch (reportes.getType()){
+            case 1:
+                reportesClientes = ventasRepository.obtenerReporteSedeAnualCliente(reportes.getYear(),idusuario);
+                break;
+            case 2:
+                reportesClientes = ventasRepository.obtenerReporteSedeTrimestralCliente(reportes.getSelected(),reportes.getYear(),idusuario);
+                break;
+            case 3:
+                reportesClientes = ventasRepository.obtenerReporteSedeMensualCliente(reportes.getSelected(),reportes.getYear(),idusuario);
+                break;
+            default:
+                reportesClientes = new ArrayList<>();
+        }
+
+        if(reportesClientes.isEmpty()){
+            sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
+
+        }else{
+            Row row = sheet.createRow(1);
+            for(int i=1; i<columns.length + 1; i++){
+                row.createCell(i).setCellValue(columns[i]);
+            }
+            int fila = 1;
+            for(ReportesClienteDto reportesClienteDto : reportesClientes){
+                row = sheet.createRow(++fila);
+                row.createCell(1).setCellValue(reportesClienteDto.getNombre());
+                row.createCell(2).setCellValue(reportesClienteDto.getRuc_dni());
+                row.createCell(3).setCellValue(reportesClienteDto.getProducto());
+                row.createCell(4).setCellValue(reportesClienteDto.getSumaventas());
+                row.createCell(5).setCellValue(reportesClienteDto.getCantidadvendidos());
+            }
+        }
+    }
 
 
     private void setcolumnwidths(Sheet sheet, Integer orderBy){
@@ -165,6 +203,11 @@ public class ReportsSedeService implements ServiceReportsSede{
                 sheet.setColumnWidth(5, 5500);
                 break;
             case 4:
+                sheet.setColumnWidth(1, 5500);
+                sheet.setColumnWidth(2, 5500);
+                sheet.setColumnWidth(3, 5500);
+                sheet.setColumnWidth(4, 5500);
+                sheet.setColumnWidth(5, 5500);
                 break;
 
         }

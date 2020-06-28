@@ -296,4 +296,29 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     // FIN TOTAL FER
 
+
+
+
+    //COMUNIDAD
+
+    @Query(value="",nativeQuery=true)
+    List<ReportesComunidadDto> obtenerReporteSedeAnualComunidad(int anho, int idusuario);
+
+    @Query(value="",nativeQuery=true)
+    List<ReportesComunidadDto> obtenerReporteSedeTrimestralComunidad(int trimestre, int anho, int idusuario);
+
+    @Query(value="",nativeQuery=true)
+    List<ReportesComunidadDto> obtenerReporteSedeMensualComunidad(int mes, int anho, int idusuario);
+
+
+    //CLIENTES
+
+    @Query(value="",nativeQuery=true)
+    List<ReportesClienteDto> obtenerReporteSedeAnualCliente(int anho, int idusuario);
+
+    @Query(value="",nativeQuery=true)
+    List<ReportesClienteDto> obtenerReporteSedeTrimestralCliente(int trimestre, int anho, int idusuario);
+
+    @Query(value="",nativeQuery=true)
+    List<ReportesClienteDto> obtenerReporteSedeMensualCliente(int mes, int anho, int idusuario);
 }
