@@ -256,13 +256,9 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
     @Query(value="SELECT v.nombrecliente as nombre , v.ruc_dni, v.productoinventario as producto, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v WHERE MONTH(v.fecha) = ?1 AND YEAR(v.fecha) = ?2 group by v.ruc_dni",nativeQuery=true)
     List<ReportesClienteDto> obtenerReporteMensualCliente(int mes, int anho);
 
-<<<<<<< HEAD
     // FIN CLIENTES ALEX
-=======
-    // FIN SEDES ALEX
 
     //COMUNIDAD
-
 
     @Query(value="",nativeQuery=true)
     List<ReportesComunidadDto> obtenerReporteAnualComunidad(int anho);
@@ -272,7 +268,6 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     @Query(value="",nativeQuery=true)
     List<ReportesComunidadDto> obtenerReporteMensualComunidad(int mes, int anho);
->>>>>>> 243655e310d2487ee7a4720c808d4a7331cd0950
 
     //ARTICULOS FER
 
