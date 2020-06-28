@@ -4,7 +4,7 @@ public interface ReportesClienteDto {
 
     String getNombre();
     Integer getRuc_dni();
-    Integer getProducto();
+    String getProducto();
     Double getSumaventas();
     Integer getCantidadvendidos();
 
