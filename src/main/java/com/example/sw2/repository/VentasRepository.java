@@ -238,13 +238,13 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
 
     @Query(value="SELECT ven.* FROM mosqoy.Ventas ven WHERE YEAR(ven.fecha) = ?1 AND ven.vendedor = ?2",nativeQuery=true)
-    List<ReportesSedesDto> obtenerReporteAnualSede(int anho, int sede);
+    List<ReportesSedesDto> obtenerReporteAnualSede(int anho);
 
     @Query(value="SELECT ven.* FROM mosqoy.Ventas ven WHERE QUARTER(ven.fecha) = ?1 AND YEAR(ven.fecha) = ?2 AND ven.vendedor = ?3 ",nativeQuery=true)
-    List<ReportesSedesDto> obtenerReporteTrimestralSede(int trimestre, int anho, int sede);
+    List<ReportesSedesDto> obtenerReporteTrimestralSede(int trimestre, int anho);
 
     @Query(value="SELECT ven.* FROM mosqoy.Ventas ven WHERE MONTH(ven.fecha) = ?1 AND YEAR(ven.fecha) = ?2 AND ven.vendedor = ?3 ",nativeQuery=true)
-    List<ReportesSedesDto> obtenerReporteMensualSede(int mes, int anho, int sede);
+    List<ReportesSedesDto> obtenerReporteMensualSede(int mes, int anho);
 
     //CLIENTES
 
