@@ -1,7 +1,6 @@
 package com.example.sw2.controller.gestor;
 
 import com.example.sw2.entity.Reportes;
-import com.example.sw2.service.ServiceReportes;
 import com.example.sw2.service.ServiceReportes2222;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -21,8 +20,6 @@ import java.time.LocalDate;
 public class ReportesGestorController {
 
 
-    @Autowired
-    ServiceReportes serviceReportes;
 
     @Autowired
     ServiceReportes2222 serviceReportes2222;

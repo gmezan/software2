@@ -1,6 +1,7 @@
 package com.example.sw2.controller.sede;
 
 import com.example.sw2.entity.Reportes;
+import com.example.sw2.service.ServiceReportsSede;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +21,7 @@ public class ReportesSedeController {
 
 
     @Autowired
-    DataResourceHandler dataResourceHandler;
+    ServiceReportsSede serviceReportsSede;
 
     @Autowired
 
@@ -33,12 +34,12 @@ public class ReportesSedeController {
 
 
 
-    @PostMapping(value = "/save")
+    @PostMapping(value = "/generate")
     public ResponseEntity<InputStreamResource> printExcel(@RequestParam("ordenar") Integer orderBy, @RequestParam("tipo") Integer type,
                                                           @RequestParam("years") Integer anho, @RequestParam("tipoSelect") Integer Select)
-            throws Exception{
+                                                         throws Exception{
 
-        ByteArrayInputStream stream = serviceReportes2222.generarReporte(new Reportes(orderBy,type,anho,Select));
+        ByteArrayInputStream stream = serviceReportsSede.generarReporte(new Reportes(orderBy,type,anho,Select));
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition","attachment; filename=ventasProducto.xls");
