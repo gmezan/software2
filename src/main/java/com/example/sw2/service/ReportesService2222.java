@@ -141,7 +141,7 @@ public class ReportesService2222 implements ServiceReportes2222 {
     }
     private void llenarReporteCliente(Workbook workbook, Reportes reportes){
         String[] columns = {"Nombre","DNI o RUC","Producto más comprado","Suma Ventas","Cantidad Productos Vendidos"};
-        Sheet sheet= workbook.createSheet("reporte cliente " + LocalDate.now().toString());
+        Sheet sheet= workbook.createSheet("reporte de clientes " + LocalDate.now().toString());
         setcolumnwidths(sheet,reportes.getOrderBy());
         List<ReportesClienteDto> reportesClientes;
         switch (reportes.getType()){
