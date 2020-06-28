@@ -8,7 +8,6 @@ import com.example.sw2.dtoReportes.ReportesSedesDto;
 import com.example.sw2.entity.Reportes;
 import com.example.sw2.repository.VentasRepository;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ReportesService2222 implements ServiceReportes2222 {
+public class ReporteGestorService implements IReporteGestorService {
 
     @Autowired
     VentasRepository ventasRepository;

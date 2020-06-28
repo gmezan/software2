@@ -2,7 +2,7 @@ package com.example.sw2.controller.sede;
 
 import com.example.sw2.entity.Reportes;
 import com.example.sw2.entity.Usuarios;
-import com.example.sw2.service.ServiceReportsSede;
+import com.example.sw2.service.IReporteSedeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
@@ -23,7 +22,7 @@ public class ReportesSedeController {
 
 
     @Autowired
-    ServiceReportsSede serviceReportsSede;
+    IReporteSedeService IReporteSedeService;
 
     @Autowired
 
@@ -43,7 +42,7 @@ public class ReportesSedeController {
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
 
-        ByteArrayInputStream stream = serviceReportsSede.generarReporte(new Reportes(orderBy,type,anho,Select), sede.getIdusuarios());
+        ByteArrayInputStream stream = IReporteSedeService.generarReporte(new Reportes(orderBy,type,anho,Select), sede.getIdusuarios());
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition","attachment; filename=ventasProducto.xls");

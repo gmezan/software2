@@ -1,7 +1,7 @@
 package com.example.sw2.controller.gestor;
 
 import com.example.sw2.entity.Reportes;
-import com.example.sw2.service.ServiceReportes2222;
+import com.example.sw2.service.IReporteGestorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +22,7 @@ public class ReportesGestorController {
 
 
     @Autowired
-    ServiceReportes2222 serviceReportes2222;
+    IReporteGestorService IReporteGestorService;
 
 
     @GetMapping(value = "")
@@ -37,7 +37,7 @@ public class ReportesGestorController {
                                                           @RequestParam("years") Integer anho, @RequestParam("tipoSelect") Integer select)
                                                             throws Exception{
 
-        ByteArrayInputStream stream = serviceReportes2222.generarReporte(new Reportes(orderBy, anho, type,select));
+        ByteArrayInputStream stream = IReporteGestorService.generarReporte(new Reportes(orderBy, anho, type,select));
 
         System.out.println("ordenar: "+ orderBy);
         System.out.println("tipo: "+type);
