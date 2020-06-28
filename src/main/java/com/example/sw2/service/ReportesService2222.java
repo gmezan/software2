@@ -1,10 +1,7 @@
 package com.example.sw2.service;
 
-<<<<<<< HEAD
 import com.example.sw2.dtoReportes.ReportesArticuloDto;
-=======
 import com.example.sw2.dtoReportes.ReportesClienteDto;
->>>>>>> 501fec20deab0cfb832164ff5014f5a39d82573f
 import com.example.sw2.dtoReportes.ReportesTotalDto;
 import com.example.sw2.dtoReportes.ReportesSedesDto;
 import com.example.sw2.entity.Reportes;
