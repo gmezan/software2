@@ -60,6 +60,15 @@ public class Productos extends Auditable implements Serializable {
         this.id = id;
     }
 
+    public Productos(){
+
+    }
+
+    public Productos(String cod){
+        this.id = new ProductoId();
+        this.id.setCodigonom(cod);
+    }
+
 
     public void setCodigolinea(String codigolinea) {
         this.id.setCodigolinea(codigolinea.trim());
