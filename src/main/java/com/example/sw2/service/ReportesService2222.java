@@ -6,7 +6,6 @@ import com.example.sw2.dtoReportes.ReportesTotalDto;
 import com.example.sw2.dtoReportes.ReportesSedesDto;
 import com.example.sw2.entity.Reportes;
 import com.example.sw2.repository.VentasRepository;
-import com.example.sw2.repository.VentasRepositoryXxSedesNClientes;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -27,8 +26,6 @@ public class ReportesService2222 implements ServiceReportes2222 {
     @Autowired
     VentasRepository ventasRepository;
 
-    @Autowired
-    VentasRepositoryXxSedesNClientes ventasRepositoryXxSedesNClientes;
 
     @Override
     public ByteArrayInputStream generarReporte(Reportes reportes) throws Exception{
