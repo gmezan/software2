@@ -1,6 +1,7 @@
 package com.example.sw2.controller.sede;
 
 import com.example.sw2.entity.Reportes;
+import com.example.sw2.entity.Usuarios;
 import com.example.sw2.service.ServiceReportsSede;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
 
 @Controller
@@ -36,10 +38,12 @@ public class ReportesSedeController {
 
     @PostMapping(value = "/generate")
     public ResponseEntity<InputStreamResource> printExcel(@RequestParam("ordenar") Integer orderBy, @RequestParam("tipo") Integer type,
-                                                          @RequestParam("years") Integer anho, @RequestParam("tipoSelect") Integer Select)
-                                                         throws Exception{
+                                                          @RequestParam("years") Integer anho, @RequestParam("tipoSelect") Integer Select,
+                                                          HttpSession session) throws Exception{
 
-        ByteArrayInputStream stream = serviceReportsSede.generarReporte(new Reportes(orderBy,type,anho,Select));
+        Usuarios sede = (Usuarios) session.getAttribute("usuario");
+
+        ByteArrayInputStream stream = serviceReportsSede.generarReporte(new Reportes(orderBy,type,anho,Select), sede.getIdusuarios());
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition","attachment; filename=ventasProducto.xls");

@@ -1,6 +1,7 @@
 package com.example.sw2.service;
 
 import com.example.sw2.entity.Reportes;
+import com.example.sw2.entity.Usuarios;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.io.ByteArrayOutputStream;
 public class ReportsSedeService implements ServiceReportsSede{
 
     @Override
-    public ByteArrayInputStream generarReporte(Reportes reportes) throws Exception{
+    public ByteArrayInputStream generarReporte(Reportes reportes, int idusuario) throws Exception{
 
         Workbook workbook = new HSSFWorkbook();
 
@@ -24,7 +25,6 @@ public class ReportsSedeService implements ServiceReportsSede{
             case 1:
                 //nos referimos al total
                 llenarReporteTotal(workbook, reportes);
-
 
                 break;
             case 2:
