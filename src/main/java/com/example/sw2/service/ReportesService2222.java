@@ -261,6 +261,11 @@ public class ReportesService2222 implements ServiceReportes2222 {
                 sheet.setColumnWidth(5, 5500);
                 break;
             case 4:
+                sheet.setColumnWidth(1, 5500);
+                sheet.setColumnWidth(2, 5500);
+                sheet.setColumnWidth(3, 5500);
+                sheet.setColumnWidth(4, 5500);
+                sheet.setColumnWidth(5, 5500);
                 break;
             case 5:
                 sheet.setColumnWidth(1, 5500);
