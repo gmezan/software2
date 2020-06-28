@@ -23,8 +23,6 @@ public class ReportesService2222 implements ServiceReportes2222 {
 
     @Autowired
     VentasRepositoryXxSedesNClientes ventasRepositoryXxSedesNClientes;
-    @Autowired
-    UsuariosRepository usuariosRepository;
 
     @Override
     public ByteArrayInputStream SedeOrClienteXxAnual_TrimesterOrMonth(int mes, int trimestre, int anho, int orderBy, int type) throws Exception {
@@ -63,6 +61,8 @@ public class ReportesService2222 implements ServiceReportes2222 {
             sedesDtos = ventasRepositoryXxSedesNClientes.obtenerClientes();
             Intro = Intro2;
         }
+
+
 
         System.out.println("Esta vacio o no: " + sedesDtos.isEmpty());
         System.out.println(sedesDtos.toArray());
