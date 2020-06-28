@@ -1,5 +1,6 @@
 package com.example.sw2.service;
 
+import com.example.sw2.dtoReportes.ReportesArticuloDto;
 import com.example.sw2.dtoReportes.ReportesClienteDto;
 import com.example.sw2.dtoReportes.ReportesComunidadDto;
 import com.example.sw2.dtoReportes.ReportesTotalDto;
@@ -125,10 +126,40 @@ public class ReportesService2222 implements ServiceReportes2222 {
         }
     }
     private void llenarReporteProducto(Workbook workbook, Reportes reportes){
-
+        String[] columns = {"Nombre","Linea","Codigo","Suma Ventas","Cantidad Vendidos"};
         Sheet sheet= workbook.createSheet("reporte producto " + LocalDate.now().toString());
         setcolumnwidths(sheet,reportes.getOrderBy());
-
+        List<ReportesArticuloDto> reportesArticulos;
+        switch (reportes.getType()){
+            case 1:
+                reportesArticulos = ventasRepository.obtenerReporteAnualArticuloProducto(reportes.getYear());
+                break;
+            case 2:
+                reportesArticulos = ventasRepository.obtenerReporteTrimestralArticuloProducto(reportes.getSelected(),reportes.getYear());
+                break;
+            case 3:
+                reportesArticulos = ventasRepository.obtenerReporteMensualArticuloProducto(reportes.getSelected(),reportes.getYear());
+                break;
+            default:
+                reportesArticulos = new ArrayList<>();
+        }
+        if(reportesArticulos.isEmpty()){
+            sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
+        }else{
+            Row row = sheet.createRow(1);
+            for(int i=1; i<columns.length + 1; i++){
+                row.createCell(i).setCellValue(columns[i]);
+            }
+            int fila = 1;
+            for(ReportesArticuloDto reportesArticuloDto : reportesArticulos){
+                row = sheet.createRow(++fila);
+                row.createCell(1).setCellValue(reportesArticuloDto.getNombre());
+                row.createCell(2).setCellValue(reportesArticuloDto.getLinea());
+                row.createCell(3).setCellValue(reportesArticuloDto.getCodigonom());
+                row.createCell(4).setCellValue(reportesArticuloDto.getSumaventas());
+                row.createCell(5).setCellValue(reportesArticuloDto.getCantidadvendidos());
+            }
+        }
     }
     private void llenarReporteComunidad(Workbook workbook, Reportes reportes){
         String[] columns = {"Nombre","Código","Cantidad Artesanos","Suma Ventas","Cantidad Productos Vendidos"};
@@ -171,7 +202,7 @@ public class ReportesService2222 implements ServiceReportes2222 {
     }
     private void llenarReporteCliente(Workbook workbook, Reportes reportes){
         String[] columns = {"Nombre","DNI o RUC","Producto más comprado","Suma Ventas","Cantidad Productos Vendidos"};
-        Sheet sheet= workbook.createSheet("reporte cliente " + LocalDate.now().toString());
+        Sheet sheet= workbook.createSheet("reporte de clientes " + LocalDate.now().toString());
         setcolumnwidths(sheet,reportes.getOrderBy());
         List<ReportesClienteDto> reportesClientes;
         switch (reportes.getType()){
@@ -223,12 +254,17 @@ public class ReportesService2222 implements ServiceReportes2222 {
                 sheet.setColumnWidth(6, 5500);
                 break;
             case 3:
+                sheet.setColumnWidth(1, 5500);
+                sheet.setColumnWidth(2, 5500);
+                sheet.setColumnWidth(3, 5500);
+                sheet.setColumnWidth(4, 5500);
+                sheet.setColumnWidth(5, 5500);
                 break;
             case 4:
                 break;
             case 5:
                 sheet.setColumnWidth(1, 5500);
-                sheet.setColumnWidth(2, 5500);
+                sheet.setColumnWidth(2, 6500);
                 sheet.setColumnWidth(3, 5500);
                 sheet.setColumnWidth(4, 5500);
                 sheet.setColumnWidth(5, 5500);
