@@ -260,13 +260,13 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     //COMUNIDAD
 
-    @Query(value="",nativeQuery=true)
+    @Query(value="SELECT comu.codigo, comu.nombre, artesanos.cantidadartesanos, cantidades.cantidadvendidos, cantidades.sumaventas FROM mosqoy.Comunidades comu, (SELECT com.codigo, SUM(ven.cantidad) AS \"cantidadvendidos\", SUM(ven.precio_venta) AS \"sumaventas\" FROM mosqoy.Ventas ven, mosqoy.Comunidades com, mosqoy.Inventario inv WHERE YEAR(ven.fecha) = ?1 AND ven.productoinventario = inv.codigo_inventario AND inv.comunidad = com.codigo GROUP BY com.codigo) cantidades, (SELECT com.codigo, SUM(art.codigo) AS \"cantidadartesanos\" FROM mosqoy.Comunidades com, mosqoy.Artesanos art WHERE com.codigo = art.comunidad GROUP BY com.codigo) artesanos WHERE comu.codigo = cantidades.codigo AND comu.codigo = artesanos.codigo",nativeQuery=true)
     List<ReportesComunidadDto> obtenerReporteAnualComunidad(int anho);
 
-    @Query(value="",nativeQuery=true)
+    @Query(value="SELECT comu.codigo, comu.nombre, artesanos.cantidadartesanos, cantidades.cantidadvendidos, cantidades.sumaventas FROM mosqoy.Comunidades comu, (SELECT com.codigo, SUM(ven.cantidad) AS \"cantidadvendidos\", SUM(ven.precio_venta) AS \"sumaventas\" FROM mosqoy.Ventas ven, mosqoy.Comunidades com, mosqoy.Inventario inv WHERE QUARTER(ven.fecha) = ?1 AND YEAR(ven.fecha) = ?2 AND ven.productoinventario = inv.codigo_inventario AND inv.comunidad = com.codigo GROUP BY com.codigo) cantidades, (SELECT com.codigo, SUM(art.codigo) AS \"cantidadartesanos\" FROM mosqoy.Comunidades com, mosqoy.Artesanos art WHERE com.codigo = art.comunidad GROUP BY com.codigo) artesanos WHERE comu.codigo = cantidades.codigo AND comu.codigo = artesanos.codigo",nativeQuery=true)
     List<ReportesComunidadDto> obtenerReporteTrimestralComunidad(int trimestre, int anho);
 
-    @Query(value="",nativeQuery=true)
+    @Query(value="SELECT comu.codigo, comu.nombre, artesanos.cantidadartesanos, cantidades.cantidadvendidos, cantidades.sumaventas FROM mosqoy.Comunidades comu, (SELECT com.codigo, SUM(ven.cantidad) AS \"cantidadvendidos\", SUM(ven.precio_venta) AS \"sumaventas\" FROM mosqoy.Ventas ven, mosqoy.Comunidades com, mosqoy.Inventario inv WHERE MONTH(ven.fecha) = ?1 AND YEAR(ven.fecha) = ?2 AND ven.productoinventario = inv.codigo_inventario AND inv.comunidad = com.codigo GROUP BY com.codigo) cantidades, (SELECT com.codigo, SUM(art.codigo) AS \"cantidadartesanos\" FROM mosqoy.Comunidades com, mosqoy.Artesanos art WHERE com.codigo = art.comunidad GROUP BY com.codigo) artesanos WHERE comu.codigo = cantidades.codigo AND comu.codigo = artesanos.codigo",nativeQuery=true)
     List<ReportesComunidadDto> obtenerReporteMensualComunidad(int mes, int anho);
 
     //ARTICULOS FER
@@ -296,6 +296,7 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     // FIN TOTAL FER
 
+<<<<<<< HEAD
 
 
 
@@ -321,4 +322,21 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     @Query(value="",nativeQuery=true)
     List<ReportesClienteDto> obtenerReporteSedeMensualCliente(int mes, int anho, int idusuario);
+=======
+    /*----------------------------------- QUERIES PARA SEDES -----------------------------------*/
+
+    //TOTAL ALEX
+
+    @Query(value="SELECT ven.ruc_dni, ven.nombrecliente, ven.tipodocumento, ven.numerodocumento, ven.lugarventa, ven.productoinventario, ven.fecha, ven.cantidad, CONCAT(usu.nombre, \" \",usu.apellido) AS \"vendedor\", usu.dni AS \"dnivendedor\" FROM mosqoy.Ventas ven, mosqoy.Usuarios usu WHERE YEAR(ven.fecha) = ?1 AND ven.vendedor = usu.dni",nativeQuery=true)
+    List<ReportesTotalDto> obtenerReporteAnualTotal(int anho, int idusuario);
+
+    @Query(value="SELECT ven.ruc_dni, ven.nombrecliente, ven.tipodocumento, ven.numerodocumento, ven.lugarventa, ven.productoinventario, ven.fecha, ven.cantidad, CONCAT(usu.nombre, \" \",usu.apellido) AS \"vendedor\", usu.dni AS \"dnivendedor\" FROM mosqoy.Ventas ven, mosqoy.Usuarios usu WHERE QUARTER(ven.fecha) = ?1 AND YEAR(ven.fecha) = ?2 AND ven.vendedor = usu.dni",nativeQuery=true)
+    List<ReportesTotalDto> obtenerReporteTrimestralTotal(int trimestre, int anho, int idusuario);
+
+    @Query(value="SELECT ven.ruc_dni, ven.nombrecliente, ven.tipodocumento, ven.numerodocumento, ven.lugarventa, ven.productoinventario, ven.fecha, ven.cantidad, CONCAT(usu.nombre, \" \",usu.apellido) AS \"vendedor\", usu.dni AS \"dnivendedor\" FROM mosqoy.Ventas ven, mosqoy.Usuarios usu WHERE MONTH(ven.fecha) = ?1 AND YEAR(ven.fecha) = ?2 AND ven.vendedor = usu.dni",nativeQuery=true)
+    List<ReportesTotalDto> obtenerReporteMensualTotal(int mes, int anho, int idusuario);
+
+    // FIN TOTAL ALEX
+
+>>>>>>> 13520272d8c1d0af1e2199cf19b505898d1feb2e
 }
