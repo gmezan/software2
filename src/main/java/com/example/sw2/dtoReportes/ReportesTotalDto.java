@@ -1,6 +1,6 @@
 package com.example.sw2.dtoReportes;
 
-public interface ReporteVenta {
+public interface ReportesTotalDto {
 
     String getRuc_dni();
     String getNombrecliente();

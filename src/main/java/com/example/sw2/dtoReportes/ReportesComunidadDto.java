@@ -1,6 +1,4 @@
 package com.example.sw2.dtoReportes;
 
-public interface ReporteAnualDto {
-
-
+public interface ReportesComunidadDto {
 }

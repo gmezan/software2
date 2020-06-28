@@ -1,6 +1,6 @@
 package com.example.sw2.service;
 
-import com.example.sw2.dtoReportes.ReporteVenta;
+import com.example.sw2.dtoReportes.ReportesTotalDto;
 import com.example.sw2.entity.Comunidades;
 import com.example.sw2.entity.Productos;
 import com.example.sw2.repository.ComunidadesRepository;
@@ -71,7 +71,7 @@ public class ReportesService implements ServiceReportes{
         fila++;
         fila++;
 
-        List<ReporteVenta> ventas = ventasRepository.obtenerVentasGENERALESPorAnho(anho);
+        List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasGENERALESPorAnho(anho);
 
         if(ventas.isEmpty()){
 
@@ -91,7 +91,7 @@ public class ReportesService implements ServiceReportes{
 
             fila++;
 
-            for(ReporteVenta ven : ventas){
+            for(ReportesTotalDto ven : ventas){
 
                 row = sheet.createRow(fila);
 
@@ -165,7 +165,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadPorAnho(idComunidad, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadPorAnho(idComunidad, anho);
 
             if(ventas.isEmpty()){
 
@@ -185,7 +185,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -258,7 +258,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDelPRIMERTrimestre(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDelPRIMERTrimestre(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -278,7 +278,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -351,7 +351,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDelSEGUNDOTrimestre(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDelSEGUNDOTrimestre(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -371,7 +371,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -444,7 +444,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDelTERCERTrimestre(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDelTERCERTrimestre(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -464,7 +464,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -537,7 +537,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDelCUARTOTrimestre(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDelCUARTOTrimestre(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -557,7 +557,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -630,7 +630,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDeENERO(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDeENERO(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -650,7 +650,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -723,7 +723,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDeFEBRERO(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDeFEBRERO(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -743,7 +743,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -817,7 +817,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDeMARZO(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDeMARZO(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -837,7 +837,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -910,7 +910,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDeABRIL(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDeABRIL(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -930,7 +930,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -1003,7 +1003,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDeMAYO(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDeMAYO(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -1023,7 +1023,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -1096,7 +1096,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDeJUNIO(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDeJUNIO(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -1116,7 +1116,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -1189,7 +1189,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDeJULIO(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDeJULIO(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -1209,7 +1209,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -1283,7 +1283,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDeAGOSTO(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDeAGOSTO(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -1303,7 +1303,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -1376,7 +1376,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDeSETIEMBRE(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDeSETIEMBRE(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -1396,7 +1396,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -1469,7 +1469,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDeOCTUBRE(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDeOCTUBRE(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -1489,7 +1489,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -1562,7 +1562,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDeNOVIEMBRE(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDeNOVIEMBRE(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -1582,7 +1582,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -1655,7 +1655,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeComunidadDeDICIEMBRE(idComunidad,anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeComunidadDeDICIEMBRE(idComunidad,anho);
 
             if(ventas.isEmpty()){
 
@@ -1675,7 +1675,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -1752,7 +1752,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoPorAnho(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoPorAnho(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -1773,7 +1773,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -1850,7 +1850,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDelPRIMERTrimestre(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDelPRIMERTrimestre(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -1871,7 +1871,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -1947,7 +1947,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDelSEGUNDOTrimestre(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDelSEGUNDOTrimestre(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -1968,7 +1968,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -2044,7 +2044,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDelTERCERTrimestre(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDelTERCERTrimestre(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -2065,7 +2065,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -2141,7 +2141,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDelCUARTOTrimestre(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDelCUARTOTrimestre(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -2162,7 +2162,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -2238,7 +2238,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDeENERO(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDeENERO(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -2259,7 +2259,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -2335,7 +2335,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDeFEBRERO(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDeFEBRERO(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -2356,7 +2356,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -2432,7 +2432,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDeMARZO(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDeMARZO(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -2453,7 +2453,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -2529,7 +2529,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDeABRIL(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDeABRIL(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -2550,7 +2550,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -2626,7 +2626,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDeMAYO(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDeMAYO(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -2647,7 +2647,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -2723,7 +2723,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDeJUNIO(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDeJUNIO(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -2744,7 +2744,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -2820,7 +2820,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDeJULIO(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDeJULIO(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -2841,7 +2841,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -2917,7 +2917,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDeAGOSTO(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDeAGOSTO(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -2938,7 +2938,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -3014,7 +3014,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDeSETIEMBRE(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDeSETIEMBRE(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -3035,7 +3035,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -3111,7 +3111,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDeOCTUBRE(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDeOCTUBRE(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -3132,7 +3132,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -3208,7 +3208,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDeNOVIEMBRE(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDeNOVIEMBRE(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -3229,7 +3229,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 
@@ -3304,7 +3304,7 @@ public class ReportesService implements ServiceReportes{
             fila++;
             fila++;
 
-            List<ReporteVenta> ventas = ventasRepository.obtenerVentasDeProductoDeDICIEMBRE(idProducto, anho);
+            List<ReportesTotalDto> ventas = ventasRepository.obtenerVentasDeProductoDeDICIEMBRE(idProducto, anho);
 
 
             if(ventas.isEmpty()){
@@ -3325,7 +3325,7 @@ public class ReportesService implements ServiceReportes{
 
                 fila++;
 
-                for(ReporteVenta ven : ventas){
+                for(ReportesTotalDto ven : ventas){
 
                     row = sheet.createRow(fila);
 

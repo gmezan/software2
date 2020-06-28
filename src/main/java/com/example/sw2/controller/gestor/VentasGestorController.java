@@ -5,7 +5,6 @@ import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
 import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.repository.VentasRepository;
-import com.example.sw2.service.ServiceAnual;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -21,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.regex.Pattern;
 

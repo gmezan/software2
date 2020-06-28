@@ -2,7 +2,6 @@ package com.example.sw2.controller.gestor;
 
 import com.example.sw2.service.ServiceReportes;
 import com.example.sw2.service.ServiceReportes2222;
-import com.example.sw2.service.ServiceVentaAnualXxProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
