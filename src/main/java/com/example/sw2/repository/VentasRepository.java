@@ -296,6 +296,33 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     // FIN TOTAL FER
 
+<<<<<<< HEAD
+
+
+
+    //COMUNIDAD
+
+    @Query(value="",nativeQuery=true)
+    List<ReportesComunidadDto> obtenerReporteSedeAnualComunidad(int anho, int idusuario);
+
+    @Query(value="",nativeQuery=true)
+    List<ReportesComunidadDto> obtenerReporteSedeTrimestralComunidad(int trimestre, int anho, int idusuario);
+
+    @Query(value="",nativeQuery=true)
+    List<ReportesComunidadDto> obtenerReporteSedeMensualComunidad(int mes, int anho, int idusuario);
+
+
+    //CLIENTES
+
+    @Query(value="",nativeQuery=true)
+    List<ReportesClienteDto> obtenerReporteSedeAnualCliente(int anho, int idusuario);
+
+    @Query(value="",nativeQuery=true)
+    List<ReportesClienteDto> obtenerReporteSedeTrimestralCliente(int trimestre, int anho, int idusuario);
+
+    @Query(value="",nativeQuery=true)
+    List<ReportesClienteDto> obtenerReporteSedeMensualCliente(int mes, int anho, int idusuario);
+=======
     /*----------------------------------- QUERIES PARA SEDES -----------------------------------*/
 
     //TOTAL ALEX
@@ -311,4 +338,5 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     // FIN TOTAL ALEX
 
+>>>>>>> 13520272d8c1d0af1e2199cf19b505898d1feb2e
 }
