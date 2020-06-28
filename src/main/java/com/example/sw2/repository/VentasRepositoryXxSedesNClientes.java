@@ -19,7 +19,6 @@ public interface VentasRepositoryXxSedesNClientes extends JpaRepository<Ventas, 
     @Query(value="SELECT CONCAT(u.nombre,' ',u.apellido) as nombre, u.dni, u.correo, u.telefono, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v inner join Usuarios u ON (v.vendedor = u.dni) WHERE YEAR(v.fecha) = ?1 AND u.rol = 2 group by v.vendedor",nativeQuery=true)
     List<ReportesTotalDto> obtenerReporteAnualSede(int anho);
 
-
     @Query(value="SELECT CONCAT(u.nombre,' ',u.apellido) as nombre, u.dni, u.correo, u.telefono, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v inner join Usuarios u ON (v.vendedor = u.dni) WHERE QUARTER(v.fecha) = ?1 AND YEAR(v.fecha) = ?2 AND u.rol = 2 group by v.vendedor",nativeQuery=true)
     List<ReportesTotalDto> obtenerReporteTrimestralSede(int trimestre, int anho);
 
@@ -30,13 +29,13 @@ public interface VentasRepositoryXxSedesNClientes extends JpaRepository<Ventas, 
     @Query(value="SELECT DISTINCT(cliente) FROM (SELECT v.ruc_dni AS \"cliente\" FROM mosqoy.Ventas v) sub",nativeQuery=true)
     List<ReportesSedesDto> obtenerClientes();
 
-    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven WHERE YEAR(ven.fecha) = ?1 AND ven.ruc_dni = ?2",nativeQuery=true)
+    @Query(value="SELECT v.nombrecliente as nombre , v.ruc_dni, v.productoinventario, sum(v.precio_venta), sum(v.cantidad) FROM Ventas v WHERE YEAR(v.fecha) = ?2 group by v.ruc_dni",nativeQuery=true)
     List<ReportesTotalDto> obtenerReporteAnualCliente(int anho);
 
-    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven WHERE QUARTER(ven.fecha) = ?1 AND YEAR(ven.fecha) = ?2 AND ven.ruc_dni = ?3 ",nativeQuery=true)
+    @Query(value="SELECT v.nombrecliente as nombre , v.ruc_dni, v.productoinventario, sum(v.precio_venta), sum(v.cantidad) FROM Ventas v WHERE QUARTER(v.fecha) = ?1 AND YEAR(v.fecha) = ?2 group by v.ruc_dni",nativeQuery=true)
     List<ReportesTotalDto> obtenerReporteTrimestralCliente(int trimestre, int anho);
 
-    @Query(value="SELECT ven.* FROM mosqoy.Ventas ven WHERE MONTH(ven.fecha) = ?1 AND YEAR(ven.fecha) = ?2 AND ven.ruc_dni = ?3 ",nativeQuery=true)
+    @Query(value="SELECT v.nombrecliente as nombre , v.ruc_dni, v.productoinventario, sum(v.precio_venta), sum(v.cantidad) FROM Ventas v WHERE MONTH(v.fecha) = ?1 AND YEAR(v.fecha) = ?2 group by v.ruc_dni",nativeQuery=true)
     List<ReportesTotalDto> obtenerReporteMensualCliente(int mes, int anho);
 
     // FIN SEDES ALEX
