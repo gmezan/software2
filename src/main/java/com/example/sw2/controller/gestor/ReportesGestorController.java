@@ -37,7 +37,7 @@ public class ReportesGestorController {
                                                           @RequestParam("years") Integer anho, @RequestParam("tipoSelect") Integer select)
                                                             throws Exception{
 
-        ByteArrayInputStream stream = serviceReportes2222.generarReporte(new Reportes(orderBy,type,anho,select));
+        ByteArrayInputStream stream = serviceReportes2222.generarReporte(new Reportes(orderBy, anho, type,select));
 
         System.out.println("ordenar: "+ orderBy);
         System.out.println("tipo: "+type);

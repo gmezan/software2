@@ -107,7 +107,7 @@ public class ReportesService2222 implements ServiceReportes2222 {
         }else{
             Row row = sheet.createRow(1);
             for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i]);
+                row.createCell(i).setCellValue(columns[i-1]);
             }
             int fila = 1;
             for(ReportesTotalDto reportesTotalDto : reportesTotales){
@@ -151,7 +151,7 @@ public class ReportesService2222 implements ServiceReportes2222 {
         }else{
             Row row = sheet.createRow(1);
             for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i]);
+                row.createCell(i).setCellValue(columns[i-1]);
             }
             int fila = 1;
             for(ReportesSedesDto reportesSedesDto : reportesSedes){
@@ -188,7 +188,7 @@ public class ReportesService2222 implements ServiceReportes2222 {
         }else{
             Row row = sheet.createRow(1);
             for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i]);
+                row.createCell(i).setCellValue(columns[i-1]);
             }
             int fila = 1;
             for(ReportesArticuloDto reportesArticuloDto : reportesArticulos){
@@ -225,7 +225,7 @@ public class ReportesService2222 implements ServiceReportes2222 {
         }else{
             Row row = sheet.createRow(1);
             for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i]);
+                row.createCell(i).setCellValue(columns[i-1]);
             }
             int fila = 1;
             for(ReportesComunidadDto reportesComunidadDto : reportesComunidad){
@@ -265,7 +265,7 @@ public class ReportesService2222 implements ServiceReportes2222 {
         }else{
             Row row = sheet.createRow(1);
             for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i]);
+                row.createCell(i).setCellValue(columns[i-1]);
             }
             int fila = 1;
             for(ReportesClienteDto reportesClienteDto : reportesClientes){
