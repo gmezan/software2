@@ -34,6 +34,10 @@ $(document).ready(function () {
 
     });
     $('.show-fotoU').removeAttr('disabled');
+    $(document).on("click", "#newtablefoot", function () {
+        $('.show-fotoU').removeAttr('disabled');
+        $('.show-foto').removeAttr('disabled');
+    });
     $(document).on("click", ".show-fotoU", function () {
         let showfoto = $("#showFotoU #fotoinv");
         showfoto.attr("src", "");
