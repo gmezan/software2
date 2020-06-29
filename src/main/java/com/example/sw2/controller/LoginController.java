@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = {"/",""})
@@ -24,8 +26,7 @@ public class LoginController {
 
 
     @GetMapping(value = {"/","/loginForm"})
-    public String login(){
-
+    public String login(Authentication auth){
         return "login";
     }
 
