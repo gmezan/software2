@@ -83,6 +83,7 @@ public class AsignadoTiendaController {
         }else{
             ventasRepository.save(venta);
             //actualizar stock(Asignados_sedes) cant_total(inventario)
+            // gestor, sede, codigo, estado int, in precio decimal(10,2), in cant int, in aTienda int)
             asignacionTiendasRepository.tienda_registra(aTienda.getAsignadosSedes().getId().getGestor().getIdusuarios(),
                     venta.getVendedor().getIdusuarios(), venta.getInventario().getCodigoinventario(),
                     2,venta.getPrecioventa(), venta.getCantidad(), idAstiendas);
@@ -102,6 +103,7 @@ public class AsignadoTiendaController {
 
         Optional<AsignacionTiendas> optAt = asignacionTiendasRepository.findById(idAstiendas);
         AsignacionTiendas at = optAt.get();
+
 
         if(v.getCantDevol() > at.getStock()){
             bindingResult.rejectValue("cantDevol", "error.user","La cantidad no puede ser mayor al stock actual de la tienda");
