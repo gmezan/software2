@@ -159,7 +159,7 @@ public class InventarioController {
         if (!keySetT.contains(inventario.getCodtamanho())) {
             bindingResult.rejectValue("codtamanho", "error.user", "Seleccione un tamaño de la lista.");
         }
-
+/*
         Set<String> keySetL = CustomConstants.getLineas().keySet();
         if (!keySetL.contains(linea)) {
             bindingResult.rejectValue("cantidadgestor", "error.user", "Seleccione una línea de la lista.");
@@ -167,10 +167,10 @@ public class InventarioController {
             m.addAttribute("linea", linea);
             m.addAttribute("listProd", productosRepository.findProductosByIdCodigolinea(linea));
         }
-
+*/
         //Gustavo lo puso :
-        System.out.println(linea);
-        inventario.getProductos().setCodigolinea(linea);
+        //System.out.println(linea);
+        //inventario.getProductos().setCodigolinea(linea);
         inventario.setProductos(productosRepository.findById(inventario.getProductos().getId()).orElse(null));
 
 /*
