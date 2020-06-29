@@ -27,7 +27,25 @@ public class LoginController {
 
     @GetMapping(value = {"/","/loginForm"})
     public String login(Authentication auth){
-        return "login";
+        String rol = "";
+        System.out.println(auth==null);
+        if(auth == null){
+            return "login";
+        }else{
+            for (GrantedAuthority role : auth.getAuthorities()) {
+                rol = role.getAuthority();
+                break;
+            }
+            switch (rol) {
+                case "admin":
+                    return "redirect:/admin/";
+                case "gestor":
+                    return "redirect:/gestor/";
+                case "sede":
+                    return "redirect:/sede/";
+            }
+            return "/";
+        }
     }
 
     @GetMapping("/redirectByRole")
