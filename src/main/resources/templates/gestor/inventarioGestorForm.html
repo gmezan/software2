@@ -37,7 +37,7 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title">Registro de nuevo producto del inventario</h5>
                                         <a th:href="@{/gestor/inventario}" type="button" class="close">
-                                            X
+                                            &times;
                                         </a>
                                     </div>
                                     
@@ -52,7 +52,7 @@
                                                             <div class="input-group-text text-body">N°</div>
                                                         </div>
                                                         <input th:field="*{numpedido}" type="number"
-                                                               class="form-control" min="1">
+                                                               class="form-control" >
                                                     </div>
                                                     <div class="text-danger" th:if="${#fields.hasErrors('numpedido')}"
                                                          th:errors="*{numpedido}">Error
@@ -79,7 +79,7 @@
                                                 </div>
                                                 <div class="form-group col">
                                                     <label for="linea" class="col-form-label"><b>Línea:</b></label>
-                                                    <select th:value="${linea}" id="linea" name="linea" class="form-control">
+                                                    <select th:value="${linea}" id="linea" name="productos.id.codigolinea" class="form-control">
                                                         <option value="no">--- Seleccionar ---</option>
                                                         <option th:each="item : ${lineas}"
                                                                 th:selected="${item.key==linea}"
@@ -286,7 +286,7 @@
                                             <div class="form-row ml-5 mr-5">
                                                 <div class="form-group col-4">
                                                     <label class="col-form-label"><b>Cantidad:</b></label>
-                                                    <input th:field="*{cantidadtotal}" type="number" min="1"
+                                                    <input th:field="*{cantidadtotal}" type="number"
                                                            class="form-control">
                                                     <div class="text-danger"
                                                          th:if="${#fields.hasErrors('cantidadtotal')}"
@@ -309,8 +309,7 @@
                                     <div class="modal-footer">
                                         <a class="btn btn-secondary " th:href="@{/gestor/inventario}">Cancelar</a>
                                         
-                                        <input form="addForm" type="submit" class="btn btn-info" value="Agregar">
-                                        <a hidden type="submit" class="btn btn-info" href="#" data-toggle="modal" data-target="#confirmModal">Agregar</a>
+                                        <a type="submit" class="btn btn-info" href="#" data-toggle="modal" data-target="#confirmModal">Agregar</a>
                                     
                                     </div>
                                 
@@ -343,22 +342,24 @@
             <div class="modal-dialog modal-confirm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Borrar Registro</h4>
+                        <h4 class="modal-title">Nuevo Registro (Confirmación)</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <p>¿Seguro que desea borrar este registro del inventario? Esta acción no se puede deshacer.</p>
+                        <p>Solo se podrán editar los siguientes campos: <b> Costo Mosqoy, Costo Tejedor, Facilitador y Fecha de vencimiento</b> (en caso de haber adquirido el producto mediante consignación)</p>
+                        <p>Al presionar <b>"Confirmar"</b> , usted confirma que todos los campos ingresados son <b>correctos</b>. En caso de querer cambiar un campo  <b>no editable</b> , se tendrá que borrar el antiguo registro y crear uno nuevo.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <input type="button" class="btn btn-primary" value="Agregar">
+                        <input form="addForm" type="submit" class="btn btn-info" value="Confirmar">
                         
                     </div>
                 </div>
             </div>
         </div>
-        
-        
+    
+        <!-- Logout Modal-->
+        <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
         
         
         <!-- Bootstrap core JavaScript-->

@@ -2,6 +2,7 @@ package com.example.sw2.controller.gestor;
 
 
 import com.example.sw2.constantes.CustomConstants;
+import com.example.sw2.constantes.ProductoId;
 import com.example.sw2.entity.Productos;
 import com.example.sw2.repository.ProductosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,8 @@ public class ProductoController {
                           BindingResult bindingResult, @RequestParam("type") int type,
                          RedirectAttributes attr, Model model) {
 
-        if(type==1 && productosRepository.findById(productos.getCodigonom()).isPresent()){ //if new
-            bindingResult.rejectValue("codigonom","error.user","Este codigo ya existe");
+        if(type==1 && productosRepository.findById(productos.getId()).isPresent()){ //if new
+            bindingResult.rejectValue("id.codigonom","error.user","Este codigo ya existe en la linea "+productos.getId().getNombreLinea());
         }
 
         if(bindingResult.hasErrors()){
@@ -52,7 +53,7 @@ public class ProductoController {
             return "gestor/productos";
         }
         else {
-            Optional<Productos> optionalProductos = productosRepository.findById(productos.getCodigonom());
+            Optional<Productos> optionalProductos = productosRepository.findById(productos.getId());
             if (optionalProductos.isPresent() && type==0) {
                 attr.addFlashAttribute("msg", "Producto actualizado exitosamente");
             }
@@ -69,12 +70,11 @@ public class ProductoController {
     }
 
     @GetMapping("/delete")
-    public String borrar(Model model,
-                            @RequestParam("codigonom") String id,
+    public String borrar(Productos productos,
                             RedirectAttributes attr) {
-        Optional<Productos> c = productosRepository.findById(id);
+        Optional<Productos> c = productosRepository.findById(productos.getId());
         if (c.isPresent()) {
-            productosRepository.deleteById(id);
+            productosRepository.deleteById(productos.getId());
             attr.addFlashAttribute("msg","Producto borrado exitosamente");
         }
         return "redirect:/gestor/producto";
@@ -83,16 +83,18 @@ public class ProductoController {
     //Web service
     @ResponseBody
     @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<Productos>> getCat(@RequestParam(value = "id") String id){
-        return new ResponseEntity<>(productosRepository.findById(id), HttpStatus.OK);
+    public ResponseEntity<Optional<Productos>> getCat(@RequestParam(value = "codigonom") String cod,
+                                                      @RequestParam(value = "codigolinea") String lin){
+        return new ResponseEntity<>(productosRepository.findById(new ProductoId(cod,lin)), HttpStatus.OK);
     }
 
 
     @ResponseBody
     @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<HashMap<String,String>>> hasItems(@RequestParam(value = "id") String id){
+    public ResponseEntity<List<HashMap<String,String>>> hasItems(@RequestParam(value = "codigonom") String cn,
+                                                                 @RequestParam(value = "codigolinea") String cl){
         return new ResponseEntity<>(new ArrayList<HashMap<String,String>>() {{
-            Objects.requireNonNull(productosRepository.findById(id).orElse(null)).getInventario().forEach((i)->
+            Objects.requireNonNull(productosRepository.findById(new ProductoId(cn,cl)).orElse(null)).getInventario().forEach((i)->
             {
                 add(new HashMap<String, String>() {
                     {

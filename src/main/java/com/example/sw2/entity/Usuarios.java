@@ -114,6 +114,18 @@ public class Usuarios extends Auditable implements Serializable {
         this.apellido = apellido.trim();
     }
 
+    public Boolean isGestor(){
+        return this.roles.getIdroles()==2;
+    }
+
+    public Boolean isSede(){
+        return this.roles.getIdroles()==3;
+    }
+
+    public Boolean isAdmin(){
+        return this.roles.getIdroles()==1;
+    }
+
 
     public String getFoto() {
         return foto;

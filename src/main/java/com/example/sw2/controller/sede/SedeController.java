@@ -121,8 +121,6 @@ public class SedeController {
                     if (ventas.getCantidad() > asignadosSedes.getCantidadactual()) {
                         bindingResult.rejectValue("cantidad", "error.user", "La cantidad vendida no puede ser mayor a la cantidad actual de la sede");
                     }
-                }else{
-                    bindingResult.rejectValue("cantidad", "error.user", "La cantidad no es válida.");
                 }
             } else {
                 attr.addFlashAttribute("msgNoVenta", "Error al encontrar el producto");
@@ -170,8 +168,6 @@ public class SedeController {
 
             attr.addFlashAttribute("msgExito", "Venta registrada exitosamente");
             return "redirect:/sede/productosConfirmados";
-
-
         }
 
     }
@@ -193,7 +189,7 @@ public class SedeController {
                 return "redirect:/sede/productosConfirmados";
             }
 
-            if (asignacionTiendas.getStock() <= 0) {
+            if (asignacionTiendas.getStock() < 0) {
                 bindingResult.rejectValue("stock", "error.user", "Ingrese una cantidad valida");
             } else {
                 if (asignacionTiendas.getStock() > asignadosSedes.getCantidadactual()) {
@@ -407,8 +403,14 @@ public class SedeController {
     //Web service
     @ResponseBody
     @PostMapping(value = "/productosPorConfirmar/post", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HashMap<String, String>> getAsignsedePost(@RequestBody AsignadosSedesId asignadosSedesId) {
+    public ResponseEntity<HashMap<String, String>> getAsignsedePost(@RequestParam(value = "gestor") Integer gestor,
+                                                                    @RequestParam(value = "sede") Integer sede,
+                                                                    @RequestParam(value = "productoinventario") String inv,
+                                                                    @RequestParam(value = "estadoasignacion") Integer estadoasignacion,
+                                                                    @RequestParam(value = "precioventa") Float precioventa) {
 
+        AsignadosSedesId asignadosSedesId = new
+                AsignadosSedesId(gestor,sede,inv,estadoasignacion,precioventa);
         return new ResponseEntity<>(new HashMap<String, String>() {{
             asignadosSedesId.setProductoinventario(inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
             asignadosSedesRepository.findAll();

@@ -22,10 +22,28 @@ $(document).ready(function () {
     $(".card-body").on('click', function () {
         updatefakeScroll();
     });
+    $('.show-foto').removeAttr('disabled');
     $(document).on("click", ".show-foto", function () {
         let showfoto = $("#showFoto #fotoinv");
         showfoto.attr("src", "");
         $("#showFoto #fototitle").text($(this).data('id'));
+        let id='#'+$(this).data('id')+'photo';
+        let url= $(id).attr('src');
+        showfoto.attr("src", url);
+
+
+    });
+    $('.show-fotoU').removeAttr('disabled');
+    $(document).on("click", "#newtablefoot", function () {
+        $('.show-fotoU').removeAttr('disabled');
+        $('.show-foto').removeAttr('disabled');
+    });
+    $(document).on("click", ".show-fotoU", function () {
+        let showfoto = $("#showFotoU #fotoinv");
+        showfoto.attr("src", "");
+        let idname='#'+$(this).data('id')+'name';
+        let idlast='#'+$(this).data('id')+'last';
+        $("#showFotoU #fototitle").text($(idname).text()+" "+$(idlast).text());
         let id='#'+$(this).data('id')+'photo';
         let url= $(id).attr('src');
         showfoto.attr("src", url);

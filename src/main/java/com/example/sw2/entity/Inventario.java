@@ -33,7 +33,9 @@ public class Inventario extends Auditable implements Serializable {
     private Categorias categorias;
 
     @ManyToOne
-    @JoinColumn(name = "producto", nullable = false)
+    @JoinColumns({
+        @JoinColumn(name = "producto", nullable = false, referencedColumnName = "codigonom"),
+        @JoinColumn(name = "linea", nullable = false, referencedColumnName = "linea")})
     @NotNull(message = "Seleccione un producto de la lista.")
     private Productos productos;
 
@@ -105,7 +107,7 @@ public class Inventario extends Auditable implements Serializable {
 
     public Inventario(){};
 
-    public Inventario(String codigoinventario){this.codigoinventario=codigoinventario;}
+    //public Inventario(String codigoinventario){this.codigoinventario=codigoinventario;}
 
 
     public void subtractCantidad(int c) {

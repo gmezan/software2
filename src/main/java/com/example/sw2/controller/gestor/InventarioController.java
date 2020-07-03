@@ -4,7 +4,6 @@ import com.example.sw2.Dao.StorageServiceDao;
 import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.entity.*;
 import com.example.sw2.repository.*;
-import com.example.sw2.utils.UploadObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,20 +12,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.time.YearMonth;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 //REPLANTEAR inventario entity
 
@@ -67,7 +63,12 @@ public class InventarioController {
     public String form(@ModelAttribute("inventario") Inventario inventario, Model m) {
         listasCamposInv(m);
         List<Inventario> listaordenada = inventarioRepository.findAllByOrderByNumpedidoDesc();
-        inventario.setNumpedido(listaordenada.get(0).getNumpedido()+1);
+        int num;
+        if (listaordenada.isEmpty())
+            num = 0;
+        else
+            num = listaordenada.get(0).getNumpedido()+1;
+        inventario.setNumpedido(num);
         return "gestor/inventarioGestorForm";
     }
 
@@ -158,14 +159,20 @@ public class InventarioController {
         if (!keySetT.contains(inventario.getCodtamanho())) {
             bindingResult.rejectValue("codtamanho", "error.user", "Seleccione un tamaño de la lista.");
         }
-
+/*
         Set<String> keySetL = CustomConstants.getLineas().keySet();
         if (!keySetL.contains(linea)) {
             bindingResult.rejectValue("cantidadgestor", "error.user", "Seleccione una línea de la lista.");
         } else {
             m.addAttribute("linea", linea);
-            m.addAttribute("listProd", productosRepository.findProductosByCodigolinea(linea));
+            m.addAttribute("listProd", productosRepository.findProductosByIdCodigolinea(linea));
         }
+*/
+        //Gustavo lo puso :
+        //System.out.println(linea);
+        //inventario.getProductos().setCodigolinea(linea);
+        inventario.setProductos(productosRepository.findById(inventario.getProductos().getId()).orElse(null));
+
 /*
         if (multipartFile.isEmpty()) {
             bindingResult.rejectValue("foto", "error.user", "Debe subir una foto.");
@@ -225,7 +232,7 @@ public class InventarioController {
             }
 
             inventario.setCantidadgestor(inventario.getCantidadtotal());
-
+            System.out.println(inventario.getCodigoinventario());
 
             try {
                 inventarioRepository.save(inventario);
@@ -408,7 +415,7 @@ public class InventarioController {
     @ResponseBody
     @GetMapping(value = {"/form/getLinea", "/save/getLinea"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Productos>> getCom(@RequestParam(value = "linea") String linea) {
-        return new ResponseEntity<>(productosRepository.findProductosByCodigolinea(linea), HttpStatus.OK);
+        return new ResponseEntity<>(productosRepository.findProductosByIdCodigolinea(linea), HttpStatus.OK);
     }
 
     //Web service
