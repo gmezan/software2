@@ -19,6 +19,14 @@ $(document).on("click",".editar-Venta", function(){
     })
 });
 
+$(document).on("click", ".cancelar-Venta", function () {
+    $("#cancelarModal  #id11").val('');
+    $("#cancelarModal  #id22").val('');
+
+    $("#cancelarModal  #id11").val($(this).data('id1'));
+    $("#cancelarModal  #id22").val($(this).data('id2'));
+});
+
 $(document).on("click",".delete-Venta", function(){
     $("#deleteModal #id1").val($(this).data('id1'));
     $("#deleteModal #id2").val($(this).data('id2'));

@@ -42,4 +42,7 @@ public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
     List<Usuarios> findUsuariosByRoles_IdrolesOrderByApellido(int rol);
 
 
+    @Query(value = "SELECT u.* FROM mosqoy.Usuarios u WHERE rol = 1 LIMIT 1", nativeQuery = true)
+    Usuarios obtenerAdmin();
+
 }

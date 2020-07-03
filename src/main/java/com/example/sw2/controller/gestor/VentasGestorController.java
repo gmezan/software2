@@ -1,6 +1,8 @@
 package com.example.sw2.controller.gestor;
 
+import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.VentasId;
+import com.example.sw2.entity.AsignadosSedes;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
 import com.example.sw2.repository.UsuariosRepository;
@@ -118,7 +120,6 @@ public class VentasGestorController {
         return "redirect:/gestor/venta";
     }
 
-
     @GetMapping("/delete")
     public String deleteVen(@RequestParam("id1") String id1,
                             @RequestParam("id2") int id2,
@@ -130,6 +131,33 @@ public class VentasGestorController {
         }
         return "redirect:/gestor/venta";
     }
+
+    @GetMapping("/cancelar")
+    public String cancelarVenta(@RequestParam(value = "nota") int nota,
+                                    @RequestParam(value = "mensaje") String mensaje,
+                                    @RequestParam("id1") String id1,
+                                    @RequestParam("id2") int id2,
+                                    RedirectAttributes attr) {
+
+        Optional<Ventas> V = ventasRepository.findById(new VentasId(id2, id1));
+
+        if (V.isPresent()) {
+            Ventas ventas = V.get();
+
+            int idgestor = ventas.getVendedor().getIdusuarios();
+            ventas.setCancelar(idgestor);
+            Usuarios idadmin = usuariosRepository.obtenerAdmin();
+            ventas.setVendedor(idadmin);
+
+            ventas.setNota(nota);
+            ventas.setMensaje(mensaje);
+            attr.addFlashAttribute("msg", "Se ha reportado la cancelación de la venta al administrador");
+
+            ventasRepository.save(ventas);
+        }
+        return "redirect:/gestor/venta";
+    }
+
 
     //Web service
     @ResponseBody

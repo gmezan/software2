@@ -56,6 +56,10 @@ public class Ventas extends Auditable implements Serializable {
     @Digits(integer=10, fraction=2, message = "El precio debe tener 2 decimales y 10 dígitos como máximo")
     private BigDecimal precioventa;
 
+    private Integer nota;
+    private String mensaje;
+    private Integer cancelar;
+
     @Transient
     private int cantDevol;
 
@@ -164,5 +168,29 @@ public class Ventas extends Auditable implements Serializable {
 
     public void setFechacreacion(LocalDateTime fechacreacion) {
         this.fechacreacion = fechacreacion;
+    }
+
+    public Integer getNota() {
+        return nota;
+    }
+
+    public void setNota(Integer nota) {
+        this.nota = nota;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public Integer getCancelar() {
+        return cancelar;
+    }
+
+    public void setCancelar(Integer cancelar) {
+        this.cancelar = cancelar;
     }
 }
