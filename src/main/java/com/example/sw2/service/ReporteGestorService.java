@@ -7,10 +7,9 @@ import com.example.sw2.dtoReportes.ReportesTotalDto;
 import com.example.sw2.dtoReportes.ReportesSedesDto;
 import com.example.sw2.entity.Reportes;
 import com.example.sw2.repository.VentasRepository;
+import com.example.sw2.utils.ReportesUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +19,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
-public class ReporteGestorService implements IReporteGestorService {
+public class ReporteGestorService extends ReportesUtils implements IReporteGestorService {
 
     @Autowired
     VentasRepository ventasRepository;
-
 
     @Override
     public ByteArrayInputStream generarReporte(Reportes reportes) throws Exception{
@@ -35,36 +34,22 @@ public class ReporteGestorService implements IReporteGestorService {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
         switch (reportes.getOrderBy()){
-
-
-            case 1:
-                //nos referimos al total
+            case 1: //nos referimos al total
                 llenarReporteTotal(workbook, reportes);
 
-
                 break;
-            case 2:
-                //nos referimos a la sede
-
+            case 2: //nos referimos a la sede
                 llenarReporteSede(workbook, reportes);
 
                 break;
-            case 3:
-                //nos referimos al articulo(producto)
-
+            case 3: //nos referimos al articulo(producto)
                 llenarReporteProducto(workbook, reportes);
 
-
-
                 break;
-            case 4:
-                //nos referimos a la comunidad
-
+            case 4: //nos referimos a la comunidad
                 llenarReporteComunidad( workbook, reportes);
                 break;
-            case 5:
-                //nos referimos al cliente
-
+            case 5: //nos referimos al cliente
                 llenarReporteCliente(workbook, reportes);
 
                 break;
@@ -82,10 +67,10 @@ public class ReporteGestorService implements IReporteGestorService {
 
         String[] columns = {"Documento","Numero","Cliente","RUC_DNI","Vendedor","DNI vendedor"};
 
-        Sheet sheet= workbook.createSheet("reporte total " + LocalDate.now().toString());
-        setcolumnwidths(sheet,reportes.getOrderBy());
+        Sheet sheet= workbook.createSheet("Reporte total " + LocalDate.now().toString());
+        setColumnWidths(sheet,reportes.getOrderBy());
 
-        List<ReportesTotalDto> reportesTotales;
+        List<ReportesTotalDto> reportesTotales = new ArrayList<>();
         switch (reportes.getType()){
             case 1:
                 reportesTotales = ventasRepository.obtenerReporteAnualTotal(reportes.getYear());
@@ -96,40 +81,15 @@ public class ReporteGestorService implements IReporteGestorService {
             case 3:
                 reportesTotales = ventasRepository.obtenerReporteMensualTotal(reportes.getSelected(),reportes.getYear());
                 break;
-            default:
-                reportesTotales = new ArrayList<>();
         }
-
-        if(reportesTotales.isEmpty()){
-            sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
-
-        }else{
-            Row row = sheet.createRow(1);
-            for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i-1]);
-            }
-            int fila = 1;
-            for(ReportesTotalDto reportesTotalDto : reportesTotales){
-                row = sheet.createRow(++fila);
-                row.createCell(1).setCellValue(reportesTotalDto.getTipodocumento());
-                row.createCell(2).setCellValue(reportesTotalDto.getNumerodocumento());
-                row.createCell(3).setCellValue(reportesTotalDto.getNombrecliente());
-                row.createCell(4).setCellValue(reportesTotalDto.getRuc_dni());
-                row.createCell(5).setCellValue(reportesTotalDto.getVendedor());
-                row.createCell(6).setCellValue(reportesTotalDto.getDnivendedor());
-            }
-        }
-
-
-
-
+        fillCellsInSheet(sheet,columns,reportesTotales,workbook);
     }
 
     private void llenarReporteSede(Workbook workbook, Reportes reportes){
         String[] columns = {"Nombre","DNI","Correo","Telefono","Suma Ventas","Cantidad Productos Vendidos"};
-        Sheet sheet= workbook.createSheet("reporte de sede " + LocalDate.now().toString());
-        setcolumnwidths(sheet,reportes.getOrderBy());
-        List<ReportesSedesDto> reportesSedes;
+        Sheet sheet= workbook.createSheet("Reporte de sede " + LocalDate.now().toString());
+        setColumnWidths(sheet,reportes.getOrderBy());
+        List<ReportesSedesDto> reportesSedes = new ArrayList<>();
         switch (reportes.getType()){
             case 1:
                 reportesSedes = ventasRepository.obtenerReporteAnualSede(reportes.getYear());
@@ -140,35 +100,14 @@ public class ReporteGestorService implements IReporteGestorService {
             case 3:
                 reportesSedes = ventasRepository.obtenerReporteMensualSede(reportes.getSelected(),reportes.getYear());
                 break;
-            default:
-                reportesSedes = new ArrayList<>();
         }
-
-        if(reportesSedes.isEmpty()){
-            sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
-
-        }else{
-            Row row = sheet.createRow(1);
-            for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i-1]);
-            }
-            int fila = 1;
-            for(ReportesSedesDto reportesSedesDto : reportesSedes){
-                row = sheet.createRow(++fila);
-                row.createCell(1).setCellValue(reportesSedesDto.getNombre());
-                row.createCell(2).setCellValue(reportesSedesDto.getDni());
-                row.createCell(3).setCellValue(reportesSedesDto.getCorreo());
-                row.createCell(4).setCellValue(reportesSedesDto.getTelefono());
-                row.createCell(5).setCellValue(reportesSedesDto.getSumaventas());
-                row.createCell(6).setCellValue(reportesSedesDto.getCantidadvendidos());
-            }
-        }
+        fillCellsInSheet(sheet,columns,reportesSedes,workbook);
     }
     private void llenarReporteProducto(Workbook workbook, Reportes reportes){
         String[] columns = {"Nombre","Linea","Codigo","Suma Ventas","Cantidad Vendidos"};
-        Sheet sheet= workbook.createSheet("reporte producto " + LocalDate.now().toString());
-        setcolumnwidths(sheet,reportes.getOrderBy());
-        List<ReportesArticuloDto> reportesArticulos;
+        Sheet sheet= workbook.createSheet("Reporte producto " + LocalDate.now().toString());
+        setColumnWidths(sheet,reportes.getOrderBy());
+        List<ReportesArticuloDto> reportesArticulos = new ArrayList<>();
         switch (reportes.getType()){
             case 1:
                 reportesArticulos = ventasRepository.obtenerReporteAnualArticuloProducto(reportes.getYear());
@@ -179,32 +118,14 @@ public class ReporteGestorService implements IReporteGestorService {
             case 3:
                 reportesArticulos = ventasRepository.obtenerReporteMensualArticuloProducto(reportes.getSelected(),reportes.getYear());
                 break;
-            default:
-                reportesArticulos = new ArrayList<>();
         }
-        if(reportesArticulos.isEmpty()){
-            sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
-        }else{
-            Row row = sheet.createRow(1);
-            for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i-1]);
-            }
-            int fila = 1;
-            for(ReportesArticuloDto reportesArticuloDto : reportesArticulos){
-                row = sheet.createRow(++fila);
-                row.createCell(1).setCellValue(reportesArticuloDto.getNombre());
-                row.createCell(2).setCellValue(reportesArticuloDto.getLinea());
-                row.createCell(3).setCellValue(reportesArticuloDto.getCodigonom());
-                row.createCell(4).setCellValue(reportesArticuloDto.getSumaventas());
-                row.createCell(5).setCellValue(reportesArticuloDto.getCantidadvendidos());
-            }
-        }
+        fillCellsInSheet(sheet,columns,reportesArticulos,workbook);
     }
     private void llenarReporteComunidad(Workbook workbook, Reportes reportes){
         String[] columns = {"Nombre","Código","Cantidad Artesanos","Suma Ventas","Cantidad Productos Vendidos"};
-        Sheet sheet= workbook.createSheet("reporte comunidad " + LocalDate.now().toString());
-        setcolumnwidths(sheet,reportes.getOrderBy());
-        List<ReportesComunidadDto> reportesComunidad;
+        Sheet sheet= workbook.createSheet("Reporte comunidad " + LocalDate.now().toString());
+        setColumnWidths(sheet,reportes.getOrderBy());
+        List<ReportesComunidadDto> reportesComunidad = new ArrayList<>();
         switch (reportes.getType()){
             case 1:
                 reportesComunidad = ventasRepository.obtenerReporteAnualComunidad(reportes.getYear());
@@ -215,35 +136,15 @@ public class ReporteGestorService implements IReporteGestorService {
             case 3:
                 reportesComunidad = ventasRepository.obtenerReporteMensualComunidad(reportes.getSelected(),reportes.getYear());
                 break;
-            default:
-                reportesComunidad = new ArrayList<>();
         }
-        if(reportesComunidad.isEmpty()){
-            sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
-
-        }else{
-            Row row = sheet.createRow(1);
-            for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i-1]);
-            }
-            int fila = 1;
-            for(ReportesComunidadDto reportesComunidadDto : reportesComunidad){
-                row = sheet.createRow(++fila);
-                row.createCell(1).setCellValue(reportesComunidadDto.getNombre());
-                row.createCell(2).setCellValue(reportesComunidadDto.getCodigo());
-                row.createCell(3).setCellValue(reportesComunidadDto.getCantidadartesanos());
-                row.createCell(4).setCellValue(reportesComunidadDto.getSumaventas());
-                row.createCell(5).setCellValue(reportesComunidadDto.getCantidadvendidos());
-            }
-        }
-
-
+        fillCellsInSheet(sheet,columns,reportesComunidad,workbook);
     }
+
     private void llenarReporteCliente(Workbook workbook, Reportes reportes){
-        String[] columns = {"Nombre","DNI o RUC","Producto más comprado","Suma Ventas","Cantidad Productos Vendidos"};
-        Sheet sheet= workbook.createSheet("reporte de clientes " + LocalDate.now().toString());
-        setcolumnwidths(sheet,reportes.getOrderBy());
-        List<ReportesClienteDto> reportesClientes;
+        String[] columns = {"Nombre","DNI o RUC","Producto más comprado","Suma Ventas","Cantidad Vendida"};
+        Sheet sheet= workbook.createSheet("Reporte de clientes " + LocalDate.now().toString());
+        setColumnWidths(sheet,reportes.getOrderBy());
+        List<ReportesClienteDto> reportesClientes = new ArrayList<>();
         switch (reportes.getType()){
             case 1:
                 reportesClientes = ventasRepository.obtenerReporteAnualCliente(reportes.getYear());
@@ -254,69 +155,9 @@ public class ReporteGestorService implements IReporteGestorService {
             case 3:
                 reportesClientes = ventasRepository.obtenerReporteMensualCliente(reportes.getSelected(),reportes.getYear());
                 break;
-            default:
-                reportesClientes = new ArrayList<>();
         }
 
-        if(reportesClientes.isEmpty()){
-            sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
-
-        }else{
-            Row row = sheet.createRow(1);
-            for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i-1]);
-            }
-            int fila = 1;
-            for(ReportesClienteDto reportesClienteDto : reportesClientes){
-                row = sheet.createRow(++fila);
-                row.createCell(1).setCellValue(reportesClienteDto.getNombre());
-                row.createCell(2).setCellValue(reportesClienteDto.getRuc_dni());
-                row.createCell(3).setCellValue(reportesClienteDto.getProducto());
-                row.createCell(4).setCellValue(reportesClienteDto.getSumaventas());
-                row.createCell(5).setCellValue(reportesClienteDto.getCantidadvendidos());
-            }
-        }
-
-
+        fillCellsInSheet(sheet,columns,reportesClientes,workbook);
     }
-
-    private void setcolumnwidths(Sheet sheet, Integer orderBy){
-        switch (orderBy){
-            case 1:
-                break;
-            case 2:
-                sheet.setColumnWidth(1, 5500);
-                sheet.setColumnWidth(2, 5500);
-                sheet.setColumnWidth(3, 5500);
-                sheet.setColumnWidth(4, 5500);
-                sheet.setColumnWidth(5, 5500);
-                sheet.setColumnWidth(6, 5500);
-                break;
-            case 3:
-                sheet.setColumnWidth(1, 5500);
-                sheet.setColumnWidth(2, 5500);
-                sheet.setColumnWidth(3, 5500);
-                sheet.setColumnWidth(4, 5500);
-                sheet.setColumnWidth(5, 5500);
-                break;
-            case 4:
-                sheet.setColumnWidth(1, 5500);
-                sheet.setColumnWidth(2, 5500);
-                sheet.setColumnWidth(3, 5500);
-                sheet.setColumnWidth(4, 5500);
-                sheet.setColumnWidth(5, 5500);
-                break;
-            case 5:
-                sheet.setColumnWidth(1, 5500);
-                sheet.setColumnWidth(2, 6500);
-                sheet.setColumnWidth(3, 5500);
-                sheet.setColumnWidth(4, 5500);
-                sheet.setColumnWidth(5, 5500);
-                break;
-
-        }
-
-    }
-
 
 }

@@ -67,7 +67,7 @@
                                                 <th>Cantidad vendida</th>
                                                 <th>Precio total</th>
                                                 <th>Última modificación</th>
-                                                <th>Editar/Borrar</th>
+                                                <th>Editar / Cancelar Venta</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -84,7 +84,7 @@
                                                 <th>Cantidad vendida</th>
                                                 <th>Precio total</th>
                                                 <th>Última modificación</th>
-                                                <th>Editar/Borrar</th>
+                                                <th>Editar / Cancelar Venta</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -109,8 +109,8 @@
                                                             data-toggle="modal" data-target="#formModal"
                                                             class="editar-Venta btn btn-datatable btn-icon btn-info mr-2"><i class="fa fa-edit" ></i></button>
                                                     <button th:attr="data-id1=${item.id.numerodocumento}, data-id2=${item.id.tipodocumento}"
-                                                            data-toggle="modal" data-target="#deleteModal"
-                                                            class="delete-Venta btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                            data-toggle="modal" data-target="#cancelarModal"
+                                                            class="cancelar-Venta btn btn-datatable btn-icon btn-danger"><i class="fas fa-times"></i></button>
                                                 </td>
                                             </tr>
 
@@ -183,12 +183,10 @@
                     <div class="modal-body">
                         <form method="post" th:action="@{/gestor/venta/save}" th:object="${venta}">
 
-                                <input type="text" hidden class="form-control" id="id12" name="id1" >
-                                <input type="text" hidden class="form-control" id="id21" name="id2" >
-                            <!--input type="text" class="form-control" th:field="*{id.numerodocumento}">
-                            <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}" th:errors="*{id.numerodocumento}">Error</div>
-                            <input type="text" class="form-control" th:field="*{id.tipodocumento}">
-                            <div class="text-danger" th:if="${#fields.hasErrors('id.tipodocumento')}" th:errors="*{id.tipodocumento}">Error</div-->
+                                <!--input type="text" hidden class="form-control" id="id12" name="id1" >
+                                <input type="text" hidden class="form-control" id="id21" name="id2" -->
+                            <input hidden type="text" class="form-control" th:field="*{id.numerodocumento}">
+                            <input hidden type="text" class="form-control" th:field="*{id.tipodocumento}">
                             <div class="form-group">
                                 <label  class="col-form-label">Ruc/Dni:</label>
                                 <input type="text" class="form-control" th:field="*{rucdni}">
@@ -215,7 +213,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Borrar Venta</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button th:href="@{/gestor/venta}" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <form method="get" th:action="@{/gestor/venta/delete}" th:object="${venta}">
                         <div class="modal-body">
@@ -226,6 +224,37 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Cancelar -->
+        <div id="cancelarModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Cancelar Venta</h4>
+                        <button th:href="@{/gestor/venta}" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <form method="get" th:action="@{/gestor/venta/cancelar}">
+                        <div class="modal-body">
+                            <input type="hidden" class="form-control" id="id11" name="id1">
+                            <input type="hidden" class="form-control" id="id22" name="id2">
+                            <p>Se enviará la cancelación al administrador para su confirmación.</p>
+                            <div class="form-group">
+                                <label  class="col-form-label">Ingrese nota de crédito:</label>
+                                <input type="number" class="form-control" name="nota" th:value="*{nota}">
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-form-label">Descripción del problema:</label>
+                                <textarea type="text" class="form-control" name="mensaje" th:value="${mensaje}"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Enviar</a></button>
                         </div>
                     </form>
                 </div>

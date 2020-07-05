@@ -10,6 +10,7 @@ import com.example.sw2.dtoReportes.ReportesTotalDto;
 import com.example.sw2.entity.Ventas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -39,10 +40,17 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
             nativeQuery = true)
     List<DatosGestorVentasDto> obtenerDatosGestorVentas();
 
-    @Query(value="SELECT ven.* FROM Ventas ven WHERE vendedor = ?1",nativeQuery=true)
+    @Query(value="SELECT ven.* FROM Ventas ven WHERE ven.vendedor = ?1",nativeQuery=true)
     List<Ventas> buscarPorGestor(int gestor);
 
     List<Ventas> findByVendedor_Idusuarios(int dni);
+
+    @Query(value = "SELECT ven.* FROM Ventas ven INNER JOIN Usuarios usu ON (ven.vendedor = usu.dni) WHERE usu.rol = ?1",
+            nativeQuery = true)
+    List<Ventas> buscarVentasDeAdmin(int rol);
+
+    @Procedure(name = "dev_stock_inv")
+    void dev_stock_inv(int cant_devol, String codigo);
 
 
     @Query(value="SELECT * FROM mosqoy.Ventas ven WHERE YEAR(ven.fecha_creacion) = ?1",nativeQuery=true)

@@ -79,7 +79,7 @@
                                                 </div>
                                                 <div class="form-group col">
                                                     <label for="linea" class="col-form-label"><b>Línea:</b></label>
-                                                    <select th:value="${linea}" id="linea" name="linea" class="form-control">
+                                                    <select th:value="${linea}" id="linea" name="productos.id.codigolinea" class="form-control">
                                                         <option value="no">--- Seleccionar ---</option>
                                                         <option th:each="item : ${lineas}"
                                                                 th:selected="${item.key==linea}"

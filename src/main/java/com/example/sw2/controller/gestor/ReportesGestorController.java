@@ -39,12 +39,13 @@ public class ReportesGestorController {
 
         ByteArrayInputStream stream = IReporteGestorService.generarReporte(new Reportes(orderBy, anho, type,select));
 
+        /*
         System.out.println("ordenar: "+ orderBy);
         System.out.println("tipo: "+type);
         System.out.println("years: "+ anho);
-        System.out.println("tipoSelect: "+ select);
+        System.out.println("tipoSelect: "+ select);*/
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition","attachment; filename=reporte "+LocalDate.now().toString() +".xls");
+        headers.add("Content-Disposition","attachment; filename=Reporte "+LocalDate.now().toString() +".xls");
 
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
     }

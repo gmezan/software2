@@ -70,11 +70,11 @@ public class ProductoController {
     }
 
     @GetMapping("/delete")
-    public String borrar(ProductoId id,
+    public String borrar(Productos productos,
                             RedirectAttributes attr) {
-        Optional<Productos> c = productosRepository.findById(id);
+        Optional<Productos> c = productosRepository.findById(productos.getId());
         if (c.isPresent()) {
-            productosRepository.deleteById(id);
+            productosRepository.deleteById(productos.getId());
             attr.addFlashAttribute("msg","Producto borrado exitosamente");
         }
         return "redirect:/gestor/producto";

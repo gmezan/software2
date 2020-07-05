@@ -150,6 +150,13 @@
             <span>Inventario</span></a>
     </li>
 
+    <!-- Nav Item - CancelarVenta -->
+    <li class="nav-item" th:classappend="${param1=='Venta'}? active : ''">
+        <a class="nav-link" th:href="@{/admin/venta}">
+            <i class="fas fa-fw fa-times"></i>
+            <span>Cancelación de Ventas</span></a>
+    </li>
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">
