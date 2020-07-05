@@ -88,10 +88,11 @@ public class LoginController {
                                         RedirectAttributes attr) throws IOException, MessagingException, NoSuchAlgorithmException {
 
 
+        String URL = "https://www.mosqoy.dns-cloud.net";
+        String URL2 = "http://localhost:8080";
         String email = "";
         String id = "";
         String token = "";
-
 
         //valida si el campo está vacío
         if(usuarios.getCorreo() == null){
@@ -112,12 +113,8 @@ public class LoginController {
                             id.getBytes(StandardCharsets.UTF_8));
                     token =bytesToHex(encodedhash);
                     u.setToken(token);
-                    System.out.println(bytesToHex(encodedhash));
                     usuariosRepository.save(u);
-
-
                     email = u.getCorreo();
-                    System.out.println(email);
                 }
             }
         }
@@ -128,65 +125,66 @@ public class LoginController {
             customMailService.sendEmail(email,
                     "Recuperación de contraseña", "Nueva contraseña",
                     "Para restablecer su contraseña ingrese al siguiente link \n"
-                            + "http://localhost:8080/nuevacontraseña?t="+ token);
+                            + URL2+"/newpassword?t="+ token+"\no\n"+URL+"/newpassword?t="+ token);
             return "message-sent";
         }
 
     }
 
-    @GetMapping("/nuevacontraseña")
-    public String NuevaContraseña(@ModelAttribute("usuario") Usuarios u,@RequestParam("t") String token,
+    @GetMapping("/newpassword")
+    public String newPassword(@ModelAttribute("usuario") Usuarios u, @RequestParam("t") String token,
                                   Model model){
 
         u = usuariosRepository.findByToken(token);
+        if (u==null){
+            return "redirect:/";
+        }
         model.addAttribute("token", token);
         return "new-password";
     }
 
-    @PostMapping("/guardarcontraseña")
-    public String GuardarNuevaContraseña(@ModelAttribute("usuario") Usuarios u,
+    @PostMapping("/savenewpassword")
+    public String saveNewPassword(@ModelAttribute("usuario") Usuarios u,
                                          BindingResult bindingResult,Model model,
                                          @RequestParam("pass") String pass,@RequestParam("token") String token){
 
-        //System.out.println(pass);
-        //System.out.println(u.getPassword2());
         Usuarios usuario = usuariosRepository.findByToken(token);
 
-        //System.out.println(usuario.getCorreo());
-
-        if(pass == null){
-            bindingResult.rejectValue("password2","error.user","Este campo no puede estar vacío");
-        }else{
-            if(!(u.getPassword().equals(pass))){
-                bindingResult.rejectValue("password2","error.user","Las contraseñas deben de ser idénticas");
+        if (usuario!=null){
+            if(pass == null || pass.equals("")){
+                bindingResult.rejectValue("password2","error.user","Este campo no puede estar vacío");
             }else{
-                if(!u.validatePassword()){
-                    bindingResult.rejectValue("password2","error.user","La contraseña debe tener 8 caracteres como mínimo y un caracter especial");
+                if(!(u.getPassword().equals(pass))){
+                    bindingResult.rejectValue("password2","error.user","Las contraseñas deben de ser idénticas");
+                }else{
+                    if(!u.validatePassword()){
+                        bindingResult.rejectValue("password2","error.user","La contraseña debe tener 8 caracteres como mínimo y un caracter especial");
+                    }
                 }
+            }
+
+            if(bindingResult.hasErrors()){
+                model.addAttribute("msgError", "ERROR");
+                model.addAttribute("token", token);
+                u.setPassword2("");
+                u.setPassword("");
+                return "new-password";
+            }else{
+                //System.out.println(usuario.getCorreo());
+                u.setPassword(pass);
+                usuariosRepository.actualizar_password(token, u.getPassword(), usuario.getIdusuarios());
             }
         }
 
-
-        if(bindingResult.hasErrors()){
-            model.addAttribute("msgError", "ERROR");
-            model.addAttribute("token", token);
-            u.setPassword2("");
-            u.setPassword("");
-            return "new-password";
-        }else{
-            //System.out.println(usuario.getCorreo());
-            u.setPassword(pass);
-            usuariosRepository.actualizar_password(token, u.getPassword(), usuario.getIdusuarios());
-            return "redirect:/";
-        }
+        return "redirect:/";
 
     }
 
     private static String bytesToHex(byte[] hash) {
-        StringBuffer hexString = new StringBuffer();
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(0xff & hash[i]);
-            if(hex.length() == 1) hexString.append('0');
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
             hexString.append(hex);
         }
         return hexString.toString();
@@ -195,8 +193,7 @@ public class LoginController {
     public static int getRandom(){
         int min = 10;
         int max = 1000;
-        int x = (int)(Math.random()*((max-min)+1))+min;
-        return x;
+        return (int)(Math.random()*((max-min)+1))+min;
     }
 
 
