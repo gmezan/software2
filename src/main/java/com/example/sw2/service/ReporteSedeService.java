@@ -5,6 +5,7 @@ import com.example.sw2.dtoReportes.ReportesTotalDto;
 import com.example.sw2.dtoReportes.ReportesComunidadDto;
 import com.example.sw2.entity.Reportes;
 import com.example.sw2.repository.VentasRepository;
+import com.example.sw2.utils.ReportesUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ReporteSedeService implements IReporteSedeService {
+public class ReporteSedeService extends ReportesUtils implements IReporteSedeService {
 
 
     @Autowired
