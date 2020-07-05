@@ -50,6 +50,8 @@ public class Usuarios extends Auditable implements Serializable {
     @Min(value = 900000000, message = "Ingrese un número de telefono válido")
     @Max(value = 999999999,  message = "Ingrese un número de telefono válido")
     private int telefono;
+    @Column(name = "token")
+    private String token;
     @ManyToOne
     @JoinColumn(name = "rol",nullable = false)
     private Roles roles;
@@ -88,6 +90,23 @@ public class Usuarios extends Auditable implements Serializable {
         password = new BCryptPasswordEncoder().
                 encode(newpassword);
         return newpassword;
+    }
+
+    public boolean validatePassword(){
+        if(password!=null){
+            int len = password.length();
+            if (len>7){
+                int count=0;
+                for(String i : password.split("//[-&+$?.@]")){
+                    if (password.contains(i)) count++;
+                }
+                if (count>=1){
+                    return true;
+                }
+
+            }
+        }
+        return false;
     }
 
     public List<Ventas> getVentas() {
@@ -151,6 +170,13 @@ public class Usuarios extends Auditable implements Serializable {
         this.password = new BCryptPasswordEncoder().encode(password);
     }
 
+    public String getPassword2() {
+        return password;
+    }
+
+    public void setPassword2(String password) { this.password = password;}
+
+
     public int getTelefono() {
         return telefono;
     }
@@ -175,7 +201,6 @@ public class Usuarios extends Auditable implements Serializable {
         this.cuentaactivada = cuentaactivada;
     }
 
-
     public int getIdusuarios() {
         return idusuarios;
     }
@@ -188,6 +213,13 @@ public class Usuarios extends Auditable implements Serializable {
         return this.nombre + " " + this.apellido;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public Usuarios updateFields(Usuarios u2){
         nombre = u2.getNombre();

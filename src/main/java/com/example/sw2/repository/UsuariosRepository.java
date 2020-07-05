@@ -33,6 +33,9 @@ public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
     @Procedure(procedureName = "delete_user")
     void delete_user(int idusuario);
 
+    @Procedure(procedureName = "actualizar_password")
+    void actualizar_password(String token, String pass, int id);
+
     //@Query(value = "SELECT * FROM mosqoy2.Ventas v WHERE v.vendedor=?1;",nativeQuery = true)
     //List<Ventas> buscarSedesenVentas(int idUsuario);
 
@@ -40,6 +43,10 @@ public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
     //List<AsignadosSedes> (int idUsuario);
 
     List<Usuarios> findUsuariosByRoles_IdrolesOrderByApellido(int rol);
+
+    Usuarios findByToken(String token);
+
+
 
 
 }
