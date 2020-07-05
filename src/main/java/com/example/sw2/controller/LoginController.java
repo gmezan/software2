@@ -106,7 +106,7 @@ public class LoginController {
                 if(u == null){
                     bindingResult.rejectValue("correo","error.user","Este email no está registrado");
                 }else{
-                    id = Integer.toString(u.getIdusuarios());
+                    id = Integer.toString(u.getIdusuarios()) + Integer.toString(getRandom());
                     MessageDigest digest = MessageDigest.getInstance("SHA-256");
                     byte[] encodedhash = digest.digest(
                             id.getBytes(StandardCharsets.UTF_8));
@@ -190,6 +190,13 @@ public class LoginController {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+
+    public static int getRandom(){
+        int min = 10;
+        int max = 1000;
+        int x = (int)(Math.random()*((max-min)+1))+min;
+        return x;
     }
 
 
