@@ -8,4 +8,5 @@ public interface ReportesClienteDto {
     Double getSumaventas();
     Integer getCantidadvendidos();
 
+
 }
