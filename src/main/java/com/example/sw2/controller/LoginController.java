@@ -5,15 +5,32 @@ import com.example.sw2.entity.Usuarios;
 import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.utils.CustomMailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ResolvableType;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.swing.text.html.Option;
 import javax.validation.Valid;
@@ -21,7 +38,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = {"/",""})
@@ -32,9 +49,35 @@ public class LoginController {
     @Autowired
     CustomMailService customMailService;
 
+    @Autowired
+    private OAuth2AuthorizedClientService authorizedClientService;
+
+    private static String authorizationRequestBaseUri = "oauth2/authorization";
+
+    private Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
+
+    @Autowired
+    private ClientRegistrationRepository clientRegistrationRepository;
+
+    @Autowired
+    UsuariosRepository usuarioRepository;
 
     @GetMapping(value = {"/","/loginForm"})
-    public String login(Authentication auth){
+    public String login(Model model, Authentication auth){
+        // For google auth:
+        Iterable<ClientRegistration> clientRegistrations = null;
+        ResolvableType type = ResolvableType.forInstance(clientRegistrationRepository)
+                .as(Iterable.class);
+        if (type != ResolvableType.NONE &&
+                ClientRegistration.class.isAssignableFrom(type.resolveGenerics()[0])) {
+            clientRegistrations = (Iterable<ClientRegistration>) clientRegistrationRepository;
+        }
+
+        clientRegistrations.forEach(registration ->
+                oauth2AuthenticationUrls.put(registration.getClientName(),
+                        authorizationRequestBaseUri + "/" + registration.getRegistrationId()));
+        // For google auth ---- end
+        model.addAttribute("urls", oauth2AuthenticationUrls);
         String rol = "";
 
         if(auth == null){
@@ -55,6 +98,70 @@ public class LoginController {
             return "/";
         }
     }
+
+    @GetMapping("/loginSuccess")
+    public String getLoginInfo(HttpServletRequest request, OAuth2AuthenticationToken authentication,
+                               HttpSession session, RedirectAttributes attr) {
+        OAuth2AuthorizedClient client = authorizedClientService
+                .loadAuthorizedClient(
+                        authentication.getAuthorizedClientRegistrationId(),
+                        authentication.getName());
+        String userInfoEndpointUri = client.getClientRegistration()
+                .getProviderDetails().getUserInfoEndpoint().getUri();
+
+        if (!StringUtils.isEmpty(userInfoEndpointUri)) {
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + client.getAccessToken()
+                    .getTokenValue());
+            HttpEntity entity = new HttpEntity("", headers);
+            ResponseEntity<Map> response = restTemplate
+                    .exchange(userInfoEndpointUri, HttpMethod.GET, entity, Map.class);
+            Map userAttributes = response.getBody();
+            Usuarios usuario = usuarioRepository.findByCorreo((String)userAttributes.get("email"));
+            if (usuario==null){
+                try { //Salir
+                    SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+                    request.logout();
+                    attr.addFlashAttribute("msgError","Usuario no registrado");
+                    return "redirect:/loginForm";
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                System.out.println("Se validó");
+                //Usuario registrado en el sistema
+                List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                authorities.add(new SimpleGrantedAuthority(usuario.getRoles().getNombrerol()));
+                Authentication auth =  new UsernamePasswordAuthenticationToken(usuario.getCorreo(), usuario.getPassword(), authorities);
+                SecurityContextHolder.getContext().setAuthentication(auth);
+
+                session.setAttribute("usuario", usuario);
+                String rol="";
+                for (GrantedAuthority role : auth.getAuthorities()) {
+                    rol = role.getAuthority();
+                    break;
+                }
+                System.out.println("EL ROL ES::::::::");
+                System.out.println(rol);
+                switch (rol) {
+                    case "admin":
+                        return "redirect:/admin/";
+                    case "gestor":
+                        return "redirect:/gestor/";
+                    case "sede":
+                        return "redirect:/sede/";
+                }
+            }
+            SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+            attr.addFlashAttribute("msgError","Error en el inicio de sesion");
+            return "redirect:/loginForm";
+        }
+
+        return "/loginForm?error";
+    }
+
 
     @GetMapping("/redirectByRole")
     public String redirectByRole(Authentication auth, HttpSession session) {
