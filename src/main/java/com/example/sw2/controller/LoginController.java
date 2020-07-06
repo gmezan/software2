@@ -52,7 +52,7 @@ public class LoginController {
 
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
-    private static String authorizationRequestBaseUri = "oauth2/authorization";
+    private static String authorizationRequestBaseUri = "oauth2/authorize";
     private Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
     @Autowired
     private ClientRegistrationRepository clientRegistrationRepository;

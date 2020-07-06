@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login()
                     .authorizationEndpoint()
-                    .baseUri("/oauth2/authorization")
+                    .baseUri("/oauth2/authorize")
                     .authorizationRequestRepository(authorizationRequestRepository())
                     .and()
                     .defaultSuccessUrl("/loginSuccess")
