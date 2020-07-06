@@ -63,7 +63,7 @@ public class LoginController {
     UsuariosRepository usuarioRepository;
 
     @GetMapping(value = {"/","/loginForm"})
-    public String login(Model model, Authentication auth){
+    public String login(Model model, Authentication auth, HttpServletRequest request){
         // For google auth:
         Iterable<ClientRegistration> clientRegistrations = null;
         ResolvableType type = ResolvableType.forInstance(clientRegistrationRepository)
@@ -94,8 +94,15 @@ public class LoginController {
                     return "redirect:/gestor/";
                 case "sede":
                     return "redirect:/sede/";
+                default:
+                    try{
+                        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+                        request.logout();}
+                    catch (ServletException e) {
+                        e.printStackTrace();
+                    }
             }
-            return "/";
+            return "redirect:/";
         }
     }
 
@@ -152,6 +159,13 @@ public class LoginController {
                         return "redirect:/gestor/";
                     case "sede":
                         return "redirect:/sede/";
+                    default:
+                        try{
+                        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+                        request.logout();}
+                    catch (ServletException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
@@ -164,7 +178,7 @@ public class LoginController {
 
 
     @GetMapping("/redirectByRole")
-    public String redirectByRole(Authentication auth, HttpSession session) {
+    public String redirectByRole(Authentication auth, HttpSession session, HttpServletRequest request) {
         String rol = "";
         for (GrantedAuthority role : auth.getAuthorities()) {
             rol = role.getAuthority();
@@ -181,9 +195,15 @@ public class LoginController {
                 return "redirect:/gestor/";
             case "sede":
                 return "redirect:/sede/";
+            default:
+                try{
+                    SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+                    request.logout();}
+                catch (ServletException e) {
+                    e.printStackTrace();
+                }
         }
-        return "/";
-
+        return "redirect:/";
     }
 
     @GetMapping("/forgotPassword")
