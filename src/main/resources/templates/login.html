@@ -55,7 +55,8 @@
                   </div>
                   <div  th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
 
-                  <div class="card-body p-1 text-center">
+                  <!-- Google auth
+                  <div class="card-body p-2 text-center">
                     <div th:each="url : ${urls}"  class="col s12 m6 offset-m3 center-align">
                       <a  th:href="${url.value}" class="oauth-container btn btn-dark darken-4 white black-text"  style="text-transform:none">
                         <div class="left">
@@ -66,6 +67,8 @@
                       </a>
                     </div>
                   </div>
+
+                  -->
 
                   <form th:action="@{/processLogin}" method="post" class="user">
                     <div class="form-group">

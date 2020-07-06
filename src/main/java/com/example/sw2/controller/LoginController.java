@@ -15,11 +15,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -49,22 +44,18 @@ public class LoginController {
     @Autowired
     CustomMailService customMailService;
 
+    /*
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
-
     private static String authorizationRequestBaseUri = "oauth2/authorization";
-
     private Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
-
     @Autowired
-    private ClientRegistrationRepository clientRegistrationRepository;
+    private ClientRegistrationRepository clientRegistrationRepository;*/
 
-    @Autowired
-    UsuariosRepository usuarioRepository;
 
     @GetMapping(value = {"/","/loginForm"})
     public String login(Model model, Authentication auth, HttpServletRequest request){
-        // For google auth:
+        /* For google auth:
         Iterable<ClientRegistration> clientRegistrations = null;
         ResolvableType type = ResolvableType.forInstance(clientRegistrationRepository)
                 .as(Iterable.class);
@@ -76,8 +67,9 @@ public class LoginController {
         clientRegistrations.forEach(registration ->
                 oauth2AuthenticationUrls.put(registration.getClientName(),
                         authorizationRequestBaseUri + "/" + registration.getRegistrationId()));
-        // For google auth ---- end
         model.addAttribute("urls", oauth2AuthenticationUrls);
+         For google auth ---- end */
+
         String rol = "";
 
         if(auth == null){
@@ -106,6 +98,7 @@ public class LoginController {
         }
     }
 
+    /*
     @GetMapping("/loginSuccess")
     public String getLoginInfo(HttpServletRequest request, OAuth2AuthenticationToken authentication,
                                HttpSession session, RedirectAttributes attr) {
@@ -125,7 +118,7 @@ public class LoginController {
             ResponseEntity<Map> response = restTemplate
                     .exchange(userInfoEndpointUri, HttpMethod.GET, entity, Map.class);
             Map userAttributes = response.getBody();
-            Usuarios usuario = usuarioRepository.findByCorreo((String)userAttributes.get("email"));
+            Usuarios usuario = usuariosRepository.findByCorreo((String)userAttributes.get("email"));
             if (usuario==null){
                 try { //Salir
                     SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
@@ -171,7 +164,7 @@ public class LoginController {
         }
 
         return "/loginForm?error";
-    }
+    }*/
 
 
     @GetMapping("/redirectByRole")
@@ -212,7 +205,7 @@ public class LoginController {
                                         RedirectAttributes attr) throws IOException, MessagingException, NoSuchAlgorithmException {
 
 
-        String URL = "https://www.mosqoy.dns-cloud.net";
+        String URL = "https://www.mosqoy-sw2.dns-cloud.net";
         String URL2 = "http://localhost:8080";
         String email = "";
         String id = "";
