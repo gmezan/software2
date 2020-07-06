@@ -24,7 +24,7 @@ public class StorageServiceDao {
     private final String USER_PATH = "saveProfile";
     private final String INVENTORY_PATH = "saveInventory" ;
 
-    private final String BASE_URL = "https://storage-service.mosqoy.dns-cloud.net/";
+    private final String BASE_URL = "https://storage-service.mosqoy-sw2.dns-cloud.net/";
     private final String API_KEY = "80e50707-27f2-481a-96d5-23e61f4cd29c-p4ssw0rd-r4nd0m";
 
     public StorageServiceResponse store(Usuarios u, MultipartFile multipartFile) throws IOException {
