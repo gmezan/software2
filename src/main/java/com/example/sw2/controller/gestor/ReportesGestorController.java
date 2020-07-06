@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.ByteArrayInputStream;
-import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/gestor/reportes")
@@ -37,16 +36,16 @@ public class ReportesGestorController {
                                                           @RequestParam("years") Integer anho, @RequestParam("tipoSelect") Integer select)
                                                             throws Exception{
 
-        ByteArrayInputStream stream = IReporteGestorService.generarReporte(new Reportes(orderBy, anho, type,select));
-
-        /*
-        System.out.println("ordenar: "+ orderBy);
-        System.out.println("tipo: "+type);
-        System.out.println("years: "+ anho);
-        System.out.println("tipoSelect: "+ select);*/
+        Reportes reportes = new Reportes(orderBy, anho, type,select);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition","attachment; filename=Reporte "+LocalDate.now().toString() +".xls");
+        ByteArrayInputStream stream = new  ByteArrayInputStream(new byte[]{});
+        String filename;
+        if (reportes.validateGestor()){
+            stream = IReporteGestorService.generarReporte(reportes);
+            filename = reportes.createNameGestor();
+        }else filename = "error";
 
+        headers.add("Content-Disposition","attachment; filename="+ filename +".xls");
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
     }
 

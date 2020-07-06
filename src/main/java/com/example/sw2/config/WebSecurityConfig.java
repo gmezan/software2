@@ -69,12 +69,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);
     }
 
-    @Bean
-    public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest>
-    accessTokenResponseClient() {
-
-        return new NimbusAuthorizationCodeTokenResponseClient();
-    }
 
     @Bean
     public AuthorizationRequestRepository<OAuth2AuthorizationRequest> authorizationRequestRepository() {

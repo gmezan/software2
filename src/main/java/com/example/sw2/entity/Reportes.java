@@ -1,6 +1,7 @@
 package com.example.sw2.entity;
 
 
+import java.time.LocalDate;
 
 public class Reportes {
 
@@ -17,6 +18,62 @@ public class Reportes {
         this.year = year;
         this.type = type;
         this.selected = selected;
+    }
+
+    public String createNameGestor(){
+        String n = "Reporte ";
+
+        switch (orderBy){
+            case 1:
+                n+="Total de Ventas";
+                break;
+            case 2:
+                n+="de Sedes";
+                break;
+            case 3:
+                n+="de Productos";
+                break;
+            case 4:
+                n+="de Comunidades";
+                break;
+            case 5:
+                n+="de Clientes";
+                break;
+        }
+
+        return n+ LocalDate.now().toString();
+    }
+
+    public boolean validateGestor(){
+        boolean validate = true;
+        if (orderBy<1 || orderBy>5) validate=false;
+        return validate && validateGeneral();
+    }
+
+    public boolean validateSede(){
+        boolean validate = true;
+        if (orderBy<1 || orderBy>4) validate=false;
+        return validate && validateGeneral();
+    }
+
+    private boolean validateGeneral(){
+        boolean validate = true;
+
+        if (year<2000 || year>3000) validate=false;
+        if (type<1 || type>3)
+            validate = false;
+        else {
+            if (type==2)//Trimestral
+            {
+                if (selected<1||selected>4) validate=false;
+            }
+            else if (type==3)//Mensual
+            {
+                if (selected<1||selected>12) validate=false;
+            }
+        }
+
+        return  validate;
     }
 
     public Integer getOrderBy() {

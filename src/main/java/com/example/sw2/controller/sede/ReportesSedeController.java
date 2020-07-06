@@ -41,12 +41,16 @@ public class ReportesSedeController {
                                                           HttpSession session) throws Exception{
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
-
-        ByteArrayInputStream stream = IReporteSedeService.generarReporte(new Reportes(orderBy,anho,type,Select), sede.getIdusuarios());
-
+        Reportes reportes = new Reportes(orderBy,anho,type,Select);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition","attachment; filename=ventasProducto.xls");
+        ByteArrayInputStream stream = new  ByteArrayInputStream(new byte[]{});
+        String filename;
+        if (reportes.validateSede()) {
+            stream = IReporteSedeService.generarReporte(reportes, sede.getIdusuarios());
+            filename = reportes.createNameGestor();
+        }else filename="error";
 
+        headers.add("Content-Disposition","attachment; filename="+filename+".xls");
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
     }
 

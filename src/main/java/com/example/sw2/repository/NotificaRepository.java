@@ -20,12 +20,14 @@ public interface NotificaRepository extends JpaRepository<Notifica,Integer> {
     @Procedure(procedureName = "delete_notifications")
     void delete_notifications(int idusuario);
 
-    List<Notifica> findNotificasByUsuario_Idusuarios(int idusuario);
+    List<Notifica> findNotificasByUsuario_IdusuariosOrderByFechacreacionDesc(int idusuario);
 
-    @Query(value = "select *  from Notificaciones where usuario=?1 order by fecha_creacion asc limit ?2", nativeQuery = true)
+    List<Notifica> findNotificasByUsuario_IdusuariosAndEstado(int iduser, int estado);
+
+    @Query(value = "select *  from Notificaciones where usuario=?1 order by fecha_creacion desc limit ?2", nativeQuery = true)
     List<Notifica> shortList(int idusuario, int limit);
 
-    @Query(value = "select count(*) as `value` from Notificaciones where usuario=?1", nativeQuery = true)
+    @Query(value = "select count(*) as `value` from Notificaciones where usuario=?1 and estado=1", nativeQuery = true)
     NotificationNumber getNotificationNumber(int id);
 
 

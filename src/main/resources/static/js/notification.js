@@ -6,6 +6,11 @@ $(function () {
     $.ajax({method:"GET", url:BASE+"/number"})
         .done(function (value) {
             (value>0) && $("#notification").find(" #number").text(value);
+
+            $.ajax({method:"GET",url:BASE+"/seen"})
+                .fail(function (err) {
+                    console.log(err);
+                })
         })
         .fail(function (err) {
             alert("Ocurrió un error al cargar la página");
@@ -16,6 +21,7 @@ $(function () {
             $.ajax({method:"GET", url:BASE+"/shortList"})
             .done(function (shortList) {
                 let dropdown = $("#notificationBody");
+                dropdown.empty();
                 $.each( shortList.reverse(),function () {
                     dropdown.prepend(
                         '<a class="dropdown-item d-flex align-items-center" href="#">\n' +
