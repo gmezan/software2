@@ -137,7 +137,6 @@ public class LoginController {
                 }
             }
             else {
-                System.out.println("Se validó");
                 //Usuario registrado en el sistema
                 List<SimpleGrantedAuthority> authorities = new ArrayList<>();
                 authorities.add(new SimpleGrantedAuthority(usuario.getRoles().getNombrerol()));
@@ -150,8 +149,6 @@ public class LoginController {
                     rol = role.getAuthority();
                     break;
                 }
-                System.out.println("EL ROL ES::::::::");
-                System.out.println(rol);
                 switch (rol) {
                     case "admin":
                         return "redirect:/admin/";
@@ -297,7 +294,6 @@ public class LoginController {
                 u.setPassword("");
                 return "new-password";
             }else{
-                //System.out.println(usuario.getCorreo());
                 u.setPassword(pass);
                 usuariosRepository.actualizar_password(token, u.getPassword(), usuario.getIdusuarios());
             }
