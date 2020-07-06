@@ -15,6 +15,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -44,18 +49,18 @@ public class LoginController {
     @Autowired
     CustomMailService customMailService;
 
-    /*
+
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
     private static String authorizationRequestBaseUri = "oauth2/authorization";
     private Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
     @Autowired
-    private ClientRegistrationRepository clientRegistrationRepository;*/
+    private ClientRegistrationRepository clientRegistrationRepository;
 
 
     @GetMapping(value = {"/","/loginForm"})
     public String login(Model model, Authentication auth, HttpServletRequest request){
-        /* For google auth:
+        /* For google auth:*/
         Iterable<ClientRegistration> clientRegistrations = null;
         ResolvableType type = ResolvableType.forInstance(clientRegistrationRepository)
                 .as(Iterable.class);
@@ -68,7 +73,7 @@ public class LoginController {
                 oauth2AuthenticationUrls.put(registration.getClientName(),
                         authorizationRequestBaseUri + "/" + registration.getRegistrationId()));
         model.addAttribute("urls", oauth2AuthenticationUrls);
-         For google auth ---- end */
+         /*For google auth ---- end */
 
         String rol = "";
 
@@ -98,7 +103,7 @@ public class LoginController {
         }
     }
 
-    /*
+
     @GetMapping("/loginSuccess")
     public String getLoginInfo(HttpServletRequest request, OAuth2AuthenticationToken authentication,
                                HttpSession session, RedirectAttributes attr) {
@@ -164,7 +169,7 @@ public class LoginController {
         }
 
         return "/loginForm?error";
-    }*/
+    }
 
 
     @GetMapping("/redirectByRole")
