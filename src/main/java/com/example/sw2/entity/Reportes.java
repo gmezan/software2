@@ -28,20 +28,20 @@ public class Reportes {
                 n+="Total de Ventas";
                 break;
             case 2:
-                n+="de Sedes";
+                n+="de Ventas por Sedes";
                 break;
             case 3:
-                n+="de Productos";
+                n+="de Ventas por Productos";
                 break;
             case 4:
-                n+="de Comunidades";
+                n+="de Ventas por Comunidades";
                 break;
             case 5:
-                n+="de Clientes";
+                n+="de Ventas por Clientes";
                 break;
         }
 
-        return n+ LocalDate.now().toString();
+        return n+" "+ LocalDate.now().toString();
     }
 
     public boolean validateGestor(){
