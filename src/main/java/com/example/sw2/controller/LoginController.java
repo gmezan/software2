@@ -57,21 +57,23 @@ public class LoginController {
     @Autowired
     private ClientRegistrationRepository clientRegistrationRepository;
 
+    private static String NO_REGISTERED_USER_MESSAGE = "Usuario no registrado";
+
 
     @GetMapping(value = {"/","/loginForm"})
     public String login(Model model, Authentication auth, HttpServletRequest request){
         /* For google auth:*/
         Iterable<ClientRegistration> clientRegistrations = null;
-        ResolvableType type = ResolvableType.forInstance(clientRegistrationRepository)
-                .as(Iterable.class);
-        if (type != ResolvableType.NONE &&
-                ClientRegistration.class.isAssignableFrom(type.resolveGenerics()[0])) {
+        ResolvableType type = ResolvableType.forInstance(clientRegistrationRepository).as(Iterable.class);
+
+        if (type != ResolvableType.NONE && ClientRegistration.class.isAssignableFrom(type.resolveGenerics()[0])) {
             clientRegistrations = (Iterable<ClientRegistration>) clientRegistrationRepository;
         }
 
         clientRegistrations.forEach(registration ->
                 oauth2AuthenticationUrls.put(registration.getClientName(),
                         authorizationRequestBaseUri + "/" + registration.getRegistrationId()));
+
         model.addAttribute("urls", oauth2AuthenticationUrls);
          /*For google auth ---- end */
 
@@ -128,7 +130,7 @@ public class LoginController {
                 try { //Salir
                     SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
                     request.logout();
-                    attr.addFlashAttribute("msgError","Usuario no registrado");
+                    attr.addFlashAttribute("msgError",NO_REGISTERED_USER_MESSAGE);
                     return "redirect:/loginForm";
                 } catch (ServletException e) {
                     e.printStackTrace();
@@ -158,9 +160,9 @@ public class LoginController {
                         try{
                         SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
                         request.logout();}
-                    catch (ServletException e) {
-                        e.printStackTrace();
-                    }
+                        catch (ServletException e) {
+                            e.printStackTrace();
+                        }
                 }
             }
             SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);

@@ -229,6 +229,13 @@ public class InventarioController {
                     }
                     return "gestor/inventarioGestorForm";
                 }
+            }else{
+                bindingResult.rejectValue("foto", "error.user", "Debe seleccionar una imagen");
+                listasCamposInv(m);
+                if (inventario.getComunidades() != null) {
+                    m.addAttribute("listArt", artesanosRepository.findArtesanosByComunidades_Codigo(inventario.getComunidades().getCodigo()));
+                }
+                return "gestor/inventarioGestorForm";
             }
 
             inventario.setCantidadgestor(inventario.getCantidadtotal());
