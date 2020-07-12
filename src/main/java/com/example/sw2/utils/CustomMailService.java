@@ -14,6 +14,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.example.sw2.constantes.CustomConstants.MANAGER_EMAIL;
@@ -110,14 +112,37 @@ public class CustomMailService {
 	}
 
 	public void sendProductExpiration(List<Inventario> list, String[] emails) throws MessagingException {
-		String message="";
+		int ld = LocalDate.now().getMonthValue();
+		StringBuilder message= new StringBuilder();
 		MimeMessage msg = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 		helper.setTo(emails);
 		helper.setSubject("Mosqoy - Correo mensual de vencimiento de productos");
 
+		list.forEach(l->{
+			if(l.getFechavencimientoconsignacion()==null || (l.getFechavencimientoconsignacion().getMonthValue()!=ld)){
+				list.remove(l);
+			}
+		});
 
-		//list.forEach(l->l.getCodigoinventario());
+		if (list.isEmpty()){
+			message.append("<p>No se encontraron productos con fecha de vencimiento para este mes</p>");
+		}else {
+			message.append("<table>\n" +
+					"<thead>\n" +
+					"<th>Codigo</th>\n" +
+					"<th>Fecha de vencimiento</th>\n" +
+					"</thead>\n" +
+					"<tbody>\n");
+			for (Inventario inv : list){
+				message.append("<tr>\n" + "<td>")
+						.append(inv.getCodigoinventario())
+						.append("</td>\n").append("<td>")
+						.append(inv.getFechavencimientoconsignacion())
+						.append("</td>\n").append(" </tr>\n");
+			}
+			message.append("</tbody>\n" + "  </table>");
+		}
 
 
 		helper.setText("<html> <body>" +

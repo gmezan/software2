@@ -71,7 +71,7 @@ public class LoginController {
     @Autowired
     private ClientRegistrationRepository clientRegistrationRepository;
 
-    private static String NO_REGISTERED_USER_MESSAGE = "Usuario no registrado";
+    private static String NO_REGISTERED_USER_MESSAGE = "Usuario no registrado con google mail, contacte a un administrador";
 
 
     @GetMapping(value = {"/","/loginForm"})
