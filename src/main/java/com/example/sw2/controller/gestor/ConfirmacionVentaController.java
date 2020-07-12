@@ -1,13 +1,11 @@
 package com.example.sw2.controller.gestor;
 
 import com.example.sw2.Dao.StorageServiceDao;
+import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.constantes.VentasId;
-import com.example.sw2.entity.StorageServiceResponse;
-import com.example.sw2.entity.Usuarios;
-import com.example.sw2.entity.Ventas;
-import com.example.sw2.repository.UsuariosRepository;
-import com.example.sw2.repository.VentasRepository;
+import com.example.sw2.entity.*;
+import com.example.sw2.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,11 +28,16 @@ public class ConfirmacionVentaController {
 
     @Autowired
     VentasRepository ventasRepository;
-
     @Autowired
     UsuariosRepository usuariosRepository;
     @Autowired
     StorageServiceDao storageServiceDao;
+    @Autowired
+    InventarioRepository inventarioRepository;
+    @Autowired
+    AsignadosSedesRepository asignadosSedesRepository;
+    @Autowired
+    AsignacionTiendasRepository asignacionTiendasRepository;
 
 
     @GetMapping(value = {""})
@@ -76,7 +79,7 @@ public class ConfirmacionVentaController {
                     }
                     if (!s2.isSuccess()) {
                         attr.addFlashAttribute("error", s2.getMsg());
-                        return "sede/asignadoTiendas";
+                        return "redirect:/gestor/confirmacion";
                     }
                 }
 
@@ -101,12 +104,62 @@ public class ConfirmacionVentaController {
 
         // Faltaría validar el numero
         System.out.println(v.getIdventas());
-        System.out.println(v.getId().getTipodocumento());
-        System.out.println(v.getId().getNumerodocumento());
 
         if (optV.isPresent()){
-            ventasRepository.delete(optV.get());
-            attr.addFlashAttribute("msg", "La venta se ha borrado");
+            Ventas venta = optV.get();
+            switch (venta.getVendedor().getRoles().getIdroles()){
+                case 2: // Gestor
+                    Optional<Inventario> optionalInventario = inventarioRepository.findById(venta.getInventario().getCodigoinventario());
+                    if (optionalInventario.isPresent()){
+                        Inventario inv = optionalInventario.get();
+                        //Se aumenta cantidad total y cantidad gestor
+                        inv.addCantidad(venta.getCantidad());
+                        inventarioRepository.save(inv);
+                    }
+                    break;
+                case 3: //Sede
+                    Optional<AsignacionTiendas> optionalAsignacionTiendas =
+                            asignacionTiendasRepository.findByAsignadosSedes_Id_SedeAndAsignadosSedes_Id_Productoinventario_CodigoinventarioAndTienda_Ruc(
+                                    venta.getVendedor(), venta.getInventario().getCodigoinventario(),venta.getRucdni());
+                    Optional<AsignadosSedes> optionalAsignadosSedes =
+                            asignadosSedesRepository.findById_SedeAndId_Productoinventario(venta.getVendedor(),venta.getInventario());
+
+                    if (optionalAsignacionTiendas.isPresent()){
+                        AsignacionTiendas asignacionTiendas = optionalAsignacionTiendas.get();
+                        // Si pertenece a asignacionTiendas
+                        //  -   Se suma la cantidad de asignacion a tiendas,
+                        //  -   Se suma el stock (total) de asignados sedes
+                        //  -   Se suma la cantidad total en el inventario.
+                        asignacionTiendas.setStock(asignacionTiendas.getStock()+venta.getCantidad());
+                        asignacionTiendas.getAsignadosSedes().setStock(
+                                asignacionTiendas.getAsignadosSedes().getStock()+venta.getCantidad()
+                        );
+                        asignacionTiendas.getAsignadosSedes().getId().getProductoinventario().addCantidadTotal(venta.getCantidad());
+                        asignacionTiendasRepository.save(asignacionTiendas);
+                        asignadosSedesRepository.save(asignacionTiendas.getAsignadosSedes());
+                        inventarioRepository.save(asignacionTiendas.getAsignadosSedes().getId().getProductoinventario());
+                    }else if (optionalAsignadosSedes.isPresent()){
+                        AsignadosSedes asignadosSedes = optionalAsignadosSedes.get();
+                        // Si pertenece a asignadosSedes
+                        //  -   Se suma el stock (total) de asignados sedes
+                        //  -   Se suma la cantidad total en el inventario.
+                           asignadosSedes.setStock(asignadosSedes.getStock()+venta.getCantidad());
+                           asignadosSedes.setCantidadactual(asignadosSedes.getCantidadactual()+venta.getCantidad());
+                           asignadosSedes.getId().getProductoinventario().addCantidadTotal(venta.getCantidad());
+                           asignadosSedesRepository.save(asignadosSedes);
+                           inventarioRepository.save(asignadosSedes.getId().getProductoinventario());
+                    }else {
+                        attr.addFlashAttribute("msgError","Hubo un error al momento de cancelar este registro");
+                        return "redirect:/gestor/confirmacion";
+                    }
+                    break;
+
+                default:
+                    attr.addFlashAttribute("msgError","Hubo un error al momento de cancelar este registro");
+                    return "redirect:/gestor/confirmacion";
+            }
+            ventasRepository.delete(venta);
+            attr.addFlashAttribute("msg", "La venta se ha cancelado");
         }else {
             attr.addFlashAttribute("msgError", "Hubo un error encontrando el registro de venta");
         }

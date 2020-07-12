@@ -113,6 +113,14 @@ public class Inventario extends Auditable implements Serializable {
         this.cantidadgestor -= c;
     }
 
+    public void addCantidad(int c) {
+        this.cantidadgestor += c;
+        this.cantidadtotal+=c;
+    }
+
+    public void addCantidadTotal(int c) {
+        this.cantidadtotal+=c;
+    }
 
     public String getCodigoinventario() {
         return codigoinventario;

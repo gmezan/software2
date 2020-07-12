@@ -36,7 +36,9 @@
                     <div class="card-header py-3">
                         <div class="d-sm-flex align-items-center justify-content-between ">
                             <p class="text-black-50 mr-5 mt-3 mb-0 ">Aquí puede ver las solicitudes de comprobante de pago hecha por los usuarios Sede.
-                                Podrá confirmar una venta ingresando el número de comprobante y opcionalmente un archivo del comprobante.
+                                Podrá confirmar una venta ingresando el número de comprobante y opcionalmente un archivo del comprobante.<br>
+                                <strong>IMPORTANTE: </strong>Si se cancela la venta, la cantidad de productos registrados como vendidos
+                                regresrá a la asignación correspondiente.
                             </p>
                         </div>
                     </div>
@@ -216,7 +218,7 @@
                 <h4 class="modal-title">Borrar solicitud de Venta</h4>
                 <button th:href="@{/gestor/confirmacion}" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
-            <form method="get" th:action="@{/gestor/confirmacion/delete}" th:object="${venta}">
+            <form method="post" th:action="@{/gestor/confirmacion/delete}" th:object="${venta}">
                 <div class="modal-body">
                     <input hidden type="text" class="form-control" th:field="*{idventas}">
                     <p>¿Seguro que desea borrar esta venta? Esta acción no se puede deshacer y se perderán los datos registrados.</p>
