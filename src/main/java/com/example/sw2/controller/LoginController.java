@@ -2,8 +2,15 @@ package com.example.sw2.controller;
 
 
 import com.example.sw2.entity.Usuarios;
+import com.example.sw2.job.TokenExpirationJob;
 import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.utils.CustomMailService;
+import org.quartz.JobBuilder;
+import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ResolvableType;
 import org.springframework.http.HttpEntity;
@@ -27,7 +34,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import org.quartz.*;
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,16 +45,23 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 @Controller
 @RequestMapping(value = {"/",""})
 public class LoginController {
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final int EXPIRATION_TIME_MINUTES = 60;
 
     @Autowired
     UsuariosRepository usuariosRepository;
     @Autowired
     CustomMailService customMailService;
+    @Autowired
+    private Scheduler scheduler;
 
 
     @Autowired
@@ -209,7 +223,10 @@ public class LoginController {
     @PostMapping("/processForgotPassword")
     public String processForgotPassword(@ModelAttribute("usuario") Usuarios usuarios,
                                         BindingResult bindingResult, Model model,
-                                        RedirectAttributes attr) throws IOException, MessagingException, NoSuchAlgorithmException {
+                                        RedirectAttributes attr) throws IOException, MessagingException, NoSuchAlgorithmException, SchedulerException {
+
+
+        ZonedDateTime dateTime = ZonedDateTime.now();
 
 
         String URL = "https://www.mosqoy-sw2.dns-cloud.net";
@@ -217,7 +234,7 @@ public class LoginController {
         String email = "";
         String id = "";
         String token = "";
-
+        Usuarios u;
         //valida si el campo está vacío
         if(usuarios.getCorreo() == null){
             bindingResult.rejectValue("correo", "error.user", "Este campo no puede estar vacío");
@@ -227,7 +244,7 @@ public class LoginController {
                 bindingResult.rejectValue("correo", "error.user", "Ingrese una dirección de correo válida");
             }else{
                 //Busca el correo en la bd
-                Usuarios u = usuariosRepository.findByCorreo(usuarios.getCorreo());
+                u = usuariosRepository.findByCorreo(usuarios.getCorreo());
                 if(u == null){
                     bindingResult.rejectValue("correo","error.user","Este email no está registrado");
                 }else{
@@ -238,6 +255,9 @@ public class LoginController {
                     token =bytesToHex(encodedhash);
                     u.setToken(token);
                     usuariosRepository.save(u);
+                    JobDetail jobDetail = buildJobDetail(u);
+                    Trigger trigger = buildJobTrigger(jobDetail, dateTime.plusMinutes(EXPIRATION_TIME_MINUTES));
+                    scheduler.scheduleJob(jobDetail, trigger);
                     email = u.getCorreo();
                 }
             }
@@ -246,10 +266,12 @@ public class LoginController {
         if(bindingResult.hasErrors()){
             return "forgot-password";
         }else{
+
             customMailService.sendEmail(email,
-                    "Recuperación de contraseña Mosqoy", "Nueva contraseña",
-                    "Para restablecer su contraseña ingrese al siguiente link \n"
-                            + URL2+"/newpassword?t="+ token+"\no\n"+URL+"/newpassword?t="+ token);
+                    "Mosqoy - Recuperación de contraseña", "Nueva contraseña",
+                    "Para restablecer su contraseña ingrese al siguiente enlace \n"
+                            + URL2+"/newpassword?t="+ token+"\no\n"+URL+"/newpassword?t="+ token+"\n<br> " +
+                            "Este enlace solo estará disponible por los siguientes "+ EXPIRATION_TIME_MINUTES +  " minutos");
             return "message-sent";
         }
 
@@ -319,6 +341,28 @@ public class LoginController {
         return (int)(Math.random()*((max-min)+1))+min;
     }
 
+    private JobDetail buildJobDetail(Usuarios usuarios) {
+        JobDataMap jobDataMap = new JobDataMap();
+
+        jobDataMap.put("user", usuarios.getIdusuarios());
+
+        return JobBuilder.newJob(TokenExpirationJob.class)
+                .withIdentity(UUID.randomUUID().toString(), "login-jobs")
+                .withDescription("Token expiration Job")
+                .usingJobData(jobDataMap)
+                .storeDurably()
+                .build();
+    }
+
+    private Trigger buildJobTrigger(JobDetail jobDetail, ZonedDateTime startAt) {
+        return TriggerBuilder.newTrigger()
+                .forJob(jobDetail)
+                .withIdentity(jobDetail.getKey().getName(), "token-password-triggers")
+                .withDescription("Token expiration for password recovery")
+                .startAt(Date.from(startAt.toInstant()))
+                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withMisfireHandlingInstructionFireNow())
+                .build();
+    }
 
 
 }

@@ -187,11 +187,13 @@ public class SedeController {
             asignadosSedesRepository.save(asignadosSedes);
             inventarioRepository.save(inventario);
             try {
+                if (asignadosSedes.getStock()==0){
+                    customMailService.sendStockAlert(asignadosSedes);
+                }
                 customMailService.sendSaleConfirmation(ventas);
             } catch (MessagingException | IOException  e) {
                 e.printStackTrace();
             }
-
             attr.addFlashAttribute("msgExito", "Venta registrada exitosamente");
             return "redirect:/sede/productosConfirmados";
         }

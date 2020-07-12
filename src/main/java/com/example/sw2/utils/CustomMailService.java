@@ -1,5 +1,7 @@
 package com.example.sw2.utils;
 
+import com.example.sw2.entity.AsignadosSedes;
+import com.example.sw2.entity.Inventario;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import static com.example.sw2.constantes.CustomConstants.MANAGER_EMAIL;
 
@@ -92,6 +95,37 @@ public class CustomMailService {
 		sendEmail(u.getCorreo(),"Confirmación de cuenta Mosqoy",
 				"Bienvenido " + u.getFullname() + ", usuario "+u.getRoles().getNombrerol().toUpperCase(),
 				"Este es un mensaje de confirmación de cuenta, para ingresar al sistema use la siguiente contraseña:\n"+u.generateNewPassword());
+	}
+
+	public void sendStockAlert(AsignadosSedes a) throws IOException, MessagingException {
+		String subject = "Mosqoy - Stock agotado en sede";
+		String title = "Alerta por stock agotado  por ventas";
+		String message = "";
+		message+="<p>Se ha agotado el stock del producto de inventario con código <b>"+a.getId().getProductoinventario().getCodigoinventario()
+				+"</b>, para el usuario sede <b>"+a.getId().getSede().getFullname()+"</b>.<br></p>";
+		message+="<p>Si desea comunicarse con el usuario, su correo es: "+a.getId().getSede().getCorreo()+" y " +
+				"su numero celular: "+a.getId().getSede().getTelefono()+"</p>";
+		String to = a.getId().getGestor().getCorreo();
+		sendEmail(to,subject,title,message);
+	}
+
+	public void sendProductExpiration(List<Inventario> list, String[] emails) throws MessagingException {
+		String message="";
+		MimeMessage msg = javaMailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+		helper.setTo(emails);
+		helper.setSubject("Mosqoy - Correo mensual de vencimiento de productos");
+
+
+		//list.forEach(l->l.getCodigoinventario());
+
+
+		helper.setText("<html> <body>" +
+				"<h1>Fechas de vencimiento de productos en Inventario</h1> "
+				+message+
+				"</body></html>", true);
+		javaMailSender.send(msg);
+
 	}
 
 

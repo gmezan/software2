@@ -2,15 +2,24 @@ package com.example.sw2.repository;
 
 import com.example.sw2.entity.Usuarios;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
+    /*
+    @Modifying
+    @Query("update Usuarios u set u.token=null where u.idusuarios=:id")
+    void setNullToken(@Param("id") Integer id);*/
 
     Usuarios findByCorreo(String correo);
 
@@ -26,7 +35,7 @@ public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
 
     Optional<Usuarios> findUsuariosByRoles_idrolesAndIdusuarios(int rol, int idUsuario);
 
-    Optional<Usuarios> findByCorreoAndCuentaactivada(String c, int num);
+    Optional<Usuarios> findByCorreoAndCuentaactivada( String correo, Boolean cuentaactivada);
 
 
 
