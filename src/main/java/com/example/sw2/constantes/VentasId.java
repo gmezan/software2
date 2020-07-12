@@ -18,8 +18,8 @@ public class VentasId implements Serializable {
     @NotNull(message = "Ingrese un tipo de documento")
     @Column(name = "tipodocumento")
     private Integer tipodocumento;
-    @NotBlank(message = "Este campo no puede estar vacío")
-    @Column(name = "numerodocumento")
+    //@NotBlank(message = "Este campo no puede estar vacío")
+    @Column(name = "numerodocumento", nullable = true)
     private String numerodocumento;
 
 
@@ -48,6 +48,10 @@ public class VentasId implements Serializable {
 
     public String getNumerodocumento() {
         return numerodocumento;
+    }
+
+    public boolean validateNumeroDocumento(){
+        return this.numerodocumento==null || (this.numerodocumento!=null && this.numerodocumento.equals(""));
     }
 
     public void setNumerodocumento(String numerodocumento) {

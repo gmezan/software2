@@ -132,10 +132,7 @@
                                                         </div>
                                                         
                                                     </button>
-                                                    
-                                                    
-                                                    
-                                                    
+
                                                 </td>
                                                 <td>
                                                     <button th:disabled="${prodConfirm.cantidadactual==0}" th:attr="data-id1=${prodConfirm.id.gestor.idusuarios}, data-id2=${prodConfirm.id.sede.idusuarios},
@@ -206,7 +203,7 @@
                         </a>
                     </div>
                     <div class="modal-body">
-                        <form method="post" th:action="@{/sede/registrarVenta}" th:object="${venta}">
+                        <form method="post" th:action="@{/sede/registrarVenta}" th:object="${venta}" enctype="multipart/form-data">
 
                             <div th:if="${msgBoleta != null}" th:text="${msgBoleta}" class="alert alert-danger py-1"
                                  role="alert"></div>
@@ -224,15 +221,8 @@
                                 <label class="col-form-label">Codigo del producto:</label>
                                 <input type="text" class="form-control" id="codinv" name="codinv" readonly>
                             </div-->
-
-                            <div class="form-group">
-                                <label class="col-form-label">Nombre del cliente:</label>
-                                <input type="text" class="form-control" th:field="*{nombrecliente}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('nombrecliente')}"
-                                     th:errors="*{nombrecliente}">Error
-                                </div>
-                            </div>
-
+                            <p>Si aún no se ha emitido un comprobante de pago de la venta, no ingrese un <strong>Número de documento de venta</strong>
+                                y seleccione el <strong>Tipo de documento de venta</strong> para solicitarlo a un gestor. La venta será confirmada cuando se le envíe el comprobante</p>
                             <div class="form-group">
                                 <label class="col-form-label">Tipo de Documento:</label>
                                 <select class="form-control" th:field="*{id.tipodocumento}">
@@ -247,12 +237,34 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-form-label">Numero de documento:</label>
+                                <label class="col-form-label">Numero de documento de venta:</label>
                                 <input type="text" class="form-control" th:field="*{id.numerodocumento}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}"
                                      th:errors="*{id.numerodocumento}">Error
                                 </div>
+
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" th:field="*{confirmado}">
+                                    <label for="confirmado" class="form-check-label">Venta confirmada (Venta ya registrada con un comprobante de pago)</label>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('confirmado')}" th:errors="*{confirmado}" ></div>
+                                </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-form-label">Nombre del cliente:</label>
+                                <input type="text" class="form-control" th:field="*{nombrecliente}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('nombrecliente')}"
+                                     th:errors="*{nombrecliente}">Error
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">RUC/DNI del Cliente(Opcional):</label>
+                                <input type="number" class="form-control" th:field="*{rucdni}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('rucdni')}" th:errors="*{rucdni}">
+                                    Error
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-form-label">Fecha de venta:</label>
                                 <input type="date" class="form-control" th:field="*{fecha}">
@@ -267,18 +279,19 @@
                                      th:errors="*{lugarventa}">Error
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-form-label">RUC/DNI(Opcional):</label>
-                                <input type="number" class="form-control" th:field="*{rucdni}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('rucdni')}" th:errors="*{rucdni}">
-                                    Error
-                                </div>
-                            </div>
+
                             <div class="form-group">
                                 <label class="col-form-label">Cantidad:</label>
                                 <input type="number" min="0" value="0" class="form-control" th:field="*{cantidad}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}"
                                      th:errors="*{cantidad}">Error
+                                </div>
+                            </div>
+                            <div hidden class="inputFile form-group ">
+                                <div class="form-group">
+                                    <label for="foto1" class="col-form-label">Documento de venta (Opcional):</label>
+                                    <input type="file" id="foto1" name="foto1">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('media')}" th:errors="*{media}">Error</div>
                                 </div>
                             </div>
                             <div class="modal-footer">

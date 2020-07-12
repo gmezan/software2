@@ -13,20 +13,35 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
+public interface VentasRepository extends JpaRepository<Ventas, Integer> {
 
-    @Query(value="select p.nombre as nombreproducto, c.nombre as comunidadproducto, i.tamanho as tamanhoproducto," +
-            "i.color as colorproducto, i.foto as fotoproducto,"+
-            "v.fecha as fechaventa,sum(v.cantidad) as cantidadventa,"+
-            "v.precio_venta as precioventa, v.productoinventario as codigoproducto\n"+
-            "FROM Ventas v\n"+
-            "inner join Inventario i on (v.productoinventario = i.codigo_inventario)\n" +
-            "inner join Comunidades c on (i.comunidad = c.codigo)\n"+
-            "inner join Productos p on (i.producto = p.codigonom)\n"+
-            "group by v.productoinventario",
+    Optional<Ventas> findById(VentasId v);
+
+    Optional<Ventas> findByIdventasAndConfirmado(Integer i, Boolean conf);
+
+    List<Ventas> findVentasByConfirmado(boolean b);
+
+    Optional<Ventas> findByIdventasAndConfirmadoAndId_Tipodocumento(Integer idventas, Boolean confirmado,  Integer id_tipodocumento);
+
+    void deleteById(VentasId id);
+
+    @Query(value="select v.productoinventario as codigoproducto, p.nombre as nombreproducto, \n" +
+            "\tc.nombre as comunidadproducto, i.tamanho as tamanhoproducto,\n" +
+            "\ti.color as colorproducto, i.foto as fotoproducto,sum(v.cantidad) as cantidadventa,\n" +
+            "\tsum(v.precio_venta) as venta\n" +
+            "\tFROM Ventas v\n" +
+            "\tinner join Inventario i on (v.productoinventario = i.codigo_inventario)\n" +
+            "\tinner join Comunidades c on (i.comunidad = c.codigo)\n" +
+            "\tinner join Productos p on (i.producto = p.codigonom)\n" +
+            "\twhere v.confirmado = 1\n" +
+            "\tgroup by v.productoinventario, p.nombre",
             nativeQuery = true)
     List<DatosProductoVentaDto> obtenerDatosPorProducto();
 
@@ -51,7 +66,6 @@ public interface VentasRepository extends JpaRepository<Ventas, VentasId> {
 
     @Procedure(name = "dev_stock_inv")
     void dev_stock_inv(int cant_devol, String codigo);
-
 
     @Query(value="SELECT * FROM mosqoy.Ventas ven WHERE YEAR(ven.fecha_creacion) = ?1",nativeQuery=true)
     List<ReportesTotalDto> obtenerReporteAnual(int anho);

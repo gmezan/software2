@@ -1,4 +1,4 @@
-var contextPath  = window.location.href;
+const contextPath  = window.location.href;
 
 $(document).on("click",".editar-Venta", function(){
     $("#formModal  #id\\.numerodocumento").val($(this).data('id1'));
@@ -33,6 +33,6 @@ $(document).on("click",".delete-Venta", function(){
 });
 $(document).ready(function() {
     if ($("#msgVenta").text()==="ERROR"){
-        $('#formModal').modal('show');
+        $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
     }
 });

@@ -247,7 +247,7 @@ public class LoginController {
             return "forgot-password";
         }else{
             customMailService.sendEmail(email,
-                    "Recuperación de contraseña", "Nueva contraseña",
+                    "Recuperación de contraseña Mosqoy", "Nueva contraseña",
                     "Para restablecer su contraseña ingrese al siguiente link \n"
                             + URL2+"/newpassword?t="+ token+"\no\n"+URL+"/newpassword?t="+ token);
             return "message-sent";

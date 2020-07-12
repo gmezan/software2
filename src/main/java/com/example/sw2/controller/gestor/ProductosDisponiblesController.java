@@ -1,25 +1,31 @@
 package com.example.sw2.controller.gestor;
 
+import com.example.sw2.Dao.StorageServiceDao;
 import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.constantes.VentasId;
-import com.example.sw2.entity.AsignadosSedes;
-import com.example.sw2.entity.Inventario;
-import com.example.sw2.entity.Usuarios;
-import com.example.sw2.entity.Ventas;
+import com.example.sw2.entity.*;
 import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.InventarioRepository;
 import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.repository.VentasRepository;
+import com.example.sw2.utils.CustomMailService;
+import com.example.sw2.utils.ExceptionView;
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.MultipartException;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -37,6 +43,10 @@ public class ProductosDisponiblesController {
     AsignadosSedesRepository asignadosSedesRepository;
     @Autowired
     UsuariosRepository usuariosRepository;
+    @Autowired
+    StorageServiceDao storageServiceDao;
+    @Autowired
+    CustomMailService customMailService;
 
     @GetMapping(value ="")
     public String listarProductosDisponibles(Model model){
@@ -56,10 +66,14 @@ public class ProductosDisponiblesController {
         return "redirect:/gestor/productosDisponibles";
     }
 
+    @ExceptionView(value = "gestor/productosDisponiblesForm", getValue ="gestor/productosDisponiblesForm")
     @PostMapping("/registrarventa")
     public String registrarventa(@ModelAttribute("venta") @Valid Ventas venta, BindingResult bindingResult,
                                  Model model, RedirectAttributes attributes,
-                                 HttpSession session) {
+                                 HttpSession session,
+                                 @RequestParam(name = "foto1", required = false) MultipartFile multipartFile) throws Exception {
+
+        StorageServiceResponse s2;
 
         Optional<Inventario> optionalInventario = inventarioRepository.findInventarioByCodigoinventarioAndCantidadgestorIsGreaterThan(
                 venta.getInventario().getCodigoinventario(),0
@@ -77,7 +91,6 @@ public class ProductosDisponiblesController {
             bindingResult.rejectValue("rucdni", "error.user", "La Cantidad de dígitos debe ser 8 o 11");
         }
 
-
         // Se verifica fecha
         if((venta.getFecha()!=null) && venta.getFecha().isBefore(venta.getInventario().getFechaadquisicion()))
             bindingResult.rejectValue("fecha", "error.user", "La fecha debe ser después de: "+ venta.getInventario().getFechaadquisicion().toString());
@@ -86,15 +99,43 @@ public class ProductosDisponiblesController {
         if(venta.getInventario().getCantidadgestor()<venta.getCantidad())
             bindingResult.rejectValue("cantidad", "error.user", "Cantidad mayor a la disponible");
 
+        //Verificar que se ingreso el numerodocumento si la venta esta confirmada
+        if (venta.getConfirmado() && venta.getId().validateNumeroDocumento()){
+                bindingResult.rejectValue("id.numerodocumento","error.user","Ingrese un numero de documento");
+        }
+
+        //Verificar que el número de documento sea único
+        if (!bindingResult.hasFieldErrors("id") && venta.getConfirmado() && ventasRepository.findById(venta.getId()).isPresent()) {
+                bindingResult.rejectValue("id.numerodocumento", "error.user", "El numero y tipo de documento de esta venta ya ha sido registrada anteriormente");
+        }
+
+
         if ((bindingResult.hasErrors())) {
             model.addAttribute("venta", venta);
             return "gestor/productosDisponiblesForm";
         }else {
+            if(multipartFile!=null && !multipartFile.isEmpty()){
+                try {
+                    s2 = storageServiceDao.store(venta,multipartFile);
+                } catch (IOException e) {
+                    s2 = new StorageServiceResponse("error","Error subiendo el archivo");
+                }
+                if (!s2.isSuccess()) {
+                    bindingResult.rejectValue("media", "error.user", s2.getMsg());
+                    model.addAttribute("venta", venta);
+                    return "gestor/productosDisponiblesForm";
+                }
+            }
             venta.getInventario().setCantidadgestor(venta.getInventario().getCantidadgestor()-venta.getCantidad());
             venta.getInventario().setCantidadtotal(venta.getInventario().getCantidadtotal()-venta.getCantidad());
             inventarioRepository.save(venta.getInventario());
             venta.setVendedor((Usuarios) session.getAttribute("usuario"));
             ventasRepository.save(venta);
+            try {
+                customMailService.sendSaleConfirmation(venta);
+            } catch (MessagingException | IOException  e) {
+                e.printStackTrace();
+            }
             attributes.addFlashAttribute("msg", "Venta de producto realizada");
             return "redirect:/gestor/productosDisponibles";
         }

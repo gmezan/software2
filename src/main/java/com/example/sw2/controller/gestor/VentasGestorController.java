@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
 @RequestMapping("/gestor/venta")
 public class VentasGestorController {
 
-
     @Autowired
     VentasRepository ventasRepository;
 

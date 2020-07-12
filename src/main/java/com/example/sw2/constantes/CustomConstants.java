@@ -15,6 +15,7 @@ public final class CustomConstants {
     public final static String INVENTARIO = "inventario";
     public final static String PERFIL = "perfil";
     public final static int BIGNUMBER = 1749183;
+    public final static String MANAGER_EMAIL = "gustavomeza27@gmail.com";
 
     private static final LinkedHashMap<String, String> lineas = new LinkedHashMap<>();
     private static final HashMap<Integer, String> meses = new HashMap<>();

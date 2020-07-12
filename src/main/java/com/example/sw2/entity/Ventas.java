@@ -19,9 +19,15 @@ import java.time.LocalDateTime;
 @Table(name = "Ventas")
 public class Ventas extends Auditable implements Serializable {
 
-    @EmbeddedId
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idventas;
+
     @Valid
+    @Embedded
     private VentasId id;
+    @NotNull
+    private Boolean confirmado;
     //@Size(min= 8, max = 11, message = "El Ruc/Dni debe contener 8 o 11 caracteres")
     @Column(name = "ruc_dni")
     @Pattern(regexp = "^[0-9]*$", message = "Ingrese solo caracteres numéricos")
@@ -60,6 +66,8 @@ public class Ventas extends Auditable implements Serializable {
     private String mensaje;
     private Integer cancelar;
 
+    private String media;
+
     @Transient
     private int cantDevol;
 
@@ -71,6 +79,34 @@ public class Ventas extends Auditable implements Serializable {
     public Ventas(Usuarios vendedor, Inventario producto){
         this.vendedor = vendedor;
         this.inventario = producto;
+    }
+
+    public String getMedia() {
+        return media;
+    }
+
+    public void setMedia(String media) {
+        this.media = media;
+    }
+
+    public Boolean getConfirmado() {
+        return confirmado;
+    }
+
+    public void setConfirmado(Boolean confirmado) {
+        this.confirmado = confirmado;
+    }
+
+    public BigDecimal getSumaParcial(){
+        return BigDecimal.valueOf(cantidad).multiply(precioventa);
+    }
+
+    public Integer getIdventas() {
+        return idventas;
+    }
+
+    public void setIdventas(Integer idventas) {
+        this.idventas = idventas;
     }
 
     public int getCantDevol() {
@@ -95,7 +131,7 @@ public class Ventas extends Auditable implements Serializable {
     }
 
     public void setRucdni(String rucdni) {
-        this.rucdni = rucdni;
+        this.rucdni = rucdni.trim();
     }
 
     public String getNombrecliente() {
@@ -103,7 +139,7 @@ public class Ventas extends Auditable implements Serializable {
     }
 
     public void setNombrecliente(String nombrecliente) {
-        this.nombrecliente = nombrecliente;
+        this.nombrecliente = nombrecliente.trim();
     }
 
     public String getLugarventa() {
@@ -111,7 +147,7 @@ public class Ventas extends Auditable implements Serializable {
     }
 
     public void setLugarventa(String lugarventa) {
-        this.lugarventa = lugarventa;
+        this.lugarventa = lugarventa.trim();
     }
 
     public Inventario getInventario() {
@@ -179,7 +215,7 @@ public class Ventas extends Auditable implements Serializable {
     }
 
     public String getMensaje() {
-        return mensaje;
+        return mensaje.trim();
     }
 
     public void setMensaje(String mensaje) {
