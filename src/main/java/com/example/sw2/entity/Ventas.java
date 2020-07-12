@@ -88,6 +88,17 @@ public class Ventas extends Auditable implements Serializable {
         return mediopago;
     }
 
+    public boolean validateMedioPago(){
+        try
+        {
+            return mediopago!= null & (mediopago>0 && this.mediopago<(MediosDePago.size() + 1));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
     public void setMediopago(Integer mediopago) {
         this.mediopago = mediopago;
     }

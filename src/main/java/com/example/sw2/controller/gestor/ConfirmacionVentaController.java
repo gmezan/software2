@@ -66,6 +66,10 @@ public class ConfirmacionVentaController {
             attr.addFlashAttribute("msgError", "El número de documento no es valido");
             return "redirect:/gestor/confirmacion";
         }
+        if (!v.validateMedioPago()){
+            attr.addFlashAttribute("msgError", "Hubo un error");
+            return "redirect:/gestor/confirmacion";
+        }
 
         // Faltaría validar el numero de documento
         System.out.println(v.getIdventas());
@@ -75,6 +79,7 @@ public class ConfirmacionVentaController {
         if (optV.isPresent()){
             if (!ventasRepository.findById(v.getId()).isPresent()){
                 Ventas venta = optV.get();
+                venta.setMediopago(v.getMediopago());
                 venta.getId().setNumerodocumento(v.getId().getNumerodocumento());
                 venta.getId().setTipodocumento(v.getId().getTipodocumento());
                 venta.setConfirmado(true);
