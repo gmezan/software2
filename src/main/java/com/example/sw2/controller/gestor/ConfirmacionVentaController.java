@@ -65,6 +65,7 @@ public class ConfirmacionVentaController {
             if (!ventasRepository.findById(v.getId()).isPresent()){
                 Ventas venta = optV.get();
                 venta.getId().setNumerodocumento(v.getId().getNumerodocumento());
+                venta.getId().setTipodocumento(v.getId().getTipodocumento());
                 venta.setConfirmado(true);
 
                 if(multipartFile!=null && !multipartFile.isEmpty()){
