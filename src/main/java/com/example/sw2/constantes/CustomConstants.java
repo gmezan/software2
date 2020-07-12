@@ -24,6 +24,8 @@ public final class CustomConstants {
     private static final HashMap<Integer, String> estadoAsignacion = new HashMap<>();
     private static final LinkedHashMap<String, String> tamanhos = new LinkedHashMap<>();
 
+    public static final HashMap<Integer, String> MediosDePago = new HashMap<>();
+
     private static final HashMap<Integer,String> notificationState = new HashMap<>();
     private static final HashMap<Integer,String> notificationType = new HashMap<>();
 
@@ -55,8 +57,8 @@ public final class CustomConstants {
 
         tiposDocumento.put(1, "Factura");
         tiposDocumento.put(2, "Boleta");
-        tiposDocumento.put(3, "Recibo");
-        tiposDocumento.put(4, "Transacción");
+        //tiposDocumento.put(3, "Recibo");
+        //tiposDocumento.put(4, "Transacción");
 
         estadoAsignacion.put(1, "Enviado a Sede");
         estadoAsignacion.put(2, "Recibido por Sede");
@@ -73,6 +75,9 @@ public final class CustomConstants {
         notificationType.put(4, "devolucion");
         notificationType.put(5, "otro");
 
+        MediosDePago.put(1,"Efectivo");
+        MediosDePago.put(2,"Depósito/Transferencia");
+        MediosDePago.put(3,"Tarjeta de crédito");
     }
 
     public final static int N_TYPE_NOTICE = 1;
@@ -84,6 +89,8 @@ public final class CustomConstants {
     public final static int NOTF_STATE_NEW = 1;
     public final static int NOTF_STATE_READ = 2;
     public final static int NOTF_STATE_ARCHIVED = 3;
+
+
 
     public final static int ESTADO_ENVIADO_A_SEDE=1;
     public final static int ESTADO_RECIBIDO_POR_SEDE=2;

@@ -14,6 +14,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static com.example.sw2.constantes.CustomConstants.MediosDePago;
+
 
 @Entity
 @Table(name = "Ventas")
@@ -22,7 +24,6 @@ public class Ventas extends Auditable implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idventas;
-
     @Valid
     @Embedded
     private VentasId id;
@@ -68,6 +69,8 @@ public class Ventas extends Auditable implements Serializable {
 
     private String media;
 
+    private Integer mediopago;
+
     @Transient
     private int cantDevol;
 
@@ -79,6 +82,18 @@ public class Ventas extends Auditable implements Serializable {
     public Ventas(Usuarios vendedor, Inventario producto){
         this.vendedor = vendedor;
         this.inventario = producto;
+    }
+
+    public Integer getMediopago() {
+        return mediopago;
+    }
+
+    public void setMediopago(Integer mediopago) {
+        this.mediopago = mediopago;
+    }
+
+    public String getNombreMedioDePago(){
+        return MediosDePago.get(this.mediopago);
     }
 
     public String getMedia() {
