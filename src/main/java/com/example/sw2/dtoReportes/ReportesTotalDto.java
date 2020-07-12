@@ -4,7 +4,7 @@ public interface ReportesTotalDto {
 
     String getRuc_dni();
     String getNombrecliente();
-    String getTipodocumento();
+    Integer getTipodocumento();
     String getNumerodocumento();
     String getLugarventa();
     String getProductoinventario();
@@ -12,4 +12,5 @@ public interface ReportesTotalDto {
     Integer getCantidad();
     String getVendedor();
     Integer getDnivendedor();
+    String getPrecio_venta();
 }

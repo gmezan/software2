@@ -67,7 +67,7 @@ public class InventarioController {
         if (listaordenada.isEmpty())
             num = 0;
         else
-            num = listaordenada.get(0).getNumpedido()+1;
+            num = listaordenada.get(0).getNumpedido() + 1;
         inventario.setNumpedido(num);
         return "gestor/inventarioGestorForm";
     }
@@ -159,20 +159,26 @@ public class InventarioController {
         if (!keySetT.contains(inventario.getCodtamanho())) {
             bindingResult.rejectValue("codtamanho", "error.user", "Seleccione un tamaño de la lista.");
         }
-/*
+
         Set<String> keySetL = CustomConstants.getLineas().keySet();
-        if (!keySetL.contains(linea)) {
+        if (!keySetL.contains(inventario.getProductos().getId().getCodigolinea())) {
             bindingResult.rejectValue("cantidadgestor", "error.user", "Seleccione una línea de la lista.");
         } else {
-            m.addAttribute("linea", linea);
-            m.addAttribute("listProd", productosRepository.findProductosByIdCodigolinea(linea));
+            m.addAttribute("linea", inventario.getProductos().getId().getCodigolinea());
+            m.addAttribute("listProd", productosRepository.findProductosByIdCodigolinea(inventario.getProductos().getId().getCodigolinea()));
         }
-*/
+        System.out.println(inventario.getProductos().getId().getCodigolinea());
+        System.out.println(inventario.getProductos().getId().getCodigonom());
+
         //Gustavo lo puso :
         //System.out.println(linea);
         //inventario.getProductos().setCodigolinea(linea);
-        inventario.setProductos(productosRepository.findById(inventario.getProductos().getId()).orElse(null));
-
+        Productos prod = productosRepository.findById(inventario.getProductos().getId()).orElse(null);
+        if (prod == null) {
+            bindingResult.rejectValue("productos", "error.user", "Seleccione un producto de la lista.");
+        } else {
+            inventario.setProductos(prod);
+        }
 /*
         if (multipartFile.isEmpty()) {
             bindingResult.rejectValue("foto", "error.user", "Debe subir una foto.");
@@ -219,8 +225,8 @@ public class InventarioController {
 */
             inventario.setCodigoinventario(codInv);
 
-            if(!multipartFile.isEmpty()){
-                s2 = storageServiceDao.store(inventario,multipartFile);
+            if (!multipartFile.isEmpty()) {
+                s2 = storageServiceDao.store(inventario, multipartFile);
                 if (!s2.isSuccess()) {
                     bindingResult.rejectValue("foto", "error.user", s2.getMsg());
                     listasCamposInv(m);
@@ -249,8 +255,6 @@ public class InventarioController {
                 attributes.addFlashAttribute("msgError", "ERROR DE REGISTRO");
             }
 
-
-            //attributes.addFlashAttribute("msg", "Producto registrado exitosamente! Codigo generado: " + codInv);
 
             return "redirect:/gestor/inventario";
         }
@@ -413,7 +417,7 @@ public class InventarioController {
 
     //Web service
     @ResponseBody
-    @GetMapping(value = {"/getInv", "/editInv/getInv","/addInv/getInv"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/getInv", "/editInv/getInv", "/addInv/getInv"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<Inventario>> getInv(@RequestParam(value = "id") String cod) {
         return new ResponseEntity<>(inventarioRepository.findById(cod), HttpStatus.OK);
     }

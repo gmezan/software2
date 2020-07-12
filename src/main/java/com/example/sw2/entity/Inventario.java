@@ -36,7 +36,6 @@ public class Inventario extends Auditable implements Serializable {
     @JoinColumns({
         @JoinColumn(name = "producto", nullable = false, referencedColumnName = "codigonom"),
         @JoinColumn(name = "linea", nullable = false, referencedColumnName = "linea")})
-    @NotNull(message = "Seleccione un producto de la lista.")
     private Productos productos;
 
     @Column(name = "tamanho", nullable = false)
@@ -105,7 +104,7 @@ public class Inventario extends Auditable implements Serializable {
     private LocalDate fechavencimientoconsignacion;
 
 
-    public Inventario(){};
+    public Inventario(){}
 
     //public Inventario(String codigoinventario){this.codigoinventario=codigoinventario;}
 
