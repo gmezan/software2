@@ -1,5 +1,6 @@
 package com.example.sw2.utils;
 
+import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.dtoReportes.*;
 import org.apache.poi.hssf.usermodel.HSSFPalette;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -97,12 +98,22 @@ public abstract class ReportesUtils {
                     i = BEGINNING_COLUMN;
                     row = sheet.createRow(++fila);
                     style = ((fila%2)==0)?style1:style2;
-                    createCell(row,i++,dataRow.getTipodocumento(),style);
+                    createCell(row,i++,CustomConstants.getTiposDocumento().get(dataRow.getTipodocumento()),style);
                     createCell(row,i++,dataRow.getNumerodocumento(),style);
+                    createCell(row,i++,dataRow.getProductoinventario(),style);
                     createCell(row,i++,dataRow.getNombrecliente(),style);
-                    createCell(row,i++,dataRow.getRuc_dni(),style);
+                    if(dataRow.getRuc_dni().length() == 11){
+                        createCell(row,i++,dataRow.getRuc_dni(),style);
+                        createCell(row,i++,"-",style);
+                    }else{
+                        createCell(row,i++,"-",style);
+                        createCell(row,i++,dataRow.getRuc_dni(),style);
+                    }
                     createCell(row,i++,dataRow.getVendedor(),style);
-                    createCell(row,i,"",style).setCellValue(dataRow.getDnivendedor());
+                    createCell(row,i++, String.valueOf(dataRow.getDnivendedor()),style);
+                    createCell(row,i++, String.valueOf(dataRow.getCantidad()),style);
+                    createCell(row,i++,dataRow.getPrecio_venta(),style);
+                    createCell(row,i++,dataRow.getFecha(),style);
                 }
             }
         }
@@ -113,6 +124,17 @@ public abstract class ReportesUtils {
         int i = BEGINNING_COLUMN;
         switch (orderBy){
             case 1:
+                sheet.setColumnWidth(i++, 4000);
+                sheet.setColumnWidth(i++, 4000);
+                sheet.setColumnWidth(i++, 4500);
+                sheet.setColumnWidth(i++, 4000);
+                sheet.setColumnWidth(i++, 3500);
+                sheet.setColumnWidth(i++, 2500);
+                sheet.setColumnWidth(i++, 4000);
+                sheet.setColumnWidth(i++, 4200);
+                sheet.setColumnWidth(i++, 3300);
+                sheet.setColumnWidth(i++, 4200);
+                sheet.setColumnWidth(i, 5000);
                 break;
             case 2:
                 sheet.setColumnWidth(i++, 6000);

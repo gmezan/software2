@@ -68,45 +68,27 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
 
     private void llenarReporteTotal(Workbook workbook, Reportes reportes, int idusuario){
 
-        String[] columns = {"Documento","Numero","Cliente","RUC_DNI","Vendedor","DNI vendedor"};
+        String[] columns = {"Documento","Numero","Cliente","RUC","DNI","Vendedor","DNI vendedor","Cantidad","Precio Total","Fecha de Venta"};
 
-        Sheet sheet= workbook.createSheet("reporte total " + LocalDate.now().toString());
-        setcolumnwidths(sheet,reportes.getOrderBy());
+        Sheet sheet= workbook.createSheet("Sede Reporte total " + LocalDate.now().toString());
+        setColumnWidths(sheet,reportes.getOrderBy());
 
         List<ReportesTotalDto> reportesTotales;
         switch (reportes.getType()){
             case 1:
-                reportesTotales = ventasRepository.obtenerReporteAnualTotal(reportes.getYear(), idusuario);
+                reportesTotales = ventasRepository.obtenerReporteSedeAnualTotal(reportes.getYear(), idusuario);
                 break;
             case 2:
-                reportesTotales = ventasRepository.obtenerReporteTrimestralTotal(reportes.getSelected(),reportes.getYear(), idusuario);
+                reportesTotales = ventasRepository.obtenerReporteSedeTrimestralTotal(reportes.getSelected(),reportes.getYear(), idusuario);
                 break;
             case 3:
-                reportesTotales = ventasRepository.obtenerReporteMensualTotal(reportes.getSelected(),reportes.getYear(), idusuario);
+                reportesTotales = ventasRepository.obtenerReporteSedeMensualTotal(reportes.getSelected(),reportes.getYear(), idusuario);
                 break;
             default:
                 reportesTotales = new ArrayList<>();
         }
 
-        if(reportesTotales.isEmpty()){
-            sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
-
-        }else{
-            Row row = sheet.createRow(1);
-            for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i]);
-            }
-            int fila = 1;
-            for(ReportesTotalDto reportesTotalDto : reportesTotales){
-                row = sheet.createRow(++fila);
-                row.createCell(1).setCellValue(reportesTotalDto.getTipodocumento());
-                row.createCell(2).setCellValue(reportesTotalDto.getNumerodocumento());
-                row.createCell(3).setCellValue(reportesTotalDto.getNombrecliente());
-                row.createCell(4).setCellValue(reportesTotalDto.getRuc_dni());
-                row.createCell(5).setCellValue(reportesTotalDto.getVendedor());
-                row.createCell(6).setCellValue(reportesTotalDto.getDnivendedor());
-            }
-        }
+        fillCellsInSheet(sheet,columns,reportesTotales,workbook);
 
     }
 
