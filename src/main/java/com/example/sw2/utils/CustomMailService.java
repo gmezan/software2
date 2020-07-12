@@ -15,10 +15,10 @@ import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.example.sw2.constantes.CustomConstants.MANAGER_EMAIL;
+import static com.example.sw2.constantes.CustomConstants.MediosDePago;
 
 @Component
 public class CustomMailService {
@@ -26,7 +26,7 @@ public class CustomMailService {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
-	public void sendEmail() {
+	public void sendSimpleMail() {
 
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setTo("to_1@gmail.com", "to_2@gmail.com", "to_3@yahoo.com");
@@ -67,7 +67,7 @@ public class CustomMailService {
 		javaMailSender.send(msg);
 	}
 
-	public void sendEmail(String to, String subject, String title, String message) throws MessagingException, IOException {
+	public void sendSimpleMail(String to, String subject, String title, String message) throws MessagingException, IOException {
 		MimeMessage msg = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 		helper.setTo(to);
@@ -80,7 +80,20 @@ public class CustomMailService {
 		javaMailSender.send(msg);
 	}
 
-	public void sendEmail2(String to, String subject, String title, String message) throws MessagingException, IOException {
+	public void sendHtmlMail(String to, String subject, String title, String message) throws MessagingException, IOException {
+		MimeMessage msg = javaMailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+		helper.setTo(to);
+		helper.setSubject(subject);
+		helper.setText("<html> <body>" +
+				"<h1>"+title+"</h1> "
+				+message+
+				"</body></html>", true);
+		//helper.setText(message);
+		javaMailSender.send(msg);
+	}
+
+	public void sendHtmlMail(String[] to, String subject, String title, String message) throws MessagingException, IOException {
 		MimeMessage msg = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 		helper.setTo(to);
@@ -94,7 +107,7 @@ public class CustomMailService {
 	}
 
 	public void sendEmailPassword(Usuarios u) throws MessagingException, IOException {
-		sendEmail(u.getCorreo(),"Confirmación de cuenta Mosqoy",
+		sendSimpleMail(u.getCorreo(),"Confirmación de cuenta Mosqoy",
 				"Bienvenido " + u.getFullname() + ", usuario "+u.getRoles().getNombrerol().toUpperCase(),
 				"Este es un mensaje de confirmación de cuenta, para ingresar al sistema use la siguiente contraseña:\n"+u.generateNewPassword());
 	}
@@ -108,22 +121,16 @@ public class CustomMailService {
 		message+="<p>Si desea comunicarse con el usuario, su correo es: "+a.getId().getSede().getCorreo()+" y " +
 				"su numero celular: "+a.getId().getSede().getTelefono()+"</p>";
 		String to = a.getId().getGestor().getCorreo();
-		sendEmail(to,subject,title,message);
+		sendSimpleMail(to,subject,title,message);
 	}
 
 	public void sendProductExpiration(List<Inventario> list, String[] emails) throws MessagingException {
-		int ld = LocalDate.now().getMonthValue();
 		StringBuilder message= new StringBuilder();
 		MimeMessage msg = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 		helper.setTo(emails);
 		helper.setSubject("Mosqoy - Correo mensual de vencimiento de productos");
 
-		list.forEach(l->{
-			if(l.getFechavencimientoconsignacion()==null || (l.getFechavencimientoconsignacion().getMonthValue()!=ld)){
-				list.remove(l);
-			}
-		});
 
 		if (list.isEmpty()){
 			message.append("<p>No se encontraron productos con fecha de vencimiento para este mes</p>");
@@ -179,6 +186,7 @@ public class CustomMailService {
 					"              <th>Cantidad</th>\n" +
 					"              <th>Precio unitario</th>\n" +
 					"              <th>Total</th>\n" +
+					"              <th>Medio de Pago</th>\n" +
 					"              <th>Fecha</th>\n" +
 					"            </thead>\n" +
 					"            <tbody>\n" +
@@ -191,14 +199,14 @@ public class CustomMailService {
 					"                <td>"+v.getCantidad()+"</td>\n" +
 					"                <td>"+v.getPrecioventa()+"</td>\n" +
 					"                <td>"+v.getSumaParcial()+"</td>\n" +
+					"                <td>"+MediosDePago.get(v.getMediopago())+"</td>\n" +
 					"                <td>"+v.getFecha()+"</td>\n" +
 					"              </tr>\n" +
 					"            </tbody>\n" +
 					"          </table>";
-			sendEmail2(MANAGER_EMAIL, "Mosqoy - Venta confirmada",
+			sendHtmlMail(MANAGER_EMAIL, "Mosqoy - Venta confirmada",
 					"Se ha registrado una venta por parte de " + v.getVendedor().getFullname(),
 					msg+table+msg2);
-
 		}
 		else {// Solicitud de comprobante
 			msg ="<p>El usuario sede, ha solicitado un(a) "+ v.getId().getNombreTipodocumento() + " para poder concluir " +
@@ -231,7 +239,7 @@ public class CustomMailService {
 					"              </tr>\n" +
 					"            </tbody>\n" +
 					"          </table>";
-			sendEmail2(MANAGER_EMAIL, "Mosqoy - Solicitud de comprobante de pago",
+			sendHtmlMail(MANAGER_EMAIL, "Mosqoy - Solicitud de comprobante de pago",
 					v.getVendedor().getFullname() + " ha solicitado un comprobante de pago (<strong>"+v.getId().getNombreTipodocumento()+ "</strong>)",
 					msg+table+msg2);
 		}

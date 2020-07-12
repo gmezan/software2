@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import javax.mail.MessagingException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MonthlyExpirationAlertJob extends QuartzJobBean {
@@ -29,7 +30,7 @@ public class MonthlyExpirationAlertJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("Executing Job with key {}", jobExecutionContext.getJobDetail().getKey());
-
+        int monthValue = LocalDate.now().getMonthValue();
         ArrayList<String> emails = new ArrayList<>();
         for(Usuarios u : usuariosRepository.findUsuariosByRoles_idroles(ROL)){
             emails.add(u.getCorreo());
@@ -37,7 +38,7 @@ public class MonthlyExpirationAlertJob extends QuartzJobBean {
         String[] strs = new String[emails.size()];
         try {
             customMailService.sendProductExpiration(
-                    inventarioRepository.findAll(), emails.toArray(strs)
+                    inventarioRepository.findInvPorFechasDeVencimiento(monthValue), emails.toArray(strs)
             );
         } catch (MessagingException e) {
             e.printStackTrace();

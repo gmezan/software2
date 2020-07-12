@@ -39,14 +39,10 @@ import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.Option;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -267,7 +263,7 @@ public class LoginController {
             return "forgot-password";
         }else{
 
-            customMailService.sendEmail(email,
+            customMailService.sendSimpleMail(email,
                     "Mosqoy - Recuperación de contraseña", "Nueva contraseña",
                     "Para restablecer su contraseña ingrese al siguiente enlace \n"
                             + URL2+"/newpassword?t="+ token+"\no\n"+URL+"/newpassword?t="+ token+"\n<br> " +

@@ -32,6 +32,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static com.example.sw2.constantes.CustomConstants.MediosDePago;
+
 @Controller
 @RequestMapping("/sede")
 public class SedeController {
@@ -79,7 +81,7 @@ public class SedeController {
 
         model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
         model.addAttribute("listaTiendas", tiendaRepository.findAll());
-
+        model.addAttribute("mediosDePago",MediosDePago);
         return "sede/ListaProductosConfirmados";
     }
 
@@ -142,8 +144,11 @@ public class SedeController {
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
 
-        if (ventas.getConfirmado() && ventas.getId().validateNumeroDocumento()){
-                bindingResult.rejectValue("id.numerodocumento","error.user","Ingrese un numero de documento");
+        if (ventas.getConfirmado() && !ventas.getId().validateNumeroDocumento()){
+                bindingResult.rejectValue("id.numerodocumento","error.user","Ingrese un numero de documento valido");
+            if (!(ventas.getMediopago()!=null && ventas.getMediopago()>0 && ventas.getMediopago()<(MediosDePago.size()+1))){
+                bindingResult.rejectValue("mediopago","error.user","Ingrese un medio de pago correcto");
+            }
         }
 
         if (!bindingResult.hasFieldErrors("id") && ventas.getConfirmado()) {
@@ -161,6 +166,7 @@ public class SedeController {
             model.addAttribute("listaTiendas", tiendaRepository.findAll());
             model.addAttribute("msgError_V", "ERROR");
             model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
+            model.addAttribute("mediosDePago",MediosDePago);
             return "sede/ListaProductosConfirmados";
         } else {
             if(multipartFile!=null && !multipartFile.isEmpty()){
@@ -175,6 +181,7 @@ public class SedeController {
                     model.addAttribute("listaTiendas", tiendaRepository.findAll());
                     model.addAttribute("msgError_V", "ERROR");
                     model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
+                    model.addAttribute("mediosDePago",MediosDePago);
                     return "sede/ListaProductosConfirmados";
                 }
             }
@@ -230,6 +237,7 @@ public class SedeController {
                 model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
                 model.addAttribute("listaTiendas", tiendaRepository.findAll());
                 model.addAttribute("msgError_A", "ERROR");
+                model.addAttribute("mediosDePago",MediosDePago);
                 return "sede/ListaProductosConfirmados";
 
             } else {

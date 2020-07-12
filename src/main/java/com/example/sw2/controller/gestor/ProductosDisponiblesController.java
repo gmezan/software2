@@ -30,6 +30,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static com.example.sw2.constantes.CustomConstants.MediosDePago;
+
 @Controller
 @RequestMapping("/gestor/productosDisponibles")
 
@@ -61,6 +63,7 @@ public class ProductosDisponiblesController {
         if ( optionalInventario.isPresent()){
             venta = new Ventas((Usuarios)session.getAttribute("usuario"),optionalInventario.get());
             model.addAttribute("venta", venta);
+            model.addAttribute("mediosDePago",MediosDePago);
             return "gestor/productosDisponiblesForm";
         }
         return "redirect:/gestor/productosDisponibles";
@@ -100,8 +103,11 @@ public class ProductosDisponiblesController {
             bindingResult.rejectValue("cantidad", "error.user", "Cantidad mayor a la disponible");
 
         //Verificar que se ingreso el numerodocumento si la venta esta confirmada
-        if (venta.getConfirmado() && venta.getId().validateNumeroDocumento()){
-                bindingResult.rejectValue("id.numerodocumento","error.user","Ingrese un numero de documento");
+        if (venta.getConfirmado() && !venta.getId().validateNumeroDocumento()){
+                bindingResult.rejectValue("id.numerodocumento","error.user","Ingrese un numero de documento valido");
+            if (!(venta.getMediopago()!=null && venta.getMediopago()>0 && venta.getMediopago()<(MediosDePago.size()+1))){
+                bindingResult.rejectValue("mediopago","error.user","Ingrese un medio de pago correcto");
+            }
         }
 
         //Verificar que el número de documento sea único
@@ -112,6 +118,7 @@ public class ProductosDisponiblesController {
 
         if ((bindingResult.hasErrors())) {
             model.addAttribute("venta", venta);
+            model.addAttribute("mediosDePago",MediosDePago);
             return "gestor/productosDisponiblesForm";
         }else {
             if(multipartFile!=null && !multipartFile.isEmpty()){
@@ -122,7 +129,9 @@ public class ProductosDisponiblesController {
                 }
                 if (!s2.isSuccess()) {
                     bindingResult.rejectValue("media", "error.user", s2.getMsg());
+
                     model.addAttribute("venta", venta);
+                    model.addAttribute("mediosDePago",MediosDePago);
                     return "gestor/productosDisponiblesForm";
                 }
             }

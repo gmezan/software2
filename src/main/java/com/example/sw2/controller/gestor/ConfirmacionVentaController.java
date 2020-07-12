@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.example.sw2.constantes.CustomConstants.MediosDePago;
+
 @Controller
 @RequestMapping("/gestor/confirmacion")
 public class ConfirmacionVentaController {
@@ -46,6 +48,7 @@ public class ConfirmacionVentaController {
                           HttpSession session) {
         model.addAttribute("lista", ventasRepository.findVentasByConfirmado(false));
         model.addAttribute("documentos", CustomConstants.getTiposDocumento());
+        model.addAttribute("mediosDePago",MediosDePago);
         return "gestor/confirmaVentas";
     }
 
@@ -59,7 +62,12 @@ public class ConfirmacionVentaController {
                 v.getIdventas(), false, v.getId().getTipodocumento()
         );
 
-        // Faltaría validar el numero
+        if (!v.getId().validateNumeroDocumento()){
+            attr.addFlashAttribute("msgError", "El número de documento no es valido");
+            return "redirect:/gestor/confirmacion";
+        }
+
+        // Faltaría validar el numero de documento
         System.out.println(v.getIdventas());
         System.out.println(v.getId().getTipodocumento());
         System.out.println(v.getId().getNumerodocumento());
@@ -78,7 +86,7 @@ public class ConfirmacionVentaController {
                         s2 = new StorageServiceResponse("error","Error subiendo el archivo");
                     }
                     if (!s2.isSuccess()) {
-                        attr.addFlashAttribute("error", s2.getMsg());
+                        attr.addFlashAttribute("msgError", s2.getMsg());
                         return "redirect:/gestor/confirmacion";
                     }
                 }

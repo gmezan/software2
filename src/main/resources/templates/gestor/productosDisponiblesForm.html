@@ -69,6 +69,16 @@
                                 </div>
                             </div>
 
+                            <div class="inputFile form-group">
+                                <label class="col-form-label"><b>Medio de pago:</b></label>
+                                <select class="form-control" th:field="*{mediopago}">
+                                    <option th:each="t : ${mediosDePago}"
+                                            th:text="${t.value}"
+                                            th:value="${t.key}"></option>
+                                </select>
+                                <div class="text-danger" th:if="${#fields.hasErrors('mediopago')}" th:errors="*{mediopago}" ></div>
+                            </div>
+
                             <div class="form-group">
                                 <label for="rucdni" class="col-form-label">Número RUC o DNI del cliente (opcional)</label>
                                 <input type="text" class="form-control" th:field="*{rucdni}">

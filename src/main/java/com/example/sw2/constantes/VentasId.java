@@ -51,7 +51,11 @@ public class VentasId implements Serializable {
     }
 
     public boolean validateNumeroDocumento(){
-        return this.numerodocumento==null || (this.numerodocumento!=null && this.numerodocumento.equals(""));
+        boolean cond1 =  this.numerodocumento==null || (this.numerodocumento!=null && this.numerodocumento.equals(""));
+        if (!cond1){
+            return this.numerodocumento.length()>5;
+        }
+        return cond1;
     }
 
     public void setNumerodocumento(String numerodocumento) {

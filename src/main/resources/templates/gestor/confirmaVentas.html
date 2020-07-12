@@ -193,6 +193,17 @@
                         <input type="text" class="form-control" th:field="*{id.numerodocumento}">
                         <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}" th:errors="*{id.numerodocumento}">Error</div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label"><b>Medio de pago:</b></label>
+                        <select class="form-control" th:field="*{mediopago}">
+                            <option th:each="t : ${mediosDePago}"
+                                    th:text="${t.value}"
+                                    th:value="${t.key}"></option>
+                        </select>
+                        <div class="text-danger" th:if="${#fields.hasErrors('mediopago')}" th:errors="*{mediopago}" ></div>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label for="foto1" class="col-form-label">Documento de venta (Opcional .pdf, .jpg, .jpeg, .png)</label>

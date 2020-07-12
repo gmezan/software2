@@ -28,6 +28,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.sw2.constantes.CustomConstants.MediosDePago;
+
 @Controller
 @RequestMapping("sede/AsignadoTienda")
 public class AsignadoTiendaController {
@@ -57,6 +59,7 @@ public class AsignadoTiendaController {
         model.addAttribute("venta", v);
         model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id_Sede(0,sede));
         model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
+        model.addAttribute("mediosDePago",MediosDePago);
         return "sede/asignadoTiendas";
     }
 
@@ -92,8 +95,11 @@ public class AsignadoTiendaController {
         //Verificar que se haya ingresado un numero correcto de documento si la venta es confirmada
         if (venta.getConfirmado() &&
                 venta.getId()!=null &&
-                venta.getId().validateNumeroDocumento()){
-            bindingResult.rejectValue("id.numerodocumento","error.user","Ingrese un numero de documento");
+                !venta.getId().validateNumeroDocumento()){
+            bindingResult.rejectValue("id.numerodocumento","error.user","Ingrese un numero de documento válido");
+            if (!(venta.getMediopago()!=null && venta.getMediopago()>0 && venta.getMediopago()<(MediosDePago.size()+1))){
+                bindingResult.rejectValue("mediopago","error.user","Ingrese un medio de pago correcto");
+            }
         }
 
 
@@ -103,6 +109,7 @@ public class AsignadoTiendaController {
             model.addAttribute("id1", idAstiendas);
             model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
             model.addAttribute("msgErrorRegistrar", "ERROR");
+            model.addAttribute("mediosDePago",MediosDePago);
             return "sede/asignadoTiendas";
         }else{
             if(multipartFile!=null && !multipartFile.isEmpty()){
@@ -118,6 +125,7 @@ public class AsignadoTiendaController {
                     model.addAttribute("id1", idAstiendas);
                     model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
                     model.addAttribute("msgErrorRegistrar", "ERROR");
+                    model.addAttribute("mediosDePago",MediosDePago);
                     return "sede/asignadoTiendas";
                 }
             }
@@ -169,11 +177,6 @@ public class AsignadoTiendaController {
             }
         }
 
-        if (v.getConfirmado()){
-            if (v.getId().validateNumeroDocumento()){
-                bindingResult.rejectValue("id.numerodocumento","error.user","Ingrese un numero de documento");
-            }
-        }
 
         if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
@@ -181,6 +184,7 @@ public class AsignadoTiendaController {
             model.addAttribute("id2", idAstiendas);
             model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
             model.addAttribute("msgErrorDevolucion", "ERROR");
+            model.addAttribute("mediosDePago",MediosDePago);
             return "sede/asignadoTiendas";
         }else{
             AsignadosSedes as = at.getAsignadosSedes();

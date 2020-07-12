@@ -228,8 +228,6 @@
                                 <select class="form-control" th:field="*{id.tipodocumento}">
                                     <option value="1">Factura</option>
                                     <option value="2">Boleta</option>
-                                    <option value="3">Recibo</option>
-                                    <option value="4">Transacción</option>
                                 </select>
                                 <div class="text-danger" th:if="${#fields.hasErrors('id.tipodocumento')}"
                                      th:errors="*{id.tipodocumento}">Error
@@ -249,6 +247,17 @@
                                     <div class="text-danger" th:if="${#fields.hasErrors('confirmado')}" th:errors="*{confirmado}" ></div>
                                 </div>
                             </div>
+
+                            <div class="inputFile form-group ">
+                                <label class="col-form-label"><b>Medio de pago:</b></label>
+                                <select class="form-control" th:field="*{mediopago}">
+                                    <option th:each="t : ${mediosDePago}"
+                                            th:text="${t.value}"
+                                            th:value="${t.key}"></option>
+                                </select>
+                                <div class="text-danger" th:if="${#fields.hasErrors('mediopago')}" th:errors="*{mediopago}" ></div>
+                            </div>
+
 
                             <div class="form-group">
                                 <label class="col-form-label">Nombre del cliente:</label>
