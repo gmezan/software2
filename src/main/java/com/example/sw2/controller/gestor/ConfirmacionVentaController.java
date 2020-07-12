@@ -96,9 +96,7 @@ public class ConfirmacionVentaController {
     @PostMapping(value = "delete")
     public String cancelar(@ModelAttribute("venta") Ventas v, RedirectAttributes attr){
 
-        Optional<Ventas> optV = ventasRepository.findByIdventasAndConfirmadoAndId_Tipodocumento(
-                v.getIdventas(), false, v.getId().getTipodocumento()
-        );
+        Optional<Ventas> optV = ventasRepository.findByIdventasAndConfirmado(v.getIdventas(), false);
 
         // Faltaría validar el numero
         System.out.println(v.getIdventas());
@@ -107,7 +105,7 @@ public class ConfirmacionVentaController {
 
         if (optV.isPresent()){
             ventasRepository.delete(optV.get());
-            attr.addFlashAttribute("msgError", "La venta se ha borrado");
+            attr.addFlashAttribute("msg", "La venta se ha borrado");
         }else {
             attr.addFlashAttribute("msgError", "Hubo un error encontrando el registro de venta");
         }

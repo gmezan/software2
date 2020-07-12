@@ -21,5 +21,5 @@ $(function() {
         alert("Ocurrió un error");
     })
 }).on("click", ".denegar-Venta", function () {
-    $("#cancelarModal  #id").val('').val($(this).data('id'));
+    $("#cancelarModal  #idventas").val('').val($(this).data('id'));
 });
