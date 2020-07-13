@@ -17,8 +17,11 @@ th, .d-sm-inline-block {
     color: #515785;
 }
 
-.card {
+.card ,.modal-content{
     font-size: .78rem;
+}
+.form-control,.input-group-text{
+    font-size: .9rem;
 }
 
 .h3 {
@@ -101,3 +104,33 @@ thead, tfoot {
 .btn-link:hover {
     color: #6b302a;
 }
+
+.table-responsive .fototabla{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+button.show-foto,button.show-fotoU{
+    padding: 0px;
+    width: 80px;
+    height: 80px;
+    box-shadow: 3px 3px 5px!important;
+    background-color: #ffffff;
+}
+.btn{
+    box-shadow: 0 .125rem .25rem 0 rgba(58,59,69,.2);
+}
+td.tdfoto {
+    text-align: center;
+    padding: 17px;
+}
+.modal-body{
+    padding: 1rem 3rem;
+}
+.forminv{
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+/*#4c0853*/

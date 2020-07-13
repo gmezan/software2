@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "Inventario")
@@ -34,8 +35,8 @@ public class Inventario extends Auditable implements Serializable {
 
     @ManyToOne
     @JoinColumns({
-        @JoinColumn(name = "producto", nullable = false, referencedColumnName = "codigonom"),
-        @JoinColumn(name = "linea", nullable = false, referencedColumnName = "linea")})
+            @JoinColumn(name = "producto", nullable = false, referencedColumnName = "codigonom"),
+            @JoinColumn(name = "linea", nullable = false, referencedColumnName = "linea")})
     private Productos productos;
 
     @Column(name = "tamanho", nullable = false)
@@ -104,7 +105,8 @@ public class Inventario extends Auditable implements Serializable {
     private LocalDate fechavencimientoconsignacion;
 
 
-    public Inventario(){}
+    public Inventario() {
+    }
 
     //public Inventario(String codigoinventario){this.codigoinventario=codigoinventario;}
 
@@ -214,17 +216,15 @@ public class Inventario extends Auditable implements Serializable {
         return fechaadquisicion;
     }
 
+
     public String getFechaAdquiStr() {
         String fecha = "";
         if (this.dia != 0) {
-            if (this.dia < 10) {
-                fecha = "0" + this.dia + "/";
-            } else {
-                fecha = this.dia + "/";
-            }
-        }
-        fecha += getMesCorto(this.mes) + "/" + this.anho;
+            fecha = fechaadquisicion.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
+        } else {
+            fecha = fechaadquisicion.format(DateTimeFormatter.ofPattern("MM/yyyy"));
+        }
         return fecha;
     }
 
@@ -324,14 +324,9 @@ public class Inventario extends Auditable implements Serializable {
     public String getFechaVencimientoStr() {
         String fecha = "---";
         if (this.fechavencimientoconsignacion != null) {
-            int dia2 = this.fechavencimientoconsignacion.getDayOfMonth();
-            if (dia2 < 10) {
-                fecha = "0" + dia2 + "/";
-            } else {
-                fecha = dia2 + "/";
-            }
-            fecha += getMesCorto(this.fechavencimientoconsignacion.getMonthValue()) + "/" + this.fechavencimientoconsignacion.getYear();
+            fecha =fechavencimientoconsignacion.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         }
+
 
 
         return fecha;

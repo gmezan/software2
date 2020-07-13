@@ -177,6 +177,7 @@ public class InventarioController {
         if (prod == null) {
             bindingResult.rejectValue("productos", "error.user", "Seleccione un producto de la lista.");
         } else {
+            m.addAttribute("pr", inventario.getProductos().getId().getCodigonom());
             inventario.setProductos(prod);
         }
 /*
@@ -235,7 +236,7 @@ public class InventarioController {
                     }
                     return "gestor/inventarioGestorForm";
                 }
-            }else{
+            } else {
                 bindingResult.rejectValue("foto", "error.user", "Debe seleccionar una imagen");
                 listasCamposInv(m);
                 if (inventario.getComunidades() != null) {
@@ -288,7 +289,11 @@ public class InventarioController {
         Inventario inventario = opt.get();
         inventario.setCantidadtotal(cantInt + inventario.getCantidadtotal());
         inventario.setCantidadgestor(cantInt + inventario.getCantidadgestor());
-        attributes.addFlashAttribute("msg", cantInt + " productos de código " + inventario.getCodigoinventario() + " añadidos exitosamente!");
+        if (cantInt == 1) {
+            attributes.addFlashAttribute("msg", cantInt + " producto de código " + inventario.getCodigoinventario() + " añadidos exitosamente!");
+        } else {
+            attributes.addFlashAttribute("msg", cantInt + " productos de código " + inventario.getCodigoinventario() + " añadidos exitosamente!");
+        }
 
 
         return "redirect:/gestor/inventario";

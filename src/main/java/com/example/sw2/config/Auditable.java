@@ -9,6 +9,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -26,8 +28,14 @@ public abstract class Auditable {
     public LocalDateTime getFechacreacion() {
         return fechacreacion;
     }
+    public String obtenerFechacreacionStr() {
+        return fechacreacion.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
 
     public LocalDateTime getFechamodificacion() {
         return fechamodificacion;
+    }
+    public String obtenerFechamodificacionStr() {
+        return fechamodificacion.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 }

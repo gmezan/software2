@@ -8,7 +8,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="shortcut icon"
-              th:href="@{/img/colibriSede.png}" >
+              th:href="@{/img/colibriSede.png}">
         <title th:text="${title}"></title>
         
         <!-- Custom fonts for this template-->
@@ -39,12 +39,12 @@
             <button id="sidebarToggleTop" style="color: #2b1b1bcc;" class=" btn btn-link d-md-none rounded-circle">
                 <i class="fa fa-bars"></i>
             </button>
-            <div class="ml-3  font-weight-bold " style="font-size: 1.1rem;font-style: italic;color: #2b1b1bcc;">Usuario Sede</div>
+            <div class="ml-3  font-weight-bold " style="font-size: 1.1rem;font-style: italic;color: #2b1b1bcc;">Usuario
+                Sede
+            </div>
             
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
-                
-                
                 
                 
                 <!-- <div th:replace="fragments/notification.html :: notification-center"></div>-->
@@ -92,9 +92,11 @@
         <ul th:fragment="sede-sidebar(param1,param2)"
             class="navbar-nav bg-gradient-sede sidebar sidebar-dark accordion" id="accordionSidebar">
             
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/sede/productosPorConfirmar}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"
+               th:href="@{/sede/productosPorConfirmar}">
                 <i class="fas"> <img style="width: 88%;height: 88%;" th:src="@{/img/colibriiiii.png}" alt="."></i>
-                <div class="sidebar-brand-text ml-0"><img style="width: 103%;height: 103%;" th:src="@{/img/mosqLOGO-min.png}" alt="."></div>
+                <div class="sidebar-brand-text ml-0"><img style="width: 103%;height: 103%;"
+                                                          th:src="@{/img/mosqLOGO-min.png}" alt="."></div>
             </a>
             
             <!-- Divider -->
@@ -178,7 +180,7 @@
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Reportes -->
             <li class="nav-item" th:classappend="${param1=='Reportes'}? active : ''">
-                <a class="nav-link"  th:href="@{/sede/reportes}">
+                <a class="nav-link" th:href="@{/sede/reportes}">
                     <i class="fas fa-fw fa-file-download"></i>
                     <span>Reportes</span></a>
             </li>
@@ -218,11 +220,12 @@
                             </button>
                         </div>
                         <div class="modal-body">Seleccione "Cerrar sesión" si está listo para cerrar su sesión actual.
+                            <div class="modal-footer mt-3">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-info">Cerrar sesión</button>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-info">Cerrar sesión</button>
-                        </div>
+                    
                     
                     </form>
                 </div>
