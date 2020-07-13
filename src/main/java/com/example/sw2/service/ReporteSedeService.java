@@ -67,7 +67,7 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
 
     private void llenarReporteTotal(Workbook workbook, Reportes reportes, int idusuario){
 
-        String[] columns = {"Documento","Numero","Cliente","RUC","DNI","Vendedor","DNI vendedor","Cantidad","Precio Total","Fecha de Venta"};
+        String[] columns = {"Documento","Numero","Producto","Cliente","RUC","DNI","Vendedor","DNI vendedor","Cantidad","Precio Unit.","Precio Total","Fecha de Venta"};
 
         Sheet sheet= workbook.createSheet("Sede Reporte total " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
