@@ -123,7 +123,7 @@ public abstract class ReportesUtils {
     protected void setColumnWidths(Sheet sheet, Integer orderBy){
         int i = BEGINNING_COLUMN;
         switch (orderBy){
-            case 1:
+            case 1: //Total
                 sheet.setColumnWidth(i++, 4000);
                 sheet.setColumnWidth(i++, 4000);
                 sheet.setColumnWidth(i++, 4500);
@@ -136,7 +136,7 @@ public abstract class ReportesUtils {
                 sheet.setColumnWidth(i++, 4200);
                 sheet.setColumnWidth(i, 5000);
                 break;
-            case 2:
+            case 2: // Sede
                 sheet.setColumnWidth(i++, 6000);
                 sheet.setColumnWidth(i++, 6000);
                 sheet.setColumnWidth(i++, 6000);
@@ -144,19 +144,19 @@ public abstract class ReportesUtils {
                 sheet.setColumnWidth(i++, 6000);
                 sheet.setColumnWidth(i, 6000);
                 break;
-            case 3:
+            case 3: // Producto
                 sheet.setColumnWidth(i++, 6000);
                 sheet.setColumnWidth(i++, 6000);
                 sheet.setColumnWidth(i++, 6000);
                 sheet.setColumnWidth(i++, 6000);
-                sheet.setColumnWidth(i, 6000);
+                sheet.setColumnWidth(i, 6500);
                 break;
-            case 4:
+            case 4: //Comunidad
+                sheet.setColumnWidth(i++, 6001);
                 sheet.setColumnWidth(i++, 6000);
                 sheet.setColumnWidth(i++, 6000);
                 sheet.setColumnWidth(i++, 6000);
-                sheet.setColumnWidth(i++, 6000);
-                sheet.setColumnWidth(i, 6000);
+                sheet.setColumnWidth(i, 11000);
                 break;
             case 5: //Cliente
                 sheet.setColumnWidth(i++, 3100);

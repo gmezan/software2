@@ -1,5 +1,6 @@
 package com.example.sw2.service;
 
+import com.example.sw2.dtoReportes.ReportesArticuloDto;
 import com.example.sw2.dtoReportes.ReportesClienteDto;
 import com.example.sw2.dtoReportes.ReportesTotalDto;
 import com.example.sw2.dtoReportes.ReportesComunidadDto;
@@ -34,8 +35,6 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
         switch (reportes.getOrderBy()){
-
-
             case 1:
                 //nos referimos al total
 
@@ -92,13 +91,32 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
 
     }
 
-    private void llenarReporteProducto(Workbook workbook, Reportes reportes, int idusuario){}
+    private void llenarReporteProducto(Workbook workbook, Reportes reportes, int idusuario){
+        String[] columns = {"Nombre","Linea","Codigo","Suma Ventas","Cantidad Vendidos"};
+        Sheet sheet= workbook.createSheet("Reporte producto " + LocalDate.now().toString());
+        setColumnWidths(sheet,3);
+        List<ReportesArticuloDto> reportesArticulos = new ArrayList<>();
+        switch (reportes.getType()){
+            case 1:
+                reportesArticulos = ventasRepository.obtenerReporteSedeAnualArticuloProducto(reportes.getYear(),idusuario);
+                break;
+            case 2:
+                reportesArticulos = ventasRepository.obtenerReporteSedeTrimestralArticuloProducto(reportes.getSelected(),reportes.getYear(),idusuario);
+                break;
+            case 3:
+                reportesArticulos = ventasRepository.obtenerReporteSedeMensualArticuloProducto(reportes.getSelected(),reportes.getYear(),idusuario);
+                break;
+            default:
+                reportesArticulos = new ArrayList<>();
+        }
+        fillCellsInSheet(sheet,columns,reportesArticulos,workbook);
+    }
 
     private void llenarReporteComunidad(Workbook workbook, Reportes reportes, Integer idusuario){
         String[] columns = {"Nombre","Código","Cantidad Artesanos","Suma Ventas","Cantidad Productos Vendidos"};
         Sheet sheet= workbook.createSheet("reporte comunidad " + LocalDate.now().toString());
-        setcolumnwidths(sheet,reportes.getOrderBy());
-        List<ReportesComunidadDto> reportesComunidad;
+        setColumnWidths(sheet,4);
+        List<ReportesComunidadDto> reportesComunidad = new ArrayList<>();
         switch (reportes.getType()){
             case 1:
                 reportesComunidad = ventasRepository.obtenerReporteSedeAnualComunidad(reportes.getYear(),idusuario);
@@ -112,24 +130,7 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
             default:
                 reportesComunidad = new ArrayList<>();
         }
-        if(reportesComunidad.isEmpty()){
-            sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
-
-        }else{
-            Row row = sheet.createRow(1);
-            for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i]);
-            }
-            int fila = 1;
-            for(ReportesComunidadDto reportesComunidadDto : reportesComunidad){
-                row = sheet.createRow(++fila);
-                row.createCell(1).setCellValue(reportesComunidadDto.getNombre());
-                row.createCell(2).setCellValue(reportesComunidadDto.getCodigo());
-                row.createCell(3).setCellValue(reportesComunidadDto.getCantidadartesanos());
-                row.createCell(4).setCellValue(reportesComunidadDto.getSumaventas());
-                row.createCell(5).setCellValue(reportesComunidadDto.getCantidadvendidos());
-            }
-        }
+        fillCellsInSheet(sheet,columns,reportesComunidad,workbook);
     }
 
     private void llenarReporteCliente(Workbook workbook, Reportes reportes,Integer idusuario){
@@ -196,11 +197,7 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
                 sheet.setColumnWidth(4, 5500);
                 sheet.setColumnWidth(5, 5500);
                 break;
-
         }
-
     }
-
-
 
 }
