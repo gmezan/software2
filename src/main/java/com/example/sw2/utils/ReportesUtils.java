@@ -111,8 +111,9 @@ public abstract class ReportesUtils {
                     }
                     createCell(row,i++,dataRow.getVendedor(),style);
                     createCell(row,i++, String.valueOf(dataRow.getDnivendedor()),style);
-                    createCell(row,i++, String.valueOf(dataRow.getCantidad()),style);
-                    createCell(row,i++,dataRow.getPrecio_venta(),style);
+                    createCell(row,i++,"",style).setCellValue(dataRow.getCantidad());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getPrecio_venta()/dataRow.getCantidad());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getPrecio_venta());
                     createCell(row,i++,dataRow.getFecha(),style);
                 }
             }
@@ -126,13 +127,14 @@ public abstract class ReportesUtils {
             case 1: //Total
                 sheet.setColumnWidth(i++, 4000);
                 sheet.setColumnWidth(i++, 4000);
-                sheet.setColumnWidth(i++, 4500);
+                sheet.setColumnWidth(i++, 6500);
                 sheet.setColumnWidth(i++, 4000);
                 sheet.setColumnWidth(i++, 3500);
                 sheet.setColumnWidth(i++, 2500);
                 sheet.setColumnWidth(i++, 4000);
                 sheet.setColumnWidth(i++, 4200);
                 sheet.setColumnWidth(i++, 3300);
+                sheet.setColumnWidth(i++, 4200);
                 sheet.setColumnWidth(i++, 4200);
                 sheet.setColumnWidth(i, 5000);
                 break;

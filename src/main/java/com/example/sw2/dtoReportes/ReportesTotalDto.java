@@ -1,5 +1,7 @@
 package com.example.sw2.dtoReportes;
 
+import java.math.BigDecimal;
+
 public interface ReportesTotalDto {
 
     String getRuc_dni();
@@ -12,5 +14,5 @@ public interface ReportesTotalDto {
     Integer getCantidad();
     String getVendedor();
     Integer getDnivendedor();
-    String getPrecio_venta();
+    Double getPrecio_venta();
 }
