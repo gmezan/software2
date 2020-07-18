@@ -25,6 +25,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+import static com.example.sw2.constantes.CustomConstants.ESTADO_ENVIADO_A_SEDE;
+
 @Controller
 @RequestMapping("/gestor/devoluciones")
 public class DevolucionesController {
@@ -104,8 +106,11 @@ public class DevolucionesController {
 
         if (optAsig.isPresent()) {
             AsignadosSedes as = optAsig.get();
-            asignadosSedesRepository.rechazar_devol_sede(as.getStock(), gestor.getIdusuarios(),
-                    sede_dni,codigo,estado_recibido,precio);
+            //asignadosSedesRepository.rechazar_devol_sede(as.getStock(), gestor.getIdusuarios(),
+            //        sede_dni,codigo,estado_recibido,precio);
+            as.getId().setEstadoasignacion(ESTADO_ENVIADO_A_SEDE);
+            asignadosSedesRepository.save(as);
+            as.getId().setEstadoasignacion(estado_devol);
             asignadosSedesRepository.deleteById(as.getId());
             attr.addFlashAttribute("msg","El producto ha sido regresado a la sede ");
         }
