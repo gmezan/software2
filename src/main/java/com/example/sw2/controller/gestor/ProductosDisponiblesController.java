@@ -205,7 +205,7 @@ public class ProductosDisponiblesController {
         else
             asignadosSedes.getId().setSede(optionalUsuarios.get());
 
-        if (asignadosSedes.getStock()<=0)
+        if (asignadosSedes.getStock()==0)
             bindingResult.rejectValue("stock","error.user","La cantidad debe ser mayor a 0");
 
         //Se verifica la fecha de envio

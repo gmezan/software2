@@ -26,7 +26,7 @@ public class AsignadosSedes extends Auditable implements Serializable {
     @NotNull(message = "Selecione una fecha")
     private LocalDate fechaenvio;
     @NotNull(message = "Ingrese una cantidad")
-    @Min(value = 0, message = "La cantidad debe ser mayor a 1")
+    @Min(value = 0, message = "La cantidad debe ser mayor a 0")
     @Column(nullable = false)
     private Integer stock;
     @Column(nullable = false)

@@ -24,6 +24,11 @@ public class ComunidadController {
     @Autowired
     ComunidadesRepository comunidadesRepository;
 
+    @GetMapping(value = {"/"})
+    public String redirectAT(){
+        return "redirect:/gestor/comunidad";
+    }
+
     @GetMapping(value = {""})
     public String listCom(@ModelAttribute("comunidad") Comunidades com, Model model) {
         model.addAttribute("lista", comunidadesRepository.findAll());

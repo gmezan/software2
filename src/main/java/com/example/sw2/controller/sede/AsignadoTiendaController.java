@@ -49,8 +49,12 @@ public class AsignadoTiendaController {
     @Autowired
     CustomMailService customMailService;
 
+    @GetMapping(value = {"/"})
+    public String redirectAT(){
+        return "redirect:/sede/AsignadoTienda";
+    }
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {""})
     public String ListaAsignacionTiendas(@ModelAttribute("venta") Ventas v,
                                          HttpSession session,
                                          Model model){
