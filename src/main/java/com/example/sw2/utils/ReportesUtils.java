@@ -73,6 +73,20 @@ public abstract class ReportesUtils {
                     createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas());
                     createCell(row,i,"",style).setCellValue(dataRow.getCantidadvendidos());
                 }
+
+                //Lo único que va hardoceado son los números 9,10 y 12 que pertenecen a las columnas que se van a sumar
+
+                String strFormula1= "SUM(E"+(BEGINNING_ROW+2)+":E"+(fila+1)+")";
+                String strFormula2= "SUM(D"+(BEGINNING_ROW+2)+":D"+(fila+1)+")";
+                String strFormula3= "SUM(F"+(BEGINNING_ROW+2)+":F"+(fila+1)+")";
+
+                sheet.createRow(fila+3).createCell(3);
+                createCell(sheet.createRow(fila+3),2,"SUMA",formulaStyle);
+                sheet.getRow(fila+3).createCell(3).setCellFormula(strFormula1);
+                sheet.getRow(fila+3).createCell(4).setCellFormula(strFormula1);
+                sheet.getRow(fila+3).createCell(5).setCellFormula(strFormula3);
+
+
             }else
             if (list.get(0) instanceof ReportesArticuloDto){
                 //Articulo
@@ -86,6 +100,14 @@ public abstract class ReportesUtils {
                     createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas());
                     createCell(row,i,"",style).setCellValue(dataRow.getCantidadvendidos());
                 }
+                //Lo único que va hardoceado son los números 9,10 y 12 que pertenecen a las columnas que se van a sumar
+                String strFormula1= "SUM(E"+(BEGINNING_ROW+2)+":E"+(fila+1)+")";
+                String strFormula2= "SUM(F"+(BEGINNING_ROW+2)+":F"+(fila+1)+")";
+                sheet.createRow(fila+3).createCell(3);
+                createCell(sheet.createRow(fila+3),3,"SUMA",formulaStyle);
+                sheet.getRow(fila+3).createCell(4).setCellFormula(strFormula1);
+                sheet.getRow(fila+3).createCell(5).setCellFormula(strFormula2);
+
             }else
             if (list.get(0) instanceof ReportesSedesDto){
                 //Sede
@@ -176,9 +198,9 @@ public abstract class ReportesUtils {
                 sheet.setColumnWidth(i, 6500);
                 break;
             case 4: //Comunidad
-                sheet.setColumnWidth(i++, 6001);
                 sheet.setColumnWidth(i++, 6000);
                 sheet.setColumnWidth(i++, 6000);
+                sheet.setColumnWidth(i++, 7000);
                 sheet.setColumnWidth(i++, 6000);
                 sheet.setColumnWidth(i, 11000);
                 break;
