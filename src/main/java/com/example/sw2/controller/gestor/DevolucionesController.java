@@ -45,7 +45,7 @@ public class DevolucionesController {
                                     HttpSession session,
                                     Model model, Authentication auth){
 
-        int estado = CustomConstants.ESTADO_DEVUELTO_POR_SEDE;
+        int estado = CustomConstants.ESTADO_RECIBIDO_CON_PROBLEMAS;
         Usuarios gestor = (Usuarios) session.getAttribute("usuario");
         model.addAttribute("devueltos", asignadosSedesRepository.findById_Gestor_IdusuariosAndId_Estadoasignacion(gestor.getIdusuarios(),estado));
         return "gestor/devoluciones";
