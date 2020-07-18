@@ -39,6 +39,10 @@ public class ComunidadController {
             bindingResult.rejectValue("codigo","error.user","Este código ya existe");
         }
 
+        if(comunidadesRepository.findComunidadesByNombre(comunidades.getNombre()).isPresent())
+            bindingResult.rejectValue("codigo","error.user","Este nombre ya está registrado");
+
+
         if(bindingResult.hasErrors()){
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", comunidadesRepository.findAll());

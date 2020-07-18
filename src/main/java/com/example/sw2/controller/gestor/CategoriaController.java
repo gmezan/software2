@@ -42,10 +42,15 @@ public class CategoriaController {
         if(type==1 && categoriasRepository.findById(categorias.getCodigo()).isPresent()){ //if new
             bindingResult.rejectValue("codigo","error.user","Este codigo ya existe");
         }
+
+        if(categoriasRepository.findCategoriasByNombre(categorias.getNombre()).isPresent()){
+            bindingResult.rejectValue("nombre","error.user","Este nombre ya está registrado");
+        }
+
         if(bindingResult.hasErrors()){
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", categoriasRepository.findAll());
-            model.addAttribute("msg", "ERROR");
+            model.addAttribute("msgError", "ERROR");
             return "gestor/categorias";
         }
         else {
