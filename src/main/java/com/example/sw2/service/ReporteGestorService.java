@@ -93,7 +93,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
     }
 
     private void llenarReporteSede(Workbook workbook, Reportes reportes){
-        String[] columns = {"Nombre","DNI","Correo","Telefono","Suma Ventas","Cantidad Productos Vendidos"};
+        String[] columns = {"Nombre","DNI","Correo","Telefono","Suma de Ventas","Cantidad Productos Vendidos"};
         Sheet sheet= workbook.createSheet("Reporte de sede " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
         String titulo = "";
