@@ -18,8 +18,11 @@ public abstract class ReportesUtils {
     protected final String MENSAJE_NO_VENTA = "No se encontró información de ventas para este reporte";
     protected final Integer BEGINNING_ROW = 3;
     protected final Integer BEGINNING_COLUMN = 1;
+    protected final Integer TITLE_ROW = 1;
     private final short HEADER_FONT = 12;
     private final short CONTENT_FONT = 10;
+    private final short TITLE_FONT = 20;
+
 
 
     //Cliente
@@ -33,9 +36,11 @@ public abstract class ReportesUtils {
             CellStyle style1 = createContentCellStyle1(workbook);
             CellStyle style2 = createContentCellStyle2(workbook);
             CellStyle headerStyle = createHeaderCellStyle(workbook);
+            CellStyle titleStyle = createTitleCellStyle(workbook);
+            CellStyle formulaStyle = createFormulaStyle(workbook);
             Row row = sheet.createRow(BEGINNING_ROW);
-            Row temp = sheet.createRow(1);
-            createCell(temp,1,titulo);
+            Row temp = sheet.createRow(TITLE_ROW);
+            createCell(temp,1,titulo,titleStyle);
 
             for(int i=1,col=BEGINNING_COLUMN; i<columns.length + 1; i++)
                 createCell(row,col++,columns[i-1],headerStyle);
@@ -119,8 +124,17 @@ public abstract class ReportesUtils {
                     createCell(row,i++,"",style).setCellValue(dataRow.getCantidad());
                     createCell(row,i++,"",style).setCellValue(dataRow.getPrecio_venta()/dataRow.getCantidad());
                     createCell(row,i++,"",style).setCellValue(dataRow.getPrecio_venta());
-                    createCell(row,i++,dataRow.getFecha(),style);
+                    createCell(row,i,dataRow.getFecha(),style);
                 }
+
+                //Lo único que va hardoceado son los números 9,10 y 12 que pertenecen a las columnas que se van a sumar
+                String strFormula1= "SUM(K"+(BEGINNING_ROW+2)+":K"+(fila+1)+")";
+                String strFormula2= "SUM(M"+(BEGINNING_ROW+2)+":M"+(fila+1)+")";
+                sheet.createRow(fila+2).createCell(9);
+                createCell(sheet.createRow(fila+2),9,"SUMA",formulaStyle);
+                sheet.getRow(fila+2).createCell(10).setCellFormula(strFormula1);
+                sheet.getRow(fila+2).createCell(12).setCellFormula(strFormula2);
+
             }
         }
     }
@@ -177,7 +191,32 @@ public abstract class ReportesUtils {
         }
     }
 
-    protected CellStyle createHeaderCellStyle(Workbook workbook){
+
+    private CellStyle createFormulaStyle(Workbook workbook){
+        Font font = workbook.createFont();
+        font.setFontHeightInPoints(HEADER_FONT);
+        font.setFontName("Courier New");
+        font.setBold(true);
+        CellStyle style = workbook.createCellStyle();
+        style.setFillBackgroundColor(IndexedColors.YELLOW.getIndex());
+        style.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        style.setFont(font);
+        return style;
+    }
+
+    private CellStyle createTitleCellStyle(Workbook workbook){
+        Font font = workbook.createFont();
+        font.setFontHeightInPoints(TITLE_FONT);
+        font.setFontName("Courier New");
+        font.setBold(true);
+        CellStyle style = workbook.createCellStyle();
+        style.setFont(font);
+        return style;
+    }
+
+
+    private CellStyle createHeaderCellStyle(Workbook workbook){
         Font font = workbook.createFont();
         font.setFontHeightInPoints(HEADER_FONT);
         font.setFontName("Courier New");
@@ -199,7 +238,7 @@ public abstract class ReportesUtils {
         return style;
     }
 
-    protected CellStyle createContentCellStyle1(Workbook workbook){
+    private CellStyle createContentCellStyle1(Workbook workbook){
         Font font = workbook.createFont();
         font.setFontHeightInPoints(CONTENT_FONT);
         font.setFontName("Arial");
@@ -217,7 +256,7 @@ public abstract class ReportesUtils {
         return style;
     }
 
-    protected CellStyle createContentCellStyle2(Workbook workbook){
+    private CellStyle createContentCellStyle2(Workbook workbook){
         Font font = workbook.createFont();
         font.setFontHeightInPoints(CONTENT_FONT);
         font.setFontName("Arial");
