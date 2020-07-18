@@ -45,7 +45,7 @@ public class ProductoController {
             bindingResult.rejectValue("id.codigonom","error.user","Este codigo ya existe en la linea "+productos.getId().getNombreLinea());
         }
 
-        if (productos.getId().validateCodigoLinea()){
+        if (!productos.getId().validateCodigoLinea()){
             bindingResult.rejectValue("id.codigolinea","error.user","Elija una línea válida");
         }
 
