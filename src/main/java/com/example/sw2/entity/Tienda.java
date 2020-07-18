@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +21,7 @@ public class Tienda implements Serializable {
     @Column(nullable = false)
     private String nombre;
     @NotBlank(message = "El campo no puede estar vacío")
+    @Pattern(regexp = "^[0-9]{11}$", message = "Ingresar un número de RUC válido")
     @Column(nullable = false)
     private String ruc;
     @NotBlank(message = "El campo no puede estar vacío")

@@ -40,7 +40,7 @@ public class ComunidadController {
         }
 
         if(comunidadesRepository.findComunidadesByNombre(comunidades.getNombre()).isPresent())
-            bindingResult.rejectValue("codigo","error.user","Este nombre ya está registrado");
+            bindingResult.rejectValue("nombre","error.user","Este nombre ya está registrado");
 
 
         if(bindingResult.hasErrors()){

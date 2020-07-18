@@ -94,10 +94,9 @@
                                                 <td th:text="${l.codigodesc}"></td>
                                                 <td th:text="${l.descripcion}"></td>
                                                 <td th:text="${l.id.getNombreLinea()}"></td>
-                                                <td th:text="${l.fechacreacion.toLocalDate()}"></td>
-                                                <td th:if="${l.fechamodificacion!=null}"
-                                                    th:text="${l.fechamodificacion.toLocalDate()}"></td>
-                                                <td th:if="${l.fechamodificacion==null}">-</td>
+                                                <td th:text="${l.obtenerFechacreacionStr()}"></td>
+                                                <td th:text="${l.fechamodificacion!=null? l.obtenerFechamodificacionStr() :'---'}">-</td>
+
                                                 <td>
                                                     <button th:attr="data-id1=${l.id.codigonom},data-id2=${l.id.codigolinea}" data-toggle="modal"
                                                             data-target="#formModal"

@@ -31,6 +31,9 @@
 
                         <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1"
                              role="alert"></div>
+
+                        <div th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1"
+                             role="alert"></div>
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -56,30 +59,30 @@
                                            cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th># de Pedido</th>
-                                                <th>Nombre</th>
+                                                <th># de<br> Pedido</th>
+                                                <th>Código</th>
                                                 <th>Descripción</th>
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
-                                                <th>Cantidad sin Asignar</th>
+                                                <th>Cantidad<br>sin Asignar</th>
                                                 <th>Color</th>
-                                                <th>Costo Unitario(S/.)</th>
-                                                <th>Asignar a una sede</th>
-                                                <th>Registrar venta</th>
+                                                <th>Costo <br>Unitario (S/.)</th>
+                                                <th>Asignar a<br> una sede</th>
+                                                <th>Registrar<br> venta</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th># de Pedido</th>
+                                                <th># de<br> Pedido</th>
                                                 <th>Código</th>
-                                                <th>Nombre</th>
+                                                <th>Descripción</th>
                                                 <th>Tamaño</th>
                                                 <th>Comunidad</th>
-                                                <th>Cantidad disponible</th>
+                                                <th>Cantidad<br>sin Asignar</th>
                                                 <th>Color</th>
-                                                <th>Costo Unitario(S/.)</th>
-                                                <th>Asignar a una sede</th>
-                                                <th>Registrar venta</th>
+                                                <th>Costo <br>Unitario (S/.)</th>
+                                                <th>Asignar a<br> una sede</th>
+                                                <th>Registrar<br> venta</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>

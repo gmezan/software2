@@ -23,7 +23,7 @@
         <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
         <!-- Custom styles for mosqoy-->
         <link th:href="@{/css/mosqoy.css}" rel="stylesheet">
-        <style>
+        <style th:if="${title!='¡Ups!'}">
             #content-wrapper {
                 background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.46)), fixed no-repeat center url(https://cdn.pixabay.com/photo/2016/11/19/15/38/craftsman-1839920_960_720.jpg);
                 background-size: cover;

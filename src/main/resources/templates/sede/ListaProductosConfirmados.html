@@ -118,7 +118,7 @@
                                                 <td th:text="${prodConfirm.id.precioventa}"></td>
                                                 <td th:text="${prodConfirm.stock}"></td>
                                                 <td th:text="${prodConfirm.cantidadactual}"></td>
-                                                <td th:text="${prodConfirm.fechaenvio}"></td>
+                                                <td th:text="${prodConfirm.fechaEnvioStr}"></td>
                                                 <td>
     
                                                     <button disabled th:attr="data-id=${prodConfirm.id.productoinventario.codigoinventario}"
@@ -129,8 +129,6 @@
                                                                  th:id="${prodConfirm.id.productoinventario.codigoinventario} +'photo'"
                                                                  th:src="${prodConfirm.id.productoinventario.foto}"
                                                                  alt="">
-                                                       
-                                                        
                                                     </button>
 
                                                 </td>

@@ -93,10 +93,9 @@
                                                 <td th:text="${item.apellidopaterno}"></td>
                                                 <td th:text="${item.apellidomaterno==null}? '-': ${item.apellidomaterno}"></td>
                                                 <td th:text="${item.comunidades.nombre}"></td>
-                                                <td th:text="${item.fechacreacion.toLocalDate()}"></td>
-                                                <td th:if="${item.fechamodificacion!=null}"
-                                                    th:text="${item.fechamodificacion.toLocalDate()}"></td>
-                                                <td th:if="${item.fechamodificacion==null}">-</td>
+                                                <td th:text="${item.obtenerFechacreacionStr()}"></td>
+                                                <td th:text="${item.fechamodificacion!=null? item.obtenerFechamodificacionStr() :'---'}">-</td>
+
                                                 <td>
                                                     <button th:attr="data-id=${item.codigo}" data-toggle="modal" data-target="#editModal"
                                                             class="edit-Artesano btn btn-datatable btn-icon btn-info mr-2"><i

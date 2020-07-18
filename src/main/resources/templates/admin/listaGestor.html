@@ -67,8 +67,10 @@
                                                 <th>Nombre</th>
                                                 <th>Apellido</th>
                                                 <th>Email</th>
-                                                <th>Telefono</th>
+                                                <th>Teléfono</th>
                                                 <th>Foto</th>
+                                                <th>Fecha de creación</th>
+                                                <th>Última modificación</th>
                                                 <th>Edit/Delete</th>
                                             </tr>
                                         </thead>
@@ -78,8 +80,10 @@
                                                 <th>Nombre</th>
                                                 <th>Apellido</th>
                                                 <th>Email</th>
-                                                <th>Telefono</th>
+                                                <th>Teléfono</th>
                                                 <th>Foto</th>
+                                                <th>Fecha de creación</th>
+                                                <th>Última modificación</th>
                                                 <th>Edit/Delete</th>
                                             </tr>
                                         </tfoot>
@@ -97,16 +101,12 @@
                                                         
                                                             <img th:id="${l.idusuarios} +'photo'" class="mx-auto my-auto mh-100 img-fluid" th:src="${l.foto}"
                                                                  alt="">
-
-                                                        
-                                                        
                                                     </button>
-                                                    
-                                                    
-                                                    
-                                                    
-                                                   
                                                 </td>
+
+                                                <td th:text="${l.obtenerFechacreacionStr()}">
+                                                <td th:text="${l.fechamodificacion!=null? l.obtenerFechamodificacionStr() :'---'}">-</td>
+
                                                 <td>
                                                     <button th:attr="data-id=${l.idusuarios}" data-toggle="modal"
                                                             data-target="#formModal"
@@ -185,7 +185,7 @@
                             <div class="form-group">
                                 <label class="col-form-label">DNI:</label>
                                 <input th:readonly="${gestor.idusuarios!=0 && gestor.idusuarios!=null && !#fields.hasErrors('idusuarios')}"
-                                       type="text" class="form-control" th:field="*{idusuarios}"
+                                       type="number" class="form-control" th:field="*{idusuarios}"
                                        th:value="*{idusuarios!=0}? *{idusuarios}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('idusuarios')}"
                                      th:errors="*{idusuarios}">Error

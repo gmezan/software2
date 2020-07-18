@@ -93,7 +93,7 @@
                                                 <td th:text="${item.nombrecliente}"></td>
                                                 <td th:text="${item.id.tipodocumento2}"></td>
                                                 <td th:text="${item.id.numerodocumento}"></td>
-                                                <td th:text="${item.fecha}"></td>
+                                                <td th:text="${item.fechaDeVentaStr}"></td>
                                                 <td th:text="${item.lugarventa}"></td>
                                                 <td th:text="${item.rucdni}"></td>
                                                 <td th:text="${item.inventario.codigoinventario}"></td>
@@ -101,9 +101,7 @@
                                                 <td th:text="${item.cantidad}"></td>
                                                 <td th:text="${item.precioventa*item.cantidad}"></td>
 
-                                                <td th:if="${item.fechamodificacion!=null}"
-                                                    th:text="${item.fechamodificacion.toLocalDate()}"></td>
-                                                <td th:if="${item.fechamodificacion==null}">-</td>
+                                                <td th:text="${item.fechamodificacion!=null? item.obtenerFechamodificacionStr() :'---'}">-</td>
                                                 <td>
                                                     <button th:attr="data-id=${item.idventas}"
                                                             data-toggle="modal" data-target="#formModal"

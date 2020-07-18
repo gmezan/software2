@@ -326,9 +326,6 @@ public class Inventario extends Auditable implements Serializable {
         if (this.fechavencimientoconsignacion != null) {
             fecha =fechavencimientoconsignacion.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         }
-
-
-
         return fecha;
     }
 

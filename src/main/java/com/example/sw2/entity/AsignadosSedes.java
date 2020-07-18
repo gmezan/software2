@@ -13,6 +13,7 @@ import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name="Asignados_sedes")
@@ -25,7 +26,7 @@ public class AsignadosSedes extends Auditable implements Serializable {
     @NotNull(message = "Selecione una fecha")
     private LocalDate fechaenvio;
     @NotNull(message = "Ingrese una cantidad")
-    @Min(value = 0, message = "La cantidad debe ser mayor a 0")
+    @Min(value = 1, message = "La cantidad debe ser mayor a 1")
     @Column(nullable = false)
     private Integer stock;
     @Column(nullable = false)
@@ -102,5 +103,13 @@ public class AsignadosSedes extends Auditable implements Serializable {
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
+    }
+
+    public String getFechaEnvioStr() {
+        String fecha = "---";
+        if (this.fechaenvio != null) {
+            fecha =fechaenvio.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
+        return fecha;
     }
 }
