@@ -118,37 +118,45 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
         String[] columns = {"Nombre","Linea","Codigo","Suma Ventas","Cantidad Vendidos"};
         Sheet sheet= workbook.createSheet("Reporte producto " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
+        String titulo = "";
         List<ReportesArticuloDto> reportesArticulos = new ArrayList<>();
         switch (reportes.getType()){
             case 1:
                 reportesArticulos = ventasRepository.obtenerReporteAnualArticuloProducto(reportes.getYear());
+                titulo = "Ventas por Artículos del año " + reportes.getYear();
                 break;
             case 2:
                 reportesArticulos = ventasRepository.obtenerReporteTrimestralArticuloProducto(reportes.getSelected(),reportes.getYear());
+                titulo = "Ventas por Artículos del año " + reportes.getYear()+" trimestre " + CustomConstants.getTrimestre().get(reportes.getSelected());
                 break;
             case 3:
                 reportesArticulos = ventasRepository.obtenerReporteMensualArticuloProducto(reportes.getSelected(),reportes.getYear());
+                titulo = "Ventas por Artículos del año " + reportes.getYear()+" mes " + CustomConstants.getMeses().get(reportes.getSelected());
                 break;
         }
-        //fillCellsInSheet(sheet,columns,reportesArticulos,workbook);
+        fillCellsInSheet(sheet,columns,reportesArticulos,workbook,titulo);
     }
     private void llenarReporteComunidad(Workbook workbook, Reportes reportes){
         String[] columns = {"Nombre","Código","Cantidad Artesanos","Suma Ventas","Cantidad Productos Vendidos"};
         Sheet sheet= workbook.createSheet("Reporte comunidad " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
+        String titulo = "";
         List<ReportesComunidadDto> reportesComunidad = new ArrayList<>();
         switch (reportes.getType()){
             case 1:
                 reportesComunidad = ventasRepository.obtenerReporteAnualComunidad(reportes.getYear());
+                titulo = "Ventas por Comunidad del año " + reportes.getYear();
                 break;
             case 2:
                 reportesComunidad = ventasRepository.obtenerReporteTrimestralComunidad(reportes.getSelected(),reportes.getYear());
+                titulo = "Ventas por Comunidad del año " + reportes.getYear()+" trimestre " + CustomConstants.getTrimestre().get(reportes.getSelected());
                 break;
             case 3:
                 reportesComunidad = ventasRepository.obtenerReporteMensualComunidad(reportes.getSelected(),reportes.getYear());
+                titulo = "Ventas por Comunidad del año " + reportes.getYear()+" mes " + CustomConstants.getMeses().get(reportes.getSelected());
                 break;
         }
-        //fillCellsInSheet(sheet,columns,reportesComunidad,workbook);
+        fillCellsInSheet(sheet,columns,reportesComunidad,workbook,titulo);
     }
 
     private void llenarReporteCliente(Workbook workbook, Reportes reportes){
