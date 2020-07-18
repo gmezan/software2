@@ -52,6 +52,7 @@ public class ArtesanoController {
             bindingResult.rejectValue("codigo","error.user","Este código ya existe");
         }
 
+
         if(bindingResult.hasErrors()){
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", artesanosRepository.findAll());

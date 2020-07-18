@@ -26,8 +26,11 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-white">Categorías</h1>
                         </div>
-                        
-                        <div id="msgCategoria" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1"
+
+                        <div id="msgCategoria" th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1"
+                             role="alert"></div>
+
+                        <div  th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1"
                              role="alert"></div>
                         <!-- Database Table -->
                         <div class="card shadow mb-4">

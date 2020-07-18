@@ -30,6 +30,12 @@ public class ProductoId implements Serializable {
         this.codigonom=cn;
         this.codigolinea=cl;
     }
+
+
+    public boolean validateCodigoLinea(){
+        return CustomConstants.getLineas().containsKey(this.codigolinea);
+    }
+
     public void setCodigolinea(String codigolinea) {
         this.codigolinea = codigolinea.trim();
     }
