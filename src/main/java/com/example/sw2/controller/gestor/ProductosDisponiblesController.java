@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -96,7 +97,12 @@ public class ProductosDisponiblesController {
 
         // Se verifica fecha
         if((venta.getFecha()!=null) && venta.getFecha().isBefore(venta.getInventario().getFechaadquisicion()))
-            bindingResult.rejectValue("fecha", "error.user", "La fecha debe ser después de: "+ venta.getInventario().getFechaadquisicion().toString());
+            bindingResult.rejectValue("fecha", "error.user", "La fecha debe ser después de la fecha de adquisicion: "+ venta.getInventario().getFechaadquisicion().toString());
+
+        if((venta.getFecha()!=null) && (venta.getInventario().getFechavencimientoconsignacion()!=null)
+        && venta.getInventario().getFechavencimientoconsignacion().isBefore(venta.getFecha()))
+            bindingResult.rejectValue("fecha", "error.user", "La fecha debe ser antes de la fecha de vencimiento: "+ venta.getInventario().getFechavencimientoconsignacion().toString());
+
 
         // Se verifica cantidad
         if(venta.getInventario().getCantidadgestor()<venta.getCantidad())
@@ -170,9 +176,16 @@ public class ProductosDisponiblesController {
     public String registrarAsignacionProducto(@ModelAttribute("asignadosSedes") @Valid AsignadosSedes asignadosSedes, BindingResult bindingResult,
                                               Model model, RedirectAttributes attributes,
                                               HttpSession session) {
-        Optional<Inventario> optionalInventario = inventarioRepository.findInventarioByCodigoinventarioAndCantidadgestorIsGreaterThan(
-                asignadosSedes.getId().getProductoinventario().getCodigoinventario(),0
-        );
+        Optional<Inventario> optionalInventario;
+        try{
+            optionalInventario = inventarioRepository.findInventarioByCodigoinventarioAndCantidadgestorIsGreaterThan(
+                    asignadosSedes.getId().getProductoinventario().getCodigoinventario(), 0
+            );
+        }catch (NullPointerException ex){
+            ex.printStackTrace();
+            attributes.addFlashAttribute("msg", "Hubo un error");
+            return "redirect:/gestor/productosDisponibles";
+        }
 
         Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(3,
                 asignadosSedes.getId().getSede().getIdusuarios());
@@ -194,6 +207,11 @@ public class ProductosDisponiblesController {
         if ((asignadosSedes.getFechaenvio()!=null) && asignadosSedes.getFechaenvio().isBefore(asignadosSedes.getId().getProductoinventario().getFechaadquisicion()))
             bindingResult.rejectValue("fechaenvio","error.user","La fecha debe ser después del :"+asignadosSedes.getId().getProductoinventario().getFechaadquisicion().toString());
 
+        if((asignadosSedes.getFechaenvio()!=null) && (asignadosSedes.getId().getProductoinventario().getFechavencimientoconsignacion()!=null)
+                && asignadosSedes.getId().getProductoinventario().getFechavencimientoconsignacion().isBefore(asignadosSedes.getFechaenvio()))
+            bindingResult.rejectValue("fechaenvio", "error.user", "La fecha debe ser antes de la fecha de vencimiento: "+ asignadosSedes.getId().getProductoinventario().getFechavencimientoconsignacion().toString());
+
+
         //Se verfica el precio de venta
         if (!((asignadosSedes.getId().getPrecioventa()!=null) && asignadosSedes.getId().getPrecioventa()>0.0))
             bindingResult.rejectValue("id.precioventa","error.user","Ingrese un precio válido");
@@ -201,6 +219,7 @@ public class ProductosDisponiblesController {
         //Se verifica la cantidad asignada
         if((asignadosSedes.getStock()!=null) && (optionalInventario.get().getCantidadgestor()<asignadosSedes.getStock()))
             bindingResult.rejectValue("stock","error.user","La cantidad asignada es mayor a la cantidad disponible");
+
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("asignadosSedes", asignadosSedes);
