@@ -76,6 +76,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
             case 1:
                 reportesTotales = ventasRepository.obtenerReporteAnualTotal(reportes.getYear());
                 titulo = "Reporte total del año " + reportes.getYear();
+                System.out.println("TestTest"); 
                 System.out.println(titulo);
                 break;
             case 2:
