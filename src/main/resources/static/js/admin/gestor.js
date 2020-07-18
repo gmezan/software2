@@ -39,18 +39,18 @@ $(function() {($("#msgGestores").text()==="ERROR") && $('#formModal').modal({sho
             $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
         }
         else {
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("El gestor no se puede borrar, está asociada a los siguientes Ventas y/o Prodcutos Asignados");
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("El gestor no se puede borrar, está asociada a los siguientes Ventas y/o Productos Asignados");
             let r = '';
             if(data[0].length!==0){
                 for (let key=0, size=data[0].length; key<size; key++)
-                    r+='<tr><td>'+data[0][key].rucdni+'</td><td>'+data[0][key].cliente+'</td><td>'+data[0][key].vendedor+'</td></tr>';
+                    r+='<tr><td>'+data[0][key].inventario+'</td><td>'+data[0][key].rucdni+'</td><td>'+data[0][key].cliente+'</td></tr>';
                 $("#deleteModal #deleteModalBody #tableModal1").prop("hidden",false);
                 $("#deleteModal #tbody").html(r);
             }
             if(data[1].length!==0){
                 r = '';
                 for (let key=0, size=data[1].length; key<size; key++)
-                    r+='<tr><td>'+data[1][key].gestor+'</td><td>'+data[1][key].stock+'</td><td>'+data[1][key].sede+'</td></tr>';
+                    r+='<tr><td>'+data[1][key].inventario+'</td><td>'+data[1][key].stock+'</td><td>'+data[1][key].sede+'</td></tr>';
                 $("#deleteModal #deleteModalBody #tableModal2").prop("hidden",false);
                 $("#deleteModal #tbody2").html(r);
             }

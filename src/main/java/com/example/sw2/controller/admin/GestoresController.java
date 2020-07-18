@@ -141,12 +141,12 @@ public class GestoresController {
                                 add(new HashMap<String, String>() {{
                                         put("rucdni", i.getRucdni());
                                         put("cliente", i.getNombrecliente());
-                                        put("vendedor", i.getVendedor().getNombre());
+                                        put("inventario", i.getInventario().getCodigoinventario());
                                     }});});}});
                 add(new ArrayList<HashMap<String,String>>() {{
                             asignadosSedesRepository.findAsignadosSedesById_Gestor_idusuarios(id).forEach((a)-> {
                                 add(new HashMap<String, String>() {{
-                                        put("gestor", a.getId().getGestor().getFullname());
+                                        put("inventario", a.getId().getProductoinventario().getCodigoinventario());
                                         put("stock", Integer.toString(a.getStock()));
                                         put("sede", a.getId().getSede().getFullname());
                                 }});});}});}},
