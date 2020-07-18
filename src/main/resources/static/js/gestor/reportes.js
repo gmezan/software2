@@ -15,6 +15,19 @@ const tipos = {'2':trimestres,'3':meses};
 
 $(function () {
     let $ventaModal = $("#reporteVentaModal");
+
+    $.ajax({method:"GET",url:contextPath+"/years"})
+        .done(function (years) {
+            let r = '';
+            $.each(years, function () {
+                r+=`<option value="${this}">${this}</option>`;
+            });
+            $ventaModal.find(" #years").append(r);
+        })
+        .fail(function(err){
+            alert("Ocurrio un error: "+ err);
+        });
+
     $("body").on('click','.reporte-Ventas',function () {
             console.log("ventas");
         $ventaModal.find(" #fields1 select").val(0);
@@ -47,5 +60,5 @@ $(function () {
 });
 
 function makeOption(x) {
-    return '<option value="'+x.numero +'" >'+x.nombre + '</option> '
+    return '<option value="'+x.numero +'" >'+x.nombre + '</option> ';
 }
