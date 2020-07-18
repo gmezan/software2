@@ -39,7 +39,6 @@ public class Productos extends Auditable implements Serializable {
     @Pattern(regexp = "^[A-Za-zÀ-ÿ]+$", message = "Ingrese solo caracteres válidos")
     private String codigodesc;
 
-
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productos")
     private List<Inventario> inventario;
@@ -61,7 +60,6 @@ public class Productos extends Auditable implements Serializable {
     }
 
     public Productos(){
-
     }
 
     public Productos(String cod){
