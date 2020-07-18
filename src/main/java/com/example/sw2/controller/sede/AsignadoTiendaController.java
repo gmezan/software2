@@ -136,10 +136,9 @@ public class AsignadoTiendaController {
                     2,venta.getPrecioventa(), venta.getCantidad(), idAstiendas);
             venta.setVendedor((Usuarios) session.getAttribute("usuario"));
             ventasRepository.save(venta);
-            AsignadosSedes asignadosSedes = asignadosSedesRepository.findById(aTienda.getAsignadosSedes().getId()).orElse(null);
             try {
-                if (asignadosSedes!=null && asignadosSedes.getStock()==0){
-                    customMailService.sendStockAlert(asignadosSedes);
+                if (aTienda.getStock()==venta.getCantidad()){
+                    customMailService.sendStockAlert(aTienda.getAsignadosSedes());
                 }
                 customMailService.sendSaleConfirmation(venta);
             } catch (MessagingException | IOException  e) {
