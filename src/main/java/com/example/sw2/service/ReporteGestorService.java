@@ -66,7 +66,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
 
     private void llenarReporteTotal(Workbook workbook, Reportes reportes){
 
-        String[] columns = {"Documento","Doc. Número","Medio de Pago","Producto","Cliente","RUC","DNI","Vendedor","DNI vendedor","Cantidad","Precio Unit.","Precio Total","Fecha de Venta"};
+        String[] columns = {"Documento","Doc. Número","Medio de Pago","Producto","Cliente","RUC","DNI","Vendedor","DNI vendedor","Precio Unit","Cantidad","Precio Total","Fecha de Venta"};
 
         Sheet sheet= workbook.createSheet("Reporte total " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
@@ -76,6 +76,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
             case 1:
                 reportesTotales = ventasRepository.obtenerReporteAnualTotal(reportes.getYear());
                 titulo = "Reporte total del año " + reportes.getYear();
+                System.out.println("TestTest");
                 System.out.println(titulo);
                 break;
             case 2:
@@ -93,7 +94,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
     }
 
     private void llenarReporteSede(Workbook workbook, Reportes reportes){
-        String[] columns = {"Nombre","DNI","Correo","Telefono","Suma Ventas","Cantidad Productos Vendidos"};
+        String[] columns = {"Nombre","DNI","Correo","Telefono","Suma de Ventas","Cantidad Productos Vendidos"};
         Sheet sheet= workbook.createSheet("Reporte de sede " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
         String titulo = "";

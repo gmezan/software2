@@ -257,28 +257,39 @@ public interface VentasRepository extends JpaRepository<Ventas, Integer> {
 
     /////////// FIN ventas de un producto por MES especifico en un anho especifico
 
+
+
+
+
+
+
+
+
+
+
+
     //SEDES ALEX
 
-    @Query(value="SELECT CONCAT(u.nombre,' ',u.apellido) as nombre, u.dni, u.correo, u.telefono, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v inner join Usuarios u ON (v.vendedor = u.dni) WHERE YEAR(v.fecha) = ?1 AND u.rol = 3 group by v.vendedor",nativeQuery=true)
+    @Query(value="SELECT CONCAT(u.nombre,' ',u.apellido) as nombre, u.dni, u.correo, u.telefono, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v inner join Usuarios u ON (v.vendedor = u.dni) WHERE YEAR(v.fecha) = ?1 AND u.rol = 3 AND v.confirmado = 1 group by v.vendedor",nativeQuery=true)
     List<ReportesSedesDto> obtenerReporteAnualSede(int anho);
 
-    @Query(value="SELECT CONCAT(u.nombre,' ',u.apellido) as nombre, u.dni, u.correo, u.telefono, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v inner join Usuarios u ON (v.vendedor = u.dni) WHERE QUARTER(v.fecha) = ?1 AND YEAR(v.fecha) = ?2 AND u.rol = 3 group by v.vendedor",nativeQuery=true)
+    @Query(value="SELECT CONCAT(u.nombre,' ',u.apellido) as nombre, u.dni, u.correo, u.telefono, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v inner join Usuarios u ON (v.vendedor = u.dni) WHERE QUARTER(v.fecha) = ?1 AND YEAR(v.fecha) = ?2 AND u.rol = 3 AND v.confirmado = 1 group by v.vendedor",nativeQuery=true)
     List<ReportesSedesDto> obtenerReporteTrimestralSede(int trimestre, int anho);
 
-    @Query(value="SELECT CONCAT(u.nombre,' ',u.apellido) as nombre, u.dni, u.correo, u.telefono, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v inner join Usuarios u ON (v.vendedor = u.dni) WHERE MONTH(v.fecha) = ?1 AND YEAR(v.fecha) = ?2 AND u.rol = 3 group by v.vendedor ",nativeQuery=true)
+    @Query(value="SELECT CONCAT(u.nombre,' ',u.apellido) as nombre, u.dni, u.correo, u.telefono, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v inner join Usuarios u ON (v.vendedor = u.dni) WHERE MONTH(v.fecha) = ?1 AND YEAR(v.fecha) = ?2 AND u.rol = 3 AND v.confirmado = 1 group by v.vendedor ",nativeQuery=true)
     List<ReportesSedesDto> obtenerReporteMensualSede(int mes, int anho);
 
     //FIN SEDES ALEX
 
     //CLIENTES ALEX
 
-    @Query(value="SELECT v.nombrecliente as nombre , v.ruc_dni, v.productoinventario as producto, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v WHERE YEAR(v.fecha) = ?1 group by v.ruc_dni",nativeQuery=true)
+    @Query(value="SELECT v.nombrecliente as nombre , v.ruc_dni, v.productoinventario as producto, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v WHERE YEAR(v.fecha) = ?1 AND v.confirmado = 1 group by v.ruc_dni",nativeQuery=true)
     List<ReportesClienteDto> obtenerReporteAnualCliente(int anho);
 
-    @Query(value="SELECT v.nombrecliente as nombre , v.ruc_dni, v.productoinventario as producto, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v WHERE QUARTER(v.fecha) = ?1 AND YEAR(v.fecha) = ?2 group by v.ruc_dni",nativeQuery=true)
+    @Query(value="SELECT v.nombrecliente as nombre , v.ruc_dni, v.productoinventario as producto, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v WHERE QUARTER(v.fecha) = ?1 AND v.confirmado = 1 AND YEAR(v.fecha) = ?2 group by v.ruc_dni",nativeQuery=true)
     List<ReportesClienteDto> obtenerReporteTrimestralCliente(int trimestre, int anho);
 
-    @Query(value="SELECT v.nombrecliente as nombre , v.ruc_dni, v.productoinventario as producto, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v WHERE MONTH(v.fecha) = ?1 AND YEAR(v.fecha) = ?2 group by v.ruc_dni",nativeQuery=true)
+    @Query(value="SELECT v.nombrecliente as nombre , v.ruc_dni, v.productoinventario as producto, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v WHERE MONTH(v.fecha) = ?1 AND v.confirmado = 1 AND YEAR(v.fecha) = ?2 group by v.ruc_dni",nativeQuery=true)
     List<ReportesClienteDto> obtenerReporteMensualCliente(int mes, int anho);
 
     // FIN CLIENTES ALEX
