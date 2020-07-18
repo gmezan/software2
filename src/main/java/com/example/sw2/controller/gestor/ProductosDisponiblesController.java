@@ -177,18 +177,20 @@ public class ProductosDisponiblesController {
                                               Model model, RedirectAttributes attributes,
                                               HttpSession session) {
         Optional<Inventario> optionalInventario;
+        Optional<Usuarios> optionalUsuarios;
         try{
             optionalInventario = inventarioRepository.findInventarioByCodigoinventarioAndCantidadgestorIsGreaterThan(
                     asignadosSedes.getId().getProductoinventario().getCodigoinventario(), 0
             );
+            optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(3,
+                    asignadosSedes.getId().getSede().getIdusuarios());
+
         }catch (NullPointerException ex){
             ex.printStackTrace();
             attributes.addFlashAttribute("msg", "Hubo un error");
             return "redirect:/gestor/productosDisponibles";
         }
 
-        Optional<Usuarios> optionalUsuarios = usuariosRepository.findUsuariosByRoles_idrolesAndIdusuarios(3,
-                asignadosSedes.getId().getSede().getIdusuarios());
 
         // Se verifica que el producto de Inventario
         if(!optionalInventario.isPresent()){
