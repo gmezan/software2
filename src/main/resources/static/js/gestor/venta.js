@@ -1,16 +1,13 @@
 const contextPath  = window.location.href;
 
 $(document).on("click",".editar-Venta", function(){
-    $("#formModal  #id\\.numerodocumento").val($(this).data('id1'));
-    $("#formModal  #id\\.tipodocumento").val($(this).data('id2'));
-
     $.ajax({
-        method:"GET", url:contextPath + "/get?id1=" + $(this).data('id1') + "&id2=" + $(this).data('id2')
+        method:"GET", url:contextPath + "/get?id=" + $(this).data('id')
     }).done(function(ven){
         if (ven!=null){
+            $("#formModal #idventas").val(ven.idventas);
             $("#formModal #rucdni").val(ven.rucdni);
             $("#formModal #nombrecliente").val(ven.nombrecliente);
-            $("#formModal  #cant").val(ven.cantidad);
         }
     }).fail(function (err) {
         console.log(err);

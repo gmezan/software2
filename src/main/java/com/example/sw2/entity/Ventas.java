@@ -2,6 +2,8 @@ package com.example.sw2.entity;
 
 import com.example.sw2.config.Auditable;
 import com.example.sw2.constantes.VentasId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -64,6 +66,7 @@ public class Ventas extends Auditable implements Serializable {
     private BigDecimal precioventa;
 
     private Integer nota;
+    @JsonIgnore
     private String mensaje;
     private Integer cancelar;
 

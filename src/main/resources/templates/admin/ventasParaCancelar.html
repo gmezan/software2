@@ -34,7 +34,8 @@
                             <div class="card-header py-3">
                                 <div class="d-sm-flex align-items-center justify-content-between ">
                                     <p class="text-black-50 mr-5 mt-3 mb-0 ">Aquí puede ver las ventas que el gestor le ha enviado para cancelar.
-                                        Una vez que se cancele la venta, los productos regresarán al stock del gestor.
+                                        Una vez que se cancele la venta, los productos regresarán al stock del <a
+                                                class="text-black-50 font-weight-bold" th:href="@{/admin/inventario}">Inventario</a>.
                                     </p>
                                 </div>
                             </div>
@@ -83,8 +84,12 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr th:each="item, index : ${lista}">
-                                                <td th:text="${index.count}"></td>
+                                            <tr th:each="item : ${lista}">
+                                                <td>
+                                                    <button th:attr="data-id1=${item.idventas}"
+                                                            data-toggle="modal" data-target="#ventaModal"
+                                                            class="info-Venta btn btn-datatable btn-icon btn-success"><i class="fas fa-info"></i></button>
+                                                </td>
                                                 <td th:text="${item.nombrecliente}"></td>
                                                 <td th:text="${item.id.tipodocumento2}"></td>
                                                 <td th:text="${item.id.numerodocumento}"></td>
@@ -97,10 +102,10 @@
                                                 <td th:text="${item.precioventa*item.cantidad}"></td>
 
                                                 <td>
-                                                    <button th:attr="data-id1=${item.id.numerodocumento}, data-id2=${item.id.tipodocumento}"
+                                                    <button th:attr="data-id2=${item.idventas}"
                                                             data-toggle="modal" data-target="#confirmarModal"
                                                             class="confirmar btn btn-datatable btn-icon btn-success"><i class="fas fa-check"></i></button>
-                                                    <button th:attr="data-id1=${item.id.numerodocumento}, data-id2=${item.id.tipodocumento}"
+                                                    <button th:attr="data-id3=${item.idventas}"
                                                             data-toggle="modal" data-target="#rechazarModal"
                                                             class="rechazar btn btn-datatable btn-icon btn-warning"><i class="fas fa-times"></i></button>
                                                     <button th:attr="data-id=${item.cancelar}" data-toggle="modal" data-target="#infoModal"
@@ -156,6 +161,7 @@
         <script th:src="@{/js/demo/datatables-demo.js}"></script>
         <script th:src="@{/js/admin/ventasCancelar.js}"></script>
         <script th:src="@{/js/admin/ventasInfo.js}"></script>
+        <script th:src="@{/js/admin/problemaInfo.js}"></script>
         <script th:src="@{/js/gestor/extra.js}"></script>
 
 
@@ -169,12 +175,11 @@
                     </div>
                     <form method="get" th:action="@{/admin/venta/confirmar}">
                         <div class="modal-body">
-                            <input hidden type="text" class="form-control" id="id11" name="id1">
-                            <input hidden type="text" class="form-control" id="id12" name="id2">
+                            <input hidden type="text" class="form-control" id="id2" name="id2">
                             <p>¿Seguro que desea confirmar la cancelación de la venta?
                                 </br>
                                 Esta acción no se puede deshacer. Los productos se retornarán
-                            al stock del gestor.</p>
+                            al stock del Inventario.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -195,12 +200,13 @@
                     </div>
                     <form method="get" th:action="@{/admin/venta/rechazar}">
                         <div class="modal-body">
-                            <input hidden type="text" class="form-control" id="id21" name="id1">
-                            <input hidden type="text" class="form-control" id="id22" name="id2">
+                            <input hidden type="text" class="form-control" id="id3" name="id3">
                             <p>¿Seguro que desea rechazar la cancelación de la venta?
                                 </br>
                                 Realice esta acción solo en caso el gestor le haya informado
-                                que el cliente ya no quiere cancelar la venta. La venta retornará a la Lista de Ventas del respectivo gestor.</p>
+                                que el cliente ya no quiere cancelar la venta o si la Nota de Crédito no es válida.
+                                </br>
+                                La venta retornará a la Lista de Ventas del respectivo gestor.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -228,7 +234,27 @@
                             <b>Correo: </b><li id="correo" th:text="${gestor.correo}"></li>
                             <b>Teléfono: </b><li id="telefono" th:text="${gestor.telefono}"></li>
                         </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
 
+        <!--Information Venta Modal -->
+        <div id="ventaModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Información de la Venta</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+
+                    <form method="get" th:object="${venta}">
+                        <ul>
+                            <li hidden id="id1"></li>
+                            <span></span></br>
+                            <b>Nota de crédito: </b><li id="nota" th:text="${venta.nota}"></li>
+                            <b>Descripción del problema: </b><li id="mensaje" th:text="${venta.mensaje}"></li>
+                        </ul>
                     </form>
                 </div>
             </div>
