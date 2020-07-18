@@ -207,7 +207,7 @@ public class ProductosDisponiblesController {
 
         //Se verifica la fecha de envio
         if ((asignadosSedes.getFechaenvio()!=null) && asignadosSedes.getFechaenvio().isBefore(asignadosSedes.getId().getProductoinventario().getFechaadquisicion()))
-            bindingResult.rejectValue("fechaenvio","error.user","La fecha debe ser después del :"+asignadosSedes.getId().getProductoinventario().getFechaadquisicion().toString());
+            bindingResult.rejectValue("fechaenvio","error.user","La fecha debe ser después del: "+asignadosSedes.getId().getProductoinventario().getFechaadquisicion().toString());
 
         if((asignadosSedes.getFechaenvio()!=null) && (asignadosSedes.getId().getProductoinventario().getFechavencimientoconsignacion()!=null)
                 && asignadosSedes.getId().getProductoinventario().getFechavencimientoconsignacion().isBefore(asignadosSedes.getFechaenvio()))
