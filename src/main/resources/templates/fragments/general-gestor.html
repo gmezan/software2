@@ -47,7 +47,7 @@
                 <div class="topbar-divider d-none d-sm-block"></div>
                 
                 
-                <!--<div th:replace="fragments/notification.html :: notification-center"></div>-->
+                <div th:replace="fragments/notification.html :: notification-center"></div>
                 
                 
                 <div class="topbar-divider d-none d-sm-block"></div>
@@ -202,6 +202,13 @@
                     <i class="fas fa-fw fa-dollar-sign"></i>
                     <span>Mis ventas</span></a>
             </li>
+
+            <!-- Nav Item - Ventas -->
+            <li class="nav-item" th:classappend="${param1=='Confirmacion'}? active : ''">
+                <a th:href="@{/gestor/confirmacion}" class="nav-link">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Confirmacion de venta</span></a>
+            </li>
             
             
             <!-- Nav Item - Ventas -->
@@ -251,11 +258,12 @@
                             </button>
                         </div>
                         <div class="modal-body">Seleccione "Cerrar sesión" si está listo para cerrar su sesión actual.
+                            <div class="modal-footer mt-3">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-info">Cerrar sesión</button>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-info">Cerrar sesión</button>
-                        </div>
+                        
                     
                     </form>
                 </div>

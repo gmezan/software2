@@ -53,6 +53,23 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">¡Bienvenido!</h1>
                   </div>
+                  <div  th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
+
+                  <!-- Google auth-->
+                  <div class="card-body p-2 text-center">
+                    <div th:each="url : ${urls}"  class="col s12 m6 offset-m3 center-align">
+                      <a  th:href="${url.value}" class="oauth-container btn btn-dark darken-4 white black-text"  style="text-transform:none">
+                        <div class="left">
+                          <img width="20px" style="margin-top:7px; margin-right:8px" alt="Google sign-in"
+                               src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                        </div>
+                        O inicia sesión con Google
+                      </a>
+                    </div>
+                  </div>
+
+                  <!---->
+
                   <form th:action="@{/processLogin}" method="post" class="user">
                     <div class="form-group">
                       <input type="email" class="form-control form-control-user" name="username" id="username" aria-describedby="emailHelp" placeholder="Ingresa tu email...">

@@ -1,5 +1,6 @@
 package com.example.sw2.service;
 
+import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.dtoReportes.ReportesArticuloDto;
 import com.example.sw2.dtoReportes.ReportesClienteDto;
 import com.example.sw2.dtoReportes.ReportesComunidadDto;
@@ -65,24 +66,30 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
 
     private void llenarReporteTotal(Workbook workbook, Reportes reportes){
 
-        String[] columns = {"Documento","Numero","Cliente","RUC_DNI","Vendedor","DNI vendedor"};
+        String[] columns = {"Documento","Doc. Número","Medio de Pago","Producto","Cliente","RUC","DNI","Vendedor","DNI vendedor","Cantidad","Precio Unit.","Precio Total","Fecha de Venta"};
 
         Sheet sheet= workbook.createSheet("Reporte total " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
-
+        String titulo = "";
         List<ReportesTotalDto> reportesTotales = new ArrayList<>();
         switch (reportes.getType()){
             case 1:
                 reportesTotales = ventasRepository.obtenerReporteAnualTotal(reportes.getYear());
+                titulo = "Reporte total del año " + reportes.getYear();
+                System.out.println(titulo);
                 break;
             case 2:
                 reportesTotales = ventasRepository.obtenerReporteTrimestralTotal(reportes.getSelected(),reportes.getYear());
+                titulo = "Reporte total del año " + reportes.getYear()+" trimestre " + CustomConstants.getTrimestre().get(reportes.getSelected());
+                System.out.println(titulo);
                 break;
             case 3:
                 reportesTotales = ventasRepository.obtenerReporteMensualTotal(reportes.getSelected(),reportes.getYear());
+                titulo = "Reporte total del año " + reportes.getYear()+" mes " + CustomConstants.getMeses().get(reportes.getSelected());
+                System.out.println(titulo);
                 break;
         }
-        fillCellsInSheet(sheet,columns,reportesTotales,workbook);
+        fillCellsInSheet(sheet,columns,reportesTotales,workbook,titulo);
     }
 
     private void llenarReporteSede(Workbook workbook, Reportes reportes){
@@ -101,7 +108,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
                 reportesSedes = ventasRepository.obtenerReporteMensualSede(reportes.getSelected(),reportes.getYear());
                 break;
         }
-        fillCellsInSheet(sheet,columns,reportesSedes,workbook);
+        //fillCellsInSheet(sheet,columns,reportesSedes,workbook);
     }
     private void llenarReporteProducto(Workbook workbook, Reportes reportes){
         String[] columns = {"Nombre","Linea","Codigo","Suma Ventas","Cantidad Vendidos"};
@@ -119,7 +126,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
                 reportesArticulos = ventasRepository.obtenerReporteMensualArticuloProducto(reportes.getSelected(),reportes.getYear());
                 break;
         }
-        fillCellsInSheet(sheet,columns,reportesArticulos,workbook);
+        //fillCellsInSheet(sheet,columns,reportesArticulos,workbook);
     }
     private void llenarReporteComunidad(Workbook workbook, Reportes reportes){
         String[] columns = {"Nombre","Código","Cantidad Artesanos","Suma Ventas","Cantidad Productos Vendidos"};
@@ -137,7 +144,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
                 reportesComunidad = ventasRepository.obtenerReporteMensualComunidad(reportes.getSelected(),reportes.getYear());
                 break;
         }
-        fillCellsInSheet(sheet,columns,reportesComunidad,workbook);
+        //fillCellsInSheet(sheet,columns,reportesComunidad,workbook);
     }
 
     private void llenarReporteCliente(Workbook workbook, Reportes reportes){
@@ -157,7 +164,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
                 break;
         }
 
-        fillCellsInSheet(sheet,columns,reportesClientes,workbook);
+        //fillCellsInSheet(sheet,columns,reportesClientes,workbook);
     }
 
 }

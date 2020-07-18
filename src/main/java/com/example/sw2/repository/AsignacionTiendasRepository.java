@@ -1,6 +1,7 @@
 package com.example.sw2.repository;
 
 
+import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.dto.DatosAsignadosTiendaDto;
 import com.example.sw2.entity.AsignacionTiendas;
 import com.example.sw2.entity.AsignadosSedes;
@@ -14,12 +15,15 @@ import org.springframework.stereotype.Repository;
 
 import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTiendas,Integer> {
+
+    Optional<AsignacionTiendas> findByAsignadosSedes_Id_SedeAndAsignadosSedes_Id_Productoinventario_CodigoinventarioAndTienda_Ruc(Usuarios asignadosSedes_id_sede, String asignadosSedes_id_productoinventario_codigoinventario,  String tienda_ruc);
 
     @Query(value="select p.nombre as nombreproducto, a.precioventa as precioventa," +
             "att.stock as stockasignadotienda, att.fecha_asignacion as fechaasignacionproducto, t.nombre as nombretienda,"+

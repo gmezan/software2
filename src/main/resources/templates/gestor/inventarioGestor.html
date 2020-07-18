@@ -195,12 +195,12 @@
                                                 </td>
                                                 
                                                 <td style="text-align: right">
-                                                    <span th:text="${inv.fechacreacion.toLocalDate()}"></span>
+                                                    <span th:text="${inv.obtenerFechacreacionStr()}"></span>
                                                     <br>
                                                     <span th:text="${inv.fechacreacion.toLocalTime()}"></span>
                                                 </td>
                                                 <td style="text-align: right">
-                                                    <span th:text="${inv.fechamodificacion!=null? inv.fechamodificacion.toLocalDate():'---'}"></span>
+                                                    <span th:text="${inv.fechamodificacion!=null? inv.obtenerFechamodificacionStr() :'---'}"></span>
                                                     <br>
                                                     <span th:text="${inv.fechamodificacion!=null? inv.fechamodificacion.toLocalTime():'---'}"></span>
                                                 </td>
@@ -275,19 +275,19 @@
                         <form id="add" method="post" th:action="@{/gestor/inventario/addInv}">
                             <input type="text" hidden id="codinvAdd" name="codinv" th:value="${codinv}">
                             <div class="form-group">
-                                <label for="cant" class="col-form-label">Cantidad a adicionar:</label>
+                                <label for="cant" class="col-form-label"><b>Cantidad a adicionar:</b></label>
                                 <input type="number" min="0" class="form-control" id="cant" name="cant"
                                        th:value="${cant}">
                                 <div class="text-danger" id="msgc" th:text="${cantError}">Error</div>
                             </div>
-                        
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button form="add" type="submit" class="btn btn-success"><a
+                                        style="color:white;text-decoration:none">Añadir</a></button>
+                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button form="add" type="submit" class="btn btn-success"><a
-                                style="color:white;text-decoration:none">Añadir</a></button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -395,13 +395,13 @@
                                 
                                 </div>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button form="edit" type="submit" class="btn btn-info"><a
+                                        style="color:white;text-decoration:none">Guardar cambios</a></button>
+                            </div>
+                        </div>
                         
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button form="edit" type="submit" class="btn btn-info"><a
-                                    style="color:white;text-decoration:none">Guardar cambios</a></button>
-                        </div>
                     </form>
                 </div>
             </div>

@@ -1,8 +1,34 @@
-var contextPath  = window.location.href;
+const contextPath  = window.location.href;
 
-$(document).on("click",".registar-Venta", function(){
+$(function() {
+
+    let $checkbox = $("#confirmado1");
+    console.log($checkbox.is(":checked"));
+    $("#id\\.numerodocumento").prop("disabled",!$checkbox.is(":checked"));
+    $(".inputFile").prop("hidden",!$checkbox.is(":checked"));
+    //$checkbox.val($checkbox.checked);
+
+    //$("#id\\.numerodocumento").val('').prop("disabled",true);
+    $("body").on('change','#confirmado1', function () {
+        console.log(this.checked);
+        $("#id\\.numerodocumento").prop("disabled",!this.checked);
+        $(".inputFile").prop("hidden",!this.checked);
+    });
+
+    if ($("#msgRegistrar").text()==="ERROR"){
+        $('#registrarModal').modal({show: true, backdrop: 'static', keyboard: false });
+    }else if($("#msgDevolucion").text()==="ERROR"){
+        $('#devolucionModal').modal({show: true, backdrop: 'static', keyboard: false });
+    }
+
+}).on("click",".registar-Venta", function(){
     $("#registrarModal  input").val('');
     $("#registrarModal  #id1").val($(this).data(''));
+
+    $("#id\\.numerodocumento").prop("disabled",true);
+    $("#confirmado1").prop("checked",false);
+    $(".inputFile").prop("hidden",true);
+
     $.ajax({
         method:"GET", url:contextPath +"/get?id1=" +$(this).data('id1')
     }).done(function(ventas){
@@ -27,14 +53,5 @@ $(document).on("click",".registar-Venta", function(){
 $(document).on("click",".retornar-Producto", function(){
     $("#devolucionModal #id2").val($(this).data('id2'));
     console.log($(this).data('id2'))
-});
-
-$(document).ready(function() {
-    if ($("#msgRegistrar").text()==="ERROR"){
-        $('#registrarModal').modal({show: true, backdrop: 'static', keyboard: false });
-    }else if($("#msgDevolucion").text()==="ERROR"){
-        $('#devolucionModal').modal({show: true, backdrop: 'static', keyboard: false });
-    }
-
 });
 

@@ -1,7 +1,26 @@
 var contextPath  = window.location.href;
 
-$(document).on("click",".regis-Venta", function(){
+$(function() {
+
+    let $checkbox = $("#confirmado1");
+    console.log($checkbox.is(":checked"));
+    $("#id\\.numerodocumento").prop("disabled",!$checkbox.is(":checked"));
+    $(".inputFile").prop("hidden",!$checkbox.is(":checked"));
+
+    if ($("#msgVenta").text()==="ERROR"){
+        $("#registrarVentaModal").modal({show:true, backdrop: 'static', keyboard: false });
+    }
+    //$("#id\\.numerodocumento").prop("disabled",true);
+    $("body").on('change','#confirmado1', function () {
+        $("#id\\.numerodocumento").prop("disabled",!this.checked);
+        $(".inputFile").prop("hidden",!this.checked);
+    });
+}).on("click",".regis-Venta", function(){
 //    $("#registrarVentaModal  input").val( '');
+
+    $("#id\\.numerodocumento").prop("disabled",true);
+    $("#confirmado1").prop("checked",false);
+    $(".inputFile").prop("hidden",true);
 
     $("#registrarVentaModal  #idgestor").val(  $(this).data('id12'));
     $("#registrarVentaModal  #vendedor").val( $(this).data('id22'));
@@ -19,15 +38,8 @@ $(document).on("click",".regis-Venta", function(){
 
 
 
-
 });
 
-
-$(document).ready(function() {
-    if ($("#msgVenta").text()==="ERROR"){
-        $("#registrarVentaModal").modal({show:true});
-    }
-});
 
 
 

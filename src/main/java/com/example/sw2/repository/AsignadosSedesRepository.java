@@ -5,6 +5,7 @@ import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.dto.DatosClientesVentaDto;
 import com.example.sw2.dto.DevolucionDto;
 import com.example.sw2.entity.AsignadosSedes;
+import com.example.sw2.entity.Inventario;
 import com.example.sw2.entity.Usuarios;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,6 +19,8 @@ import java.util.Optional;
 
 @Repository
 public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, AsignadosSedesId> {
+
+    Optional<AsignadosSedes> findById_SedeAndId_Productoinventario(Usuarios id_sede, Inventario id_productoinventario);
 
     @Query(value="SELECT ass.*\n" +
             "FROM Asignados_sedes ass\n" +

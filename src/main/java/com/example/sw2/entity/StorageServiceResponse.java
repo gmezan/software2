@@ -15,6 +15,11 @@ public class StorageServiceResponse implements Serializable {
         status="";
     }
 
+    public StorageServiceResponse(String status, String msg){
+        this.status=status;
+        this.msg = msg;
+    }
+
     public StorageServiceResponse(String fileName, String url, String status, String msg){
         this.fileName = fileName;
         this.url = url;

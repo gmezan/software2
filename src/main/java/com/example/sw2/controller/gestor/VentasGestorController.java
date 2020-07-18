@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
 @RequestMapping("/gestor/venta")
 public class VentasGestorController {
 
-
     @Autowired
     VentasRepository ventasRepository;
 
@@ -87,28 +86,16 @@ public class VentasGestorController {
 
         Usuarios gestor = (Usuarios) session.getAttribute("usuario");
 
-        if (bindingResult.hasFieldErrors("rucdni")||bindingResult.hasFieldErrors("nombrecliente")) {
+        if (bindingResult.hasFieldErrors("rucdni") || bindingResult.hasFieldErrors("nombrecliente")) {
             model.addAttribute("lista", ventasRepository.buscarPorGestor(gestor.getIdusuarios()));
             model.addAttribute("msgError", "ERROR");
             return "gestor/ventas";
         } else {
-
-            Optional<Ventas> optionalVentas = ventasRepository.findById(ventas.getId());
+            Optional<Ventas> optionalVentas = ventasRepository.findById(ventas.getIdventas());
             if (optionalVentas.isPresent()) {
                 Ventas ven = optionalVentas.get();
                 ven.setRucdni(ventas.getRucdni());
                 ven.setNombrecliente(ventas.getNombrecliente());
-                //ven.setCantidad(ventas.getCantidad());
-                /*
-                ventas.setId(new VentasId(id2,id1));
-                ventas.setFechamodificacion(LocalDateTime.now());
-                ventas.setFechacreacion(ven.getFechacreacion());
-                ventas.setLugarventa(ven.getLugarventa());
-                ventas.setInventario(ven.getInventario());
-                ventas.setFecha(ven.getFecha());
-                ventas.setVendedor(ven.getVendedor());
-                ventas.setCantidad(ven.getCantidad());
-                ventas.setPrecioventa(ven.getPrecioventa());*/
                 attr.addFlashAttribute("msg", "Venta actualizada exitosamente");
                 ventasRepository.save(ven);
             } else {
@@ -134,10 +121,10 @@ public class VentasGestorController {
 
     @GetMapping("/cancelar")
     public String cancelarVenta(@RequestParam(value = "nota") int nota,
-                                    @RequestParam(value = "mensaje") String mensaje,
-                                    @RequestParam("id1") String id1,
-                                    @RequestParam("id2") int id2,
-                                    RedirectAttributes attr) {
+                                @RequestParam(value = "mensaje") String mensaje,
+                                @RequestParam("id1") String id1,
+                                @RequestParam("id2") int id2,
+                                RedirectAttributes attr) {
 
         Optional<Ventas> V = ventasRepository.findById(new VentasId(id2, id1));
 
@@ -162,8 +149,8 @@ public class VentasGestorController {
     //Web service
     @ResponseBody
     @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<Ventas>> getVen(@RequestParam(value = "id1") String id1, @RequestParam(value = "id2") int id2) {
-        return new ResponseEntity<>(ventasRepository.findById(new VentasId(id2, id1)), HttpStatus.OK);
+    public ResponseEntity<Optional<Ventas>> getVen(@RequestParam(value = "id") int id) {
+        return new ResponseEntity<>(ventasRepository.findById(id), HttpStatus.OK);
     }
 
     /*
@@ -178,8 +165,6 @@ public class VentasGestorController {
 
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
     }*/
-
-
 
 
 }

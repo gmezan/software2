@@ -15,6 +15,8 @@ public final class CustomConstants {
     public final static String INVENTARIO = "inventario";
     public final static String PERFIL = "perfil";
     public final static int BIGNUMBER = 1749183;
+    // Poner el email para que las alertas lleguen
+    public final static String[] MANAGER_EMAIL = {"gustavomeza27@gmail.com"};
 
     private static final LinkedHashMap<String, String> lineas = new LinkedHashMap<>();
     private static final HashMap<Integer, String> meses = new HashMap<>();
@@ -23,8 +25,12 @@ public final class CustomConstants {
     private static final HashMap<Integer, String> estadoAsignacion = new HashMap<>();
     private static final LinkedHashMap<String, String> tamanhos = new LinkedHashMap<>();
 
+    public static final HashMap<Integer, String> MediosDePago = new HashMap<>();
+
     private static final HashMap<Integer,String> notificationState = new HashMap<>();
     private static final HashMap<Integer,String> notificationType = new HashMap<>();
+
+    private static final HashMap<Integer, String> trimestre = new HashMap<>();
 
     static {
         lineas.put("T", "Tradicional");
@@ -54,8 +60,8 @@ public final class CustomConstants {
 
         tiposDocumento.put(1, "Factura");
         tiposDocumento.put(2, "Boleta");
-        tiposDocumento.put(3, "Recibo");
-        tiposDocumento.put(4, "Transacción");
+        //tiposDocumento.put(3, "Recibo");
+        //tiposDocumento.put(4, "Transacción");
 
         estadoAsignacion.put(1, "Enviado a Sede");
         estadoAsignacion.put(2, "Recibido por Sede");
@@ -72,6 +78,14 @@ public final class CustomConstants {
         notificationType.put(4, "devolucion");
         notificationType.put(5, "otro");
 
+        MediosDePago.put(1,"Efectivo");
+        MediosDePago.put(2,"Depósito/Transferencia");
+        MediosDePago.put(3,"Tarjeta de crédito");
+
+        trimestre.put(1,"EN-FEB-MAR");
+        trimestre.put(2,"ABR-MAY-JUN");
+        trimestre.put(3,"JUL-AGO-SET");
+        trimestre.put(4,"OCT-NOV-DIC");
     }
 
     public final static int N_TYPE_NOTICE = 1;
@@ -83,6 +97,8 @@ public final class CustomConstants {
     public final static int NOTF_STATE_NEW = 1;
     public final static int NOTF_STATE_READ = 2;
     public final static int NOTF_STATE_ARCHIVED = 3;
+
+
 
     public final static int ESTADO_ENVIADO_A_SEDE=1;
     public final static int ESTADO_RECIBIDO_POR_SEDE=2;
@@ -113,5 +129,13 @@ public final class CustomConstants {
 
     public static HashMap<Integer, String> getTiposDocumento() {
         return tiposDocumento;
+    }
+
+    public static HashMap<Integer, String> getTrimestre() {
+        return trimestre;
+    }
+
+    public static HashMap<Integer, String> getMediosDePago() {
+        return MediosDePago;
     }
 }

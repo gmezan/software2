@@ -1,10 +1,12 @@
 package com.example.sw2.controller.sede;
 
+import com.example.sw2.Dao.StorageServiceDao;
 import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.constantes.VentasId;
 import com.example.sw2.entity.*;
 import com.example.sw2.repository.*;
+import com.example.sw2.utils.CustomMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -14,10 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +31,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
+import static com.example.sw2.constantes.CustomConstants.MediosDePago;
 
 @Controller
 @RequestMapping("/sede")
@@ -45,6 +52,10 @@ public class SedeController {
     AsignacionTiendasRepository asignacionTiendasRepository;
     @Autowired
     TiendaRepository tiendaRepository;
+    @Autowired
+    StorageServiceDao storageServiceDao;
+    @Autowired
+    CustomMailService customMailService;
 
     @GetMapping(value = {"/", ""})
     public String init() {
@@ -70,7 +81,7 @@ public class SedeController {
 
         model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
         model.addAttribute("listaTiendas", tiendaRepository.findAll());
-
+        model.addAttribute("mediosDePago",MediosDePago);
         return "sede/ListaProductosConfirmados";
     }
 
@@ -80,7 +91,9 @@ public class SedeController {
                                  @ModelAttribute("asignaciontiendas") AsignacionTiendas asignacionTiendas,
                                  @RequestParam(value = "idgestor") String idgestorstr,
                                  @RequestParam(value = "idestadoasign") String idestadoasignstr,
-                                 RedirectAttributes attr, HttpSession session, Model model) {
+                                 RedirectAttributes attr, HttpSession session, Model model,
+                                 @RequestParam(name = "foto1", required = false) MultipartFile multipartFile) {
+        StorageServiceResponse s2;
         int idgestor;
         int idestadoasign;
         try{
@@ -91,12 +104,7 @@ public class SedeController {
             return "redirect:/sede/productosConfirmados";
         }
 
-
-        System.out.println(idgestor);
-        System.out.println(idestadoasign);
-        System.out.println(ventas.getPrecioventa());
         AsignadosSedes asignadosSedes = null;
-
 
         if(!usuariosRepository.findById(idgestor).isPresent()){
             attr.addFlashAttribute("msgNoVenta", "Error al encontrar el producto");
@@ -136,9 +144,14 @@ public class SedeController {
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
 
+        if (ventas.getConfirmado() && !ventas.getId().validateNumeroDocumento()){
+                bindingResult.rejectValue("id.numerodocumento","error.user","Ingrese un numero de documento valido");
+            if (!(ventas.getMediopago()!=null && ventas.getMediopago()>0 && ventas.getMediopago()<(MediosDePago.size()+1))){
+                bindingResult.rejectValue("mediopago","error.user","Ingrese un medio de pago correcto");
+            }
+        }
 
-
-        if (!bindingResult.hasFieldErrors("id")) {
+        if (!bindingResult.hasFieldErrors("id") && ventas.getConfirmado()) {
             Optional<Ventas> optVenta = ventasRepository.findById(ventas.getId());
 
             if (optVenta.isPresent()) {
@@ -153,11 +166,26 @@ public class SedeController {
             model.addAttribute("listaTiendas", tiendaRepository.findAll());
             model.addAttribute("msgError_V", "ERROR");
             model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
+            model.addAttribute("mediosDePago",MediosDePago);
             return "sede/ListaProductosConfirmados";
         } else {
-
+            if(multipartFile!=null && !multipartFile.isEmpty()){
+                try {
+                    s2 = storageServiceDao.store(ventas,multipartFile);
+                } catch (IOException e) {
+                    s2 = new StorageServiceResponse("error","Error subiendo el archivo");
+                }
+                if (!s2.isSuccess()) {
+                    model.addAttribute("idgestor", idgestor);
+                    model.addAttribute("idestadoasign", idestadoasign);
+                    model.addAttribute("listaTiendas", tiendaRepository.findAll());
+                    model.addAttribute("msgError_V", "ERROR");
+                    model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
+                    model.addAttribute("mediosDePago",MediosDePago);
+                    return "sede/ListaProductosConfirmados";
+                }
+            }
             ventasRepository.save(ventas);
-
             int StockActual = asignadosSedes.getStock() - ventas.getCantidad();
             asignadosSedes.setCantidadactual(asignadosSedes.getCantidadactual() - ventas.getCantidad());
             asignadosSedes.setStock(StockActual);
@@ -165,7 +193,14 @@ public class SedeController {
             inventario.setCantidadtotal(inventario.getCantidadtotal() - ventas.getCantidad());
             asignadosSedesRepository.save(asignadosSedes);
             inventarioRepository.save(inventario);
-
+            try {
+                if (asignadosSedes.getStock()==0){
+                    customMailService.sendStockAlert(asignadosSedes);
+                }
+                customMailService.sendSaleConfirmation(ventas);
+            } catch (MessagingException | IOException  e) {
+                e.printStackTrace();
+            }
             attr.addFlashAttribute("msgExito", "Venta registrada exitosamente");
             return "redirect:/sede/productosConfirmados";
         }
@@ -202,6 +237,7 @@ public class SedeController {
                 model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
                 model.addAttribute("listaTiendas", tiendaRepository.findAll());
                 model.addAttribute("msgError_A", "ERROR");
+                model.addAttribute("mediosDePago",MediosDePago);
                 return "sede/ListaProductosConfirmados";
 
             } else {

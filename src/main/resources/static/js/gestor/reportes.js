@@ -17,6 +17,7 @@ $(function () {
     let $ventaModal = $("#reporteVentaModal");
     $("body").on('click','.reporte-Ventas',function () {
             console.log("ventas");
+        $ventaModal.find(" #fields1 select").val(0);
         $ventaModal.find(" #fields2").prop("hidden",true).find(" #tipoSelectDiv").prop("hidden",true);
         }
     );

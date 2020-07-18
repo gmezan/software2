@@ -154,7 +154,7 @@
     <li class="nav-item" th:classappend="${param1=='Venta'}? active : ''">
         <a class="nav-link" th:href="@{/admin/venta}">
             <i class="fas fa-fw fa-times"></i>
-            <span>Cancelación de Ventas</span></a>
+            <span>Cancelar Ventas</span></a>
     </li>
 
 
@@ -197,11 +197,13 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Seleccione "Cerrar sesión" si está listo para cerrar su sesión actual.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-info" >Cerrar sesión</button>
+                <div class="modal-body">Seleccione "Cerrar sesión" si está listo para cerrar su sesión actual.
+                    <div class="modal-footer mt-3">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-info" >Cerrar sesión</button>
+                    </div>
                 </div>
+                
 
             </form>
         </div>

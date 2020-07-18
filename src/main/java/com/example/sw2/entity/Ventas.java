@@ -2,6 +2,8 @@ package com.example.sw2.entity;
 
 import com.example.sw2.config.Auditable;
 import com.example.sw2.constantes.VentasId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,14 +16,21 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static com.example.sw2.constantes.CustomConstants.MediosDePago;
+
 
 @Entity
 @Table(name = "Ventas")
 public class Ventas extends Auditable implements Serializable {
 
-    @EmbeddedId
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idventas;
     @Valid
+    @Embedded
     private VentasId id;
+    @NotNull
+    private Boolean confirmado;
     //@Size(min= 8, max = 11, message = "El Ruc/Dni debe contener 8 o 11 caracteres")
     @Column(name = "ruc_dni")
     @Pattern(regexp = "^[0-9]*$", message = "Ingrese solo caracteres numéricos")
@@ -57,8 +66,13 @@ public class Ventas extends Auditable implements Serializable {
     private BigDecimal precioventa;
 
     private Integer nota;
+    @JsonIgnore
     private String mensaje;
     private Integer cancelar;
+
+    private String media;
+
+    private Integer mediopago;
 
     @Transient
     private int cantDevol;
@@ -71,6 +85,57 @@ public class Ventas extends Auditable implements Serializable {
     public Ventas(Usuarios vendedor, Inventario producto){
         this.vendedor = vendedor;
         this.inventario = producto;
+    }
+
+    public Integer getMediopago() {
+        return mediopago;
+    }
+
+    public boolean validateMedioPago(){
+        try
+        {
+            return mediopago!= null & (mediopago>0 && this.mediopago<(MediosDePago.size() + 1));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public void setMediopago(Integer mediopago) {
+        this.mediopago = mediopago;
+    }
+
+    public String getNombreMedioDePago(){
+        return MediosDePago.get(this.mediopago);
+    }
+
+    public String getMedia() {
+        return media;
+    }
+
+    public void setMedia(String media) {
+        this.media = media;
+    }
+
+    public Boolean getConfirmado() {
+        return confirmado;
+    }
+
+    public void setConfirmado(Boolean confirmado) {
+        this.confirmado = confirmado;
+    }
+
+    public BigDecimal getSumaParcial(){
+        return BigDecimal.valueOf(cantidad).multiply(precioventa);
+    }
+
+    public Integer getIdventas() {
+        return idventas;
+    }
+
+    public void setIdventas(Integer idventas) {
+        this.idventas = idventas;
     }
 
     public int getCantDevol() {
@@ -95,7 +160,7 @@ public class Ventas extends Auditable implements Serializable {
     }
 
     public void setRucdni(String rucdni) {
-        this.rucdni = rucdni;
+        this.rucdni = rucdni.trim();
     }
 
     public String getNombrecliente() {
@@ -103,7 +168,7 @@ public class Ventas extends Auditable implements Serializable {
     }
 
     public void setNombrecliente(String nombrecliente) {
-        this.nombrecliente = nombrecliente;
+        this.nombrecliente = nombrecliente.trim();
     }
 
     public String getLugarventa() {
@@ -111,7 +176,7 @@ public class Ventas extends Auditable implements Serializable {
     }
 
     public void setLugarventa(String lugarventa) {
-        this.lugarventa = lugarventa;
+        this.lugarventa = lugarventa.trim();
     }
 
     public Inventario getInventario() {
@@ -179,7 +244,7 @@ public class Ventas extends Auditable implements Serializable {
     }
 
     public String getMensaje() {
-        return mensaje;
+        return mensaje.trim();
     }
 
     public void setMensaje(String mensaje) {

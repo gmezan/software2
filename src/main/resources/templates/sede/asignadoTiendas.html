@@ -10,7 +10,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='Tiendas',param2='Asignado a tienda')"></div>
+            <div th:replace="fragments/general-sede.html ::sede-sidebar(param1='AsignadoTienda',param2='...')"></div>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -151,7 +151,7 @@
         <!-- Modal Registrar Venta -->
         <div id="registrarModal" class="modal fade" role="dialog" aria-labelledby="registrarModal" tabindex="-1"
              aria-hidden="true">
-            <div class="modal-dialog modal-confirm" role="document">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Registrar venta</h4>
@@ -161,8 +161,10 @@
                     </div>
 
                     <div class="modal-body">
-                        <form method="post" th:action="@{/sede/AsignadoTienda/registrar}" th:object="${ventas}">
+                        <form method="post" th:action="@{/sede/AsignadoTienda/registrar}" th:object="${venta}" enctype="multipart/form-data">
                             <p id="fechaasignacion" name="fechaasignacion"></p>
+                            <p>Si aún no se ha emitido un comprobante de pago de la venta, no ingrese un <strong>Número de documento de venta</strong>
+                                y seleccione el <strong>Tipo de documento de venta</strong> para solicitarlo a un gestor. La venta será confirmada cuando se le envíe el comprobante</p>
                             <input hidden id="id1" name="id1" type="text" class="form-control"
                                    th:value="${id1!=null}? ${id1}">
 
@@ -176,7 +178,7 @@
                                    th:field="*{vendedor.idusuarios}">
 
                             <div class="form-group col">
-                                <label class="col-form-label"><b>Tipo de documento:</b></label>
+                                <label class="col-form-label"><b>Tipo de documento de venta:</b></label>
                                 <select class="form-control" th:field="*{id.tipodocumento}">
                                     <option th:each="t : ${tipodoc}"
                                             th:text="${t.value}"
@@ -184,13 +186,31 @@
                                 </select>
                             </div>
 
-                            <div class="form-group col">
-                                <label class="col-form-label"><b>Número de documento</b></label>
-                                <input type="text" class="form-control" th:field="*{id.numerodocumento}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}"
-                                     th:errors="*{id.numerodocumento}">Error
+                            <div class="form-group">
+                                <div class="col">
+                                    <label class="col-form-label"><b>Número de documento de venta</b></label>
+                                    <input type="text" class="form-control" th:field="*{id.numerodocumento}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}"
+                                         th:errors="*{id.numerodocumento}">Error
+                                    </div>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" th:field="*{confirmado}" value="off">
+                                    <label for="confirmado" class="form-check-label">Venta confirmada (Venta ya registrada con un comprobante de pago)</label>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('confirmado')}" th:errors="*{confirmado}" ></div>
                                 </div>
                             </div>
+
+                            <div class="inputFile form-group col">
+                                <label class="col-form-label"><b>Medio de pago:</b></label>
+                                <select class="form-control" th:field="*{mediopago}">
+                                    <option th:each="t : ${mediosDePago}"
+                                            th:text="${t.value}"
+                                            th:value="${t.key}"></option>
+                                </select>
+                                <div class="text-danger" th:if="${#fields.hasErrors('mediopago')}" th:errors="*{mediopago}" ></div>
+                            </div>
+
 
                             <div class="form-group col">
                                 <label class="col-form-label">Fecha de venta:</label>
@@ -205,6 +225,13 @@
                                 <input type="text" class="form-control" th:field="*{cantidad}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}"
                                      th:errors="*{cantidad}">Error
+                                </div>
+                            </div>
+                            <div hidden class="inputFile form-group col">
+                                <div class="form-group">
+                                    <label for="foto1" class="col-form-label">Documento de venta (Opcional .pdf, .jpg, .jpeg, .png)</label>
+                                    <input type="file" id="foto1" name="foto1">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('media')}" th:errors="*{media}">Error</div>
                                 </div>
                             </div>
 
@@ -232,7 +259,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <form method="get" th:action="@{/sede/AsignadoTienda/devolucion}" th:object="${ventas}">
+                        <form method="get" th:action="@{/sede/AsignadoTienda/devolucion}" th:object="${venta}">
                             <p>¿Seguro que desea registrar la cantidad de devolución? Esta acción no se puede
                                 deshacer.</p>
 

@@ -34,8 +34,9 @@ public class VentasCancelarController {
 
     @GetMapping(value = {""})
     public String listVen(@ModelAttribute("gestor") Usuarios u,
-                          @RequestParam(value = "id", required = false) Integer dni,
-                          @ModelAttribute("venta") Ventas ven,
+                          //@RequestParam(value = "id", required = false) Integer dni,
+                          //@RequestParam(value = "id1", required = false) Integer idventas,
+                          @ModelAttribute("venta") Ventas venta,
                           Model model,
                           HttpSession session) {
         Usuarios admin = (Usuarios) session.getAttribute("usuario");
@@ -49,30 +50,30 @@ public class VentasCancelarController {
     }
 
     @GetMapping("/confirmar")
-    public String confirmarCancelacion(@RequestParam("id1") String id1,
+    public String confirmarCancelacion(
                             @RequestParam("id2") int id2,
                             HttpSession session,
                             RedirectAttributes attr) {
 
-        Optional<Ventas> V = ventasRepository.findById(new VentasId(id2, id1));
+        Optional<Ventas> V = ventasRepository.findById(id2);
 
         if (V.isPresent()) {
             Ventas V2 = V.get();
             ventasRepository.dev_stock_inv(V2.getCantidad(), V2.getInventario().getCodigoinventario());
 
-            ventasRepository.deleteById(new VentasId(id2, id1));
+            ventasRepository.deleteById(id2);
             attr.addFlashAttribute("msg","Venta cancelada exitosamente");
         }
         return "redirect:/admin/venta";
     }
 
     @GetMapping("/rechazar")
-    public String rechazarCancelacion(@RequestParam("id1") String id1,
-                                      @RequestParam("id2") int id2,
+    public String rechazarCancelacion(
+                                      @RequestParam("id3") int id3,
                                       HttpSession session,
                                       RedirectAttributes attr) {
 
-        Optional<Ventas> V = ventasRepository.findById(new VentasId(id2, id1));
+        Optional<Ventas> V = ventasRepository.findById(id3);
 
         if (V.isPresent()) {
             Ventas V2 = V.get();
@@ -99,6 +100,13 @@ public class VentasCancelarController {
     @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<Usuarios>> getGestor(@RequestParam(value = "id") int id){
         return new ResponseEntity<>(usuariosRepository.findById(id), HttpStatus.OK);
+    }
+
+    //Web service
+    @ResponseBody
+    @GetMapping(value = "/has",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<Ventas>> getVenta(@RequestParam(value = "id1") int id1){
+        return new ResponseEntity<>(ventasRepository.findById(id1), HttpStatus.OK);
     }
 
 
