@@ -1,5 +1,11 @@
 var contextPath = window.location.href;
-
+$(document).ready(function () {
+    $("#addForm #invAdd").attr("disabled",false);
+    $("#addForm #conDia").attr("disabled",false);
+    $("#addForm #linea").attr("disabled",false);
+    $("#addForm #codAdquisicion").attr("disabled",false);
+    $( "input[hidden='hidden']" ).removeAttr("required");
+});
 $("#addForm #linea").on('change', function () {
     let prodList = $("#addForm #productos");
     let option = this.value;
@@ -35,6 +41,8 @@ $("#addForm #codAdquisicion").on('change', function () {
     let cond = this.value === '0';
     $("#addForm #artesanoConsignacion").prop("hidden", cond).prop("disabled", cond);
     $("#addForm #vencimientoConsignacion").prop("hidden", cond).prop("disabled", cond);
+    $("#addForm #vencimientoConsignacion input").prop("required", !cond);
+
     if (cond) {
         $("#addForm #artesanos").empty();
     } else {
@@ -85,8 +93,8 @@ function updateArtesanos(option) {
 
 $("#addForm #conDia").on('change', function () {
 
-    $("#addForm #fechadia").prop("hidden", !this.checked).prop("disabled", !this.checked);
-    $("#addForm #fechames").prop("hidden", this.checked).prop("disabled", this.checked);
+    $("#addForm #fechadia").prop("hidden", !this.checked).prop("disabled", !this.checked).prop("required", this.checked);
+    $("#addForm #fechames").prop("hidden", this.checked).prop("disabled", this.checked).prop("required", !this.checked);
 
 });
 $("#addForm #fechadia").on('change', function () {
@@ -101,8 +109,18 @@ $("#addForm #fechames").on('change', function () {
     let fecha = $("#addForm #fechames").val().split("-");
     let fechasig = new Date(fecha[0], fecha[1], 1);
     setminfecha(fechasig);
+});
+$("#addForm").on('submit',function () {
+    if ($('#confirmModal').hasClass("show")) {
+        return true;
+    }else{
+        $('#confirmModal').modal({show: true, backdrop: 'static', keyboard: false});
+        return false;
+    }
+});
 
-
+$("#confirmbtn").on('click',function () {
+    $("#addForm").submit();
 });
 
 $(document).on("click", ".add-inventario", function () {
