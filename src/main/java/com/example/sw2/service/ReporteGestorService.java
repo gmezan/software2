@@ -96,19 +96,23 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
         String[] columns = {"Nombre","DNI","Correo","Telefono","Suma Ventas","Cantidad Productos Vendidos"};
         Sheet sheet= workbook.createSheet("Reporte de sede " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
+        String titulo = "";
         List<ReportesSedesDto> reportesSedes = new ArrayList<>();
         switch (reportes.getType()){
             case 1:
                 reportesSedes = ventasRepository.obtenerReporteAnualSede(reportes.getYear());
+                titulo = "Reporte total del año " + reportes.getYear();
                 break;
             case 2:
                 reportesSedes = ventasRepository.obtenerReporteTrimestralSede(reportes.getSelected(),reportes.getYear());
+                titulo = "Reporte total del año " + reportes.getYear()+" trimestre " + CustomConstants.getTrimestre().get(reportes.getSelected());
                 break;
             case 3:
                 reportesSedes = ventasRepository.obtenerReporteMensualSede(reportes.getSelected(),reportes.getYear());
+                titulo = "Reporte total del año " + reportes.getYear()+" mes " + CustomConstants.getMeses().get(reportes.getSelected());
                 break;
         }
-        //fillCellsInSheet(sheet,columns,reportesSedes,workbook);
+        fillCellsInSheet(sheet,columns,reportesSedes,workbook,titulo);
     }
     private void llenarReporteProducto(Workbook workbook, Reportes reportes){
         String[] columns = {"Nombre","Linea","Codigo","Suma Ventas","Cantidad Vendidos"};
