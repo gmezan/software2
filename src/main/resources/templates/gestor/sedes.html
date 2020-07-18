@@ -199,7 +199,7 @@
                             <div class="form-group">
                                 <label class="col-form-label">DNI:</label>
                                 <input th:readonly="${sede.idusuarios!=0 && sede.idusuarios!=null && !#fields.hasErrors('idusuarios')}"
-                                       type="text" class="form-control" th:field="*{idusuarios}"
+                                       type="number" class="form-control" th:field="*{idusuarios}"
                                        th:value="*{idusuarios!=0}? *{idusuarios}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('idusuarios')}"
                                      th:errors="*{idusuarios}">Error

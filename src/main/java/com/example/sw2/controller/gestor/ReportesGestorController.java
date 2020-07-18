@@ -1,18 +1,19 @@
 package com.example.sw2.controller.gestor;
 
 import com.example.sw2.entity.Reportes;
+import com.example.sw2.repository.VentasRepository;
 import com.example.sw2.service.IReporteGestorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @Controller
 @RequestMapping("/gestor/reportes")
@@ -22,6 +23,8 @@ public class ReportesGestorController {
 
     @Autowired
     IReporteGestorService IReporteGestorService;
+    @Autowired
+    VentasRepository ventasRepository;
 
 
     @GetMapping(value = "")
@@ -47,6 +50,17 @@ public class ReportesGestorController {
 
         headers.add("Content-Disposition","attachment; filename="+ filename +".xls");
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
+    }
+
+
+    @ResponseBody
+    @GetMapping(value = "/years")
+    public ResponseEntity<ArrayList<Integer>> getYears(){
+        return new ResponseEntity<>(new ArrayList<Integer>(){
+            {
+                this.addAll(ventasRepository.getYears());
+            }
+        }, HttpStatus.OK);
     }
 
 }

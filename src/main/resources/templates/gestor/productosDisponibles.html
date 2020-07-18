@@ -31,6 +31,9 @@
 
                         <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1"
                              role="alert"></div>
+
+                        <div th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1"
+                             role="alert"></div>
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">

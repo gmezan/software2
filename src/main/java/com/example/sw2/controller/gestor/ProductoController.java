@@ -45,6 +45,10 @@ public class ProductoController {
             bindingResult.rejectValue("id.codigonom","error.user","Este codigo ya existe en la linea "+productos.getId().getNombreLinea());
         }
 
+        if (!productos.getId().validateCodigoLinea()){
+            bindingResult.rejectValue("id.codigolinea","error.user","Elija una línea válida");
+        }
+
         if(bindingResult.hasErrors()){
             model.addAttribute("formtype",Integer.toString(type));
             model.addAttribute("lista", productosRepository.findAll());

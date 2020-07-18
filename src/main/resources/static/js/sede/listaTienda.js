@@ -1,8 +1,9 @@
-var contextPath  = window.location.href;
+    var contextPath  = window.location.href;
 
 $(document).on("click",".edit-Tienda", function(){
     $("#EditarTiendaModal  #idtienda").val('');
     $("#EditarTiendaModal  #nombre").val('');
+    $("#EditarTiendaModal  #ruc").val('');
     $("#EditarTiendaModal  #direccion").val('');
     $("#EditarTiendaModal  #type").val('0');
     $("#EditarTiendaModal  #formTitle").text('Editar Tienda');
@@ -12,6 +13,7 @@ $(document).on("click",".edit-Tienda", function(){
         if (tienda!=null){
             $("#EditarTiendaModal  #idtienda").val(tienda.idtienda);
             $("#EditarTiendaModal  #nombre").val(tienda.nombre);
+            $("#EditarTiendaModal  #ruc").val(tienda.ruc);
             $("#EditarTiendaModal  #direccion").val(tienda.direccion);
         }
     }).fail(function (err) {
@@ -23,6 +25,7 @@ $(document).on("click",".edit-Tienda", function(){
 $(document).on("click",".new-Tienda", function(){
     $("#EditarTiendaModal  #idtienda").val('0');
     $("#EditarTiendaModal  #nombre").val('');
+    $("#EditarTiendaModal  #ruc").val('');
     $("#EditarTiendaModal  #direccion").val('');
     $("#EditarTiendaModal  #type").val('1');
     $("#EditarTiendaModal  #formTitle").text('Nueva Tienda');

@@ -81,7 +81,7 @@
 
                             <div class="form-group">
                                 <label for="rucdni" class="col-form-label">Número RUC o DNI del cliente (opcional)</label>
-                                <input type="text" class="form-control" th:field="*{rucdni}">
+                                <input type="number" class="form-control" th:field="*{rucdni}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('rucdni')}" th:errors="*{rucdni}" ></div>
                             </div>
                             <div class="form-group">
@@ -102,7 +102,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="precioventa" class="col-form-label" th:text="'Precio de venta: S/. (Precio Ref. Precio Mosqoy S/.'+*{inventario.costomosqoy} +')'">Precio de venta: S/.</label>
-                                <input type="text" class="form-control" th:field="*{precioventa}">
+                                <input type="number" class="form-control" th:field="*{precioventa}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('precioventa')}" th:errors="*{precioventa}" ></div>
                             </div>
                             <div class="form-group">
