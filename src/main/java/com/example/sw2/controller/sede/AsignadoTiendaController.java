@@ -49,8 +49,12 @@ public class AsignadoTiendaController {
     @Autowired
     CustomMailService customMailService;
 
+    @GetMapping(value = {"/"})
+    public String redirectAT(){
+        return "redirect:/sede/AsignadoTienda";
+    }
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {""})
     public String ListaAsignacionTiendas(@ModelAttribute("venta") Ventas v,
                                          HttpSession session,
                                          Model model){
@@ -136,10 +140,9 @@ public class AsignadoTiendaController {
                     2,venta.getPrecioventa(), venta.getCantidad(), idAstiendas);
             venta.setVendedor((Usuarios) session.getAttribute("usuario"));
             ventasRepository.save(venta);
-            AsignadosSedes asignadosSedes = asignadosSedesRepository.findById(aTienda.getAsignadosSedes().getId()).orElse(null);
             try {
-                if (asignadosSedes!=null && asignadosSedes.getStock()==0){
-                    customMailService.sendStockAlert(asignadosSedes);
+                if (aTienda.getStock()==venta.getCantidad()){
+                    customMailService.sendStockAlert(aTienda.getAsignadosSedes());
                 }
                 customMailService.sendSaleConfirmation(venta);
             } catch (MessagingException | IOException  e) {

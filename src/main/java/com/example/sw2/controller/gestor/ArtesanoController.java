@@ -37,6 +37,11 @@ public class ArtesanoController {
     @Autowired
     InventarioRepository inventarioRepository;
 
+    @GetMapping(value = {"/"})
+    public String redirectAT(){
+        return "redirect:/gestor/artesano";
+    }
+
     @GetMapping(value = {""})
     public String listCat(@ModelAttribute("artesano") Artesanos artesanos, Model model) {
         model.addAttribute("lista", artesanosRepository.findAll());

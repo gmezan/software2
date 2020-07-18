@@ -27,6 +27,11 @@ public class CategoriaController {
     CategoriasRepository categoriasRepository;
 
 
+    @GetMapping(value = {"/"})
+    public String redirectAT(){
+        return "redirect:/gestor/categoria";
+    }
+
     @GetMapping(value = {""})
     public String listCat(@ModelAttribute("categoria") Categorias cat, Model model) {
         model.addAttribute("lista", categoriasRepository.findAll());

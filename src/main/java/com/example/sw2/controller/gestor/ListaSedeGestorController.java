@@ -40,6 +40,12 @@ public class ListaSedeGestorController {
     @Autowired
     StorageServiceDao storageServiceDao;
 
+
+    @GetMapping(value = {"/"})
+    public String redirectAT(){
+        return "redirect:/gestor/sede";
+    }
+
     @GetMapping(value = {""})
     public String listaSede(@ModelAttribute("sede") Usuarios usuarios, Model model){
         model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));

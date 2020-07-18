@@ -28,6 +28,10 @@ public class ProductoController {
     @Autowired
     ProductosRepository productosRepository;
 
+    @GetMapping(value = {"/"})
+    public String redirectAT(){
+        return "redirect:/gestor/producto";
+    }
 
     @GetMapping(value = {""})
     public String listar(@ModelAttribute("producto") Productos productos, Model model) {

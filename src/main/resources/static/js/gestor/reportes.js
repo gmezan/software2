@@ -29,11 +29,17 @@ $(function () {
         });
 
     $("body").on('click','.reporte-Ventas',function () {
-            console.log("ventas");
         $ventaModal.find(" #fields1 select").val(0);
         $ventaModal.find(" #fields2").prop("hidden",true).find(" #tipoSelectDiv").prop("hidden",true);
         }
-    );
+    ).on('submit','#reporteForm', function () {
+        if((parseInt($ventaModal.find(" #fields1 #ordenar").children("option:selected").val())===0)
+            || (parseInt($ventaModal.find(" #fields1 #tipo").children("option:selected").val())===0)
+                || (parseInt($ventaModal.find(" #fields2 #years").children("option:selected").val())===0)){
+            alert("Debe seleccionar un tipo de reporte");
+            return false;
+        }
+    });
     
     $ventaModal.find(" #tipo").on('change',function () {
         let val = this.value;
@@ -58,6 +64,7 @@ $(function () {
     })
     
 });
+
 
 function makeOption(x) {
     return '<option value="'+x.numero +'" >'+x.nombre + '</option> ';

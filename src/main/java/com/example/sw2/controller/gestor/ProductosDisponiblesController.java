@@ -205,6 +205,9 @@ public class ProductosDisponiblesController {
         else
             asignadosSedes.getId().setSede(optionalUsuarios.get());
 
+        if (asignadosSedes.getStock()==0)
+            bindingResult.rejectValue("stock","error.user","La cantidad debe ser mayor a 0");
+
         //Se verifica la fecha de envio
         if ((asignadosSedes.getFechaenvio()!=null) && asignadosSedes.getFechaenvio().isBefore(asignadosSedes.getId().getProductoinventario().getFechaadquisicion()))
             bindingResult.rejectValue("fechaenvio","error.user","La fecha debe ser después del: "+asignadosSedes.getId().getProductoinventario().getFechaadquisicion().toString());

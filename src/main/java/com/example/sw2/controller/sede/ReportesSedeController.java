@@ -28,6 +28,10 @@ public class ReportesSedeController {
 
     @Autowired
 
+    @GetMapping(value = {"/"})
+    public String redirectAT(){
+        return "redirect:/sede/reportes";
+    }
 
     @GetMapping(value = "")
     public String listaReportes(){
