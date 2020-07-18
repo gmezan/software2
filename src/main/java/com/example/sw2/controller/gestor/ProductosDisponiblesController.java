@@ -84,7 +84,7 @@ public class ProductosDisponiblesController {
         );
 
         if(!optionalInventario.isPresent()){
-            attributes.addFlashAttribute("msg", "Hubo un error");
+            attributes.addFlashAttribute("msgError", "Hubo un error");
             return "redirect:/gestor/productosDisponibles";
         } else
             venta.setInventario(optionalInventario.get());
@@ -187,14 +187,14 @@ public class ProductosDisponiblesController {
 
         }catch (NullPointerException ex){
             ex.printStackTrace();
-            attributes.addFlashAttribute("msg", "Hubo un error");
+            attributes.addFlashAttribute("msgError", "Hubo un error");
             return "redirect:/gestor/productosDisponibles";
         }
 
 
         // Se verifica que el producto de Inventario
         if(!optionalInventario.isPresent()){
-            attributes.addFlashAttribute("msg", "Hubo un error");
+            attributes.addFlashAttribute("msgError", "Hubo un error");
             return "redirect:/gestor/productosDisponibles";
         } else
             asignadosSedes.getId().setProductoinventario(optionalInventario.get());
