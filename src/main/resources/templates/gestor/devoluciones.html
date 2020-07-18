@@ -71,7 +71,7 @@
                                                 <th>Producto</th>
                                                 <th>Cantidad</th>
                                                 <th>Sede</th>
-                                                <th>Confirmar/Rechazar/Datos Sede</th>
+                                                <th>Confirmar/Regresar/Datos Sede</th>
                                             </tr>
                                             </tfoot>
                                             <tbody>
@@ -86,9 +86,9 @@
                                                     <button th:attr="data-id1=${d.id.sede.idusuarios},data-id2=${d.id.productoinventario.codigoinventario},data-id3=${d.id.precioventa}, data-id4=${d.fechaenvio}" data-toggle="modal"
                                                             data-target="#confirmarModal" class="confirmar btn btn-datatable btn-icon btn-success"><i class="fas fa-check"></i></button>
                                                     <button th:attr="data-id1=${d.id.sede.idusuarios},data-id2=${d.id.productoinventario.codigoinventario},data-id3=${d.id.precioventa}, data-id4=${d.fechaenvio}" data-toggle="modal"
-                                                            data-target="#rechazarModal" class="rechazar btn btn-datatable btn-icon btn-warning"><i class="fas fa-times"></i></button>
+                                                            data-target="#rechazarModal" class="rechazar btn btn-datatable btn-icon btn-warning"><i class="fas fa-redo-alt"></i></button>
                                                     <button th:attr="data-id=${d.id.sede.idusuarios}" data-toggle="modal" data-target="#infoModal"
-                                                            class="info-Sede btn btn-datatable btn-icon btn-danger"><i class="fas fa-phone"></i></button>
+                                                            class="info-Sede btn btn-datatable btn-icon btn-info"><i class="fas fa-phone"></i></button>
                                                 </td>
                                             </tr>
 
@@ -193,7 +193,7 @@
                 <div class="modal-dialog modal-confirm">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Rechazar devolución</h4>
+                            <h4 class="modal-title">Regresar el producto a la sede</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <form method="get" th:action="@{/gestor/devoluciones/rechazar}">
@@ -202,11 +202,11 @@
                                 <input hidden type="text" class="form-control" id="codigo" name="codigo">
                                 <input hidden type="text" class="form-control" id="precio" name="precio">
                                 <input hidden type="text" class="form-control" id="fecha" name="fecha">
-                                <p>¿Seguro que desea rechazar la cantidad devuelta? Esta acción no se puede deshacer.</p>
+                                <p>¿Seguro que desea regresar la cantidad devuelta a la sede? Esta acción no se puede deshacer.</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-warning"><a style="color:white;text-decoration:none">Rechazar</a></button>
+                                <button type="submit" class="btn btn-warning"><a style="color:white;text-decoration:none">Aceptar</a></button>
                             </div>
                         </form>
                     </div>
