@@ -15,4 +15,5 @@ public interface ReportesTotalDto {
     String getVendedor();
     Integer getDnivendedor();
     Double getPrecio_venta();
+    Integer getMediopago();
 }

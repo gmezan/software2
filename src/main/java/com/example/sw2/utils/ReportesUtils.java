@@ -5,6 +5,7 @@ import com.example.sw2.dtoReportes.*;
 import org.apache.poi.hssf.usermodel.HSSFPalette;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.IndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 
@@ -15,14 +16,14 @@ public abstract class ReportesUtils {
 
 
     protected final String MENSAJE_NO_VENTA = "No se encontró información de ventas para este reporte";
-    protected final Integer BEGINNING_ROW = 1;
+    protected final Integer BEGINNING_ROW = 3;
     protected final Integer BEGINNING_COLUMN = 1;
     private final short HEADER_FONT = 12;
     private final short CONTENT_FONT = 10;
 
 
     //Cliente
-    protected void fillCellsInSheet(Sheet sheet, String[] columns, Object data, Workbook workbook){
+    protected void fillCellsInSheet(Sheet sheet, String[] columns, Object data, Workbook workbook,String titulo){
 
         List<Object> list = (List<Object>)data;
         if(list.isEmpty()) {
@@ -33,6 +34,9 @@ public abstract class ReportesUtils {
             CellStyle style2 = createContentCellStyle2(workbook);
             CellStyle headerStyle = createHeaderCellStyle(workbook);
             Row row = sheet.createRow(BEGINNING_ROW);
+            Row temp = sheet.createRow(1);
+            createCell(temp,1,titulo);
+
             for(int i=1,col=BEGINNING_COLUMN; i<columns.length + 1; i++)
                 createCell(row,col++,columns[i-1],headerStyle);
 
@@ -100,6 +104,7 @@ public abstract class ReportesUtils {
                     style = ((fila%2)==0)?style1:style2;
                     createCell(row,i++,CustomConstants.getTiposDocumento().get(dataRow.getTipodocumento()),style);
                     createCell(row,i++,dataRow.getNumerodocumento(),style);
+                    createCell(row,i++,CustomConstants.getMediosDePago().get(dataRow.getMediopago()),style);
                     createCell(row,i++,dataRow.getProductoinventario(),style);
                     createCell(row,i++,dataRow.getNombrecliente(),style);
                     if(dataRow.getRuc_dni().length() == 11){
@@ -125,8 +130,9 @@ public abstract class ReportesUtils {
         int i = BEGINNING_COLUMN;
         switch (orderBy){
             case 1: //Total
+                sheet.setColumnWidth(i++, 3800);
                 sheet.setColumnWidth(i++, 4000);
-                sheet.setColumnWidth(i++, 4000);
+                sheet.setColumnWidth(i++, 5300);
                 sheet.setColumnWidth(i++, 6500);
                 sheet.setColumnWidth(i++, 4000);
                 sheet.setColumnWidth(i++, 3500);

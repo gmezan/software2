@@ -1,5 +1,6 @@
 package com.example.sw2.service;
 
+import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.dtoReportes.ReportesArticuloDto;
 import com.example.sw2.dtoReportes.ReportesClienteDto;
 import com.example.sw2.dtoReportes.ReportesTotalDto;
@@ -67,27 +68,30 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
 
     private void llenarReporteTotal(Workbook workbook, Reportes reportes, int idusuario){
 
-        String[] columns = {"Documento","Numero","Producto","Cliente","RUC","DNI","Vendedor","DNI vendedor","Cantidad","Precio Unit.","Precio Total","Fecha de Venta"};
+        String[] columns = {"Documento","Doc. Número","Medio de Pago","Producto","Cliente","RUC","DNI","Vendedor","DNI vendedor","Cantidad","Precio Unit.","Precio Total","Fecha de Venta"};
 
         Sheet sheet= workbook.createSheet("Sede Reporte total " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
-
+        String titulo = "";
         List<ReportesTotalDto> reportesTotales;
         switch (reportes.getType()){
             case 1:
                 reportesTotales = ventasRepository.obtenerReporteSedeAnualTotal(reportes.getYear(), idusuario);
+                titulo = "Reporte total del año " + reportes.getYear();
                 break;
             case 2:
                 reportesTotales = ventasRepository.obtenerReporteSedeTrimestralTotal(reportes.getSelected(),reportes.getYear(), idusuario);
+                titulo = "Reporte total del año " + reportes.getYear()+" trimestre " + CustomConstants.getTrimestre().get(reportes.getSelected());
                 break;
             case 3:
                 reportesTotales = ventasRepository.obtenerReporteSedeMensualTotal(reportes.getSelected(),reportes.getYear(), idusuario);
+                titulo = "Reporte total del año " + reportes.getYear()+" mes " + CustomConstants.getMeses().get(reportes.getSelected());
                 break;
             default:
                 reportesTotales = new ArrayList<>();
         }
 
-        fillCellsInSheet(sheet,columns,reportesTotales,workbook);
+        fillCellsInSheet(sheet,columns,reportesTotales,workbook,titulo);
 
     }
 
@@ -109,7 +113,7 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
             default:
                 reportesArticulos = new ArrayList<>();
         }
-        fillCellsInSheet(sheet,columns,reportesArticulos,workbook);
+        //fillCellsInSheet(sheet,columns,reportesArticulos,workbook);
     }
 
     private void llenarReporteComunidad(Workbook workbook, Reportes reportes, Integer idusuario){
@@ -130,7 +134,7 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
             default:
                 reportesComunidad = new ArrayList<>();
         }
-        fillCellsInSheet(sheet,columns,reportesComunidad,workbook);
+        //fillCellsInSheet(sheet,columns,reportesComunidad,workbook);
     }
 
     private void llenarReporteCliente(Workbook workbook, Reportes reportes,Integer idusuario){

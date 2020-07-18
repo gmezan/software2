@@ -30,6 +30,8 @@ public final class CustomConstants {
     private static final HashMap<Integer,String> notificationState = new HashMap<>();
     private static final HashMap<Integer,String> notificationType = new HashMap<>();
 
+    private static final HashMap<Integer, String> trimestre = new HashMap<>();
+
     static {
         lineas.put("T", "Tradicional");
         lineas.put("M", "Mosqoy");
@@ -79,6 +81,11 @@ public final class CustomConstants {
         MediosDePago.put(1,"Efectivo");
         MediosDePago.put(2,"Depósito/Transferencia");
         MediosDePago.put(3,"Tarjeta de crédito");
+
+        trimestre.put(1,"EN-FEB-MAR");
+        trimestre.put(2,"ABR-MAY-JUN");
+        trimestre.put(3,"JUL-AGO-SET");
+        trimestre.put(4,"OCT-NOV-DIC");
     }
 
     public final static int N_TYPE_NOTICE = 1;
@@ -122,5 +129,13 @@ public final class CustomConstants {
 
     public static HashMap<Integer, String> getTiposDocumento() {
         return tiposDocumento;
+    }
+
+    public static HashMap<Integer, String> getTrimestre() {
+        return trimestre;
+    }
+
+    public static HashMap<Integer, String> getMediosDePago() {
+        return MediosDePago;
     }
 }
