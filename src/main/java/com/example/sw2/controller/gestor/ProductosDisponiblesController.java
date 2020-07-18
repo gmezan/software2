@@ -246,7 +246,6 @@ public class ProductosDisponiblesController {
             Usuarios sedes = optionalUsuarios.get();
             asignadosSedes.setId(new AsignadosSedesId(usuarios, sedes, inv,1,precio));
             asignadosSedes.setCantidadactual(asignadosSedes.getStock());
-            System.out.println( "La puta fecha sin asignar es " + asignadosSedes.getFechaenvio());
             asignadosSedesRepository.save(asignadosSedes);
 */
             attributes.addFlashAttribute("msg", "Producto asignado exitosamente");
