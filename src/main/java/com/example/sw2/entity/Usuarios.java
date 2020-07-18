@@ -37,7 +37,7 @@ public class Usuarios extends Auditable implements Serializable {
     @NotBlank(message = "Este campo no puede estar vacío")
     @Pattern(regexp = "^[A-Za-zÀ-ÿ'. ]+$", message = "Ingrese solo caracteres válidos")
     private String apellido;
-    private String foto;
+    private String foto = "https://storage-service.mosqoy-sw2.dns-cloud.net/profile/defaultProfilePicture.jpg";
     @Email(message = "Ingrese una dirección de email válida")
     @Column(nullable = false)
     @Size(max = 45, message = "Debe contener 45 caracteres como maximo")
