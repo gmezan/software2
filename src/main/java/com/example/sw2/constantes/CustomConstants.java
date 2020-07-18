@@ -60,8 +60,8 @@ public final class CustomConstants {
 
         tiposDocumento.put(1, "Factura");
         tiposDocumento.put(2, "Boleta");
-        //tiposDocumento.put(3, "Recibo");
-        //tiposDocumento.put(4, "Transacción");
+        tiposDocumento.put(3, "Recibo");
+        tiposDocumento.put(4, "Transacción");
 
         estadoAsignacion.put(1, "Enviado a Sede");
         estadoAsignacion.put(2, "Recibido por Sede");

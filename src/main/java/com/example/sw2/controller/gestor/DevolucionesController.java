@@ -36,7 +36,7 @@ public class DevolucionesController {
     @Autowired
     InventarioRepository inventarioRepository;
 
-    private int estado_devol = CustomConstants.ESTADO_DEVUELTO_POR_SEDE;
+    private int estado_devol = CustomConstants.ESTADO_RECIBIDO_CON_PROBLEMAS;
     private int estado_recibido = CustomConstants.ESTADO_RECIBIDO_POR_SEDE;
 
     @GetMapping(value = {"", "/"})
@@ -45,7 +45,7 @@ public class DevolucionesController {
                                     HttpSession session,
                                     Model model, Authentication auth){
 
-        int estado = CustomConstants.ESTADO_DEVUELTO_POR_SEDE;
+        int estado = CustomConstants.ESTADO_RECIBIDO_CON_PROBLEMAS;
         Usuarios gestor = (Usuarios) session.getAttribute("usuario");
         model.addAttribute("devueltos", asignadosSedesRepository.findById_Gestor_IdusuariosAndId_Estadoasignacion(gestor.getIdusuarios(),estado));
         return "gestor/devoluciones";
@@ -79,7 +79,7 @@ public class DevolucionesController {
 
             asignadosSedesRepository.deleteById(as_devol.getId());
             //sumar lo devuelto a cant_gestor del inventario
-            attr.addFlashAttribute("msg","Producto devuelto exitosamente");
+            attr.addFlashAttribute("msg","Producto devuelto al inventario exitosamente");
         }
 
         return "redirect:/gestor/devoluciones/";
@@ -107,7 +107,7 @@ public class DevolucionesController {
             asignadosSedesRepository.rechazar_devol_sede(as.getStock(), gestor.getIdusuarios(),
                     sede_dni,codigo,estado_recibido,precio);
             asignadosSedesRepository.deleteById(as.getId());
-            attr.addFlashAttribute("msg","El producto ha sido rechazado ");
+            attr.addFlashAttribute("msg","El producto ha sido regresado a la sede ");
         }
 
         return "redirect:/gestor/devoluciones/";
