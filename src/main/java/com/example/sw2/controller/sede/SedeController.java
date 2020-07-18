@@ -194,10 +194,9 @@ public class SedeController {
             asignadosSedesRepository.save(asignadosSedes);
             inventarioRepository.save(inventario);
             try {
-                if (asignadosSedes.getStock()==0){
+                if (asignadosSedes.getStock() ==0){
                     customMailService.sendStockAlert(asignadosSedes);
                 }
-                customMailService.sendSaleConfirmation(ventas);
             } catch (MessagingException | IOException  e) {
                 e.printStackTrace();
             }

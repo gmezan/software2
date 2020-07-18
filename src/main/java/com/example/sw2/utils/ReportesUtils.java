@@ -143,20 +143,22 @@ public abstract class ReportesUtils {
                     }
                     createCell(row,i++,dataRow.getVendedor(),style);
                     createCell(row,i++, String.valueOf(dataRow.getDnivendedor()),style);
-                    createCell(row,i++,"",style).setCellValue(dataRow.getCantidad());
                     createCell(row,i++,"",style).setCellValue(dataRow.getPrecio_venta()/dataRow.getCantidad());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getCantidad());
                     createCell(row,i++,"",style).setCellValue(dataRow.getPrecio_venta());
                     createCell(row,i,dataRow.getFecha(),style);
                 }
 
-                //Lo único que va hardoceado son los números 9,10 y 12 que pertenecen a las columnas que se van a sumar
-                String strFormula1= "SUM(K"+(BEGINNING_ROW+2)+":K"+(fila+1)+")";
+                //Lo único que va hardcodeado son los números 10,11 y 12 que pertenecen a las columnas que se van a sumar
+                String strFormula1= "SUM(L"+(BEGINNING_ROW+2)+":L"+(fila+1)+")";
                 String strFormula2= "SUM(M"+(BEGINNING_ROW+2)+":M"+(fila+1)+")";
-                sheet.createRow(fila+2).createCell(9);
-                createCell(sheet.createRow(fila+2),9,"SUMA",formulaStyle);
-                sheet.getRow(fila+2).createCell(10).setCellFormula(strFormula1);
-                sheet.getRow(fila+2).createCell(12).setCellFormula(strFormula2);
-
+                sheet.createRow(fila+2).createCell(10);
+                row = sheet.createRow(fila+2);
+                createCell(row,10,"SUMA",formulaStyle);
+                row.createCell(11).setCellFormula(strFormula1);
+                row.createCell(12).setCellFormula(strFormula2);
+                row.getCell(11).setCellStyle(formulaStyle);
+                row.getCell(12).setCellStyle(formulaStyle);
             }
         }
     }
@@ -233,6 +235,15 @@ public abstract class ReportesUtils {
         font.setFontName("Courier New");
         font.setBold(true);
         CellStyle style = workbook.createCellStyle();
+        style.setFillForegroundColor(IndexedColors.BLACK.getIndex());
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        style.setBorderLeft(BorderStyle.THIN);
+        style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+        style.setBorderRight(BorderStyle.THIN);
+        style.setRightBorderColor(IndexedColors.BLACK.getIndex());
+        style.setBorderTop(BorderStyle.THIN);
+        style.setTopBorderColor(IndexedColors.BLACK.getIndex());
         style.setFont(font);
         return style;
     }

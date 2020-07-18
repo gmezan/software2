@@ -139,7 +139,6 @@
         <script th:src="@{/js/sb-admin-2.min.js}"></script>
 
         <!-- Page level plugins -->
-        <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
         <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
         <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
         <script th:src="@{/js/sede/asignadoTiendas.js}"></script>
@@ -193,11 +192,12 @@
                                     <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}"
                                          th:errors="*{id.numerodocumento}">Error
                                     </div>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" th:field="*{confirmado}" value="off">
-                                    <label for="confirmado" class="form-check-label">Venta confirmada (Venta ya registrada con un comprobante de pago)</label>
-                                    <div class="text-danger" th:if="${#fields.hasErrors('confirmado')}" th:errors="*{confirmado}" ></div>
+
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" th:field="*{confirmado}" value="off">
+                                        <label for="confirmado" class="form-check-label">Venta confirmada (Venta ya registrada con un comprobante de pago)</label>
+                                        <div class="text-danger" th:if="${#fields.hasErrors('confirmado')}" th:errors="*{confirmado}" ></div>
+                                    </div>
                                 </div>
                             </div>
 

@@ -22,7 +22,12 @@ public class TiendaController {
     @Autowired
     TiendaRepository tiendaRepository;
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {"/"})
+    public String redirectAT(){
+        return "redirect:/sede/tienda";
+    }
+
+    @GetMapping(value = {""})
     public String listCat(@ModelAttribute("tienda") Tienda cat, Model model) {
         model.addAttribute("lista", tiendaRepository.findAll());
         return "sede/tiendas";

@@ -114,7 +114,7 @@ public class CustomMailService {
 
 	public void sendStockAlert(AsignadosSedes a) throws IOException, MessagingException {
 		String subject = "Mosqoy - Stock agotado en sede";
-		String title = "Alerta por stock agotado  por ventas";
+		String title = "Alerta de stock agotado  por ventas";
 		String message = "";
 		message+="<p>Se ha agotado el stock del producto de inventario con código <b>"+a.getId().getProductoinventario().getCodigoinventario()
 				+"</b>, para el usuario sede <b>"+a.getId().getSede().getFullname()+"</b>.<br></p>";
@@ -133,7 +133,7 @@ public class CustomMailService {
 
 
 		if (list.isEmpty()){
-			message.append("<p>No se encontraron productos con fecha de vencimiento para este mes</p>");
+			message.append("<p>No hay productos con fecha de vencimiento para este mes</p>");
 		}else {
 			message.append("<table>\n" +
 					"<thead>\n" +

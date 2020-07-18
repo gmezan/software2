@@ -27,6 +27,12 @@ public class ReportesGestorController {
     VentasRepository ventasRepository;
 
 
+    @GetMapping(value = {"/"})
+    public String redirectAT(){
+        return "redirect:/gestor/reportes";
+    }
+
+
     @GetMapping(value = "")
     public String listaReportes(){
         return "gestor/Reportes";
