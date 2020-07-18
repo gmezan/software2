@@ -101,20 +101,16 @@
                                                 <td th:text="${prodPorConfirm.id.productoinventario.comunidades.nombre}"></td>
                                                 <td th:text="${prodPorConfirm.id.precioventa}"></td>
                                                 <td th:text="${prodPorConfirm.stock}"></td>
-                                                <td th:text="${prodPorConfirm.fechaenvio}"></td>
+                                                <td th:text="${prodPorConfirm.fechaEnvioStr}"></td>
                                                 <td>
                                                     <button disabled th:attr="data-id=${prodPorConfirm.id.productoinventario.codigoinventario}"
                                                             data-toggle="modal" data-target="#showFoto"
                                                             class="show-foto btn ">
-    
                                                         
                                                             <img th:id="${prodPorConfirm.id.productoinventario.codigoinventario} +'photo'"
                                                                     class="mx-auto my-auto mh-100 img-fluid"
                                                                  th:src="${prodPorConfirm.id.productoinventario.foto}"
                                                                  alt="">
-                                                        
-                                                        
-    
                                                     </button>
                                                     
                                                 </td>

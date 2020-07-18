@@ -79,10 +79,9 @@
                                             <tr th:each="item : ${lista}">
                                                 <td th:text="${item.codigo}"></td>
                                                 <td th:text="${item.nombre}"></td>
-                                                <td th:text="${item.fechacreacion.toLocalDate()}"></td>
-                                                <td th:if="${item.fechamodificacion!=null}"
-                                                    th:text="${item.fechamodificacion.toLocalDate()}"></td>
-                                                <td th:if="${item.fechamodificacion==null}">-</td>
+                                                <td th:text="${item.obtenerFechacreacionStr()}"></td>
+                                                <td th:text="${item.fechamodificacion!=null? item.obtenerFechamodificacionStr() :'---'}">-</td>
+
                                                 <td>
                                                     <button th:attr="data-id=${item.codigo}" data-toggle="modal"
                                                             data-target="#formModal"

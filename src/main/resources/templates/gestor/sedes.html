@@ -111,10 +111,8 @@
                                                 
                                                 </td>
                                                 
-                                                <td th:text="${l.fechacreacion.toLocalDate()}">
-                                                <td th:if="${l.fechamodificacion!=null}"
-                                                    th:text="${l.fechamodificacion.toLocalDate()}"></td>
-                                                <td th:if="${l.fechamodificacion==null}">-</td>
+                                                <td th:text="${l.obtenerFechacreacionStr()}">
+                                                <td th:text="${l.fechamodificacion!=null? l.obtenerFechamodificacionStr() :'---'}">-</td>
                                                 <td>
                                                     <button th:attr="data-id=${l.idusuarios}" data-toggle="modal"
                                                             data-target="#formModal"

@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.example.sw2.constantes.CustomConstants.MediosDePago;
 
@@ -257,5 +258,13 @@ public class Ventas extends Auditable implements Serializable {
 
     public void setCancelar(Integer cancelar) {
         this.cancelar = cancelar;
+    }
+
+    public String getFechaDeVentaStr() {
+        String fecha2 = "---";
+        if (this.fecha != null) {
+            fecha2 =fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
+        return fecha2;
     }
 }

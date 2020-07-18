@@ -13,6 +13,7 @@ import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name="Asignados_sedes")
@@ -102,5 +103,13 @@ public class AsignadosSedes extends Auditable implements Serializable {
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
+    }
+
+    public String getFechaEnvioStr() {
+        String fecha = "---";
+        if (this.fechaenvio != null) {
+            fecha =fechaenvio.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
+        return fecha;
     }
 }

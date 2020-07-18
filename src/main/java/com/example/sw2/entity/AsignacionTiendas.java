@@ -13,6 +13,7 @@ import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name="Asignacion_tienda")
@@ -85,5 +86,13 @@ public class AsignacionTiendas extends Auditable implements Serializable {
 
     public void setAsignadosSedes(AsignadosSedes asignadosSedes) {
         this.asignadosSedes = asignadosSedes;
+    }
+
+    public String getFechaAsignacionStr() {
+        String fecha = "---";
+        if (this.fechaasignacion != null) {
+            fecha =fechaasignacion.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
+        return fecha;
     }
 }

@@ -135,10 +135,10 @@
                                                 <td th:text="${inv.cantidadtotal}">25</td>
                                                 
                                                 <td th:text="${inv.tipoAdquisicion}">Consignado</td>
-                                                <td th:text="${inv.fechaadquisicion!=null? inv.fechaadquisicion : '---'}">
+                                                <td th:text="${inv.fechaAdquiStr}">
                                                     FEB, 20
                                                 </td>
-                                                <td th:text="${inv.fechavencimientoconsignacion!=null? inv.fechavencimientoconsignacion : '---'}">
+                                                <td th:text="${inv.fechaVencimientoStr}">
                                                     FEB, 20
                                                 </td>
                                                 <td th:text="${inv.facilitador}">Sam Sammie</td>
@@ -156,14 +156,14 @@
                                                     
                                                     
                                                     </td>
-                                                
+
                                                 <td style="text-align: right">
-                                                    <span th:text="${inv.fechacreacion.toLocalDate()}"></span>
+                                                    <span th:text="${inv.obtenerFechacreacionStr()}"></span>
                                                     <br>
                                                     <span th:text="${inv.fechacreacion.toLocalTime()}"></span>
                                                 </td>
                                                 <td style="text-align: right">
-                                                    <span th:text="${inv.fechamodificacion!=null? inv.fechamodificacion.toLocalDate():'---'}"></span>
+                                                    <span th:text="${inv.fechamodificacion!=null? inv.obtenerFechamodificacionStr() :'---'}"></span>
                                                     <br>
                                                     <span th:text="${inv.fechamodificacion!=null? inv.fechamodificacion.toLocalTime():'---'}"></span>
                                                 </td>

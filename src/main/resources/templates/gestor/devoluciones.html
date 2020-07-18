@@ -77,7 +77,7 @@
                                             <tbody>
                                             <tr th:each="d, index : ${devueltos}">
                                                 <td th:text="${index.count}"></td>
-                                                <td th:text="${d.fechaenvio}"></td>
+                                                <td th:text="${d.fechaEnvioStr}"></td>
                                                 <td th:text="${d.id.productoinventario.codigoinventario}"></td>
                                                 <td th:text="${d.id.productoinventario.productos.nombre}"></td>
                                                 <td th:text="${d.stock}"></td>
