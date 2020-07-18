@@ -257,6 +257,17 @@ public interface VentasRepository extends JpaRepository<Ventas, Integer> {
 
     /////////// FIN ventas de un producto por MES especifico en un anho especifico
 
+
+
+
+
+
+
+
+
+
+
+    
     //SEDES ALEX
 
     @Query(value="SELECT CONCAT(u.nombre,' ',u.apellido) as nombre, u.dni, u.correo, u.telefono, sum(v.precio_venta) as sumaventas, sum(v.cantidad) as cantidadvendidos FROM Ventas v inner join Usuarios u ON (v.vendedor = u.dni) WHERE YEAR(v.fecha) = ?1 AND u.rol = 3 group by v.vendedor",nativeQuery=true)
