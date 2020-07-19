@@ -36,7 +36,7 @@ public class DevolucionesController {
     @Autowired
     InventarioRepository inventarioRepository;
 
-    private int estado_devol = CustomConstants.ESTADO_RECIBIDO_CON_PROBLEMAS;
+    private int estado_devol = CustomConstants.ESTADO_DEVUELTO_POR_SEDE;
     private int estado_recibido = CustomConstants.ESTADO_RECIBIDO_POR_SEDE;
 
     @GetMapping(value = {"", "/"})
@@ -45,7 +45,7 @@ public class DevolucionesController {
                                     HttpSession session,
                                     Model model, Authentication auth){
 
-        int estado = CustomConstants.ESTADO_RECIBIDO_CON_PROBLEMAS;
+        int estado = estado_devol;
         Usuarios gestor = (Usuarios) session.getAttribute("usuario");
         model.addAttribute("devueltos", asignadosSedesRepository.findById_Gestor_IdusuariosAndId_Estadoasignacion(gestor.getIdusuarios(),estado));
         return "gestor/devoluciones";
