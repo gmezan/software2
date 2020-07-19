@@ -4,7 +4,7 @@ $(function() {
 
     let $checkbox = $("#confirmado1");
     console.log($checkbox.is(":checked"));
-    $("#id\\.numerodocumento").prop("disabled",!$checkbox.is(":checked"));
+    $("#id\\.numerodocumento").prop("disabled",!$checkbox.is(":checked")).val('');
     $(".inputFile").prop("hidden",!$checkbox.is(":checked"));
 
     if ($("#msgVenta").text()==="ERROR"){
