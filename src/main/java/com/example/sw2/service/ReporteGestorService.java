@@ -159,7 +159,6 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
         }
         fillCellsInSheet(sheet,columns,reportesComunidad,workbook,titulo);
     }
-
     private void llenarReporteCliente(Workbook workbook, Reportes reportes){
         String[] columns = {"Nombre","DNI o RUC","Producto más comprado","Suma Ventas","Cantidad Vendida"};
         Sheet sheet= workbook.createSheet("Reporte de clientes " + LocalDate.now().toString());
@@ -180,7 +179,6 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
                 titulo = "Reporte total por cliente del año " + reportes.getYear()+" mes " + CustomConstants.getMeses().get(reportes.getSelected());
                 break;
         }
-
         fillCellsInSheet(sheet,columns,reportesClientes,workbook,titulo);
     }
 
