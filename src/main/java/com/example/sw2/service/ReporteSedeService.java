@@ -147,8 +147,9 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
 
     private void llenarReporteCliente(Workbook workbook, Reportes reportes,Integer idusuario){
         String[] columns = {"Nombre","DNI o RUC","Producto más comprado","Suma Ventas","Cantidad Productos Vendidos"};
-        Sheet sheet= workbook.createSheet("reporte de clientes " + LocalDate.now().toString());
-        setcolumnwidths(sheet,reportes.getOrderBy());
+        Sheet sheet= workbook.createSheet("Reporte de clientes " + LocalDate.now().toString());
+        setColumnWidths(sheet,reportes.getOrderBy());
+        String titulo = "";
         List<ReportesClienteDto> reportesClientes;
         switch (reportes.getType()){
             case 1:
@@ -164,7 +165,8 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
                 reportesClientes = new ArrayList<>();
         }
 
-        if(reportesClientes.isEmpty()){
+        fillCellsInSheet(sheet,columns,reportesClientes,workbook,titulo);
+        /*if(reportesClientes.isEmpty()){
             sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
 
         }else{
@@ -180,6 +182,7 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
                 row.createCell(3).setCellValue(reportesClienteDto.getProducto());
                 row.createCell(4).setCellValue(reportesClienteDto.getSumaventas());
                 row.createCell(5).setCellValue(reportesClienteDto.getCantidadvendidos());
+<<<<<<< HEAD
             }
         }
     }
@@ -208,7 +211,8 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
                 sheet.setColumnWidth(4, 5500);
                 sheet.setColumnWidth(5, 5500);
                 break;
-        }
+                }
+            }*/
     }
 
 }

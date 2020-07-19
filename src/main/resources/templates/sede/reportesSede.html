@@ -92,8 +92,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" th:action="@{/sede/reportes/generate}" >
-                    <div class="row">
+                <form method="post" id="reporteForm" th:action="@{/sede/reportes/generate}" >
+                    <div id="fields1" class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="ordenar" class="col-form-label">Ordenar Por</label>
@@ -137,8 +137,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal"  class="btn btn-secondary " >Cancelar</button>
                         <button type="submit" class="btn btn-info"><a style="color:white;text-decoration:none">Generar</a></button>
