@@ -171,9 +171,8 @@ public abstract class ReportesUtils {
                     if(dataRow.getMedia()==null||dataRow.getMedia().equals("")){
                         createCell(row,i,"-",style);
                     }else {
-                        createCell(row,i,dataRow.getMedia(),style);
+                        createCell(row,i,"\""+dataRow.getMedia()+"\"",style);
                     }
-
                 }
 
                 //Lo único que va hardcodeado son los números 10,11 y 12 que pertenecen a las columnas que se van a sumar
