@@ -7,13 +7,13 @@
     </head>
     <body>
         <div th:fragment="err(etype,rol,texto)" class="container-fluid">
-            <div th:if="${etype==403}" class="text-center">
+            <!--div th:if="${etype==403}" class="text-center">
                 <div class="error mx-auto" data-text="403">403</div>
                 <p class="lead text-gray-800 mb-5">Sin autorización >:(</p>
                 <p class="text-gray-500 mb-0">Parece que no tienes permiso para acceder a esta página...</p>
                 <a th:href="@{'/'+${rol}}" th:text="'&larr;' +${texto}"></a>
-            </div>
-            <div th:if="${etype==404}" class="text-center">
+            </div-->
+            <div th:if="${etype==404||etype==403}" class="text-center">
                 <div class="error mx-auto" data-text="404">404</div>
                 <p class="lead text-gray-800 mb-5">Página no encontrada :(</p>
                 <p class="text-gray-500 mb-0">Parece que esta página no existe o no está disponible en estos

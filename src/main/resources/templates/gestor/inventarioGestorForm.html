@@ -207,7 +207,7 @@
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text text-body">S/.</div>
                                                         </div>
-                                                        <input th:field="*{costomosqoy}" type="number" th:min="${inventario.costotejedor+0.01}"
+                                                        <input th:field="*{costomosqoy}" type="number" th:min="${inventario.costotejedor==null? 0.01 : inventario.costotejedor+0.01}"
                                                                step='0.01'
                                                                class="form-control" required
                                                                placeholder="000.00">
@@ -242,11 +242,11 @@
                                                     
                                                     <label class="col-form-label"><b>Fecha de adquisición:</b></label>
                                                     
-                                                    <input th:hidden="${inventario.dia==0}" id="fechadia" type="date"
+                                                    <input th:hidden="${inventario.dia==0}" th:disabled="${inventario.dia==0}" id="fechadia" type="date"
                                                            name="fechadia"
                                                            class="form-control" required
                                                            th:value="${inventario.fechaadquisicion}" th:max="${todayd}">
-                                                    <input th:hidden="${inventario.dia!=0}" id="fechames" type="month"
+                                                    <input th:hidden="${inventario.dia!=0}" th:disabled="${inventario.dia!=0}" id="fechames" type="month"
                                                            name="fechames"
                                                            class="form-control" th:max="${todaym}" required
                                                            th:value="${inventario.mes<10? inventario.anho+'-0'+inventario.mes  : inventario.anho+'-'+inventario.mes}">
@@ -263,7 +263,7 @@
                                                     
                                                 </div>
                                                 
-                                                <div th:hidden="${inventario.codAdquisicion!=1}"
+                                                <div th:hidden="${inventario.codAdquisicion!=1}" th:disabled="${inventario.codAdquisicion!=1}"
                                                      id="vencimientoConsignacion" class="form-group col-4">
                                                     <label class="col-form-label"><b>Fecha de
                                                         vencimiento(consignación):</b></label>

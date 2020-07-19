@@ -378,7 +378,7 @@ public class InventarioController {
 
     @GetMapping("/delete")
     public String borrar(Model model,
-                         @RequestParam("codDelete") String id,
+                         @RequestParam("codigoinventario") String id,
                          RedirectAttributes attr) {
         Optional<Inventario> c = inventarioRepository.findById(id);
         if (c.isPresent()) {
@@ -451,19 +451,23 @@ public class InventarioController {
     //Has items
     @ResponseBody
     @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<HashMap<String,String>>> hasItem(@RequestParam(value = "id") String id){
-        return new ResponseEntity<>(new ArrayList<HashMap<String,String>>() {{
-            Objects.requireNonNull(categoriasRepository.findById(id).orElse(null)).getInventario().forEach((i)->
+    public ResponseEntity<List<List<HashMap<String,String>>>> hasItems(@RequestParam(value = "id") String id){
+        return new ResponseEntity<>(new ArrayList<List<HashMap<String, String>>>() {
             {
-                add(new HashMap<String, String>() {
-                    {
-                        put("codigo", i.getCodigoinventario());
-                        put("producto", i.getProductos().getNombre());
-                        put("cantidad", Integer.toString(i.getCantidadtotal()));
-                    }
-                });
-            });
-        }},HttpStatus.OK);
+                add(new ArrayList<HashMap<String,String>>() {{
+                    Objects.requireNonNull(inventarioRepository.findById(id).orElse(null)).getAsignadosSedes().forEach((i)-> {
+                        add(new HashMap<String, String>() {{
+                            put("sede", i.getId().getSede().getFullname());
+                            put("stock", i.getStock().toString());
+                            put("envio", i.getFechaEnvioStr());
+                        }});});}});
+                add(new ArrayList<HashMap<String,String>>() {{
+                    Objects.requireNonNull(inventarioRepository.findById(id).orElse(null)).getVentas().forEach((i)-> {
+                        add(new HashMap<String, String>() {{
+                            put("numdocumento", i.getId().getNumerodocumento());
+                            put("fechaVenta", i.getFechaDeVentaStr());
+                            put("vendedor", i.getVendedor().getFullname());
+                        }});});}});}},
+                HttpStatus.OK);
     }
-
 }
