@@ -41,17 +41,17 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
 
                 llenarReporteTotal(workbook, reportes, idusuario);
                 break;
-            case 2:
+            case 3:
                 //nos referimos al articulo(producto)
 
                 llenarReporteProducto(workbook, reportes, idusuario);
                 break;
-            case 3:
+            case 4:
                 //nos referimos a la comunidad
 
                 llenarReporteComunidad( workbook, reportes,idusuario);
                 break;
-            case 4:
+            case 5:
                 //nos referimos al cliente
 
                 llenarReporteCliente(workbook, reportes,idusuario);
@@ -98,7 +98,7 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
     private void llenarReporteProducto(Workbook workbook, Reportes reportes, int idusuario){
         String[] columns = {"Nombre","Linea","Codigo","Suma Ventas","Cantidad Vendidos"};
         Sheet sheet= workbook.createSheet("Reporte producto " + LocalDate.now().toString());
-        setColumnWidths(sheet,3);
+        setColumnWidths(sheet,reportes.getOrderBy());
         String titulo = "";
         List<ReportesArticuloDto> reportesArticulos = new ArrayList<>();
         switch (reportes.getType()){
@@ -123,7 +123,7 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
     private void llenarReporteComunidad(Workbook workbook, Reportes reportes, Integer idusuario){
         String[] columns = {"Nombre","Código","Cantidad Artesanos","Suma Ventas","Cantidad Productos Vendidos"};
         Sheet sheet= workbook.createSheet("reporte comunidad " + LocalDate.now().toString());
-        setColumnWidths(sheet,4);
+        setColumnWidths(sheet,reportes.getOrderBy());
         String titulo = "";
         List<ReportesComunidadDto> reportesComunidad = new ArrayList<>();
         switch (reportes.getType()){
@@ -148,7 +148,7 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
     private void llenarReporteCliente(Workbook workbook, Reportes reportes,Integer idusuario){
         String[] columns = {"Nombre","RUC","DNI","Producto más comprado","Suma Ventas","Cantidad Productos Vendidos"};
         Sheet sheet= workbook.createSheet("Reporte de clientes " + LocalDate.now().toString());
-        setColumnWidths(sheet,5);
+        setColumnWidths(sheet,reportes.getOrderBy());
         String titulo = "";
         List<ReportesClienteDto> reportesClientes;
         switch (reportes.getType()){
@@ -169,53 +169,6 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
         }
 
         fillCellsInSheet(sheet,columns,reportesClientes,workbook,titulo);
-        /*if(reportesClientes.isEmpty()){
-            sheet.createRow(1).createCell(0).setCellValue("Sin ventas :(");
-
-        }else{
-            Row row = sheet.createRow(1);
-            for(int i=1; i<columns.length + 1; i++){
-                row.createCell(i).setCellValue(columns[i]);
-            }
-            int fila = 1;
-            for(ReportesClienteDto reportesClienteDto : reportesClientes){
-                row = sheet.createRow(++fila);
-                row.createCell(1).setCellValue(reportesClienteDto.getNombre());
-                row.createCell(2).setCellValue(reportesClienteDto.getRuc_dni());
-                row.createCell(3).setCellValue(reportesClienteDto.getProducto());
-                row.createCell(4).setCellValue(reportesClienteDto.getSumaventas());
-                row.createCell(5).setCellValue(reportesClienteDto.getCantidadvendidos());
-<<<<<<< HEAD
-            }
-        }
-    }
-
-    private void setcolumnwidths(Sheet sheet, Integer orderBy){
-        switch (orderBy){
-            case 1:
-                //Total
-                break;
-            case 2:
-                //Articulo
-                break;
-            case 3:
-                //Comunidad
-                sheet.setColumnWidth(1, 6000);
-                sheet.setColumnWidth(2, 6000);
-                sheet.setColumnWidth(3, 6000);
-                sheet.setColumnWidth(4, 6000);
-                sheet.setColumnWidth(5, 6000);
-                break;
-            case 4:
-                //Cliente
-                sheet.setColumnWidth(1, 5500);
-                sheet.setColumnWidth(2, 5500);
-                sheet.setColumnWidth(3, 5500);
-                sheet.setColumnWidth(4, 5500);
-                sheet.setColumnWidth(5, 5500);
-                break;
-                }
-            }*/
     }
 
 }
