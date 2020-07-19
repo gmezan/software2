@@ -31,10 +31,9 @@ $(document).on( "click", ".asign-A-Tienda", function () {
         url:url
     }).done(function(asigntienda){
         if (asigntienda!=null){
-            console.log(asigntienda);
-            $("#AsignarProductoModal  #cantAsign").text(asigntienda.cantAsign);
-
+            $("#AsignarProductoModal #cantAsign").text(asigntienda.cantAsign);
         }
+        $("#AsignarProductoModal .modal-footer button").attr("disabled",false);
     }).fail(function (err) {
         console.log(err);
         $('#AsignarProductoModal').modal('hide');
@@ -46,6 +45,7 @@ $(document).on( "click", ".asign-A-Tienda", function () {
 $(document).ready(function() {
     if ($("#msgAsign").text()==="ERROR"){
         $("#AsignarProductoModal").modal({show:true});
+        $("#AsignarProductoModal .modal-footer button").attr("disabled",false);
     }
 });
 

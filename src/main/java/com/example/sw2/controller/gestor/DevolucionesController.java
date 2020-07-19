@@ -2,7 +2,6 @@ package com.example.sw2.controller.gestor;
 
 import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.CustomConstants;
-import com.example.sw2.constantes.VentasId;
 import com.example.sw2.entity.*;
 import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.InventarioRepository;
@@ -18,11 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Controller
@@ -36,7 +32,7 @@ public class DevolucionesController {
     @Autowired
     InventarioRepository inventarioRepository;
 
-    private int estado_devol = CustomConstants.ESTADO_RECIBIDO_CON_PROBLEMAS;
+    private int estado_devol = CustomConstants.ESTADO_DEVUELTO_POR_SEDE;
     private int estado_recibido = CustomConstants.ESTADO_RECIBIDO_POR_SEDE;
 
     @GetMapping(value = {"", "/"})
@@ -45,7 +41,7 @@ public class DevolucionesController {
                                     HttpSession session,
                                     Model model, Authentication auth){
 
-        int estado = CustomConstants.ESTADO_RECIBIDO_CON_PROBLEMAS;
+        int estado = estado_devol;
         Usuarios gestor = (Usuarios) session.getAttribute("usuario");
         model.addAttribute("devueltos", asignadosSedesRepository.findById_Gestor_IdusuariosAndId_Estadoasignacion(gestor.getIdusuarios(),estado));
         return "gestor/devoluciones";
@@ -74,7 +70,7 @@ public class DevolucionesController {
             AsignadosSedes as_devol = optAsig1.get();
 
             //Aumenta la cant_gestor(inventario) y disminuye el stock(Asignados_sedes)
-            asignadosSedesRepository.devol_sede_gestor(as_devol.getStock(), gestor.getIdusuarios(),
+            asignadosSedesRepository.aceptar_devol_sede(as_devol.getStock(), gestor.getIdusuarios(),
                     sede_dni,codigo,estado_recibido,precio);
 
             asignadosSedesRepository.deleteById(as_devol.getId());

@@ -1,6 +1,7 @@
 package com.example.sw2.controller.gestor;
 
 import com.example.sw2.Dao.StorageServiceDao;
+import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.entity.*;
 import com.example.sw2.repository.*;
@@ -19,10 +20,8 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.*;
 import java.time.YearMonth;
-import java.util.Optional;
-import java.util.Set;
 
 //REPLANTEAR inventario entity
 
@@ -167,6 +166,7 @@ public class InventarioController {
             m.addAttribute("linea", inventario.getProductos().getId().getCodigolinea());
             m.addAttribute("listProd", productosRepository.findProductosByIdCodigolinea(inventario.getProductos().getId().getCodigolinea()));
         }
+
         System.out.println(inventario.getProductos().getId().getCodigolinea());
         System.out.println(inventario.getProductos().getId().getCodigonom());
 
@@ -185,6 +185,13 @@ public class InventarioController {
             bindingResult.rejectValue("foto", "error.user", "Debe subir una foto.");
         }
 */
+        if (!bindingResult.hasFieldErrors("costotejedor")&&!bindingResult.hasFieldErrors("costomosqoy")) {
+
+            if (inventario.getCostotejedor().compareTo(inventario.getCostomosqoy())!=-1){
+                bindingResult.rejectValue("costomosqoy", "error.user", "Debe ser mayor al costo tejedor.");
+            }
+        }
+
         if (bindingResult.hasErrors()) {
             listasCamposInv(m);
             if (inventario.getComunidades() != null) {
@@ -441,5 +448,22 @@ public class InventarioController {
         return new ResponseEntity<>(artesanosRepository.findArtesanosByComunidades_Codigo(comunidad), HttpStatus.OK);
     }
 
+    //Has items
+    @ResponseBody
+    @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<HashMap<String,String>>> hasItem(@RequestParam(value = "id") String id){
+        return new ResponseEntity<>(new ArrayList<HashMap<String,String>>() {{
+            Objects.requireNonNull(categoriasRepository.findById(id).orElse(null)).getInventario().forEach((i)->
+            {
+                add(new HashMap<String, String>() {
+                    {
+                        put("codigo", i.getCodigoinventario());
+                        put("producto", i.getProductos().getNombre());
+                        put("cantidad", Integer.toString(i.getCantidadtotal()));
+                    }
+                });
+            });
+        }},HttpStatus.OK);
+    }
 
 }

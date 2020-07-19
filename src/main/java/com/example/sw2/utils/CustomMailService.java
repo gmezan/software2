@@ -166,6 +166,7 @@ public class CustomMailService {
 		String table;
 		String msg2="";
 		if(v.getConfirmado()) { // Venta confirmada
+			/*
 			msg="<p>El usuario "+v.getVendedor().getRoles().getNombrerol()+" "+v.getVendedor().getFullname()+
 			", ha registrado una venta en el sistema. Los detalles de la venta se muestran a continuación</p>";
 
@@ -206,7 +207,7 @@ public class CustomMailService {
 					"          </table>";
 			sendHtmlMail(MANAGER_EMAIL, "Mosqoy - Venta confirmada",
 					"Se ha registrado una venta por parte de " + v.getVendedor().getFullname(),
-					msg+table+msg2);
+					msg+table+msg2);*/
 		}
 		else {// Solicitud de comprobante
 			msg ="<p>El usuario sede, ha solicitado un(a) "+ v.getId().getNombreTipodocumento() + " para poder concluir " +

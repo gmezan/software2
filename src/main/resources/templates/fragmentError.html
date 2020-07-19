@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <div th:fragment="err(etype,rol,texto)" class="container-fluid">
+            <div th:if="${etype==403}" class="text-center">
+                <div class="error mx-auto" data-text="403">403</div>
+                <p class="lead text-gray-800 mb-5">Sin autorización >:(</p>
+                <p class="text-gray-500 mb-0">Parece que no tienes permiso para acceder a esta página...</p>
+                <a th:href="@{'/'+${rol}}" th:text="'&larr;' +${texto}"></a>
+            </div>
+            <div th:if="${etype==404}" class="text-center">
+                <div class="error mx-auto" data-text="404">404</div>
+                <p class="lead text-gray-800 mb-5">Página no encontrada :(</p>
+                <p class="text-gray-500 mb-0">Parece que esta página no existe o no está disponible en estos
+                    momentos...</p>
+                <a th:href="@{'/'+${rol}}" th:text="'&larr;' +${texto}"></a>
+            </div>
+            <div th:if="${etype==500}" class="text-center">
+                <div class="error mx-auto" data-text="500">500</div>
+                <p class="lead text-gray-800 mb-5">Error interno del servidor :(</p>
+                <p class="text-gray-500 mb-0">No se pudo realizar la solicitud, intenta volver a la página anterior. No dudes en contactar con servicio técnico.</p>
+                <a th:href="@{'/'+${rol}}" th:text="'&larr;' +${texto}"></a>
+            </div>
+            <div th:if="${etype!=404&&etype!=500&&etype!=403}" class="text-center">
+                <div class="error mx-auto" data-text="Ups!">Ups!</div>
+                <p class="lead text-gray-800 mb-5">Error inesperado :(</p>
+                <p class="text-gray-500 mb-0">No se pudo realizar la solicitud, intenta volver a la página anterior. No dudes en contactar con servicio técnico.</p>
+                <a th:href="@{'/'+${rol}}" th:text="'&larr;' +${texto}"></a>
+            </div>
+        </div>
+    </body>
+</html>

@@ -11,7 +11,7 @@ $(function() {
     //$("#id\\.numerodocumento").val('').prop("disabled",true);
     $("body").on('change','#confirmado1', function () {
         console.log(this.checked);
-        $("#id\\.numerodocumento").prop("disabled",!this.checked);
+        $("#id\\.numerodocumento").val('').prop("disabled",!this.checked);
         $(".inputFile").prop("hidden",!this.checked);
     });
 

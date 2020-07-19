@@ -146,6 +146,11 @@ public class ProductosDisponiblesController {
             inventarioRepository.save(venta.getInventario());
             venta.setVendedor((Usuarios) session.getAttribute("usuario"));
             ventasRepository.save(venta);
+            try {
+                customMailService.sendSaleConfirmation(venta);
+            } catch (MessagingException | IOException  e) {
+                e.printStackTrace();
+            }
             attributes.addFlashAttribute("msg", "Venta de producto realizada");
             return "redirect:/gestor/productosDisponibles";
         }

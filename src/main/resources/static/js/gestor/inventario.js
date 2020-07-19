@@ -1,10 +1,10 @@
 var contextPath = window.location.href;
 $(document).ready(function () {
-    $("#addForm #invAdd").attr("disabled",false);
-    $("#addForm #conDia").attr("disabled",false);
-    $("#addForm #linea").attr("disabled",false);
-    $("#addForm #codAdquisicion").attr("disabled",false);
-    $( "input[hidden='hidden']" ).removeAttr("required");
+    $("#addForm #invAdd").attr("disabled", false);
+    $("#addForm #conDia").attr("disabled", false);
+    $("#addForm #linea").attr("disabled", false);
+    $("#addForm #codAdquisicion").attr("disabled", false);
+    $("input[hidden='hidden']").removeAttr("required");
 });
 $("#addForm #linea").on('change', function () {
     let prodList = $("#addForm #productos");
@@ -34,7 +34,6 @@ $("#addForm #linea").on('change', function () {
             alert("Ocurrió un error");
         })
     }
-
 });
 
 $("#addForm #codAdquisicion").on('change', function () {
@@ -56,9 +55,12 @@ $("#addForm #comunidades").on('change', function () {
     if (cond && !$("#addForm #artesanoConsignacion").prop("hidden")) {
         updateArtesanos(option);
     }
-
-
 });
+$("#addForm #costotejedor").on('change', function () {
+    let tej = (parseFloat(this.value) + 0.01).toFixed(2);
+    $("#addForm #costomosqoy").attr("min",tej);
+});
+
 
 function updateArtesanos(option) {
     let artList = $("#addForm #artesanos");
@@ -86,10 +88,7 @@ function updateArtesanos(option) {
             alert("Ocurrió un error");
         })
     }
-
-
 }
-
 
 $("#addForm #conDia").on('change', function () {
 
@@ -110,16 +109,16 @@ $("#addForm #fechames").on('change', function () {
     let fechasig = new Date(fecha[0], fecha[1], 1);
     setminfecha(fechasig);
 });
-$("#addForm").on('submit',function () {
+$("#addForm").on('submit', function () {
     if ($('#confirmModal').hasClass("show")) {
         return true;
-    }else{
+    } else {
         $('#confirmModal').modal({show: true, backdrop: 'static', keyboard: false});
         return false;
     }
 });
 
-$("#confirmbtn").on('click',function () {
+$("#confirmbtn").on('click', function () {
     $("#addForm").submit();
 });
 
@@ -127,7 +126,7 @@ $(document).on("click", ".add-inventario", function () {
     $("#addModal #cant").val('1');
     $("#addModal #msgc").text('');
     $("#addModal #codinvAdd").val($(this).data('id'));
-    $("#addModal #addTitle").text("Añadir "+$(this).data('id'));
+    $("#addModal #addTitle").text("Añadir " + $(this).data('id'));
 
 });
 
@@ -147,12 +146,10 @@ $(document).on("click", ".edit-inventario", function () {
 
     $("#editModal #codAdquisicion").val('');
 
-
     $("#editModal .errorInv").text('');
     $("#editModal .modal-title").text("Editar " + $(this).data('id'));
     $("#editModal #codigoinventario").val($(this).data('id'));
     $("#editModal #vencimientoConsignacion").prop("hidden", true);
-
 
     $.ajax({
         method: "GET", url: contextPath + "/getInv?id=" + $(this).data('id')
@@ -202,10 +199,32 @@ $(document).ready(function () {
         $('#editModal').modal({show: true, backdrop: 'static', keyboard: false});
     }
 });
-
 $(document).on("click", ".delete-inventario", function () {
-
     $("#deleteModal .modal-title").text("Borrar " + $(this).data('id'));
 
+    let id = $(this).data('id');
+    $("#deleteModal #buttonDelete").prop("hidden",true).prop("disabled",true);
+    $("#deleteModal #deleteModalBody #deleteModalBodyP").text("");
+    $("#deleteModal #deleteModalBody #tableModal").prop("hidden",true);
+/*
+    $.ajax({method:"GET", url:contextPath+"/has?id="+id
+    }).done(function(data){
+        if (data==null || data.length === 0){
+            $("#deleteModal #codigo").val(id);
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar esta Categoría? Esta acción no se puede deshacer.")
+            $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
+        }
+        else {
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("La categoría no se puede borrar, esta asociada a lo siguiente:")
+            $("#deleteModal #deleteModalBody #tableModal").prop("hidden",false);
+            $("#deleteModal #buttonDelete").prop("disabled",true).prop("hidden",true);
+            let r ='';
+            for (let i=0,size=data.length; i<size; i++){
+                r+='<tr><td>'+data[i].codigo+'</td><td>'+data[i].producto+'</td><td>'+data[i].cantidad+'</td></tr>';
+            }
+            $("#deleteModal #tbody").html(r);
+        }
+    }).fail(function (err) {alert("Ocurrió un error");$('#deleteModal').modal({show: false});
+    })*/
     $("#deleteModal #codDelete").val($(this).data('id'));
 });
