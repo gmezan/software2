@@ -415,17 +415,44 @@
                         <h4 class="modal-title">Borrar Registro</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <div class="modal-body">
-                        <p>¿Seguro que desea borrar este registro del inventario? Esta acción no se puede deshacer.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <form method="get" th:action="@{/gestor/inventario/delete} ">
-                            <input id="codDelete" hidden name="codDelete">
+                    <form method="get" th:action="@{/gestor/inventario/delete}" th:object="${inventario}">
+                        <div id="deleteModalBody" class="modal-body">
+                            <input hidden type="text" class="form-control" th:field="*{codigoinventario}">
+                            <p id="deleteModalBodyP"></p>
+                            <table hidden class="table" id="tableModal1">
+                                <p hidden id="asig" class="text-center">Asignado a sedes</p>
+                                <thead>
+                                    <tr>
+                                        <th>Sede</th>
+                                        <th>Stock</th>
+                                        <th>Fecha de envío</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody1">
+        
+                                </tbody>
+                            </table>
+                            <table hidden class="table" id="tableModal2">
+                                <p hidden id="vent" class="text-center">Ventas</p>
+                                <thead>
+                                    <tr>
+                                        <th>#Documento</th>
+                                        <th>Fecha de Venta</th>
+                                        <th>Vendedor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody2">
+        
+                                </tbody>
+                            </table>
+        
+                        </div>
+                        <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-danger"><a
+                            <button hidden id="buttonDelete" type="submit" class="btn btn-danger"><a
                                     style="color:white;text-decoration:none">Borrar</a></button>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

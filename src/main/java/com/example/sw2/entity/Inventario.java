@@ -3,6 +3,7 @@ package com.example.sw2.entity;
 import com.example.sw2.config.Auditable;
 import com.example.sw2.constantes.CustomConstants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Entity
 @Table(name = "Inventario")
@@ -104,6 +106,29 @@ public class Inventario extends Auditable implements Serializable {
     @Column(name = "fecha_vencimiento_consignacion")
     private LocalDate fechavencimientoconsignacion;
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "inventario")
+    private List<Ventas> ventas;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.productoinventario")
+    private List<AsignadosSedes> asignadosSedes;
+
+    public List<Ventas> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Ventas> ventas) {
+        this.ventas = ventas;
+    }
+
+    public List<AsignadosSedes> getAsignadosSedes() {
+        return asignadosSedes;
+    }
+
+    public void setAsignadosSedes(List<AsignadosSedes> asignadosSedes) {
+        this.asignadosSedes = asignadosSedes;
+    }
 
     public Inventario() {
     }
