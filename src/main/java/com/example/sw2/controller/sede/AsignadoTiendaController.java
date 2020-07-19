@@ -144,6 +144,7 @@ public class AsignadoTiendaController {
                 if (aTienda.getStock()==venta.getCantidad()){
                     customMailService.sendStockAlert(aTienda.getAsignadosSedes());
                 }
+                customMailService.sendSaleConfirmation(venta);
             } catch (MessagingException | IOException  e) {
                 e.printStackTrace();
             }
