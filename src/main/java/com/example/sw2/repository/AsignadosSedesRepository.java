@@ -43,8 +43,8 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
 
     List<AsignadosSedes> findAsignadosSedesById_Gestor_idusuarios(int id);
 
-    @Procedure(name = "devol_sede_gestor")
-    void devol_sede_gestor(int cant_devol, int gestor, int sede, String codigo, int estado, Float precio);
+    @Procedure(name = "aceptar_devol_sede")
+    void aceptar_devol_sede(int cant_devol, int gestor, int sede, String codigo, int estado, Float precio);
 
     @Procedure(name = "rechazar_devol_sede")
     void rechazar_devol_sede(int cant_devol, int gestor, int sede, String codigo, int estado, Float precio);
