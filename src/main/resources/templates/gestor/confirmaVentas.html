@@ -224,17 +224,17 @@
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Borrar solicitud de Venta</h4>
+                <h4 class="modal-title">Cancelar solicitud de Venta</h4>
                 <button th:href="@{/gestor/confirmacion}" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <form method="post" th:action="@{/gestor/confirmacion/delete}" th:object="${venta}">
                 <div class="modal-body">
                     <input hidden type="text" class="form-control" th:field="*{idventas}">
-                    <p>¿Seguro que desea borrar esta venta? Esta acción no se puede deshacer y se perderán los datos registrados.</p>
+                    <p>¿Seguro que desea cancelar esta venta? Esta acción no se puede deshacer y se perderán los datos registrados.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Borrar</a></button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Volver</button>
+                    <button type="submit" class="btn btn-danger"><a style="color:white;text-decoration:none">Aceptar</a></button>
                 </div>
             </form>
         </div>
