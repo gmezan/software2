@@ -248,14 +248,17 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
 
-                    <form method="get" th:object="${venta}">
-                        <ul>
-                            <li hidden id="id1"></li>
-                            <span></span></br>
-                            <b>Nota de crédito: </b><li id="nota" th:text="${venta.nota}"></li>
-                            <b>Descripción del problema: </b><li id="mensaje" th:text="${venta.mensaje}"></li>
-                        </ul>
+                    <form >
+                        <div class="modal-body">
+                            <div class="form-group col ">
+                                <b>Nota de crédito: </b><br>
+                                <span id="nota" ></span> <br>
+                                <b>Descripción del problema:</b><br>
+                                <span id="mensaje"></span>
+                            </div>
+                        </div>
                     </form>
+
                 </div>
             </div>
         </div>
