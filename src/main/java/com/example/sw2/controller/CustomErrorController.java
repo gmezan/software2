@@ -14,7 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class CustomErrorController{/* implements ErrorController {
+public class CustomErrorController implements ErrorController {
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request, Authentication auth, Model m) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
@@ -56,5 +56,5 @@ public class CustomErrorController{/* implements ErrorController {
     @Override
     public String getErrorPath() {
         return "/error";
-    }*/
+    }
 }
