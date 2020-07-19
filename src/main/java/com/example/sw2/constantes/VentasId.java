@@ -59,6 +59,6 @@ public class VentasId implements Serializable {
     }
 
     public void setNumerodocumento(String numerodocumento) {
-        this.numerodocumento = numerodocumento;
+        this.numerodocumento = numerodocumento.replace(",","").trim();
     }
 }
