@@ -184,7 +184,6 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
         }
     }
 
-
     private void setcolumnwidths(Sheet sheet, Integer orderBy){
         switch (orderBy){
             case 1:
