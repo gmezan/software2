@@ -224,7 +224,7 @@ public class SedeController {
                 return "redirect:/sede/productosConfirmados";
             }
 
-            if (asignacionTiendas.getStock() <= 0) {
+            if (asignacionTiendas.getStock() < 0) {
                 bindingResult.rejectValue("stock", "error.user", "Ingrese una cantidad valida");
             } else {
                 if (asignacionTiendas.getStock() > asignadosSedes.getCantidadactual()) {
@@ -233,6 +233,7 @@ public class SedeController {
             }
 
             if (bindingResult.hasErrors() ) {
+                model.addAttribute("cantAsign", asignadosSedes.getCantidadactual());
                 Usuarios sede = (Usuarios) session.getAttribute("usuario");
                 model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
                 model.addAttribute("listaTiendas", tiendaRepository.findAll());
@@ -314,15 +315,19 @@ public class SedeController {
 
         if (asignadosSedesOptional.isPresent()) {
 
-            AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
-                    id.getProductoinventario(), 3, id.getPrecioventa());
-            asignadosSedesRepository.deleteById(id);
-            AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
-            asignadosSedes.setId(idNew);
-            asignadosSedes.setMensaje(mensaje);
-            attr.addFlashAttribute("msgExito", "Se ha reportado el problema correctamente");
+            if (mensaje==null || mensaje.isEmpty()){
+                attr.addFlashAttribute("msgError", "Debe ingresar un mensaje");
+            }else{
+                AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
+                        id.getProductoinventario(), 3, id.getPrecioventa());
+                asignadosSedesRepository.deleteById(id);
+                AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
+                asignadosSedes.setId(idNew);
+                asignadosSedes.setMensaje(mensaje);
+                asignadosSedesRepository.save(asignadosSedes);
+                attr.addFlashAttribute("msgExito", "Se ha reportado el problema correctamente");
+            }
 
-            asignadosSedesRepository.save(asignadosSedes);
         }
         return "redirect:/sede/productosPorConfirmar";
     }
