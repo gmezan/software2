@@ -93,16 +93,12 @@ public abstract class ReportesUtils {
                 //Lo único que va hardoceado son los números 9,10 y 12 que pertenecen a las columnas que se van a sumar
 
                 String strFormula1= "SUM(E"+(BEGINNING_ROW+2)+":E"+(fila+1)+")";
-                String strFormula2= "SUM(D"+(BEGINNING_ROW+2)+":D"+(fila+1)+")";
-                String strFormula3= "SUM(F"+(BEGINNING_ROW+2)+":F"+(fila+1)+")";
+                String strFormula2= "SUM(F"+(BEGINNING_ROW+2)+":F"+(fila+1)+")";
 
                 sheet.createRow(fila+3).createCell(3);
-                createCell(sheet.createRow(fila+3),2,"SUMA",formulaStyle);
-                sheet.getRow(fila+3).createCell(3).setCellFormula(strFormula1);
+                createCell(sheet.createRow(fila+3),3,"SUMA",formulaStyle);
                 sheet.getRow(fila+3).createCell(4).setCellFormula(strFormula1);
-                sheet.getRow(fila+3).createCell(5).setCellFormula(strFormula3);
-
-                sheet.getRow(fila+3).getCell(3).setCellStyle(formulaStyle);
+                sheet.getRow(fila+3).createCell(5).setCellFormula(strFormula2);
                 sheet.getRow(fila+3).getCell(4).setCellStyle(formulaStyle);
                 sheet.getRow(fila+3).getCell(5).setCellStyle(formulaStyle);
 
