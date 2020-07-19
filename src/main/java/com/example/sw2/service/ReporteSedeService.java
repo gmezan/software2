@@ -183,33 +183,4 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
             }
         }
     }
-
-
-    private void setcolumnwidths(Sheet sheet, Integer orderBy){
-        switch (orderBy){
-            case 1:
-                //Total
-                break;
-            case 2:
-                //Articulo
-                break;
-            case 3:
-                //Comunidad
-                sheet.setColumnWidth(1, 6000);
-                sheet.setColumnWidth(2, 6000);
-                sheet.setColumnWidth(3, 6000);
-                sheet.setColumnWidth(4, 6000);
-                sheet.setColumnWidth(5, 6000);
-                break;
-            case 4:
-                //Cliente
-                sheet.setColumnWidth(1, 5500);
-                sheet.setColumnWidth(2, 5500);
-                sheet.setColumnWidth(3, 5500);
-                sheet.setColumnWidth(4, 5500);
-                sheet.setColumnWidth(5, 5500);
-                break;
-        }
-    }
-
 }
