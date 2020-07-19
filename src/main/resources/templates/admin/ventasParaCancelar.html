@@ -53,7 +53,7 @@
                                            cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
+                                                <th>-</th>
                                                 <th>Nombre del cliente</th>
                                                 <th>Tipo de documento</th>
                                                 <th>N° de documento</th>
@@ -64,12 +64,12 @@
                                                 <th>Nombre del producto</th>
                                                 <th>Cantidad vendida</th>
                                                 <th>Precio total</th>
-                                                <th>Confirmar / Cancelar / Datos Gestor</th>
+                                                <th>Confirmar / Cancelar</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>#</th>
+                                                <th>-</th>
                                                 <th>Nombre del cliente</th>
                                                 <th>Tipo de documento</th>
                                                 <th>N° de documento</th>
@@ -80,7 +80,7 @@
                                                 <th>Nombre del producto</th>
                                                 <th>Cantidad vendida</th>
                                                 <th>Precio total</th>
-                                                <th>Confirmar / Cancelar / Datos Gestor</th>
+                                                <th>Confirmar / Cancelar</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -108,8 +108,8 @@
                                                     <button th:attr="data-id3=${item.idventas}"
                                                             data-toggle="modal" data-target="#rechazarModal"
                                                             class="rechazar btn btn-datatable btn-icon btn-warning"><i class="fas fa-times"></i></button>
-                                                    <button th:attr="data-id=${item.cancelar}" data-toggle="modal" data-target="#infoModal"
-                                                            class="info-Gestor btn btn-datatable btn-icon btn-danger"><i class="fas fa-phone"></i></button>
+                                                    <!--button th:attr="data-id=${item.cancelar}" data-toggle="modal" data-target="#infoModal"
+                                                            class="info-Gestor btn btn-datatable btn-icon btn-danger"><i class="fas fa-phone"></i></button-->
                                                 </td>
                                             </tr>
 
