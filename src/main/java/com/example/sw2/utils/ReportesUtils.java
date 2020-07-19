@@ -60,6 +60,16 @@ public abstract class ReportesUtils {
                     createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas());
                     createCell(row,i,"",style).setCellValue(dataRow.getCantidadvendidos());
                 }
+
+                String strFormula1= "SUM(E"+(BEGINNING_ROW+2)+":E"+(fila+1)+")";
+                String strFormula2= "SUM(F"+(BEGINNING_ROW+2)+":F"+(fila+1)+")";
+                sheet.createRow(fila+2).createCell(3);
+                row = sheet.createRow(fila+2);
+                createCell(row,3,"SUMA",formulaStyle);
+                row.createCell(4).setCellFormula(strFormula1);
+                row.createCell(5).setCellFormula(strFormula2);
+                row.getCell(4).setCellStyle(formulaStyle);
+                row.getCell(5).setCellStyle(formulaStyle);
             }else
             if (list.get(0) instanceof ReportesComunidadDto){
                 //Comunidad
@@ -122,6 +132,16 @@ public abstract class ReportesUtils {
                     createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas());
                     createCell(row,i,"",style).setCellValue(dataRow.getCantidadvendidos());
                 }
+
+                String strFormula1= "SUM(F"+(BEGINNING_ROW+2)+":F"+(fila+1)+")";
+                String strFormula2= "SUM(G"+(BEGINNING_ROW+2)+":G"+(fila+1)+")";
+                sheet.createRow(fila+2).createCell(4);
+                row = sheet.createRow(fila+2);
+                createCell(row,4,"SUMA",formulaStyle);
+                row.createCell(5).setCellFormula(strFormula1);
+                row.createCell(6).setCellFormula(strFormula2);
+                row.getCell(5).setCellStyle(formulaStyle);
+                row.getCell(6).setCellStyle(formulaStyle);
             } else
             if (list.get(0) instanceof ReportesTotalDto){
                 //Total
@@ -130,6 +150,7 @@ public abstract class ReportesUtils {
                     row = sheet.createRow(++fila);
                     style = ((fila%2)==0)?style1:style2;
                     createCell(row,i++,CustomConstants.getTiposDocumento().get(dataRow.getTipodocumento()),style);
+                    System.out.println("Numero de tipo de doc" + dataRow.getTipodocumento());
                     createCell(row,i++,dataRow.getNumerodocumento(),style);
                     createCell(row,i++,CustomConstants.getMediosDePago().get(dataRow.getMediopago()),style);
                     createCell(row,i++,dataRow.getProductoinventario(),style);
