@@ -146,9 +146,9 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
     }
 
     private void llenarReporteCliente(Workbook workbook, Reportes reportes,Integer idusuario){
-        String[] columns = {"Nombre","DNI o RUC","Producto más comprado","Suma Ventas","Cantidad Productos Vendidos"};
+        String[] columns = {"Nombre","RUC","DNI","Producto más comprado","Suma Ventas","Cantidad Productos Vendidos"};
         Sheet sheet= workbook.createSheet("Reporte de clientes " + LocalDate.now().toString());
-        setColumnWidths(sheet,reportes.getOrderBy());
+        setColumnWidths(sheet,5);
         String titulo = "";
         List<ReportesClienteDto> reportesClientes;
         switch (reportes.getType()){
