@@ -223,7 +223,7 @@ public class SedeController {
                 return "redirect:/sede/productosConfirmados";
             }
 
-            if (asignacionTiendas.getStock() < 0) {
+            if (asignacionTiendas.getStock() <= 0) {
                 bindingResult.rejectValue("stock", "error.user", "Ingrese una cantidad valida");
             } else {
                 if (asignacionTiendas.getStock() > asignadosSedes.getCantidadactual()) {
@@ -467,5 +467,30 @@ public class SedeController {
         }},
                 HttpStatus.OK);
     }
+
+    @ResponseBody
+    @PostMapping(value = "/productosConfirmados/post", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, String>> getAsignTiendaPost(@RequestParam(value = "gestor") Integer gestor,
+                                                                    @RequestParam(value = "sede") Integer sede,
+                                                                    @RequestParam(value = "productoinventario") String inv,
+                                                                    @RequestParam(value = "estadoasignacion") Integer estadoasignacion,
+                                                                    @RequestParam(value = "precioventa") Float precioventa) {
+
+        AsignadosSedesId asignadosSedesId = new AsignadosSedesId(gestor,sede,inv,estadoasignacion,precioventa);
+        return new ResponseEntity<>(new HashMap<String, String>() {{
+            asignadosSedesId.setProductoinventario(inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
+            asignadosSedesRepository.findAll();
+            AsignadosSedes asignadosSedes = asignadosSedesRepository.findById(asignadosSedesId).orElse(null);
+            put("idgestor", Integer.toString(asignadosSedesId.getGestor().getIdusuarios()));
+            put("idsede", Integer.toString(asignadosSedesId.getSede().getIdusuarios()));
+            put("idproductoinv", asignadosSedesId.getProductoinventario().getCodigoinventario());
+            put("idestadoasign", Integer.toString(asignadosSedesId.getEstadoasignacion()));
+            put("idprecioventa", Float.toString(asignadosSedesId.getPrecioventa()));
+            put("cantAsign", asignadosSedes != null ? Integer.toString(asignadosSedes.getCantidadactual()) : null);
+
+        }},
+                HttpStatus.OK);
+    }
+
 }
     
