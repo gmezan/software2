@@ -2,20 +2,16 @@ $(document).ready(function () {
     let tableContainer = $(".table-responsive");
     let fakeContainer = $(".fakescroll");
     updatefakeScroll();
-
     fakeContainer.scroll(function () {
         tableContainer.scrollLeft(fakeContainer.scrollLeft());
-
     });
     tableContainer.scroll(function () {
         fakeContainer.scrollLeft(tableContainer.scrollLeft());
-
     });
 
     let tablawrapper = $("#dataTable_wrapper");
     tablawrapper.children().eq(0).appendTo("#newFilterLength");
     tablawrapper.children().eq(1).appendTo("#newtablefoot");
-
     $("#dataTable_filter label input").on('input', function () {
         updatefakeScroll();
     });
@@ -23,7 +19,6 @@ $(document).ready(function () {
         updatefakeScroll();
     });
     refreshimg();
-
     $(document).on("click", ".show-foto", function () {
         let showfoto = $("#showFoto #fotoinv");
         showfoto.attr("src", "");
@@ -40,10 +35,10 @@ $(document).ready(function () {
         let url = $(id).attr('src');
         showfoto.attr("src", url);
     });
-    $(document).on("mouseover",function () {
+    $(document).on("mouseover", function () {
         refreshimg();
     });
-    $(document).on("mouseout",function () {
+    $(document).on("mouseout", function () {
         refreshimg();
     });
 });
@@ -58,21 +53,19 @@ function updatefakeScroll() {
     let tableWidth = table.width();
     fakeDiv.width(tableWidth);
 }
-
 function refreshimg() {
     $('.show-fotoU').removeAttr('disabled');
     $('.show-foto').removeAttr('disabled');
     $('.show-foto').parent().addClass("tdfoto");
     $('.show-fotoU').parent().addClass("tdfoto");
-
     let imgTabla = $('.table-responsive img');
     imgTabla.removeClass();
-    imgTabla.each(function(){
-        if($(this).attr('src')=='https://storage-service.mosqoy-sw2.dns-cloud.net/profile/defaultProfilePicture.jpg'){
-            $(this).parent().prop('disabled',true);
-        };
+    imgTabla.each(function () {
+        if ($(this).attr('src') == 'https://storage-service.mosqoy-sw2.dns-cloud.net/profile/defaultProfilePicture.jpg') {
+            $(this).parent().prop('disabled', true);
+        }
+        ;
     })
-
     imgTabla.addClass("fototabla");
     imgTabla.removeAttr('height');
     imgTabla.removeAttr('width');
