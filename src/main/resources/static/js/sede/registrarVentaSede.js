@@ -36,7 +36,31 @@ $(function() {
     $("#registrarVentaModal  #rucdni").val('');
     $("#registrarVentaModal  #cantidad").val('');
 
+    let url = contextPath + "/postV";
 
+    let data = {
+        idgestor: parseInt($(this).data('id12')),
+        vendedor: parseInt($(this).data('id22')),
+        inventario: $(this).data('id32'),
+        idestadoasign: parseInt($(this).data('id42')),
+        precioventa: parseFloat($(this).data('id52'))
+    };
+
+    console.log(data);
+    $.ajax({
+        method:"POST",
+        data: data,
+        url:url
+    }).done(function(registrarventa){
+        if (registrarventa!=null){
+            $("#registrarVentaModal #cantAsignV").text(registrarventa.cantAsignV);
+        }
+        $("#registrarVentaModal .modal-footer button").attr("disabled",false);
+    }).fail(function (err) {
+        console.log(err);
+        $('#registrarVentaModal').modal('hide');
+        alert("Ocurrió un error");
+    })
 
 });
 
