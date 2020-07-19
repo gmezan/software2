@@ -67,7 +67,8 @@ public class Reportes {
 
     public boolean validateSede(){
         boolean validate = true;
-        if (orderBy<1 || orderBy>4) validate=false;
+        if (orderBy<1 || orderBy>5) validate=false;
+        if (orderBy==2) validate=false;
         return validate && validateGeneral();
     }
 
