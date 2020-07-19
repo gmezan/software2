@@ -45,6 +45,7 @@ $(document).on( "click", ".asign-A-Tienda", function () {
 $(document).ready(function() {
     if ($("#msgAsign").text()==="ERROR"){
         $("#AsignarProductoModal").modal({show:true});
+        $("#AsignarProductoModal .modal-footer button").attr("disabled",false);
     }
 });
 
