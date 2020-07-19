@@ -207,7 +207,7 @@
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text text-body">S/.</div>
                                                         </div>
-                                                        <input th:field="*{costomosqoy}" type="number" min="0.01"
+                                                        <input th:field="*{costomosqoy}" type="number" th:min="${inventario.costotejedor+0.01}"
                                                                step='0.01'
                                                                class="form-control" required
                                                                placeholder="000.00">
