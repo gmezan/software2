@@ -234,7 +234,7 @@
                             <p>Se enviará la cancelación al administrador para su confirmación.</p>
                             <div class="form-group">
                                 <label  class="col-form-label">Ingrese nota de crédito:</label>
-                                <input type="number" class="form-control" th:value="*{nota}">
+                                <input type="number" class="form-control" th:field="*{nota}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('nota')}" th:errors="*{nota}">Error</div>
                             </div>
                             <div class="form-group">
