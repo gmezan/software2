@@ -69,7 +69,7 @@ public class Ventas extends Auditable implements Serializable {
     //@Positive
     private Integer nota;
     @JsonIgnore
-    private String mensaje;
+    private String mensaje="";
     private Integer cancelar;
 
     private String media;
