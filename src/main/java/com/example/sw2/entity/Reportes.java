@@ -1,6 +1,8 @@
 package com.example.sw2.entity;
 
 
+import com.example.sw2.constantes.CustomConstants;
+
 import java.time.LocalDate;
 
 public class Reportes {
@@ -40,6 +42,19 @@ public class Reportes {
                 n+="de Ventas por Clientes";
                 break;
         }
+
+        switch (type){
+            case 1:
+                n+=" del año " + year;
+                break;
+            case 2:
+                n+=" del año " + year + " trimestre " + CustomConstants.getTrimestre().get(selected);
+                break;
+            case 3:
+                n+=" del año " + year + " mes " + CustomConstants.getMeses().get(selected);
+                break;
+        }
+
 
         return n+" "+ LocalDate.now().toString();
     }
