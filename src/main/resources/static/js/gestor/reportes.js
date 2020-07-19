@@ -36,7 +36,7 @@ $(function () {
         if((parseInt($ventaModal.find(" #fields1 #ordenar").children("option:selected").val())===0)
             || (parseInt($ventaModal.find(" #fields1 #tipo").children("option:selected").val())===0)
                 || (parseInt($ventaModal.find(" #fields2 #years").children("option:selected").val())===0)){
-            alert("Debe seleccionar un tipo de reporte");
+            alert("Debe seleccionar todos los campos para generar un reporte");
             return false;
         }
     });

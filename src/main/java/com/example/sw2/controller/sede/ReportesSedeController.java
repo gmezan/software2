@@ -47,6 +47,9 @@ public class ReportesSedeController {
                                                           HttpSession session) throws Exception{
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
+        if(orderBy>1){
+            orderBy += 1;
+        }
         Reportes reportes = new Reportes(orderBy,anho,type,Select);
         HttpHeaders headers = new HttpHeaders();
         ByteArrayInputStream stream = new  ByteArrayInputStream(new byte[]{});
