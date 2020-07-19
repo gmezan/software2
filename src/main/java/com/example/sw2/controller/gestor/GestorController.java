@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -35,8 +36,10 @@ public class GestorController {
 
     @GetMapping("/perfil")
     public String perfilGestor(@ModelAttribute("gestor") Usuarios usuarios,
-                               Model model) {
-        model.addAttribute("lista", usuariosRepository.findAll());
+                               Model model,
+                               HttpSession session) {
+        Usuarios gestor = (Usuarios) session.getAttribute("usuario");
+        model.addAttribute("lista", usuariosRepository.findById(gestor.getIdusuarios()));
         return "gestor/perfilGestor";
     }
 

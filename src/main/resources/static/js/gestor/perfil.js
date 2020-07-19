@@ -1,8 +1,6 @@
-var contextPath  = window.location.href;
+const contextPath  = window.location.href;
 
 $(document).on("click",".editar-Gestor", function(){
-    $("#formModal input").val('');
-    //$("#formModal  #idusuarios").val($(this).data('idusuarios'));
     $.ajax({
         method:"GET", url:contextPath + "/get?id=" + $(this).data('id')
     }).done(function(usu){
@@ -15,13 +13,13 @@ $(document).on("click",".editar-Gestor", function(){
         }
     }).fail(function (err) {
         console.log(err);
-        $('#formModal').modal('hide');
+        $('#formModal').modal({show: false});
         alert("Ocurrió un error");
     })
 });
 
 $(document).ready(function() {
     if ($("#msgGestor").text()==="ERROR"){
-        $('#formModal').modal('show');
+        $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
     }
 });
