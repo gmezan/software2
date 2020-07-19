@@ -102,6 +102,10 @@ public abstract class ReportesUtils {
                 sheet.getRow(fila+3).createCell(4).setCellFormula(strFormula1);
                 sheet.getRow(fila+3).createCell(5).setCellFormula(strFormula3);
 
+                sheet.getRow(fila+3).getCell(3).setCellStyle(formulaStyle);
+                sheet.getRow(fila+3).getCell(4).setCellStyle(formulaStyle);
+                sheet.getRow(fila+3).getCell(5).setCellStyle(formulaStyle);
+
 
             }else
             if (list.get(0) instanceof ReportesArticuloDto){
@@ -123,6 +127,8 @@ public abstract class ReportesUtils {
                 createCell(sheet.createRow(fila+3),3,"SUMA",formulaStyle);
                 sheet.getRow(fila+3).createCell(4).setCellFormula(strFormula1);
                 sheet.getRow(fila+3).createCell(5).setCellFormula(strFormula2);
+                sheet.getRow(fila+3).getCell(4).setCellStyle(formulaStyle);
+                sheet.getRow(fila+3).getCell(5).setCellStyle(formulaStyle);
 
             }else
             if (list.get(0) instanceof ReportesSedesDto){
