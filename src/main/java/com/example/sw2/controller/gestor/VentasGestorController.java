@@ -120,29 +120,45 @@ public class VentasGestorController {
     }
 
     @GetMapping("/cancelar")
-    public String cancelarVenta(@RequestParam(value = "nota") int nota,
-                                @RequestParam(value = "mensaje") String mensaje,
-                                @RequestParam("id1") String id1,
-                                @RequestParam("id2") int id2,
-                                RedirectAttributes attr) {
+    public String cancelarVenta(@ModelAttribute("venta") @Valid Ventas ventas,
+                                BindingResult bindingResult,
+                                Model model,
+                                //@RequestParam(value = "nota") int nota,
+                                //@RequestParam(value = "mensaje") String mensaje,
+                                //@RequestParam("id1") String id1,
+                                //@RequestParam("id2") int id2,
+                                RedirectAttributes attr,
+                                HttpSession session) {
 
-        Optional<Ventas> V = ventasRepository.findById(new VentasId(id2, id1));
-
-        if (V.isPresent()) {
-            Ventas ventas = V.get();
-
-            int idgestor = ventas.getVendedor().getIdusuarios();
-            ventas.setCancelar(idgestor);
-            Usuarios idadmin = usuariosRepository.obtenerAdmin();
-            ventas.setVendedor(idadmin);
-
-            ventas.setNota(nota);
-            ventas.setMensaje(mensaje);
-            attr.addFlashAttribute("msg", "Se ha reportado la cancelación de la venta al administrador");
-
-            ventasRepository.save(ventas);
+        if (ventas.getMensaje().isEmpty()) {
+            bindingResult.rejectValue("mensaje", "error.user", "Debe ingresar el problema por el cual se quiere anular la venta.");
         }
-        return "redirect:/gestor/venta";
+
+        Usuarios gestor = (Usuarios) session.getAttribute("usuario");
+
+        if (bindingResult.hasFieldErrors("rucdni") || bindingResult.hasFieldErrors("nombrecliente")) {
+            model.addAttribute("lista", ventasRepository.buscarPorGestor(gestor.getIdusuarios()));
+            model.addAttribute("msgError", "ERROR");
+            return "gestor/ventas";
+        } else {
+            Optional<Ventas> V = ventasRepository.findById(ventas.getIdventas());
+
+            if (V.isPresent()) {
+                Ventas ven = V.get();
+
+                int idgestor = ven.getVendedor().getIdusuarios();
+                ven.setCancelar(idgestor);
+                Usuarios idadmin = usuariosRepository.obtenerAdmin();
+                ven.setVendedor(idadmin);
+
+                ven.setNota(ventas.getNota());
+                ven.setMensaje(ventas.getMensaje());
+                attr.addFlashAttribute("msg", "Se ha reportado la cancelación de la venta al administrador");
+
+                ventasRepository.save(ventas);
+            }
+            return "redirect:/gestor/venta";
+        }
     }
 
 
@@ -152,6 +168,7 @@ public class VentasGestorController {
     public ResponseEntity<Optional<Ventas>> getVen(@RequestParam(value = "id") int id) {
         return new ResponseEntity<>(ventasRepository.findById(id), HttpStatus.OK);
     }
+
 
     /*
 

@@ -66,6 +66,7 @@ public class Ventas extends Auditable implements Serializable {
     @Digits(integer=10, fraction=2, message = "El precio debe tener 2 decimales y 10 dígitos como máximo")
     private BigDecimal precioventa;
 
+    //@Positive
     private Integer nota;
     @JsonIgnore
     private String mensaje;
