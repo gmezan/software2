@@ -154,12 +154,15 @@ public class ReporteSedeService extends ReportesUtils implements IReporteSedeSer
         switch (reportes.getType()){
             case 1:
                 reportesClientes = ventasRepository.obtenerReporteSedeAnualCliente(reportes.getYear(),idusuario);
+                titulo = "Reporte total por cliente del año " + reportes.getYear();
                 break;
             case 2:
                 reportesClientes = ventasRepository.obtenerReporteSedeTrimestralCliente(reportes.getSelected(),reportes.getYear(),idusuario);
+                titulo = "Reporte total por cliente del año " + reportes.getYear()+" trimestre " + CustomConstants.getTrimestre().get(reportes.getSelected());
                 break;
             case 3:
                 reportesClientes = ventasRepository.obtenerReporteSedeMensualCliente(reportes.getSelected(),reportes.getYear(),idusuario);
+                titulo = "Reporte total por cliente del año " + reportes.getYear()+" mes " + CustomConstants.getMeses().get(reportes.getSelected());
                 break;
             default:
                 reportesClientes = new ArrayList<>();
