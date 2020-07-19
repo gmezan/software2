@@ -239,7 +239,7 @@
                             </div>
                             <div class="form-group">
                                 <label  class="col-form-label">Descripción del problema:</label>
-                                <input type="text" class="form-control" th:value="*{mensaje}">
+                                <input type="text" class="form-control" th:field="*{mensaje}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('mensaje')}" th:errors="*{mensaje}">Error</div>
                             </div>
                         </div>
