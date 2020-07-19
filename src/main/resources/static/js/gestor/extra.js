@@ -40,16 +40,12 @@ $(document).ready(function () {
         let url = $(id).attr('src');
         showfoto.attr("src", url);
     });
-    $(document).on("mouseover", "ul.pagination", function () {
+    $(document).on("mouseover",function () {
         refreshimg();
     });
-    $(document).on("mouseout", "ul.pagination", function () {
+    $(document).on("mouseout",function () {
         refreshimg();
     });
-    /*$("img").on("error", function() {
-        $(this).parent().attr("disabled");
-        console.log(this);
-    });*/
 });
 
 $(window).resize(function () {
@@ -68,8 +64,15 @@ function refreshimg() {
     $('.show-foto').removeAttr('disabled');
     $('.show-foto').parent().addClass("tdfoto");
     $('.show-fotoU').parent().addClass("tdfoto");
+
     let imgTabla = $('.table-responsive img');
     imgTabla.removeClass();
+    imgTabla.each(function(){
+        if($(this).attr('src')=='https://storage-service.mosqoy-sw2.dns-cloud.net/profile/defaultProfilePicture.jpg'){
+            $(this).parent().prop('disabled',true);
+        };
+    })
+
     imgTabla.addClass("fototabla");
     imgTabla.removeAttr('height');
     imgTabla.removeAttr('width');
