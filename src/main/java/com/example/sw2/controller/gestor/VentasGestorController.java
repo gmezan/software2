@@ -134,9 +134,14 @@ public class VentasGestorController {
             bindingResult.rejectValue("mensaje", "error.user", "Debe ingresar el problema por el cual se quiere anular la venta.");
         }
 
+        if (!(ventas.getNota()!=null &&
+                (ventas.getNota()>10000) && (ventas.getNota()<999999999))){
+            bindingResult.rejectValue("nota", "error.user", "Debe ingresar una nota válida");
+        }
+
         Usuarios gestor = (Usuarios) session.getAttribute("usuario");
 
-        if (bindingResult.hasFieldErrors("rucdni") || bindingResult.hasFieldErrors("nombrecliente")) {
+        if (bindingResult.hasFieldErrors("mensaje") || bindingResult.hasFieldErrors("nota")) {
             model.addAttribute("lista", ventasRepository.buscarPorGestor(gestor.getIdusuarios()));
             model.addAttribute("msgError", "ERROR");
             return "gestor/ventas";
