@@ -2,6 +2,7 @@ var contextPath = window.location.href;
 
 $(document).on( "click", ".asign-A-Tienda", function () {
 
+    $("#AsignarProductoModal  input").val('');
 
     $("#AsignarProductoModal  #asignadosSedes\\.id\\.gestor").val($(this).data('id1'));
     $("#AsignarProductoModal  #asignadosSedes\\.id\\.sede").val($(this).data('id2'));
@@ -12,8 +13,33 @@ $(document).on( "click", ".asign-A-Tienda", function () {
     $("#AsignarProductoModal  #fechaasignacion").val('');
     $("#AsignarProductoModal  #stock").val('');
     $("#AsignarProductoModal  #tienda").val('');
+    $("#AsignarProductoModal  #cantAsign").text('');
+    let url = contextPath + "/post";
 
+    let data = {
+        gestor: parseInt($(this).data('id1')),
+        sede: parseInt($(this).data('id2')),
+        productoinventario: $(this).data('id3'),
+        estadoasignacion: parseInt($(this).data('id4')),
+        precioventa: parseFloat($(this).data('id5'))
+    };
 
+    console.log(data);
+    $.ajax({
+        method:"POST",
+        data: data,
+        url:url
+    }).done(function(asigntienda){
+        if (asigntienda!=null){
+            console.log(asigntienda);
+            $("#AsignarProductoModal  #cantAsign").text(asigntienda.cantAsign);
+
+        }
+    }).fail(function (err) {
+        console.log(err);
+        $('#AsignarProductoModal').modal('hide');
+        alert("Ocurrió un error");
+    })
 
 });
 
