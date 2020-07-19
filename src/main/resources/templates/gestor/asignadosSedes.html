@@ -63,7 +63,6 @@
                                                 <th>Stock</th>
                                                 <th>Precio de Venta</th>
                                                 <th>Estado</th>
-                                                <th>Cantidad vendida</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -74,7 +73,6 @@
                                                 <td th:text="${asig.stock}">20</td>
                                                 <td th:text="${asig.id.precioventa}">20</td>
                                                 <td th:text="${asig.id.getNombreEstado()}">Recibido por sede</td>
-                                                <td th:text="${asig.stock - asig.cantidadactual}">20</td>
                                             </tr>
                                         </tbody>
                                     </table>
