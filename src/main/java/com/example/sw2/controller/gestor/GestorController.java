@@ -2,10 +2,14 @@ package com.example.sw2.controller.gestor;
 
 import com.example.sw2.Dao.StorageServiceDao;
 import com.example.sw2.constantes.VentasId;
+import com.example.sw2.entity.Inventario;
 import com.example.sw2.entity.StorageServiceResponse;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.entity.Ventas;
+import com.example.sw2.repository.AsignadosSedesRepository;
+import com.example.sw2.repository.InventarioRepository;
 import com.example.sw2.repository.UsuariosRepository;
+import com.example.sw2.repository.VentasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,6 +37,13 @@ public class GestorController {
     UsuariosRepository usuariosRepository;
     @Autowired
     StorageServiceDao storageServiceDao;
+    @Autowired
+    InventarioRepository inventarioRepository;
+    @Autowired
+    VentasRepository ventasRepository;
+    @Autowired
+    AsignadosSedesRepository asignadosSedesRepository;
+
 
     @GetMapping(value = {"/", ""})
     public String init() {
@@ -46,7 +57,7 @@ public class GestorController {
                                HttpSession session) {
         newUser = (Usuarios) session.getAttribute("usuario");
         model.addAttribute("user", newUser);
-        model.addAttribute("cantSedes", usuariosRepository.cantUsuarios(3));
+        obtenercifras(model,newUser);
         return "gestor/perfilGestor";
     }
 
@@ -70,6 +81,7 @@ public class GestorController {
             newUser.setFoto(usuOld.getFoto());
             if (bindingResult.hasFieldErrors("nombre") || bindingResult.hasFieldErrors("apellido") || bindingResult.hasFieldErrors("telefono")) {
                 model.addAttribute("msgError", "ERROR");
+                obtenercifras(model,newUser);
                 return "gestor/perfilGestor";
             } else {
                 if (df){
@@ -80,6 +92,7 @@ public class GestorController {
                     if (!s2.isSuccess()) {
                         bindingResult.rejectValue("foto", "error.user", s2.getMsg());
                         model.addAttribute("msgError", "ERROR");
+                        obtenercifras(model,newUser);
                         return "gestor/perfilGestor";
                     }
                 }
@@ -98,6 +111,20 @@ public class GestorController {
             model.addAttribute("msgError", "Fatal error de edición");
             return "gestor/perfilGestor";
         }
+    }
+
+    public void obtenercifras(Model model,Usuarios newUser){
+        model.addAttribute("cantSedes", usuariosRepository.cantUsuarios(3));
+        model.addAttribute("cantInventario", inventarioRepository.cantInventario());
+        model.addAttribute("stock_total", inventarioRepository.stockTotal());
+        model.addAttribute("cantProdGestor", inventarioRepository.cantPoductosGestor());
+        model.addAttribute("stock_gestor", inventarioRepository.stockGestor());
+        model.addAttribute("cantProdSede", asignadosSedesRepository.cantProductosEnSede(newUser.getIdusuarios()));
+        model.addAttribute("stock_enSede", asignadosSedesRepository.stockProductosEnSede());
+        model.addAttribute("cantProdDevueltos", asignadosSedesRepository.cantProductosDevueltos(newUser.getIdusuarios()));
+        model.addAttribute("stock_devuelto", asignadosSedesRepository.stockProductosDevueltos(newUser.getIdusuarios()));
+        model.addAttribute("cantVentas", ventasRepository.cantVentas(newUser.getIdusuarios()));
+        model.addAttribute("cantVentasTotales", ventasRepository.cantVentasTotales(newUser.getRoles().getIdroles()));
     }
 
     //Web service

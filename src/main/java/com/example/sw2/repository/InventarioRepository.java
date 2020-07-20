@@ -26,4 +26,13 @@ public interface InventarioRepository extends JpaRepository<Inventario,String> {
 
     @Query(value = "SELECT COUNT(codigo_inventario) FROM mosqoy.Inventario", nativeQuery = true)
     String cantInventario();
+
+    @Query(value = "SELECT SUM(cantidad_total) FROM mosqoy.Inventario", nativeQuery = true)
+    String stockTotal();
+
+    @Query(value = "SELECT SUM(cantidad_gestor) FROM mosqoy.Inventario", nativeQuery = true)
+    String stockGestor();
+
+    @Query(value = "SELECT COUNT(codigo_inventario) FROM mosqoy.Inventario WHERE cantidad_gestor>0", nativeQuery = true)
+    String cantPoductosGestor();
 }
