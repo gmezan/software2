@@ -23,4 +23,7 @@ public interface InventarioRepository extends JpaRepository<Inventario,String> {
     //List<Inventario> findInventariosByFechavencimientoconsignacion_Month(int i);
 
     Optional<Inventario> findInventarioByCodigoinventarioAndCantidadgestorIsGreaterThan(String cod, int num);
+
+    @Query(value = "SELECT COUNT(codigo_inventario) FROM mosqoy.Inventario", nativeQuery = true)
+    String cantInventario();
 }

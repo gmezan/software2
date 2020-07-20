@@ -46,7 +46,7 @@ public class GestorController {
                                HttpSession session) {
         newUser = (Usuarios) session.getAttribute("usuario");
         model.addAttribute("user", newUser);
-        model.addAttribute("cantSedes", usuariosRepository.cantSedes());
+        model.addAttribute("cantSedes", usuariosRepository.cantUsuarios(3));
         return "gestor/perfilGestor";
     }
 
