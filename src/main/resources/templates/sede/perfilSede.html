@@ -104,27 +104,32 @@
                                         </div>
                                     </div-->
                                 </div>
-                                <div class="bg-light p-4 d-flex justify-content-end text-center">
+                                <div class="bg-light px-4 pt-4 pb-2 d-flex justify-content-between text-center">
+                                    
+                                        <li class="list-inline-item pt-3">
+                                            <h5 class="font-weight-bold mb-2 d-block" >Cifras Globales:</h5>
+                                        </li>
+                                    
                                     <ul class="list-inline mb-0">
-                                        <li class="list-inline-item">
-                                            <h5 class="font-weight-bold mb-0 d-block" th:text="${prod_porConfirmar}">241</h5>
-                                            <small class="text-muted"> <i class="fa fa-picture-o mr-1"></i>Productos</br>Por Confirmar</small>
+                                        <li class="list-inline-item mb-4">
+                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${prod_porConfirmar}">241</h5>
+                                            <small class="text-muted">Productos Por Confirmar</small>
                                         </li>
-                                        <li class="list-inline-item">
-                                            <h5 class="font-weight-bold mb-0 d-block" th:text="${prod_Confirmado}">84K</h5>
-                                            <small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Productos</br>Confirmados</small>
+                                        <li class="list-inline-item mb-4">
+                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${prod_Confirmado}">84K</h5>
+                                            <small class="text-muted"> Productos Confirmados</small>
                                         </li>
-                                        <li class="list-inline-item">
-                                            <h5 class="font-weight-bold mb-0 d-block" th:text="${stockProductos}">84K</h5>
-                                            <small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Stock Total</br>de Productos</small>
+                                        <li class="list-inline-item mb-4">
+                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${stockProductos}">84K</h5>
+                                            <small class="text-muted">Stock Total de Productos</small>
                                         </li>
-                                        <li class="list-inline-item">
-                                            <h5 class="font-weight-bold mb-0 d-block" th:text="${cantTiendas}">84K</h5>
-                                            <small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Tiendas</small>
+                                        <li class="list-inline-item mb-4">
+                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${cantTiendas}">84K</h5>
+                                            <small class="text-muted">Tiendas</small>
                                         </li>
-                                        <li class="list-inline-item">
-                                            <h5 class="font-weight-bold mb-0 d-block" th:text="${cantProd_enTienda}">84K</h5>
-                                            <small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Productos</br>en Tiendas</small>
+                                        <li class="list-inline-item mb-4">
+                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${cantProd_enTienda}">84K</h5>
+                                            <small class="text-muted"> Productos en Tiendas</small>
                                         </li>
                                     </ul>
                                 </div>

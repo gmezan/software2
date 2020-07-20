@@ -39,6 +39,8 @@ $(document).ready(function () {
         refreshimg();
     }).on("mouseout", function () {
         refreshimg();
+    }).on("click", function () {
+        refreshimg();
     });
 });
 $(window).resize(function () {
@@ -65,6 +67,7 @@ function refreshimg() {
     imgTabla.addClass("fototabla");
     imgTabla.removeAttr('height');
     imgTabla.removeAttr('width');
+    imgTabla.removeAttr('style');
     imgTabla.removeAttr('alt');
     imgTabla.attr('alt', "No disponible");
 }
