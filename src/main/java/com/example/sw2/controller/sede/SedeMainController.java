@@ -54,11 +54,7 @@ public class SedeMainController {
                                HttpSession session) {
         newUser = (Usuarios) session.getAttribute("usuario");
         model.addAttribute("user", newUser);
-        model.addAttribute("prod_porConfirmar", asignadosSedesRepository.cantProductosSegunEstado(estado_enviado,newUser.getIdusuarios()));
-        model.addAttribute("prod_Confirmado", asignadosSedesRepository.cantProductosSegunEstado(estado_recibido,newUser.getIdusuarios()));
-        model.addAttribute("stockProductos", asignadosSedesRepository.stockTotalProductos(newUser.getIdusuarios()));
-        model.addAttribute("cantTiendas", tiendaRepository.cantTiendas());
-        model.addAttribute("cantProd_enTienda", asignacionTiendasRepository.cantProductosEnTienda(newUser.getIdusuarios()));
+        obtenercifras(model,newUser);
         return "sede/perfilSede";
     }
 
@@ -77,11 +73,13 @@ public class SedeMainController {
 
         boolean valid=(userSession.getIdusuarios()==newUser.getIdusuarios())&&optionalUsuarios.isPresent();
         if (valid) {
+            Usuarios usuOld = optionalUsuarios.get();
+            newUser.setFoto(usuOld.getFoto());
             if (bindingResult.hasFieldErrors("nombre") || bindingResult.hasFieldErrors("apellido") || bindingResult.hasFieldErrors("telefono")) {
                 model.addAttribute("msgError", "ERROR");
+                obtenercifras(model,newUser);
                 return "sede/perfilSede";
             } else {
-                Usuarios usuOld = optionalUsuarios.get();
                 if (df){
                     usuOld.setFoto("https://storage-service.mosqoy-sw2.dns-cloud.net/profile/defaultProfilePicture.jpg");
                 }
@@ -90,6 +88,7 @@ public class SedeMainController {
                     if (!s2.isSuccess()) {
                         bindingResult.rejectValue("foto", "error.user", s2.getMsg());
                         model.addAttribute("msgError", "ERROR");
+                        obtenercifras(model,newUser);
                         return "sede/perfilSede";
                     }
                 }
@@ -107,6 +106,14 @@ public class SedeMainController {
             model.addAttribute("msgError", "Fatal error de edición");
             return "sede/perfilSede";
         }
+    }
+
+    public void obtenercifras(Model model,Usuarios newUser){
+        model.addAttribute("prod_porConfirmar", asignadosSedesRepository.cantProductosSegunEstado(estado_enviado,newUser.getIdusuarios()));
+        model.addAttribute("prod_Confirmado", asignadosSedesRepository.cantProductosSegunEstado(estado_recibido,newUser.getIdusuarios()));
+        model.addAttribute("stockProductos", asignadosSedesRepository.stockTotalProductos(newUser.getIdusuarios()));
+        model.addAttribute("cantTiendas", tiendaRepository.cantTiendas());
+        model.addAttribute("cantProd_enTienda", asignacionTiendasRepository.cantProductosEnTienda(newUser.getIdusuarios()));
     }
 
     //Web service

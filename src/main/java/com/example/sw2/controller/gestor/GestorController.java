@@ -64,12 +64,14 @@ public class GestorController {
         Usuarios userSession=(Usuarios)session.getAttribute("usuario");
 
         boolean valid=(userSession.getIdusuarios()==newUser.getIdusuarios())&&optionalUsuarios.isPresent();
+
         if (valid) {
+            Usuarios usuOld = optionalUsuarios.get();
+            newUser.setFoto(usuOld.getFoto());
             if (bindingResult.hasFieldErrors("nombre") || bindingResult.hasFieldErrors("apellido") || bindingResult.hasFieldErrors("telefono")) {
                 model.addAttribute("msgError", "ERROR");
                 return "gestor/perfilGestor";
             } else {
-                Usuarios usuOld = optionalUsuarios.get();
                 if (df){
                     usuOld.setFoto("https://storage-service.mosqoy-sw2.dns-cloud.net/profile/defaultProfilePicture.jpg");
                 }
