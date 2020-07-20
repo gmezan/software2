@@ -28,6 +28,9 @@
                 background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.46)), fixed no-repeat center url(https://cdn.pixabay.com/photo/2016/11/19/15/38/craftsman-1839920_960_720.jpg);
                 background-size: cover;
             }
+            h1{
+                text-shadow: -2px 0 3px #0000006b, 2px 0 3px #000000;
+            }
         </style>
     </head>
     <body>
@@ -61,17 +64,18 @@
 
                               th:text=" ${session.usuario.getFullname()}"></span>
                         <img th:if="session.usuario.foto!=''" class="img-profile rounded-circle"
-                             th:src="${session.usuario.foto}">
+                             th:src="${session.usuario.foto}" style="
+                                                        object-fit: contain;">
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                          aria-labelledby="userDropdown">
-                        <!--a class="dropdown-item" th:href="@{/gestor/perfil}">
+                        <a class="dropdown-item" th:href="@{/gestor/perfil}">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Perfil
+                            Ver Mi Perfil
                         </a>
-
-                        <div class="dropdown-divider"></div-->
+                        
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Cerrar Sesión
@@ -110,8 +114,8 @@
             
             <li class="nav-item">
                 <a class="sidebar-brand d-flex align-items-center justify-content-center"
-                   th:href="@{/gestor/inventario}">
-                    <i class="fas"> <img style="width: 88%;height: 88%;" th:src="@{/img/colibriiiii.png}" alt="."></i>
+                   th:href="@{/gestor}">
+                    <i hidden class="fas"> <img style="width: 88%;height: 88%;" th:src="@{/img/colibriiiii.png}" alt="."></i>
                     <div class="sidebar-brand-text ml-0"><img style="width: 103%;height: 103%;"
                                                               th:src="@{/img/mosqLOGO-min.png}" alt="."></div>
                 </a>
@@ -180,7 +184,7 @@
             <li class="nav-item" th:classappend="${param1=='Sedes'}? active : ''">
                 <a class="nav-link" th:href="@{/gestor/sede}">
                     <i class="fas fa-fw fa-user"></i>
-                    <span>Lista de Usuarios Sede</span></a>
+                    <span>Usuarios Sede</span></a>
             </li>
             
             <!-- Nav Item - Productos Asignados -->
@@ -189,6 +193,14 @@
                     <i class="fas fa-fw fa-shipping-fast"></i>
                     <span>Productos Asignados</span></a>
             </li>
+            <!-- Nav Item - Devoluciones -->
+            <li class="nav-item" th:classappend="${param1=='Devoluciones'}? active : ''">
+                <a th:href="@{/gestor/devoluciones}" class="nav-link">
+                    <i class="fas fa-fw fa-undo-alt"></i>
+                    <span>Devoluciones</span></a>
+            </li>
+            
+            
             <!-- Divider -->
             <hr class="sidebar-divider ">
             <!-- Heading -->
@@ -202,20 +214,12 @@
                     <i class="fas fa-fw fa-dollar-sign"></i>
                     <span>Mis ventas</span></a>
             </li>
-
-            <!-- Nav Item - Ventas -->
+            
+            <!-- Nav Item - Confirmacion -->
             <li class="nav-item" th:classappend="${param1=='Confirmacion'}? active : ''">
                 <a th:href="@{/gestor/confirmacion}" class="nav-link">
                     <i class="fas fa-fw fa-file-invoice-dollar"></i>
                     <span>Confirmacion de venta</span></a>
-            </li>
-            
-            
-            <!-- Nav Item - Ventas -->
-            <li class="nav-item" th:classappend="${param1=='Devoluciones'}? active : ''">
-                <a th:href="@{/gestor/devoluciones}" class="nav-link">
-                    <i class="fas fa-fw fa-undo-alt"></i>
-                    <span>Devoluciones</span></a>
             </li>
             
             
@@ -246,28 +250,29 @@
         
         
         <!--Logout Modal -->
-        <div th:fragment="logout-modal" class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form th:action="@{/logout}" method="post">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Cerrar Sesión</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Seleccione "Cerrar sesión" si está listo para cerrar su sesión actual.
-                            <div class="modal-footer mt-3">
-                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-info">Cerrar sesión</button>
+        
+        <div th:fragment="logout-modal">
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form th:action="@{/logout}" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Cerrar Sesión</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
                             </div>
-                        </div>
-                        
-                    
-                    </form>
+                            <div class="modal-body">Seleccione "Cerrar sesión" si está listo para cerrar su sesión actual.
+                                <div class="modal-footer mt-3">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-info">Cerrar sesión</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
+            
         </div>
     
     

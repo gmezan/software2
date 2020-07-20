@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $(".nav-item i").prop("hidden",false);
     let tableContainer = $(".table-responsive");
     let fakeContainer = $(".fakescroll");
     updatefakeScroll();
@@ -8,7 +9,6 @@ $(document).ready(function () {
     tableContainer.scroll(function () {
         fakeContainer.scrollLeft(tableContainer.scrollLeft());
     });
-
     let tablawrapper = $("#dataTable_wrapper");
     tablawrapper.children().eq(0).appendTo("#newFilterLength");
     tablawrapper.children().eq(1).appendTo("#newtablefoot");
@@ -37,16 +37,13 @@ $(document).ready(function () {
     });
     $(document).on("mouseover", function () {
         refreshimg();
-    });
-    $(document).on("mouseout", function () {
+    }).on("mouseout", function () {
         refreshimg();
     });
 });
-
 $(window).resize(function () {
     updatefakeScroll();
 });
-
 function updatefakeScroll() {
     let fakeDiv = $(".fakescroll div");
     let table = $(".table-responsive table");
@@ -64,8 +61,7 @@ function refreshimg() {
         if ($(this).attr('src') == 'https://storage-service.mosqoy-sw2.dns-cloud.net/profile/defaultProfilePicture.jpg') {
             $(this).parent().prop('disabled', true);
         }
-        ;
-    })
+    });
     imgTabla.addClass("fototabla");
     imgTabla.removeAttr('height');
     imgTabla.removeAttr('width');

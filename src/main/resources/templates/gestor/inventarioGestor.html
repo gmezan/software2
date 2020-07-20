@@ -163,7 +163,7 @@
                                                     <div class="row">
                                                         <div class="col-7" th:text="${inv.cantidadtotal}"></div>
                                                         <button th:attr="data-id=${inv.codigoinventario}"
-                                                                data-toggle="modal" data-target="#addModal"
+                                                                data-toggle="modal" data-target="#addModal" disabled
                                                                 class=" add-inventario btn btn-datatable btn-icon btn-success ">
                                                             <i
                                                                     class="fas fa-arrow-alt-circle-up"></i></button>
@@ -209,12 +209,12 @@
                                                     
                                                     
                                                     <button th:attr="data-id=${inv.codigoinventario}"
-                                                            data-toggle="modal" data-target="#editModal"
+                                                            data-toggle="modal" data-target="#editModal" disabled
                                                             class="edit-inventario btn btn-datatable btn-icon btn-info mr-2">
                                                         <i
                                                                 class="fas fa-edit"></i></button>
                                                     <button th:attr="data-id=${inv.codigoinventario}"
-                                                            data-toggle="modal" data-target="#deleteModal"
+                                                            data-toggle="modal" data-target="#deleteModal" disabled
                                                             class=" delete-inventario btn btn-datatable btn-icon btn-danger mr-2">
                                                         <i
                                                                 class="fas fa-trash-alt"></i></button>
@@ -287,7 +287,7 @@
                             </div>
                         </form>
                     </div>
-                    
+                
                 </div>
             </div>
         </div>
@@ -345,7 +345,7 @@
                                             <div class="input-group-text text-body">S/.</div>
                                         </div>
                                         <input th:field="*{costomosqoy}" type="number" min="0.01"
-                                               step='0.01'
+                                               step='0.01' th:min="${inventario.costotejedor==null? 0.01 : inventario.costotejedor+0.01}"
                                                class="form-control"
                                                placeholder="000.00">
                                         <div class="input-group-append">
@@ -401,7 +401,7 @@
                                         style="color:white;text-decoration:none">Guardar cambios</a></button>
                             </div>
                         </div>
-                        
+                    
                     </form>
                 </div>
             </div>
@@ -420,7 +420,7 @@
                             <input hidden type="text" class="form-control" th:field="*{codigoinventario}">
                             <p id="deleteModalBodyP"></p>
                             <table hidden class="table" id="tableModal1">
-                                <p hidden id="asig" class="text-center">Asignado a sedes</p>
+                                <p hidden id="asig" class="text-center"><b>Asignado a sedes</b></p>
                                 <thead>
                                     <tr>
                                         <th>Sede</th>
@@ -429,23 +429,23 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tbody1">
-        
+                                
                                 </tbody>
                             </table>
                             <table hidden class="table" id="tableModal2">
-                                <p hidden id="vent" class="text-center">Ventas</p>
+                                <p hidden id="vent" class="text-center"><b>Ventas</b></p>
                                 <thead>
                                     <tr>
                                         <th>#Documento</th>
-                                        <th>Fecha de Venta</th>
                                         <th>Vendedor</th>
+                                        <th>Fecha de Venta</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody2">
-        
+                                
                                 </tbody>
                             </table>
-        
+                        
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

@@ -56,9 +56,9 @@ $("#addForm #comunidades").on('change', function () {
         updateArtesanos(option);
     }
 });
-$("#addForm #costotejedor").on('change', function () {
+$("#costotejedor").on('change', function () {
     let tej = (parseFloat(this.value) + 0.01).toFixed(2);
-    $("#addForm #costomosqoy").attr("min",tej);
+    $("#costomosqoy").attr("min",tej);
 });
 
 
@@ -129,15 +129,6 @@ $(document).on("click", ".add-inventario", function () {
     $("#addModal #addTitle").text("Añadir " + $(this).data('id'));
 
 });
-
-$(document).ready(function () {
-    if ($("#msgError").text() === "ERROR DE CANTIDAD") {
-        //$('#formModal').modal('show');
-        $('#addModal').modal({show: true, backdrop: 'static', keyboard: false});
-    }
-
-});
-
 $(document).on("click", ".edit-inventario", function () {
     $("#editModal #costotejedor").val('');
     $("#editModal #costomosqoy").val('');
@@ -157,7 +148,8 @@ $(document).on("click", ".edit-inventario", function () {
         if (inv != null) {
             $("#editModal #codAdquisicion").val(inv.codAdquisicion);
             $("#editModal #costotejedor").val(inv.costotejedor);
-            $("#editModal #costomosqoy").val(inv.costomosqoy);
+            let tej = (parseFloat(inv.costotejedor) + 0.01).toFixed(2);
+            $("#editModal #costomosqoy").val(inv.costomosqoy).prop("min",tej);
             $("#editModal #facilitador").val(inv.facilitador);
             if (inv.codAdquisicion === 1) {
                 $("#editModal #vencimientoConsignacion").prop("hidden", false);
@@ -198,7 +190,22 @@ $(document).ready(function () {
         //$('#formModal').modal('show');
         $('#editModal').modal({show: true, backdrop: 'static', keyboard: false});
     }
+    if ($("#msgError").text() === "ERROR DE CANTIDAD") {
+        //$('#formModal').modal('show');
+        $('#addModal').modal({show: true, backdrop: 'static', keyboard: false});
+    }
+    refreshbtn();
 });
+$(document).on("mouseover", function () {
+    refreshbtn();
+}).on("mouseout", function () {
+    refreshbtn();
+});
+function refreshbtn(){
+    $(".edit-inventario").attr("disabled", false);
+    $(".delete-inventario").attr("disabled", false);
+    $(".add-inventario").attr("disabled", false);
+}
 $(document).on("click", ".delete-inventario", function () {
     $("#deleteModal .modal-title").text("Borrar " + $(this).data('id'));
 
@@ -215,11 +222,11 @@ $(document).on("click", ".delete-inventario", function () {
         console.log(data);
         if (data==null || data[0].length === 0 && data[1].length === 0){
             $("#deleteModal #codigoinventario").val(id);
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar este producto del inventario? Esta acción no se puede deshacer.");
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar este registro del inventario? Esta acción no se puede deshacer.");
             $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
         }
         else {
-            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("Este registro no se puede borrar, está asociada a las siguientes Ventas y/o Productos Asignados");
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("Este registro no se puede borrar, ya que está asociado a las siguientes Ventas y/o Productos Asignados");
             let r = '';
             if(data[0].length!==0){
                 for (let key=0, size=data[0].length; key<size; key++)
@@ -231,7 +238,7 @@ $(document).on("click", ".delete-inventario", function () {
             if(data[1].length!==0){
                 r = '';
                 for (let key=0, size=data[1].length; key<size; key++)
-                    r+='<tr><td>'+data[1][key].numdocumento+'</td><td>'+data[1][key].fechaVenta+'</td><td>'+data[1][key].vendedor+'</td></tr>';
+                    r+='<tr><td>'+data[1][key].numdocumento+'</td><td>'+data[1][key].vendedor+'</td><td>'+data[1][key].fechaVenta+'</td></tr>';
                 $("#deleteModal #deleteModalBody #tableModal2").prop("hidden",false);
                 $("#deleteModal #vent").prop("hidden",false);
                 $("#deleteModal #tbody2").html(r);

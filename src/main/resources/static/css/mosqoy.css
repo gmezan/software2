@@ -126,8 +126,10 @@ td.tdfoto {
     text-align: center;
     padding: 17px;
 }
-.modal-body{
-    padding: 1rem 3rem;
+@media (min-width: 992px) {
+    .modal-body {
+        padding: 1rem 3rem;
+    }
 }
 .forminv{
     padding-left: 5rem;

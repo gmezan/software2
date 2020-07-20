@@ -167,9 +167,6 @@ public class InventarioController {
             m.addAttribute("listProd", productosRepository.findProductosByIdCodigolinea(inventario.getProductos().getId().getCodigolinea()));
         }
 
-        System.out.println(inventario.getProductos().getId().getCodigolinea());
-        System.out.println(inventario.getProductos().getId().getCodigonom());
-
         //Gustavo lo puso :
         //System.out.println(linea);
         //inventario.getProductos().setCodigolinea(linea);
@@ -185,9 +182,8 @@ public class InventarioController {
             bindingResult.rejectValue("foto", "error.user", "Debe subir una foto.");
         }
 */
-        if (!bindingResult.hasFieldErrors("costotejedor")&&!bindingResult.hasFieldErrors("costomosqoy")) {
-
-            if (inventario.getCostotejedor().compareTo(inventario.getCostomosqoy())!=-1){
+        if (!bindingResult.hasFieldErrors("costotejedor") && !bindingResult.hasFieldErrors("costomosqoy")) {
+            if (inventario.getCostotejedor().compareTo(inventario.getCostomosqoy()) != -1) {
                 bindingResult.rejectValue("costomosqoy", "error.user", "Debe ser mayor al costo tejedor.");
             }
         }
@@ -352,14 +348,16 @@ public class InventarioController {
                     }
                 }
             }
-
-
+            if (!bindingResult.hasFieldErrors("costotejedor") && !bindingResult.hasFieldErrors("costomosqoy")) {
+                if (inv.getCostotejedor().compareTo(inv.getCostomosqoy()) != -1) {
+                    bindingResult.rejectValue("costomosqoy", "error.user", "Debe ser mayor al costo tejedor.");
+                }
+            }
             if (bindingResult.hasFieldErrors("facilitador") || bindingResult.hasFieldErrors("costomosqoy") || bindingResult.hasFieldErrors("costotejedor") || bindingResult.hasFieldErrors("fechavencimientoconsignacion")) {
                 m.addAttribute("listaInv", inventarioRepository.findAllByOrderByFechamodificacionDesc());
                 m.addAttribute("msgError", "ERROR DE EDICION");
                 return "gestor/inventarioGestor";
             } else {
-
                 invOld.setCostotejedor(inv.getCostotejedor());
                 invOld.setCostomosqoy(inv.getCostomosqoy());
 
@@ -450,24 +448,30 @@ public class InventarioController {
 
     //Has items
     @ResponseBody
-    @GetMapping(value = "/has", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<List<HashMap<String,String>>>> hasItems(@RequestParam(value = "id") String id){
+    @GetMapping(value = {"/has", "/editInv/has", "/addInv/has"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<List<HashMap<String, String>>>> hasItems(@RequestParam(value = "id") String id) {
         return new ResponseEntity<>(new ArrayList<List<HashMap<String, String>>>() {
             {
-                add(new ArrayList<HashMap<String,String>>() {{
-                    Objects.requireNonNull(inventarioRepository.findById(id).orElse(null)).getAsignadosSedes().forEach((i)-> {
+                add(new ArrayList<HashMap<String, String>>() {{
+                    Objects.requireNonNull(inventarioRepository.findById(id).orElse(null)).getAsignadosSedes().forEach((i) -> {
                         add(new HashMap<String, String>() {{
                             put("sede", i.getId().getSede().getFullname());
                             put("stock", i.getStock().toString());
                             put("envio", i.getFechaEnvioStr());
-                        }});});}});
-                add(new ArrayList<HashMap<String,String>>() {{
-                    Objects.requireNonNull(inventarioRepository.findById(id).orElse(null)).getVentas().forEach((i)-> {
+                        }});
+                    });
+                }});
+                add(new ArrayList<HashMap<String, String>>() {{
+                    Objects.requireNonNull(inventarioRepository.findById(id).orElse(null)).getVentas().forEach((i) -> {
                         add(new HashMap<String, String>() {{
                             put("numdocumento", i.getId().getNumerodocumento());
                             put("fechaVenta", i.getFechaDeVentaStr());
                             put("vendedor", i.getVendedor().getFullname());
-                        }});});}});}},
+                        }});
+                    });
+                }});
+            }
+        },
                 HttpStatus.OK);
     }
 }

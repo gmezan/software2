@@ -30,9 +30,9 @@
                         <div id="msg" th:if="${msg != null}" th:text="${msg}" class="alert alert-warning py-1"
                              role="alert"></div>
                         
-                        <div class="container forminv">
+                        <div class="container">
                             <!-- DataTales Example -->
-                            <div class="card shadow mb-4 mx-5">
+                            <div class="card shadow mb-lg-4 mx-lg-5">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Registro de nuevo producto del inventario</h5>
@@ -41,7 +41,7 @@
                                         </a>
                                     </div>
                                     
-                                    <div class="modal-body">
+                                    <div class="modal-body px-lg-5 px-md-0">
                                         <form id="addForm" method="post" th:action="@{/gestor/inventario/save}"
                                               th:object="${inventario}" enctype="multipart/form-data">
                                             <div class="form-row mx-4">
@@ -92,8 +92,8 @@
                                                 </div>
                                                 <div class="form-group col">
                                                     <label class="col-form-label"><b>Producto:</b></label>
-                                                    <select id="productos" name="productos.id.codigonom"  class="form-control">
-                                                        <option th:text="${listProd==null? '-Debe elegir una línea-':'--- Seleccionar ---'}"  value=""></option>
+                                                    <select id="productos" name="productos.id.codigonom" class="form-control">
+                                                        <option th:text="${listProd==null? '-Debe elegir una línea-':'--- Seleccionar ---'}" value=""></option>
                                                         <option th:each="item : ${listProd}"
                                                                 th:selected="${item.codigonom==pr}"
                                                                 th:value="${item.codigonom}"
@@ -198,7 +198,7 @@
                                                          th:if="${#fields.hasErrors('costotejedor')}"
                                                          th:errors="*{costotejedor}">Error
                                                     </div>
-                                                    
+                                                
                                                 </div>
                                                 
                                                 <div class="form-group col-4">
@@ -220,7 +220,7 @@
                                                     
                                                          th:errors="*{costomosqoy}">Error
                                                     </div>
-                                                    
+                                                
                                                 
                                                 </div>
                                             </div>
@@ -258,16 +258,16 @@
                                                                class="form-check-input" type="checkbox" name="conDia"
                                                                id="conDia" disabled>
                                                         <label class="form-check-label" for="conDia">Con día</label>
-                                                        <input hidden="hidden" type="text" name="conDia" />
+                                                        <input hidden="hidden" type="text" name="conDia"/>
                                                     </div>
-                                                    
+                                                
                                                 </div>
                                                 
                                                 <div th:hidden="${inventario.codAdquisicion!=1}" th:disabled="${inventario.codAdquisicion!=1}"
                                                      id="vencimientoConsignacion" class="form-group col-4">
                                                     <label class="col-form-label"><b>Fecha de
                                                         vencimiento(consignación):</b></label>
-                                                    <input th:field="*{fechavencimientoconsignacion}"  type="date"
+                                                    <input th:field="*{fechavencimientoconsignacion}" type="date"
                                                            class="form-control">
                                                     <div class="text-danger"
                                                          th:if="${#fields.hasErrors('fechavencimientoconsignacion')}"
@@ -305,15 +305,13 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="btn btn-secondary " th:href="@{/gestor/inventario}">Cancelar</a>
-        
+                                                
                                                 <input disabled id="invAdd" form="addForm" type="submit" class="btn btn-info" value="Agregar">
-    
+                                            
                                             </div>
                                         </form>
                                     </div>
-                                    
-                                    
-                                    
+                                
                                 
                                 </div>
                             </div>
@@ -349,17 +347,17 @@
                     </div>
                     <div class="modal-body">
                         <p>Solo se podrán editar los siguientes campos: <b> Costo Mosqoy, Costo Tejedor, Facilitador y Fecha de vencimiento</b> (en caso de haber adquirido el producto mediante consignación)</p>
-                        <p>Al presionar <b>"Confirmar"</b> , usted confirma que todos los campos ingresados son <b>correctos</b>. En caso de querer cambiar un campo  <b>no editable</b> , se tendrá que borrar el antiguo registro y crear uno nuevo.</p>
+                        <p>Al presionar <b>"Confirmar"</b> , usted confirma que todos los campos ingresados son <b>correctos</b>. En caso de querer cambiar un campo <b>no editable</b> , se tendrá que borrar el antiguo registro y crear uno nuevo.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         <button id="confirmbtn" type="button" class="btn btn-info">Confirmar</button>
-                        
+                    
                     </div>
                 </div>
             </div>
         </div>
-    
+        
         <!-- Logout Modal-->
         <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
         
