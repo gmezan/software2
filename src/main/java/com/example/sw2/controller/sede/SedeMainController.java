@@ -1,8 +1,12 @@
 package com.example.sw2.controller.sede;
 
 import com.example.sw2.Dao.StorageServiceDao;
+import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.entity.StorageServiceResponse;
 import com.example.sw2.entity.Usuarios;
+import com.example.sw2.repository.AsignacionTiendasRepository;
+import com.example.sw2.repository.AsignadosSedesRepository;
+import com.example.sw2.repository.TiendaRepository;
 import com.example.sw2.repository.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +32,15 @@ public class SedeMainController {
     UsuariosRepository usuariosRepository;
     @Autowired
     StorageServiceDao storageServiceDao;
+    @Autowired
+    AsignadosSedesRepository asignadosSedesRepository;
+    @Autowired
+    TiendaRepository tiendaRepository;
+    @Autowired
+    AsignacionTiendasRepository asignacionTiendasRepository;
+
+    private int estado_enviado = CustomConstants.ESTADO_ENVIADO_A_SEDE;
+    private int estado_recibido = CustomConstants.ESTADO_RECIBIDO_POR_SEDE;
 
 
     @GetMapping(value = {"/", ""})
@@ -41,6 +54,11 @@ public class SedeMainController {
                                HttpSession session) {
         newUser = (Usuarios) session.getAttribute("usuario");
         model.addAttribute("user", newUser);
+        model.addAttribute("prod_porConfirmar", asignadosSedesRepository.cantProductosSegunEstado(estado_enviado,newUser.getIdusuarios()));
+        model.addAttribute("prod_Confirmado", asignadosSedesRepository.cantProductosSegunEstado(estado_recibido,newUser.getIdusuarios()));
+        model.addAttribute("stockProductos", asignadosSedesRepository.stockTotalProductos(newUser.getIdusuarios()));
+        model.addAttribute("cantTiendas", tiendaRepository.cantTiendas());
+        model.addAttribute("cantProd_enTienda", asignacionTiendasRepository.cantProductosEnTienda(newUser.getIdusuarios()));
         return "sede/perfilSede";
     }
 
