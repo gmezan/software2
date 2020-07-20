@@ -57,11 +57,6 @@ public class SedeController {
     @Autowired
     CustomMailService customMailService;
 
-    @GetMapping(value = {"/", ""})
-    public String init() {
-        return "redirect:/sede/productosPorConfirmar";
-    }
-
 
     @GetMapping("productosPorConfirmar")
     public String productosPorConfirmar(HttpSession session, Model model) {

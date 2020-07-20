@@ -61,4 +61,7 @@ public interface UsuariosRepository extends JpaRepository<Usuarios,Integer> {
     @Query(value = "SELECT u.* FROM mosqoy.Usuarios u WHERE rol = 1 LIMIT 1", nativeQuery = true)
     Usuarios obtenerAdmin();
 
+    @Query(value = "SELECT COUNT(dni) FROM mosqoy.Usuarios WHERE rol = 3", nativeQuery = true)
+    String cantSedes();
+
 }
