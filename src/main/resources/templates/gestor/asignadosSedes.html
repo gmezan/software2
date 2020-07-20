@@ -52,7 +52,6 @@
                                                 <th>Stock</th>
                                                 <th>Precio de Venta</th>
                                                 <th>Estado</th>
-                                                <th>Cantidad vendida</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -69,7 +68,7 @@
                                             <tr th:each="asig,i:${listaAsignados}">
                                                 <td th:text="${i.index+1}">1</td>
                                                 <td th:text="${asig.id.productoinventario.codigoinventario}">Codigo 1</td>
-                                                <td th:text="${asig.id.sede.nombre}">Sede 1</td>
+                                                <td th:text="${asig.id.sede.getFullname()}">Sede 1</td>
                                                 <td th:text="${asig.stock}">20</td>
                                                 <td th:text="${asig.id.precioventa}">20</td>
                                                 <td th:text="${asig.id.getNombreEstado()}">Recibido por sede</td>
