@@ -58,6 +58,12 @@ public interface VentasRepository extends JpaRepository<Ventas, Integer> {
             nativeQuery = true)
     List<DatosGestorVentasDto> obtenerDatosGestorVentas();
 
+    @Query(value="SELECT COUNT(idventas) FROM mosqoy.Ventas WHERE vendedor = ?1",nativeQuery=true)
+    String cantVentas(int usuario);
+
+    @Query(value="SELECT COUNT(idventas) FROM mosqoy.Ventas v INNER JOIN Usuarios u ON (v.vendedor = u.dni) WHERE u.rol = ?1",nativeQuery=true)
+    String cantVentasTotales(int rol);
+
     @Query(value="SELECT ven.* FROM Ventas ven WHERE ven.vendedor = ?1",nativeQuery=true)
     List<Ventas> buscarPorGestor(int gestor);
 

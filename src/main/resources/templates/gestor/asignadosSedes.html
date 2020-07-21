@@ -26,7 +26,8 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-white">Productos asignados a Sedes</h1>
                         </div>
-                        
+                        <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1"
+                             role="alert"></div>
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <div class="d-sm-flex align-items-center justify-content-between ">
@@ -52,6 +53,8 @@
                                                 <th>Stock</th>
                                                 <th>Precio de Venta</th>
                                                 <th>Estado</th>
+                                                <th>Cantidad vendida</th>
+                                                <th>Descartar envío</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -62,16 +65,25 @@
                                                 <th>Stock</th>
                                                 <th>Precio de Venta</th>
                                                 <th>Estado</th>
+                                                <th>Cantidad vendida</th>
+                                                <th>Descartar envío</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
                                             <tr th:each="asig,i:${listaAsignados}">
                                                 <td th:text="${i.index+1}">1</td>
                                                 <td th:text="${asig.id.productoinventario.codigoinventario}">Codigo 1</td>
-                                                <td th:text="${asig.id.sede.getFullname()}">Sede 1</td>
+                                                <td th:text="${asig.id.sede.nombre}">Sede 1</td>
                                                 <td th:text="${asig.stock}">20</td>
                                                 <td th:text="${asig.id.precioventa}">20</td>
                                                 <td th:text="${asig.id.getNombreEstado()}">Recibido por sede</td>
+                                                <td th:text="${asig.stock - asig.cantidadactual}">20</td>
+                                                <td th:if="${asig.id.getEstadoasignacion() != 4}"></td>
+                                                <td th:if="${asig.id.getEstadoasignacion() == 4}">
+                                                    <button th:attr="data-msg=${asig.mensaje}, data-gestor=${asig.id.gestor.idusuarios}, data-sede=${asig.id.sede.idusuarios}, data-inventario=${asig.id.productoinventario.codigoinventario},
+                                                                data-estado=${asig.id.estadoasignacion}, data-precio=${asig.id.precioventa}, data-stock=${asig.stock}"
+                                                            type="button" class="btn btn-danger" data-toggle="modal" id="DescartarBoton" data-target="#DescartarModal"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

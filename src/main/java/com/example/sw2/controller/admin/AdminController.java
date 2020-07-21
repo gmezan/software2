@@ -44,9 +44,7 @@ public class AdminController {
                                HttpSession session) {
         newUser = (Usuarios) session.getAttribute("usuario");
         model.addAttribute("user", newUser);
-        model.addAttribute("cantGestores", usuariosRepository.cantUsuarios(2));
-        model.addAttribute("cantSedes", usuariosRepository.cantUsuarios(3));
-        model.addAttribute("cantInventario", inventarioRepository.cantInventario());
+        obtenercifras(model,newUser);
         return "admin/perfilAdmin";
     }
 
@@ -70,6 +68,7 @@ public class AdminController {
             newUser.setFoto(usuOld.getFoto());
             if (bindingResult.hasFieldErrors("nombre") || bindingResult.hasFieldErrors("apellido") || bindingResult.hasFieldErrors("telefono")) {
                 model.addAttribute("msgError", "ERROR");
+                obtenercifras(model,newUser);
                 return "admin/perfilGestor";
             } else {
                 if (df){
@@ -80,6 +79,7 @@ public class AdminController {
                     if (!s2.isSuccess()) {
                         bindingResult.rejectValue("foto", "error.user", s2.getMsg());
                         model.addAttribute("msgError", "ERROR");
+                        obtenercifras(model,newUser);
                         return "admin/perfilAdmin";
                     }
                 }
@@ -91,13 +91,19 @@ public class AdminController {
                 session.setAttribute("usuario", usuOld);
                 usuariosRepository.save(usuOld);
 
-
                 return "redirect:/admin/perfil";
             }
         }else{
             model.addAttribute("msgError", "Fatal error de edición");
             return "admin/perfilAdmin";
         }
+    }
+
+    public void obtenercifras(Model model,Usuarios newUser){
+        model.addAttribute("cantGestores", usuariosRepository.cantUsuarios(2));
+        model.addAttribute("cantSedes", usuariosRepository.cantUsuarios(3));
+        model.addAttribute("cantInventario", inventarioRepository.cantInventario());
+        model.addAttribute("stock_total", inventarioRepository.stockTotal());
     }
 
     //Web service
