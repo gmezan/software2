@@ -211,7 +211,7 @@ public abstract class ReportesUtils {
                 sheet.setColumnWidth(i++, 2500);
                 sheet.setColumnWidth(i++, 4000);
                 sheet.setColumnWidth(i++, 4200);
-                sheet.setColumnWidth(i++, 3300);
+                sheet.setColumnWidth(i++, 4200);
                 sheet.setColumnWidth(i++, 4200);
                 sheet.setColumnWidth(i++, 4200);
                 sheet.setColumnWidth(i++, 5000);
