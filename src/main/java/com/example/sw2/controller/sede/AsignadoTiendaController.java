@@ -96,7 +96,8 @@ public class AsignadoTiendaController {
         }
 
         //Verificar que se haya ingresado un numero correcto de documento si la venta es confirmada
-        if (venta.getConfirmado() &&
+
+        if (venta.getConfirmado()!=null && venta.getConfirmado() &&
                 venta.getId()!=null &&
                 !venta.getId().validateNumeroDocumento()){
             bindingResult.rejectValue("id.numerodocumento","error.user","Ingrese un numero de documento válido");
@@ -104,6 +105,7 @@ public class AsignadoTiendaController {
                 bindingResult.rejectValue("mediopago","error.user","Ingrese un medio de pago correcto");
             }
         }
+
 
         if(optVentas.isPresent() && venta.getId().validateNumeroDocumento()){
             bindingResult.rejectValue("id.numerodocumento", "error.user", "El número de documento ya está registrado");

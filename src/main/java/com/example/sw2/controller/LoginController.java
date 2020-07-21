@@ -266,7 +266,7 @@ public class LoginController {
             customMailService.sendSimpleMail(email,
                     "Mosqoy - Recuperación de contraseña", "Nueva contraseña",
                     "Para restablecer su contraseña ingrese al siguiente enlace \n"
-                            + URL2+"/newpassword?t="+ token+"\no\n"+URL+"/newpassword?t="+ token+"\n<br> " +
+                            +URL+"/newpassword?t="+ token+"\n<br> " +
                             "Este enlace solo estará disponible por los siguientes "+ EXPIRATION_TIME_MINUTES +  " minutos");
             return "message-sent";
         }

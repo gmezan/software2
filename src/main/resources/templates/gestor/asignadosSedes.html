@@ -79,17 +79,17 @@
                                                 <td th:text="${asig.stock}">20</td>
                                                 <td th:text="${asig.id.precioventa}">20</td>
                                                 <td th:text="${asig.fechaenvio}">20</td>
-                                                <td th:text="${asig.id.getNombreEstado()}">Recibido por sede</td>
+                                                <td ><div th:text="${asig.id.getNombreEstado()}" th:class="${asig.claseHtml}">Recibido por sede</div>  </td>
                                                 <td th:if="${asig.id.getEstadoasignacion() == 2}" th:text="${asig.stock - asig.cantidadactual}">20</td>
                                                 <td th:if="${asig.id.getEstadoasignacion() != 2}">-</td>
                                                 <td th:if="${asig.id.getEstadoasignacion() < 3}"></td>
                                                 <td th:if="${asig.id.getEstadoasignacion() == 3}">
-                                                    <button th:attr="data-msg=${asig.mensaje}, data-gestor=${asig.id.gestor.idusuarios}, data-sede=${asig.id.sede.idusuarios}, data-inventario=${asig.id.productoinventario.codigoinventario},
+                                                    <button th:attr="data-msg=${asig.id.sede.fullname+': '+asig.mensaje}, data-gestor=${asig.id.gestor.idusuarios}, data-sede=${asig.id.sede.idusuarios}, data-inventario=${asig.id.productoinventario.codigoinventario},
                                                                 data-estado=${asig.id.estadoasignacion}, data-precio=${asig.id.precioventa}, data-stock=${asig.stock}"
-                                                            type="button" class="btn btn-danger" data-toggle="modal" id="DescartarBoton" data-target="#DescartarModal"><i class="fas fa-trash-alt"></i></button>
+                                                            type="button" class="btn btn-danger" data-toggle="modal" id="DescartarBoton" data-target="#DescartarModal"><i class="fas fa-exclamation-circle"></i></button>
                                                 </td>
                                                 <td th:if="${asig.id.getEstadoasignacion() == 4}">
-                                                    <a  type="button" class="btn btn-warning" th:href="@{'/gestor/devoluciones'}"><i class="fas fa-redo-alt"></i></a>
+                                                    <a  type="button" class="btn btn-link" th:href="@{'/gestor/devoluciones'}"><i class="fas fa-redo-alt"></i>  Ver en Devoluciones</a>
                                                 </td>
                                             </tr>
                                         </tbody>

@@ -112,7 +112,7 @@ public class GestoresController {
 
         if (c.isPresent()) {
             try {
-                usuariosRepository.delete_user(c.get().getIdusuarios());
+                usuariosRepository.deleteById(c.get().getIdusuarios());
                 attr.addFlashAttribute("msg", "Gestor borrado exitosamente");
             }
             catch (Exception ex){
