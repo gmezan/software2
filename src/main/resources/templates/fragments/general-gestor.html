@@ -28,7 +28,8 @@
                 background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.46)), fixed no-repeat center url(https://cdn.pixabay.com/photo/2016/11/19/15/38/craftsman-1839920_960_720.jpg);
                 background-size: cover;
             }
-            h1{
+            
+            h1 {
                 text-shadow: -2px 0 3px #0000006b, 2px 0 3px #000000;
             }
         </style>
@@ -156,14 +157,14 @@
                 <div id="collapseInv" class="collapse" th:classappend="${param1=='Campos'}?  show : ''"
                      aria-labelledby="headingInv" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" th:classappend="${param2=='Productos'}?  active : ''"
-                           th:href="@{/gestor/producto}">Productos</a>
                         <a class="collapse-item" th:classappend="${param2=='Categorias'}?  active : ''"
                            th:href="@{/gestor/categoria}">Categorías</a>
-                        <a class="collapse-item" th:classappend="${param2=='Artesanos'}?  active : ''"
-                           th:href="@{/gestor/artesano}">Artesanos</a>
+                        <a class="collapse-item" th:classappend="${param2=='Productos'}?  active : ''"
+                           th:href="@{/gestor/producto}">Productos</a>
                         <a class="collapse-item" th:classappend="${param2=='Comunidades'}?  active : ''"
                            th:href="@{/gestor/comunidad}">Comunidades</a>
+                        <a class="collapse-item" th:classappend="${param2=='Artesanos'}?  active : ''"
+                           th:href="@{/gestor/artesano}">Artesanos</a>
                     </div>
                 </div>
             </li>
@@ -272,7 +273,7 @@
                     </div>
                 </div>
             </div>
-            
+        
         </div>
     
     

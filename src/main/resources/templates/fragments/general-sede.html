@@ -28,6 +28,7 @@
                 background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.46)), fixed no-repeat center url(https://cdn.pixabay.com/photo/2013/08/20/15/47/sunset-174276_960_720.jpg);
                 background-size: cover;
             }
+            
             h1 {
                 text-shadow: -2px 0 3px #ffffff6b, 2px 0 1px #ffffff;
             }
@@ -72,7 +73,7 @@
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Ver Mi Perfil
                         </a>
-
+                        
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -136,10 +137,10 @@
                 <div id="collapseInv" class="collapse" th:classappend="${param1=='Productos'}?  show : ''"
                      aria-labelledby="headingInv" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" th:classappend="${param2=='ListaProductosConfirmados'}?  active : ''"
-                           th:href="@{/sede/productosConfirmados}">Productos confirmados</a>
                         <a class="collapse-item" th:classappend="${param2=='ListaProductosPorConfirmar'}?  active : ''"
                            th:href="@{/sede/productosPorConfirmar}">Productos por confirmar</a>
+                        <a class="collapse-item" th:classappend="${param2=='ListaProductosConfirmados'}?  active : ''"
+                           th:href="@{/sede/productosConfirmados}">Productos confirmados</a>
                     </div>
                 </div>
             </li>
@@ -162,11 +163,11 @@
                     </div>
                 </div>
             </li>
-
+            
             
             <!-- Divider -->
             <hr class="sidebar-divider">
-    
+            
             <!-- Heading -->
             <div class="sidebar-heading">
                 Tiendas
@@ -177,17 +178,17 @@
                     <i class="fas fa-fw fa-truck"></i>
                     <span>Asignado a tienda</span></a>
             </li>
-           
+            
             <!-- Nav Item - Reportes -->
             <li class="nav-item" th:classappend="${param1=='Tiendas'}? active : ''">
                 <a class="nav-link" th:href="@{/sede/tienda}">
                     <i class="fas fa-fw fa-store"></i>
                     <span>Lista de tiendas</span></a>
             </li>
-    
+            
             <!-- Divider -->
             <hr class="sidebar-divider">
-    
+            
             <!-- Heading -->
             <div class="sidebar-heading">
                 Data
