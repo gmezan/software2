@@ -21,6 +21,7 @@ $(function() {
     $("#id\\.numerodocumento").prop("disabled",true);
     $("#confirmado1").prop("checked",false);
     $(".inputFile").prop("hidden",true);
+    $(".text-danger").hide();
 
     $("#registrarVentaModal  #idgestor").val(  $(this).data('id12'));
     $("#registrarVentaModal  #vendedor").val( $(this).data('id22'));
@@ -60,8 +61,13 @@ $(function() {
         console.log(err);
         $('#registrarVentaModal').modal('hide');
         alert("Ocurrió un error");
-    })
-
+    });
+}).on("submit","#registrarVentaModal form", function () {
+    if((document.getElementById('foto1').files[0].size*1.0004)>=2097152) {
+        $("#foto1").next().remove().end().parent().append("<div class=\"text-danger\">Archivo mayor a 2MB</div>");
+        return false;
+    }
+    return  true;
 });
 
 

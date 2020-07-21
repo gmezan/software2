@@ -9,4 +9,10 @@ $(function () {
         $("#id\\.numerodocumento").prop("disabled",!this.checked);
         $(".inputFile").prop("hidden",!this.checked);
     })
+}).on("submit","#registraVentaForm", function () {
+    if((document.getElementById('foto1').files[0].size*1.0004)>=2097152) {
+        $("#foto1").next().remove().end().parent().append("<div class=\"text-danger\">Archivo mayor a 2MB</div>");
+        return false;
+    }
+    return  true;
 });

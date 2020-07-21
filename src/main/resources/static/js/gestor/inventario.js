@@ -5,6 +5,12 @@ $(document).ready(function () {
     $("#addForm #linea").attr("disabled", false);
     $("#addForm #codAdquisicion").attr("disabled", false);
     $("input[hidden='hidden']").removeAttr("required");
+}).on("submit","form", function () {
+    if((document.getElementById('foto1').files[0].size*1.0004)>=2097152) {
+        $("#foto1").next().remove().end().parent().append("<div class=\"text-danger\">Archivo mayor a 2MB</div>");
+        return false;
+    }
+    return  true;
 });
 $("#addForm #linea").on('change', function () {
     let prodList = $("#addForm #productos");

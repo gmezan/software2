@@ -40,4 +40,7 @@ $(document).ready(function() {
     if ($("#msgVenta").text()==="ERROR"){
         $('#formModal').modal({show: true, backdrop: 'static', keyboard: false });
     }
+    else if ($("#msgVenta").text() === "ERROR_cancelar"){
+        $('#cancelarModal').modal({show: true, backdrop: 'static', keyboard: false });
+    }
 });

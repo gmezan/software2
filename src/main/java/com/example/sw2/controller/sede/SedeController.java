@@ -62,7 +62,7 @@ public class SedeController {
     public String productosPorConfirmar(HttpSession session, Model model) {
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
-
+        session.setAttribute("controller","sede/productosPorConfirmar");
         model.addAttribute("listaProductosPorConfirmar", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
         return "sede/ListaProductosPorConfirmar";
 
@@ -146,7 +146,7 @@ public class SedeController {
             }
         }
 
-        if (!bindingResult.hasFieldErrors("id") && ventas.getConfirmado()) {
+        if (!bindingResult.hasFieldErrors("id") && ventas.getConfirmado() && ventas.getId().validateNumeroDocumento()) {
             Optional<Ventas> optVenta = ventasRepository.findById(ventas.getId());
 
             if (optVenta.isPresent()) {
@@ -199,7 +199,7 @@ public class SedeController {
                 if (asignadosSedes.getStock() ==0){
                     customMailService.sendStockAlert(asignadosSedes);
                 }
-                customMailService.sendSaleConfirmation(ventas);
+                customMailService.sendSaleConfirmation(ventas, asignadosSedes.getId().getGestor().getCorreo());
             } catch (MessagingException | IOException  e) {
                 e.printStackTrace();
             }
@@ -317,15 +317,19 @@ public class SedeController {
 
         if (asignadosSedesOptional.isPresent()) {
 
-            if (mensaje==null || mensaje.isEmpty()){
+            if (mensaje==null || mensaje.trim().isEmpty()){
                 attr.addFlashAttribute("msgError", "Debe ingresar un mensaje");
-            }else{
+            }
+            else if (mensaje.trim().length()>256){
+                attr.addFlashAttribute("msgError", "Mensaje muy largo, máximo 256 caracteres");
+            }
+            else{
                 AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
                         id.getProductoinventario(), 3, id.getPrecioventa());
                 asignadosSedesRepository.deleteById(id);
                 AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
                 asignadosSedes.setId(idNew);
-                asignadosSedes.setMensaje(mensaje);
+                asignadosSedes.setMensaje(mensaje.trim());
                 asignadosSedesRepository.save(asignadosSedes);
                 attr.addFlashAttribute("msgExito", "Se ha reportado el problema correctamente");
             }

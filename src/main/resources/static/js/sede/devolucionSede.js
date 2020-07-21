@@ -41,7 +41,7 @@ $(document).on("click", ".dev-Prod", function () {
 
 $(document).ready(function() {
     if ($("#msgDevolucion").text()==="ERROR"){
-        $("#devolucionModal").modal({show:true});
+        $("#devolucionModal").modal({show: true, backdrop: 'static', keyboard: false });
     }
 });
 
