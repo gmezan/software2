@@ -59,6 +59,7 @@ public class AsignadoTiendaController {
                                          HttpSession session,
                                          Model model){
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
+        session.setAttribute("controller","sede/AsignadoTienda");
         v = new Ventas(); v.setConfirmado(false);
         model.addAttribute("venta", v);
         model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id_Sede(0,sede));
@@ -86,9 +87,7 @@ public class AsignadoTiendaController {
         System.out.println(venta.getConfirmado());
 
 
-        if(optVentas.isPresent()){
-            bindingResult.rejectValue("id.numerodocumento", "error.user", "El número de documento ya está registrado");
-        }
+
         if(venta.getCantidad() > aTienda.getStock()){
             bindingResult.rejectValue("cantidad", "error.user","La cantidad no puede ser mayor al stock de la tienda");
         }
@@ -104,6 +103,10 @@ public class AsignadoTiendaController {
             if (!(venta.getMediopago()!=null && venta.getMediopago()>0 && venta.getMediopago()<(MediosDePago.size()+1))){
                 bindingResult.rejectValue("mediopago","error.user","Ingrese un medio de pago correcto");
             }
+        }
+
+        if(optVentas.isPresent() && venta.getId().validateNumeroDocumento()){
+            bindingResult.rejectValue("id.numerodocumento", "error.user", "El número de documento ya está registrado");
         }
 
 

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
@@ -47,7 +48,8 @@ public class GestoresController {
     }
 
     @GetMapping(value = {""})
-    public String listaSede(@ModelAttribute("gestor")  Usuarios usuarios, Model model){
+    public String listaSede(@ModelAttribute("gestor")  Usuarios usuarios, Model model, HttpSession session){
+        session.setAttribute("controller","admin/gestor");
         model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
         return "admin/listaGestor";
     }

@@ -143,7 +143,7 @@ public class VentasGestorController {
 
         if (bindingResult.hasFieldErrors("mensaje") || bindingResult.hasFieldErrors("nota")) {
             model.addAttribute("lista", ventasRepository.buscarPorGestor(gestor.getIdusuarios()));
-            model.addAttribute("msgError", "ERROR");
+            model.addAttribute("msgError", "ERROR_cancelar");
             return "gestor/ventas";
         } else {
             Optional<Ventas> V = ventasRepository.findById(ventas.getIdventas());
@@ -160,7 +160,7 @@ public class VentasGestorController {
                 ven.setMensaje(ventas.getMensaje());
                 attr.addFlashAttribute("msg", "Se ha reportado la cancelación de la venta al administrador");
 
-                ventasRepository.save(ventas);
+                ventasRepository.save(ven);
             }
             return "redirect:/gestor/venta";
         }

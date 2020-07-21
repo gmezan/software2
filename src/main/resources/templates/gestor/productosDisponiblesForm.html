@@ -37,7 +37,7 @@
                             y seleccione el <strong>Tipo de documento de venta</strong> para solicitarlo al encargado. La venta será confirmada cuando se le envíe el comprobante</p>
 
 
-                        <form method="post" th:action="@{'/gestor/productosDisponibles/registrarventa'}" th:object="${venta}"
+                        <form method="post" id="registraVentaForm" th:action="@{'/gestor/productosDisponibles/registrarventa'}" th:object="${venta}"
                               enctype="multipart/form-data">
                             <div hidden class="form-group">
                                 <label class="col-form-label">Código de producto:</label>
@@ -113,7 +113,7 @@
 
                             <div class="inputFile form-row ">
                                 <div class="form-group">
-                                    <label for="foto1" class="col-form-label">Documento de venta (Opcional .pdf, .jpg, .jpeg, .png)</label>
+                                    <label for="foto1" class="col-form-label">Documento de venta (Opcional, Máx 2MB)<br>Soportado: .pdf, .jpg, .jpeg, .png</label>
                                     <input type="file" id="foto1" name="foto1">
                                     <div class="text-danger" th:if="${#fields.hasErrors('media')}" th:errors="*{media}">Error</div>
                                 </div>

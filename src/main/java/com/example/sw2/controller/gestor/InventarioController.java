@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -47,9 +48,9 @@ public class InventarioController {
     }
 
     @GetMapping(value = {""})
-    public String listInv(@ModelAttribute("inventario") Inventario inventario, Model m) {
+    public String listInv(@ModelAttribute("inventario") Inventario inventario, Model m, HttpSession session) {
         m.addAttribute("listaInv", inventarioRepository.findAllByOrderByFechamodificacionDesc());
-
+        session.setAttribute("controller","gestor/inventario");
         return "gestor/inventarioGestor";
     }
 

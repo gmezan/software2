@@ -46,6 +46,7 @@ public class ConfirmacionVentaController {
     public String listVen(@ModelAttribute("venta") Ventas ven,
                           Model model,
                           HttpSession session) {
+        session.setAttribute("controller","gestor/confirmacion");
         model.addAttribute("lista", ventasRepository.findVentasByConfirmado(false));
         model.addAttribute("documentos", CustomConstants.getTiposDocumento());
         model.addAttribute("mediosDePago",MediosDePago);
@@ -63,7 +64,7 @@ public class ConfirmacionVentaController {
         );
 
         if (!v.getId().validateNumeroDocumento()){
-            attr.addFlashAttribute("msgError", "El número de documento no es valido");
+            attr.addFlashAttribute("msgError", "El número de documento no es valido (mínimo 5 digitos)");
             return "redirect:/gestor/confirmacion";
         }
         if (!v.validateMedioPago()){

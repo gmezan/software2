@@ -7,7 +7,9 @@ import com.example.sw2.repository.AsignadosSedesRepository;
 import com.example.sw2.repository.NotificaRepository;
 import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.utils.CustomMailService;
+import com.example.sw2.utils.ExceptionView;
 import com.example.sw2.utils.UploadObject;
+import com.sun.istack.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,9 +18,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
@@ -39,6 +48,19 @@ public class ListaSedeGestorController {
     NotificaRepository notificaRepository;
     @Autowired
     StorageServiceDao storageServiceDao;
+    /*
+    @Override
+    public ModelAndView resolveException(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Object object,
+            Exception exc) {
+
+        ModelAndView model = new ModelAndView();
+        model.setView(new MappingJackson2JsonView());
+        model.addObject("msgError", exc.getMessage());
+        return model;
+    }*/
 
 
     @GetMapping(value = {"/"})
@@ -47,17 +69,19 @@ public class ListaSedeGestorController {
     }
 
     @GetMapping(value = {""})
-    public String listaSede(@ModelAttribute("sede") Usuarios usuarios, Model model){
+    public String listaSede(@ModelAttribute("sede") Usuarios usuarios, Model model, HttpSession session){
+        session.setAttribute("controller","gestor/sede");
         model.addAttribute("lista", usuariosRepository.findUsuariosByRoles_idroles(ROL_CRUD));
         return "gestor/sedes";
     }
 
+    //@ExceptionView(value = "gestor/sedes", getValue ="gestor/sedes")
     @PostMapping("/save")
     public String editCat(@ModelAttribute("sede") @Valid Usuarios usuarios,
                           BindingResult bindingResult,
                           @RequestParam(name = "photo", required = false) MultipartFile multipartFile,
                           @RequestParam("type") int type,
-                          RedirectAttributes attr, Model model) throws IOException {
+                          RedirectAttributes attr, Model model) throws Exception {
         StorageServiceResponse s2 = new StorageServiceResponse();
 
         if(usuarios.validateUser(bindingResult,type,usuariosRepository).hasErrors()){
@@ -128,6 +152,7 @@ public class ListaSedeGestorController {
         return "redirect:/gestor/sede";
     }
 
+
     //Web service
     @ResponseBody
     @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -156,7 +181,6 @@ public class ListaSedeGestorController {
                                     }});});}}); }},
                 HttpStatus.OK);
     }
-
 
 
 }

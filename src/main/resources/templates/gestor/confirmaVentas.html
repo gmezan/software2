@@ -38,7 +38,7 @@
                             <p class="text-black-50 mr-5 mt-3 mb-0 ">Aquí puede ver las solicitudes de comprobante de pago hecha por los usuarios Sede.
                                 Podrá confirmar una venta ingresando el número de comprobante y opcionalmente un archivo del comprobante.<br>
                                 <strong>IMPORTANTE: </strong>Si se cancela la venta, la cantidad de productos registrados como vendidos
-                                regresrá a la asignación correspondiente.
+                                regresará a la asignación correspondiente.
                             </p>
                         </div>
                     </div>
@@ -204,7 +204,7 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="foto1" class="col-form-label">Documento de venta (Opcional .pdf, .jpg, .jpeg, .png)</label>
+                            <label for="foto1" class="col-form-label">Documento de venta (Opcional, Máx 2MB)<br>Soportado: .pdf, .jpg, .jpeg, .png</label>
                             <input type="file" id="foto1" name="foto1">
                             <div class="text-danger" th:if="${#fields.hasErrors('media')}" th:errors="*{media}">Error</div>
                         </div>

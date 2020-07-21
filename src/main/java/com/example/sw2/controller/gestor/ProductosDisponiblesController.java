@@ -52,7 +52,8 @@ public class ProductosDisponiblesController {
     CustomMailService customMailService;
 
     @GetMapping(value ="")
-    public String listarProductosDisponibles(Model model){
+    public String listarProductosDisponibles(Model model, HttpSession session){
+        session.setAttribute("controller","gestor/productosDisponibles");
         model.addAttribute("listainventario",inventarioRepository.findAll());
         return "gestor/productosDisponibles";
     }

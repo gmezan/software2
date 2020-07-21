@@ -24,7 +24,7 @@ $(function() {
 }).on("click",".registar-Venta", function(){
     $("#registrarModal  input").val('');
     $("#registrarModal  #id1").val($(this).data(''));
-
+    $("#registrarModal  .text-danger").hide();
     $("#id\\.numerodocumento").prop("disabled",true);
     $("#confirmado1").prop("checked",false);
     $(".inputFile").prop("hidden",true);
@@ -48,10 +48,16 @@ $(function() {
         $('#registrarModal').modal('hide');
         alert("Ocurrió un error");
     })
+}).on("submit","#registrarModal form", function () {
+    if((document.getElementById('foto1').files[0].size*1.0004)>=2097152) {
+        $("#foto1").next().remove().end().parent().append("<div class=\"text-danger\">Archivo mayor a 2MB</div>");
+        return false;
+    }
+    return  true;
 });
 
 $(document).on("click",".retornar-Producto", function(){
     $("#devolucionModal #id2").val($(this).data('id2'));
-    console.log($(this).data('id2'))
+    //console.log($(this).data('id2'))
 });
 
