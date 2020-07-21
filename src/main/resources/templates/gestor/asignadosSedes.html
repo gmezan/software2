@@ -79,13 +79,13 @@
                                                 <td th:text="${asig.stock}">20</td>
                                                 <td th:text="${asig.id.precioventa}">20</td>
                                                 <td th:text="${asig.fechaenvio}">20</td>
-                                                <td th:text="${asig.id.getNombreEstado()}">Recibido por sede</td>
+                                                <td> <div th:text="${asig.id.getNombreEstado()}"  th:class="${asig.claseHtml}"></div></td>
                                                 <td th:text="${asig.stock - asig.cantidadactual}">20</td>
                                                 <td th:if="${asig.id.getEstadoasignacion() != 3}"></td>
                                                 <td th:if="${asig.id.getEstadoasignacion() == 3}">
                                                     <button th:attr="data-msg=${asig.mensaje}, data-gestor=${asig.id.gestor.idusuarios}, data-sede=${asig.id.sede.idusuarios}, data-inventario=${asig.id.productoinventario.codigoinventario},
                                                                 data-estado=${asig.id.estadoasignacion}, data-precio=${asig.id.precioventa}, data-stock=${asig.stock}"
-                                                            type="button" class="btn btn-danger" data-toggle="modal" id="DescartarBoton" data-target="#DescartarModal"><i class="fas fa-trash-alt"></i></button>
+                                                            type="button" class="btn btn-danger" data-toggle="modal" id="DescartarBoton" data-target="#DescartarModal"><i class="fas fa-exclamation"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
