@@ -295,7 +295,8 @@ public class CustomMailService {
 		}
 		else {// Solicitud de comprobante
 			msg ="<p>El usuario sede, ha solicitado un(a) "+ v.getId().getNombreTipodocumento() + " para poder concluir " +
-					"la venta detallada a continuación</p>";
+					"la venta detallada a continuación. Podrá encontrar esta solicitud en <b>Confirmación de venta</b> en " +
+					"la página web. </p>";
 
 			msg2+="<p>Si desea comunicarse con el usuario, su correo es: "+v.getVendedor().getCorreo()+" y " +
 					"su numero celular: "+v.getVendedor().getTelefono()+"</p>";

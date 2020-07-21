@@ -82,7 +82,7 @@
                                                 <td ><div th:text="${asig.id.getNombreEstado()}" th:class="${asig.claseHtml}">Recibido por sede</div>  </td>
                                                 <td th:if="${asig.id.getEstadoasignacion() == 2}" th:text="${asig.stock - asig.cantidadactual}">20</td>
                                                 <td th:if="${asig.id.getEstadoasignacion() != 2}">-</td>
-                                                <td th:if="${asig.id.getEstadoasignacion() < 3}"></td>
+                                                <td th:if="${asig.id.getEstadoasignacion() < 3}">-</td>
                                                 <td th:if="${asig.id.getEstadoasignacion() == 3}">
                                                     <button th:attr="data-msg=${asig.id.sede.fullname+': '+asig.mensaje}, data-gestor=${asig.id.gestor.idusuarios}, data-sede=${asig.id.sede.idusuarios}, data-inventario=${asig.id.productoinventario.codigoinventario},
                                                                 data-estado=${asig.id.estadoasignacion}, data-precio=${asig.id.precioventa}, data-stock=${asig.stock}"

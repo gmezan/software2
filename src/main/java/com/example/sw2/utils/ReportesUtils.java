@@ -63,7 +63,7 @@ public abstract class ReportesUtils {
                         createCell(row,i++,dataRow.getRuc_dni(),style);
                     }
                     createCell(row,i++,dataRow.getProducto(),style);
-                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas()*dataRow.getCantidadvendidos());
                     createCell(row,i,"",style).setCellValue(dataRow.getCantidadvendidos());
                 }
 
@@ -86,7 +86,7 @@ public abstract class ReportesUtils {
                     createCell(row, i++,dataRow.getNombre(),style);
                     createCell(row,i++,dataRow.getCodigo(),style);
                     createCell(row,i++,"",style).setCellValue(dataRow.getCantidadartesanos());
-                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas()*dataRow.getCantidadvendidos());
                     createCell(row,i,"",style).setCellValue(dataRow.getCantidadvendidos());
                 }
 
@@ -113,7 +113,7 @@ public abstract class ReportesUtils {
                     createCell(row,i++,dataRow.getNombre(),style);
                     createCell(row,i++,dataRow.getLinea(),style);
                     createCell(row,i++,dataRow.getCodigonom(),style);
-                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas()*dataRow.getCantidadvendidos());
                     createCell(row,i,"",style).setCellValue(dataRow.getCantidadvendidos());
                 }
                 //Lo único que va hardoceado son los números 9,10 y 12 que pertenecen a las columnas que se van a sumar
@@ -137,7 +137,7 @@ public abstract class ReportesUtils {
                     createCell(row,i++,"",style).setCellValue(dataRow.getDni());
                     createCell(row,i++,dataRow.getCorreo(),style);
                     createCell(row,i++,"",style).setCellValue(dataRow.getTelefono());
-                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas()*dataRow.getCantidadvendidos());
                     createCell(row,i,"",style).setCellValue(dataRow.getCantidadvendidos());
                 }
 
@@ -172,9 +172,9 @@ public abstract class ReportesUtils {
                     }
                     createCell(row,i++,dataRow.getVendedor(),style);
                     createCell(row,i++, String.valueOf(dataRow.getDnivendedor()),style);
-                    createCell(row,i++,"",style).setCellValue(dataRow.getPrecio_venta()/dataRow.getCantidad());
-                    createCell(row,i++,"",style).setCellValue(dataRow.getCantidad());
                     createCell(row,i++,"",style).setCellValue(dataRow.getPrecio_venta());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getCantidad());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getPrecio_venta()*dataRow.getCantidad());
                     createCell(row,i++,dataRow.getFecha(),style);
                     if(dataRow.getMedia()==null||dataRow.getMedia().equals("")){
                         createCell(row,i,"-",style);
@@ -211,7 +211,7 @@ public abstract class ReportesUtils {
                 sheet.setColumnWidth(i++, 2500);
                 sheet.setColumnWidth(i++, 4000);
                 sheet.setColumnWidth(i++, 4200);
-                sheet.setColumnWidth(i++, 3300);
+                sheet.setColumnWidth(i++, 4200);
                 sheet.setColumnWidth(i++, 4200);
                 sheet.setColumnWidth(i++, 4200);
                 sheet.setColumnWidth(i++, 5000);

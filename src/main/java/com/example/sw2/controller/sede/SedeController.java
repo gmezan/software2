@@ -139,14 +139,14 @@ public class SedeController {
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
 
-        if (ventas.getConfirmado() && !ventas.getId().validateNumeroDocumento()){
+        if (ventas.getConfirmado() && (!ventas.getId().validateNumeroDocumento())){
                 bindingResult.rejectValue("id.numerodocumento","error.user","Ingrese un numero de documento valido");
             if (!(ventas.getMediopago()!=null && ventas.getMediopago()>0 && ventas.getMediopago()<(MediosDePago.size()+1))){
                 bindingResult.rejectValue("mediopago","error.user","Ingrese un medio de pago correcto");
             }
         }
 
-        if (!bindingResult.hasFieldErrors("id") && ventas.getConfirmado() && ventas.getId().validateNumeroDocumento()) {
+        if (!bindingResult.hasFieldErrors("id") && ventas.getConfirmado() && !ventas.getId().validateNumeroDocumento()) {
             Optional<Ventas> optVenta = ventasRepository.findById(ventas.getId());
 
             if (optVenta.isPresent()) {
