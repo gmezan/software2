@@ -94,7 +94,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
     }
 
     private void llenarReporteSede(Workbook workbook, Reportes reportes){
-        String[] columns = {"Nombre","DNI","Correo","Telefono","Suma de Ventas","Cantidad Productos Vendidos"};
+        String[] columns = {"Nombre","DNI","Correo","Telefono","Precio Total","Cantidad Productos Vendidos"};
         Sheet sheet= workbook.createSheet("Reporte de sede " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
         String titulo = "";
@@ -116,7 +116,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
         fillCellsInSheet(sheet,columns,reportesSedes,workbook,titulo);
     }
     private void llenarReporteProducto(Workbook workbook, Reportes reportes){
-        String[] columns = {"Nombre","Linea","Codigo","Suma Ventas","Cantidad Vendidos"};
+        String[] columns = {"Nombre","Linea","Codigo","Precio Total","Cantidad Vendidos"};
         Sheet sheet= workbook.createSheet("Reporte producto " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
         String titulo = "";
@@ -138,7 +138,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
         fillCellsInSheet(sheet,columns,reportesArticulos,workbook,titulo);
     }
     private void llenarReporteComunidad(Workbook workbook, Reportes reportes){
-        String[] columns = {"Nombre","Código","Cantidad Artesanos","Suma Ventas","Cantidad Productos Vendidos"};
+        String[] columns = {"Nombre","Código","Cantidad Artesanos","Precio Total","Cantidad Productos Vendidos"};
         Sheet sheet= workbook.createSheet("Reporte comunidad " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
         String titulo = "";
@@ -160,7 +160,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
         fillCellsInSheet(sheet,columns,reportesComunidad,workbook,titulo);
     }
     private void llenarReporteCliente(Workbook workbook, Reportes reportes){
-        String[] columns = {"Nombre","RUC","DNI","Producto más comprado","Suma Ventas","Cantidad Vendida"};
+        String[] columns = {"Nombre","RUC","DNI","Producto más comprado","Suma de Ventas","Cantidad Vendida"};
         Sheet sheet= workbook.createSheet("Reporte de clientes " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
         String titulo = "";
