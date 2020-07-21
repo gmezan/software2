@@ -30,8 +30,8 @@ public class Ventas extends Auditable implements Serializable {
     @Valid
     @Embedded
     private VentasId id;
-    @NotNull
-    private Boolean confirmado;
+    @NotNull(message = "Debe seleccionar si está confirmado o no")
+    private Boolean confirmado = false;
     //@Size(min= 8, max = 11, message = "El Ruc/Dni debe contener 8 o 11 caracteres")
     @Column(name = "ruc_dni")
     @Pattern(regexp = "^[0-9]*$", message = "Ingrese solo caracteres numéricos")
