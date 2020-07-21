@@ -34,7 +34,7 @@ public class VentasClienteController {
     public String ListVentasCliente(@ModelAttribute("ventas") Ventas ventas,
                                     Model model, HttpSession session){
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
-        model.addAttribute("listaVentas", ventasRepository.findByVendedor_Idusuarios(sede.getIdusuarios()));
+        model.addAttribute("listaVentas", ventasRepository.findByVendedor_IdusuariosAndConfirmado(sede.getIdusuarios(),true));
         return "sede/ventasPorCliente";
     }
 
