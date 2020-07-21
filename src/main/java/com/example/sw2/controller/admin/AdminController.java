@@ -69,7 +69,7 @@ public class AdminController {
             if (bindingResult.hasFieldErrors("nombre") || bindingResult.hasFieldErrors("apellido") || bindingResult.hasFieldErrors("telefono")) {
                 model.addAttribute("msgError", "ERROR");
                 obtenercifras(model,newUser);
-                return "admin/perfilGestor";
+                return "admin/perfilAdmin";
             } else {
                 if (df){
                     usuOld.setFoto("https://storage-service.mosqoy-sw2.dns-cloud.net/profile/defaultProfilePicture.jpg");
