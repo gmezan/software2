@@ -29,8 +29,10 @@ import javax.validation.constraints.Null;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
+import static com.example.sw2.constantes.CustomConstants.MANAGER_EMAIL;
 import static com.example.sw2.constantes.CustomConstants.MediosDePago;
 
 @Controller
@@ -52,7 +54,8 @@ public class ProductosDisponiblesController {
     CustomMailService customMailService;
 
     @GetMapping(value ="")
-    public String listarProductosDisponibles(Model model){
+    public String listarProductosDisponibles(Model model, HttpSession session){
+        session.setAttribute("controller","gestor/productosDisponibles");
         model.addAttribute("listainventario",inventarioRepository.findAll());
         return "gestor/productosDisponibles";
     }
@@ -146,6 +149,18 @@ public class ProductosDisponiblesController {
             inventarioRepository.save(venta.getInventario());
             venta.setVendedor((Usuarios) session.getAttribute("usuario"));
             ventasRepository.save(venta);
+            try {
+                ArrayList<String> sa = new ArrayList<String>(){
+                    {usuariosRepository.findUsuariosByRoles_idroles(2).forEach(usuarios -> {
+                        if (!(venta.getVendedor().getIdusuarios()==usuarios.getIdusuarios()))
+                            add(usuarios.getCorreo());});}
+                };
+                String[] mails = new String[sa.size()];
+                mails = sa.toArray(mails);
+                customMailService.sendSaleConfirmation(venta,mails);
+            } catch (MessagingException | IOException  e) {
+                e.printStackTrace();
+            }
             attributes.addFlashAttribute("msg", "Venta de producto realizada");
             return "redirect:/gestor/productosDisponibles";
         }

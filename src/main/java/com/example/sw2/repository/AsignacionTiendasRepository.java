@@ -64,4 +64,7 @@ public interface AsignacionTiendasRepository extends JpaRepository<AsignacionTie
     void borrar_venta_as(int dni_gestor, int dni_sede, String codigo,
                              int estado, Float precio, int cant);
 
+    @Query(value = "SELECT COUNT(idtiendas) FROM mosqoy.Asignacion_tienda WHERE sede = ?1", nativeQuery = true)
+    String cantProductosEnTienda(int sede);
+
 }

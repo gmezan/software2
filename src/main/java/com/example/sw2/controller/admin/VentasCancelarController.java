@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Optional;
 
 @Controller
@@ -105,8 +106,14 @@ public class VentasCancelarController {
     //Web service
     @ResponseBody
     @GetMapping(value = "/has",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<Ventas>> getVenta(@RequestParam(value = "id1") int id1){
-        return new ResponseEntity<>(ventasRepository.findById(id1), HttpStatus.OK);
+    public ResponseEntity<HashMap<String,String>> getVenta(@RequestParam(value = "id1") int id1){
+        HashMap<String,String> map = new HashMap<>();
+        Ventas v = ventasRepository.findById(id1).orElse(null);
+        if (v!=null){
+            map.put("nota",v.getNota().toString());
+            map.put("mensaje",v.getMensaje());
+        }
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
 

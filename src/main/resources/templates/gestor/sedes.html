@@ -186,7 +186,7 @@
                     </a>
                     </div>
                     <div class="modal-body">
-                        <form method="post" th:action="@{/gestor/sede/save}" th:object="${sede}"
+                        <form method="post"  th:action="@{/gestor/sede/save}" th:object="${sede}"
                               enctype="multipart/form-data">
                             <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
                             <div class="form-group">
@@ -230,11 +230,12 @@
                                 <img id="foto" class="rounded-pill" width="100" style="height: auto;">
                             </div>
                             <div class="form-group">
-                                <label for="photo" class="col-form-label">Foto</label>
+                                <label for="photo" class="col-form-label">Foto (Opcional, Máx. 2MB)<br>Soportado: jpg, png, jpeg</label>
                                 <input type="file" id="photo" name="photo">
                                 <div class="text-danger" th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}">
                                     Error
                                 </div>
+
                             </div>
                             <div class="modal-footer">
                                 <a type="button" th:href="@{/gestor/sede}" class="btn btn-secondary">Cancelar</a>

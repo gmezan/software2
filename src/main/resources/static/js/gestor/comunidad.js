@@ -13,7 +13,7 @@ $(function() {($("#msgComunidad").text()==="ERROR") && $('#formModal').modal({sh
         }
     }).fail(function (err) {alert("Ocurrió un error");$('#formModal').modal({show: false});})
 }).on("click",".new-Comunidad", function(){
-    $("#formModal").find(" #formTitle").text('Nueva Categoría').end().find(" input").val('').prop("readonly",false).end()
+    $("#formModal").find(" #formTitle").text('Nueva Comunidad').end().find(" input").val('').prop("readonly",false).end()
         .find(" #type").val('1').end().find("  #formSavebtn").text('Registrar');
 }).on("click",".delete-Comunidad", function(){
     let id = $(this).data('id');

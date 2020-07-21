@@ -1,27 +1,14 @@
-var contextPath  = window.location.href;
-
-$(document).on("click",".editar-Gestor", function(){
-    $("#formModal input").val('');
-    //$("#formModal  #idusuarios").val($(this).data('idusuarios'));
-    $.ajax({
-        method:"GET", url:contextPath + "/get?id=" + $(this).data('id')
-    }).done(function(usu){
-        if (usu!=null){
-            $("#formModal #idusuarios").val(usu.idusuarios);
-            $("#formModal #nombre").val(usu.nombre);
-            $("#formModal #apellido").val(usu.apellido);
-            $("#formModal #correo").val(usu.correo);
-            $("#formModal #telefono").val(usu.telefono);
-        }
-    }).fail(function (err) {
-        console.log(err);
-        $('#formModal').modal('hide');
-        alert("Ocurrió un error");
-    })
-});
+const contextPath  = window.location.href;
 
 $(document).ready(function() {
+    $(".nav-item i").prop("hidden",false);
     if ($("#msgGestor").text()==="ERROR"){
-        $('#formModal').modal('show');
+        $('#editprofile').modal({show: true, backdrop: 'static', keyboard: false });
     }
+}).on("submit","#editprofile form", function () {
+    if((document.getElementById('photo').files[0].size*1.0004)>=2097152) {
+        $("#photo").next().remove().end().parent().append("<div class=\"text-danger\">Archivo mayor a 2MB</div>");
+        return false;
+    }
+    return  true;
 });

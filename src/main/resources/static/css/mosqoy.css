@@ -126,11 +126,22 @@ td.tdfoto {
     text-align: center;
     padding: 17px;
 }
-.modal-body{
-    padding: 1rem 3rem;
+@media (min-width: 992px) {
+    .modal-body {
+        padding: 1rem 3rem;
+    }
 }
 .forminv{
     padding-left: 5rem;
     padding-right: 5rem;
 }
-/*#4c0853*/
+.sidebar-brand img {
+    -webkit-filter: drop-shadow(3px 3px 4px #000);
+    filter: drop-shadow(3px 3px 4px #000);
+}
+.list-inline .list-inline-item {
+    vertical-align: top;
+    max-width: 80px;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}

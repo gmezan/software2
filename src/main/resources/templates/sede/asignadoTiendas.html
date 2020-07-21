@@ -126,25 +126,6 @@
             <i class="fas fa-angle-up"></i>
         </a>
 
-        <!-- Logout Modal-->
-        <div th:replace="fragments/general-sede.html :: logout-modal"></div>
-        <!-- Bootstrap core JavaScript-->
-        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
-        <!-- Core plugin JavaScript-->
-        <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
-
-        <!-- Custom scripts for all pages-->
-        <script th:src="@{/js/sb-admin-2.min.js}"></script>
-
-        <!-- Page level plugins -->
-        <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
-        <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
-        <script th:src="@{/js/sede/asignadoTiendas.js}"></script>
-        <!-- Page level custom scripts -->
-        <script th:src="@{/js/demo/datatables-demo.js}"></script>
-        <script th:src="@{/js/gestor/extra.js}"></script>
 
 
         <!-- Modal Registrar Venta -->
@@ -185,19 +166,17 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <div class="col">
-                                    <label class="col-form-label"><b>Número de documento de venta</b></label>
-                                    <input type="text" class="form-control" th:field="*{id.numerodocumento}">
-                                    <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}"
-                                         th:errors="*{id.numerodocumento}">Error
-                                    </div>
+                            <div class="form-group col">
+                                <label class="col-form-label">Numero de documento de venta:</label>
+                                <input type="text" class="form-control" th:field="*{id.numerodocumento}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('id.numerodocumento')}"
+                                     th:errors="*{id.numerodocumento}">Error
+                                </div>
 
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" th:field="*{confirmado}" value="off">
-                                        <label for="confirmado" class="form-check-label">Venta confirmada (Venta ya registrada con un comprobante de pago)</label>
-                                        <div class="text-danger" th:if="${#fields.hasErrors('confirmado')}" th:errors="*{confirmado}" ></div>
-                                    </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" th:field="*{confirmado}" value="true">
+                                    <label class="form-check-label">Venta confirmada (Venta ya registrada con un comprobante de pago)</label>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('confirmado')}" th:errors="*{confirmado}" ></div>
                                 </div>
                             </div>
 
@@ -229,7 +208,7 @@
                             </div>
                             <div hidden class="inputFile form-group col">
                                 <div class="form-group">
-                                    <label for="foto1" class="col-form-label">Documento de venta (Opcional .pdf, .jpg, .jpeg, .png)</label>
+                                    <label for="foto1" class="col-form-label">Documento de venta (Opcional, Máx 2MB)<br>Soportado: .pdf, .jpg, .jpeg, .png</label>
                                     <input type="file" id="foto1" name="foto1">
                                     <div class="text-danger" th:if="${#fields.hasErrors('media')}" th:errors="*{media}">Error</div>
                                 </div>
@@ -293,6 +272,27 @@
                 </div>
             </div>
         </div>
+
+        <!-- Logout Modal-->
+        <div th:replace="fragments/general-sede.html :: logout-modal"></div>
+        <!-- Bootstrap core JavaScript-->
+        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+        <!-- Page level plugins -->
+        <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+        <!-- Page level custom scripts -->
+        <script th:src="@{/js/demo/datatables-demo.js}"></script>
+        <script th:src="@{/js/sede/asignadoTiendas.js}"></script>
+        <script th:src="@{/js/gestor/extra.js}"></script>
 
     </body>
 

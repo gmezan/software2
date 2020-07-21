@@ -161,11 +161,12 @@ public class CustomMailService {
 	}
 
 
-	public void sendSaleConfirmation(Ventas v) throws IOException, MessagingException {
+	public void sendSaleConfirmation(Ventas v, String correo) throws IOException, MessagingException {
 		String msg ;
 		String table;
 		String msg2="";
 		if(v.getConfirmado()) { // Venta confirmada
+			/*
 			msg="<p>El usuario "+v.getVendedor().getRoles().getNombrerol()+" "+v.getVendedor().getFullname()+
 			", ha registrado una venta en el sistema. Los detalles de la venta se muestran a continuación</p>";
 
@@ -206,7 +207,7 @@ public class CustomMailService {
 					"          </table>";
 			sendHtmlMail(MANAGER_EMAIL, "Mosqoy - Venta confirmada",
 					"Se ha registrado una venta por parte de " + v.getVendedor().getFullname(),
-					msg+table+msg2);
+					msg+table+msg2);*/
 		}
 		else {// Solicitud de comprobante
 			msg ="<p>El usuario sede, ha solicitado un(a) "+ v.getId().getNombreTipodocumento() + " para poder concluir " +
@@ -239,7 +240,91 @@ public class CustomMailService {
 					"              </tr>\n" +
 					"            </tbody>\n" +
 					"          </table>";
-			sendHtmlMail(MANAGER_EMAIL, "Mosqoy - Solicitud de comprobante de pago",
+			sendHtmlMail(correo, "Mosqoy - Solicitud de comprobante de pago",
+					v.getVendedor().getFullname() + " ha solicitado un comprobante de pago (<strong>"+v.getId().getNombreTipodocumento()+ "</strong>)",
+					msg+table+msg2);
+		}
+	}
+	public void sendSaleConfirmation(Ventas v, String[] correo) throws IOException, MessagingException {
+		String msg ;
+		String table;
+		String msg2="";
+		if(v.getConfirmado()) { // Venta confirmada
+			/*
+			msg="<p>El usuario "+v.getVendedor().getRoles().getNombrerol()+" "+v.getVendedor().getFullname()+
+			", ha registrado una venta en el sistema. Los detalles de la venta se muestran a continuación</p>";
+
+			if (v.getMedia()!=null && v.getMedia().length()>10){
+				msg2+="<p>Adicionalmente, el usuario registro un archivo del comprobante de pago, el cual puede" +
+						" visualizar a través del siguiente enlace: <br> <a href='"+v.getMedia()+"'>"+v.getMedia()+"</a></p>";
+			}
+
+			msg2+="<p>Si desea comunicarse con el usuario, su correo es: "+v.getVendedor().getCorreo()+" y " +
+					"su numero celular: "+v.getVendedor().getTelefono()+"</p>";
+			table = "<table>\n" +
+					"            <thead>\n" +
+					"              <th>Nombre del cliente</th>\n" +
+					"              <th>Tipo de comprobante</th>\n" +
+					"              <th>Numero de comprobante</th>\n" +
+					"              <th>Lugar de venta</th>\n" +
+					"              <th>Codigo inventario</th>\n" +
+					"              <th>Cantidad</th>\n" +
+					"              <th>Precio unitario</th>\n" +
+					"              <th>Total</th>\n" +
+					"              <th>Medio de Pago</th>\n" +
+					"              <th>Fecha</th>\n" +
+					"            </thead>\n" +
+					"            <tbody>\n" +
+					"              <tr>\n" +
+					"                <td>"+v.getNombrecliente()+"</td>\n" +
+					"                <td>"+v.getId().getNombreTipodocumento()+"</td>\n" +
+					"                <td>"+v.getId().getNumerodocumento()+"</td>\n" +
+					"                <td>"+v.getLugarventa()+"</td>\n" +
+					"                <td>"+v.getInventario().getCodigoinventario()+"</td>\n" +
+					"                <td>"+v.getCantidad()+"</td>\n" +
+					"                <td>"+v.getPrecioventa()+"</td>\n" +
+					"                <td>"+v.getSumaParcial()+"</td>\n" +
+					"                <td>"+MediosDePago.get(v.getMediopago())+"</td>\n" +
+					"                <td>"+v.getFecha()+"</td>\n" +
+					"              </tr>\n" +
+					"            </tbody>\n" +
+					"          </table>";
+			sendHtmlMail(MANAGER_EMAIL, "Mosqoy - Venta confirmada",
+					"Se ha registrado una venta por parte de " + v.getVendedor().getFullname(),
+					msg+table+msg2);*/
+		}
+		else {// Solicitud de comprobante
+			msg ="<p>El usuario sede, ha solicitado un(a) "+ v.getId().getNombreTipodocumento() + " para poder concluir " +
+					"la venta detallada a continuación</p>";
+
+			msg2+="<p>Si desea comunicarse con el usuario, su correo es: "+v.getVendedor().getCorreo()+" y " +
+					"su numero celular: "+v.getVendedor().getTelefono()+"</p>";
+
+			table = "<table>\n" +
+					"            <thead>\n" +
+					"              <th>Nombre del cliente</th>\n" +
+					"              <th>Tipo de comprobante</th>\n" +
+					"              <th>Lugar de venta</th>\n" +
+					"              <th>Codigo inventario</th>\n" +
+					"              <th>Cantidad</th>\n" +
+					"              <th>Precio unitario</th>\n" +
+					"              <th>Total</th>\n" +
+					"              <th>Fecha</th>\n" +
+					"            </thead>\n" +
+					"            <tbody>\n" +
+					"              <tr>\n" +
+					"                <td>"+v.getNombrecliente()+"</td>\n" +
+					"                <td>"+v.getId().getNombreTipodocumento()+"</td>\n" +
+					"                <td>"+v.getLugarventa()+"</td>\n" +
+					"                <td>"+v.getInventario().getCodigoinventario()+"</td>\n" +
+					"                <td>"+v.getCantidad()+"</td>\n" +
+					"                <td>"+v.getPrecioventa()+"</td>\n" +
+					"                <td>"+v.getSumaParcial()+"</td>\n" +
+					"                <td>"+v.getFecha()+"</td>\n" +
+					"              </tr>\n" +
+					"            </tbody>\n" +
+					"          </table>";
+			sendHtmlMail(correo, "Mosqoy - Solicitud de comprobante de pago",
 					v.getVendedor().getFullname() + " ha solicitado un comprobante de pago (<strong>"+v.getId().getNombreTipodocumento()+ "</strong>)",
 					msg+table+msg2);
 		}

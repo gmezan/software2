@@ -1,21 +1,17 @@
 $(document).ready(function () {
+    $(".nav-item i").prop("hidden",false);
     let tableContainer = $(".table-responsive");
     let fakeContainer = $(".fakescroll");
     updatefakeScroll();
-
     fakeContainer.scroll(function () {
         tableContainer.scrollLeft(fakeContainer.scrollLeft());
-
     });
     tableContainer.scroll(function () {
         fakeContainer.scrollLeft(tableContainer.scrollLeft());
-
     });
-
     let tablawrapper = $("#dataTable_wrapper");
     tablawrapper.children().eq(0).appendTo("#newFilterLength");
     tablawrapper.children().eq(1).appendTo("#newtablefoot");
-
     $("#dataTable_filter label input").on('input', function () {
         updatefakeScroll();
     });
@@ -23,7 +19,6 @@ $(document).ready(function () {
         updatefakeScroll();
     });
     refreshimg();
-
     $(document).on("click", ".show-foto", function () {
         let showfoto = $("#showFoto #fotoinv");
         showfoto.attr("src", "");
@@ -40,29 +35,23 @@ $(document).ready(function () {
         let url = $(id).attr('src');
         showfoto.attr("src", url);
     });
-    $(document).on("mouseover", "ul.pagination", function () {
+    $(document).on("mouseover", function () {
+        refreshimg();
+    }).on("mouseout", function () {
+        refreshimg();
+    }).on("click", function () {
         refreshimg();
     });
-    $(document).on("mouseout", "ul.pagination", function () {
-        refreshimg();
-    });
-    /*$("img").on("error", function() {
-        $(this).parent().attr("disabled");
-        console.log(this);
-    });*/
 });
-
 $(window).resize(function () {
     updatefakeScroll();
 });
-
 function updatefakeScroll() {
     let fakeDiv = $(".fakescroll div");
     let table = $(".table-responsive table");
     let tableWidth = table.width();
     fakeDiv.width(tableWidth);
 }
-
 function refreshimg() {
     $('.show-fotoU').removeAttr('disabled');
     $('.show-foto').removeAttr('disabled');
@@ -70,9 +59,15 @@ function refreshimg() {
     $('.show-fotoU').parent().addClass("tdfoto");
     let imgTabla = $('.table-responsive img');
     imgTabla.removeClass();
+    imgTabla.each(function () {
+        if ($(this).attr('src') == 'https://storage-service.mosqoy-sw2.dns-cloud.net/profile/defaultProfilePicture.jpg') {
+            $(this).parent().prop('disabled', true);
+        }
+    });
     imgTabla.addClass("fototabla");
     imgTabla.removeAttr('height');
     imgTabla.removeAttr('width');
+    imgTabla.removeAttr('style');
     imgTabla.removeAttr('alt');
     imgTabla.attr('alt', "No disponible");
 }

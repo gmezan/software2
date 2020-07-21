@@ -1,6 +1,7 @@
 package com.example.sw2.controller.gestor;
 
 import com.example.sw2.Dao.StorageServiceDao;
+import com.example.sw2.constantes.AsignadosSedesId;
 import com.example.sw2.constantes.CustomConstants;
 import com.example.sw2.entity.*;
 import com.example.sw2.repository.*;
@@ -15,14 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.*;
 import java.time.YearMonth;
-import java.util.Optional;
-import java.util.Set;
 
 //REPLANTEAR inventario entity
 
@@ -48,9 +48,9 @@ public class InventarioController {
     }
 
     @GetMapping(value = {""})
-    public String listInv(@ModelAttribute("inventario") Inventario inventario, Model m) {
+    public String listInv(@ModelAttribute("inventario") Inventario inventario, Model m, HttpSession session) {
         m.addAttribute("listaInv", inventarioRepository.findAllByOrderByFechamodificacionDesc());
-
+        session.setAttribute("controller","gestor/inventario");
         return "gestor/inventarioGestor";
     }
 
@@ -167,8 +167,6 @@ public class InventarioController {
             m.addAttribute("linea", inventario.getProductos().getId().getCodigolinea());
             m.addAttribute("listProd", productosRepository.findProductosByIdCodigolinea(inventario.getProductos().getId().getCodigolinea()));
         }
-        System.out.println(inventario.getProductos().getId().getCodigolinea());
-        System.out.println(inventario.getProductos().getId().getCodigonom());
 
         //Gustavo lo puso :
         //System.out.println(linea);
@@ -185,6 +183,12 @@ public class InventarioController {
             bindingResult.rejectValue("foto", "error.user", "Debe subir una foto.");
         }
 */
+        if (!bindingResult.hasFieldErrors("costotejedor") && !bindingResult.hasFieldErrors("costomosqoy")) {
+            if (inventario.getCostotejedor().compareTo(inventario.getCostomosqoy()) != -1) {
+                bindingResult.rejectValue("costomosqoy", "error.user", "Debe ser mayor al costo tejedor.");
+            }
+        }
+
         if (bindingResult.hasErrors()) {
             listasCamposInv(m);
             if (inventario.getComunidades() != null) {
@@ -345,14 +349,16 @@ public class InventarioController {
                     }
                 }
             }
-
-
+            if (!bindingResult.hasFieldErrors("costotejedor") && !bindingResult.hasFieldErrors("costomosqoy")) {
+                if (inv.getCostotejedor().compareTo(inv.getCostomosqoy()) != -1) {
+                    bindingResult.rejectValue("costomosqoy", "error.user", "Debe ser mayor al costo tejedor.");
+                }
+            }
             if (bindingResult.hasFieldErrors("facilitador") || bindingResult.hasFieldErrors("costomosqoy") || bindingResult.hasFieldErrors("costotejedor") || bindingResult.hasFieldErrors("fechavencimientoconsignacion")) {
                 m.addAttribute("listaInv", inventarioRepository.findAllByOrderByFechamodificacionDesc());
                 m.addAttribute("msgError", "ERROR DE EDICION");
                 return "gestor/inventarioGestor";
             } else {
-
                 invOld.setCostotejedor(inv.getCostotejedor());
                 invOld.setCostomosqoy(inv.getCostomosqoy());
 
@@ -371,7 +377,7 @@ public class InventarioController {
 
     @GetMapping("/delete")
     public String borrar(Model model,
-                         @RequestParam("codDelete") String id,
+                         @RequestParam("codigoinventario") String id,
                          RedirectAttributes attr) {
         Optional<Inventario> c = inventarioRepository.findById(id);
         if (c.isPresent()) {
@@ -441,5 +447,32 @@ public class InventarioController {
         return new ResponseEntity<>(artesanosRepository.findArtesanosByComunidades_Codigo(comunidad), HttpStatus.OK);
     }
 
-
+    //Has items
+    @ResponseBody
+    @GetMapping(value = {"/has", "/editInv/has", "/addInv/has"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<List<HashMap<String, String>>>> hasItems(@RequestParam(value = "id") String id) {
+        return new ResponseEntity<>(new ArrayList<List<HashMap<String, String>>>() {
+            {
+                add(new ArrayList<HashMap<String, String>>() {{
+                    Objects.requireNonNull(inventarioRepository.findById(id).orElse(null)).getAsignadosSedes().forEach((i) -> {
+                        add(new HashMap<String, String>() {{
+                            put("sede", i.getId().getSede().getFullname());
+                            put("stock", i.getStock().toString());
+                            put("envio", i.getFechaEnvioStr());
+                        }});
+                    });
+                }});
+                add(new ArrayList<HashMap<String, String>>() {{
+                    Objects.requireNonNull(inventarioRepository.findById(id).orElse(null)).getVentas().forEach((i) -> {
+                        add(new HashMap<String, String>() {{
+                            put("numdocumento", i.getId().getNumerodocumento());
+                            put("fechaVenta", i.getFechaDeVentaStr());
+                            put("vendedor", i.getVendedor().getFullname());
+                        }});
+                    });
+                }});
+            }
+        },
+                HttpStatus.OK);
+    }
 }

@@ -1,10 +1,16 @@
 var contextPath = window.location.href;
 $(document).ready(function () {
-    $("#addForm #invAdd").attr("disabled",false);
-    $("#addForm #conDia").attr("disabled",false);
-    $("#addForm #linea").attr("disabled",false);
-    $("#addForm #codAdquisicion").attr("disabled",false);
-    $( "input[hidden='hidden']" ).removeAttr("required");
+    $("#addForm #invAdd").attr("disabled", false);
+    $("#addForm #conDia").attr("disabled", false);
+    $("#addForm #linea").attr("disabled", false);
+    $("#addForm #codAdquisicion").attr("disabled", false);
+    $("input[hidden='hidden']").removeAttr("required");
+}).on("submit","form", function () {
+    if((document.getElementById('foto1').files[0].size*1.0004)>=2097152) {
+        $("#foto1").next().remove().end().parent().append("<div class=\"text-danger\">Archivo mayor a 2MB</div>");
+        return false;
+    }
+    return  true;
 });
 $("#addForm #linea").on('change', function () {
     let prodList = $("#addForm #productos");
@@ -34,7 +40,6 @@ $("#addForm #linea").on('change', function () {
             alert("Ocurrió un error");
         })
     }
-
 });
 
 $("#addForm #codAdquisicion").on('change', function () {
@@ -56,9 +61,12 @@ $("#addForm #comunidades").on('change', function () {
     if (cond && !$("#addForm #artesanoConsignacion").prop("hidden")) {
         updateArtesanos(option);
     }
-
-
 });
+$("#costotejedor").on('change', function () {
+    let tej = (parseFloat(this.value) + 0.01).toFixed(2);
+    $("#costomosqoy").attr("min",tej);
+});
+
 
 function updateArtesanos(option) {
     let artList = $("#addForm #artesanos");
@@ -86,10 +94,7 @@ function updateArtesanos(option) {
             alert("Ocurrió un error");
         })
     }
-
-
 }
-
 
 $("#addForm #conDia").on('change', function () {
 
@@ -110,16 +115,16 @@ $("#addForm #fechames").on('change', function () {
     let fechasig = new Date(fecha[0], fecha[1], 1);
     setminfecha(fechasig);
 });
-$("#addForm").on('submit',function () {
+$("#addForm").on('submit', function () {
     if ($('#confirmModal').hasClass("show")) {
         return true;
-    }else{
+    } else {
         $('#confirmModal').modal({show: true, backdrop: 'static', keyboard: false});
         return false;
     }
 });
 
-$("#confirmbtn").on('click',function () {
+$("#confirmbtn").on('click', function () {
     $("#addForm").submit();
 });
 
@@ -127,18 +132,9 @@ $(document).on("click", ".add-inventario", function () {
     $("#addModal #cant").val('1');
     $("#addModal #msgc").text('');
     $("#addModal #codinvAdd").val($(this).data('id'));
-    $("#addModal #addTitle").text("Añadir "+$(this).data('id'));
+    $("#addModal #addTitle").text("Añadir " + $(this).data('id'));
 
 });
-
-$(document).ready(function () {
-    if ($("#msgError").text() === "ERROR DE CANTIDAD") {
-        //$('#formModal').modal('show');
-        $('#addModal').modal({show: true, backdrop: 'static', keyboard: false});
-    }
-
-});
-
 $(document).on("click", ".edit-inventario", function () {
     $("#editModal #costotejedor").val('');
     $("#editModal #costomosqoy").val('');
@@ -147,12 +143,10 @@ $(document).on("click", ".edit-inventario", function () {
 
     $("#editModal #codAdquisicion").val('');
 
-
     $("#editModal .errorInv").text('');
     $("#editModal .modal-title").text("Editar " + $(this).data('id'));
     $("#editModal #codigoinventario").val($(this).data('id'));
     $("#editModal #vencimientoConsignacion").prop("hidden", true);
-
 
     $.ajax({
         method: "GET", url: contextPath + "/getInv?id=" + $(this).data('id')
@@ -160,7 +154,8 @@ $(document).on("click", ".edit-inventario", function () {
         if (inv != null) {
             $("#editModal #codAdquisicion").val(inv.codAdquisicion);
             $("#editModal #costotejedor").val(inv.costotejedor);
-            $("#editModal #costomosqoy").val(inv.costomosqoy);
+            let tej = (parseFloat(inv.costotejedor) + 0.01).toFixed(2);
+            $("#editModal #costomosqoy").val(inv.costomosqoy).prop("min",tej);
             $("#editModal #facilitador").val(inv.facilitador);
             if (inv.codAdquisicion === 1) {
                 $("#editModal #vencimientoConsignacion").prop("hidden", false);
@@ -201,11 +196,61 @@ $(document).ready(function () {
         //$('#formModal').modal('show');
         $('#editModal').modal({show: true, backdrop: 'static', keyboard: false});
     }
+    if ($("#msgError").text() === "ERROR DE CANTIDAD") {
+        //$('#formModal').modal('show');
+        $('#addModal').modal({show: true, backdrop: 'static', keyboard: false});
+    }
+    refreshbtn();
 });
-
+$(document).on("mouseover", function () {
+    refreshbtn();
+}).on("mouseout", function () {
+    refreshbtn();
+});
+function refreshbtn(){
+    $(".edit-inventario").attr("disabled", false);
+    $(".delete-inventario").attr("disabled", false);
+    $(".add-inventario").attr("disabled", false);
+}
 $(document).on("click", ".delete-inventario", function () {
-
     $("#deleteModal .modal-title").text("Borrar " + $(this).data('id'));
 
-    $("#deleteModal #codDelete").val($(this).data('id'));
+    let id = $(this).data('id');
+    $("#deleteModal #buttonDelete").prop("hidden",true).prop("disabled",true);
+    $("#deleteModal #deleteModalBody #deleteModalBodyP").text("");
+    $("#deleteModal #deleteModalBody #tableModal1").prop("hidden",true);
+    $("#deleteModal #deleteModalBody #tableModal2").prop("hidden",true);
+    $("#deleteModal #vent").prop("hidden",true);
+    $("#deleteModal #asig").prop("hidden",true);
+    $.ajax({
+        method:"GET", url:contextPath+"/has?id="  + id
+    }).done(function(data){
+        console.log(data);
+        if (data==null || data[0].length === 0 && data[1].length === 0){
+            $("#deleteModal #codigoinventario").val(id);
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("¿Seguro que desea borrar este registro del inventario? Esta acción no se puede deshacer.");
+            $("#deleteModal #buttonDelete").prop("disabled",false).prop("hidden",false);
+        }
+        else {
+            $("#deleteModal #deleteModalBody #deleteModalBodyP").text("Este registro no se puede borrar, ya que está asociado a las siguientes Ventas y/o Productos Asignados");
+            let r = '';
+            if(data[0].length!==0){
+                for (let key=0, size=data[0].length; key<size; key++)
+                    r+='<tr><td>'+data[0][key].sede+'</td><td>'+data[0][key].stock+'</td><td>'+data[0][key].envio+'</td></tr>';
+                $("#deleteModal #deleteModalBody #tableModal1").prop("hidden",false);
+                $("#deleteModal #asig").prop("hidden",false);
+                $("#deleteModal #tbody1").html(r);
+            }
+            if(data[1].length!==0){
+                r = '';
+                for (let key=0, size=data[1].length; key<size; key++)
+                    r+='<tr><td>'+data[1][key].numdocumento+'</td><td>'+data[1][key].vendedor+'</td><td>'+data[1][key].fechaVenta+'</td></tr>';
+                $("#deleteModal #deleteModalBody #tableModal2").prop("hidden",false);
+                $("#deleteModal #vent").prop("hidden",false);
+                $("#deleteModal #tbody2").html(r);
+            }
+        }
+    }).fail(function (err) {alert("Ocurrió un error");$('#deleteModal').modal({show: false});
+    });
+
 });

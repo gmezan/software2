@@ -112,4 +112,18 @@ public class AsignadosSedes extends Auditable implements Serializable {
         }
         return fecha;
     }
+
+    public String getClaseHtml() {
+        String clase="";
+        if (this.id.getEstadoasignacion()==CustomConstants.ESTADO_ENVIADO_A_SEDE){
+            clase="badge badge-warning badge-pill";
+        }else if(this.id.getEstadoasignacion()==CustomConstants.ESTADO_RECIBIDO_POR_SEDE){
+            clase="badge badge-success badge-pill";
+        }else if(this.id.getEstadoasignacion()==CustomConstants.ESTADO_DEVUELTO_POR_SEDE){
+            clase="badge badge-secondary badge-pill";
+        }else if(this.id.getEstadoasignacion()==CustomConstants.ESTADO_RECIBIDO_CON_PROBLEMAS){
+            clase="badge badge-danger badge-pill";
+        }
+        return clase;
+    }
 }

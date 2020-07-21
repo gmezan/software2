@@ -4,7 +4,7 @@ $(function() {
 
     let $checkbox = $("#confirmado1");
     console.log($checkbox.is(":checked"));
-    $("#id\\.numerodocumento").prop("disabled",!$checkbox.is(":checked"));
+    $("#id\\.numerodocumento").val('').prop("disabled",!$checkbox.is(":checked"));
     $(".inputFile").prop("hidden",!$checkbox.is(":checked"));
 
     if ($("#msgVenta").text()==="ERROR"){
@@ -21,6 +21,7 @@ $(function() {
     $("#id\\.numerodocumento").prop("disabled",true);
     $("#confirmado1").prop("checked",false);
     $(".inputFile").prop("hidden",true);
+    $(".text-danger").hide();
 
     $("#registrarVentaModal  #idgestor").val(  $(this).data('id12'));
     $("#registrarVentaModal  #vendedor").val( $(this).data('id22'));
@@ -36,8 +37,37 @@ $(function() {
     $("#registrarVentaModal  #rucdni").val('');
     $("#registrarVentaModal  #cantidad").val('');
 
+    let url = contextPath + "/postV";
 
+    let data = {
+        idgestor: parseInt($(this).data('id12')),
+        vendedor: parseInt($(this).data('id22')),
+        inventario: $(this).data('id32'),
+        idestadoasign: parseInt($(this).data('id42')),
+        precioventa: parseFloat($(this).data('id52'))
+    };
 
+    console.log(data);
+    $.ajax({
+        method:"POST",
+        data: data,
+        url:url
+    }).done(function(registrarventa){
+        if (registrarventa!=null){
+            $("#registrarVentaModal #cantAsignV").text(registrarventa.cantAsignV);
+        }
+        $("#registrarVentaModal .modal-footer button").attr("disabled",false);
+    }).fail(function (err) {
+        console.log(err);
+        $('#registrarVentaModal').modal('hide');
+        alert("Ocurrió un error");
+    });
+}).on("submit","#registrarVentaModal form", function () {
+    if((document.getElementById('foto1').files[0].size*1.0004)>=2097152) {
+        $("#foto1").next().remove().end().parent().append("<div class=\"text-danger\">Archivo mayor a 2MB</div>");
+        return false;
+    }
+    return  true;
 });
 
 

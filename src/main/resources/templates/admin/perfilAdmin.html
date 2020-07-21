@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/general-gestor.html ::gestor-head(title='¡Bienvenido!')">
-    
+    <head th:replace="fragments/general-admin.html ::admin-head(title='¡Bienvenido!')">
+
     </head>
     <body id="page-top">
-        
+
         <!-- Page Wrapper -->
         <div id="wrapper">
-            
+
             <!-- Sidebar -->
-            <div th:replace="fragments/general-gestor.html ::gestor-sidebar(param1='...',param2='...')"></div>
+            <div th:replace="fragments/general-admin.html ::admin-sidebar(param1='...',param2='...')"></div>
             <!-- End of Sidebar -->
-            
+
             <!-- Content Wrapper -->
             <div id="content-wrapper" class="d-flex flex-column">
-                
+
                 <!-- Main Content -->
                 <div id="content">
-                    
-                    <div th:replace="fragments/general-gestor.html :: topbar"></div>
-                    
+
+                    <div th:replace="fragments/general-admin.html :: topbar"></div>
+
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-                        
+
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-white" th:text="${'Bienvenido, '+user.fullname}">Perfil del Gestor</h1>
+                            <h1 class="h3 mb-0 text-gray-800" th:text="${'Bienvenido, '+user.fullname}">Perfil del Admin</h1>
                         </div>
                         <div id="msg" th:if="${msg != null}" th:text="${msg}" class="alert alert-success py-1"
                              role="alert"></div>
                         <div id="msgGestor" th:if="${msgError != null}" th:text="${msgError}"
                              class="alert alert-danger py-1" role="alert"></div>
-                        
+
                         <div class="col-lg-9 mx-auto">
-                            
+
                             <!-- Profile widget -->
                             <div class="bg-white shadow rounded overflow-hidden mb-5">
                                 <div class="px-4 pt-0 pb-4" style="background-color: #9d9ea9!important">
@@ -47,16 +47,16 @@
                                                         width: 128px;
                                                         height: 128px;">
                                             </a>
-                                            
+
                                             <a th:attr=" data-id=${session.usuario.idusuarios}"
                                                data-toggle="modal" data-target="#editprofile"
                                                style="color: white"
                                                class="editar-perfil btn btn-dark btn-sm btn-block">Editar
                                                 perfil</a>
-                                        
-                                        
+
+
                                         </div>
-                                        
+
                                         <div class="media-body mt-3 mb-2 text-white">
                                             <h4 class="mt-0 mb-4" th:text="${session.usuario.getFullname()}"></h4>
                                             <p class="small mb-2"><i class="fa fa-user-circle mr-2"></i><span
@@ -68,7 +68,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="py-4 px-4">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <h5 class="mb-0">¡Bienvenido a la familia de Mosqoy!</h5>
@@ -106,73 +106,64 @@
                                 </div>
                                 <div class="bg-light px-4 pt-4 pb-2 d-flex justify-content-between text-center">
                                     <li class="list-inline-item pt-3">
-                                        <h5 class="font-weight-bold mb-2 d-block">Cifras Globales:</h5>
+                                        <h5 class="font-weight-bold mb-2 d-block" >Cifras Globales:</h5>
                                     </li>
                                     <ul class="list-inline mb-0">
-                                        
+                                        <li class="list-inline-item">
+                                            <h5 class="font-weight-bold mb-0 d-block" th:text="${cantGestores!=null? cantGestores : '0'}">241</h5>
+                                            <small class="text-muted"> <i class="fa fa-picture-o mr-1"></i>Gestores</small>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <h5 class="font-weight-bold mb-0 d-block" th:text="${cantSedes!=null? cantSedes : '0'}">84K</h5>
+                                            <small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Sedes</small>
+                                        </li>
                                         <li class="list-inline-item">
                                             <h5 class="font-weight-bold mb-0 d-block" th:text="${stock_total!=null? stock_total : '0'}">84K</h5>
                                             <small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Productos</br>Registrados</small>
                                         </li>
-                                        <li class="list-inline-item">
-                                            <h5 class="font-weight-bold mb-0 d-block" th:text="${stock_gestor!=null? stock_gestor : '0'}">84K</h5>
-                                            <small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Stock</br>Disponible</small>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <h5 class="font-weight-bold mb-0 d-block" th:text="${stock_enSede!=null? stock_enSede : '0'}">84K</h5>
-                                            <small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Stock</br>en Sedes</small>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <h5 class="font-weight-bold mb-0 d-block" th:text="${cantVentasTotales!=null? cantVentasTotales : '0'}">84K</h5>
-                                            <small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Ventas</br>Totales</small>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <h5 class="font-weight-bold mb-0 d-block" th:text="${cantSedes!=null? cantSedes : '0'}">241</h5>
-                                            <small class="text-muted"> <i class="fa fa-picture-o mr-1"></i>Sedes</small>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
-                            
+
                             <!-- End profile widget -->
                         </div>
-                    
-                    
+
+
                     </div>
                     <!-- /.container-fluid -->
-                
+
                 </div>
                 <!-- End of Main Content -->
-                
-                <div th:replace="fragments/general-gestor.html :: footer"></div>
-            
+
+                <div th:replace="fragments/general-admin.html :: footer"></div>
+
             </div>
             <!-- End of Content Wrapper -->
-        
+
         </div>
         <!-- End of Page Wrapper -->
-        
+
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-        
+
         <!-- Logout Modal-->
-        <div th:replace="fragments/general-gestor.html :: logout-modal"></div>
-        
+        <div th:replace="fragments/general-admin.html :: logout-modal"></div>
+
         <!-- Bootstrap core JavaScript-->
         <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
         <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-        
+
         <!-- Core plugin JavaScript-->
         <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
-        
+
         <!-- Custom scripts for all pages-->
         <script th:src="@{/js/sb-admin-2.min.js}"></script>
-        
+
         <script th:src="@{/js/gestor/perfil.js}"></script>
-        
-        
+
+
         <!-- Modal Form-->
         <div class="modal fade" id="editprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -180,19 +171,19 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 id="formTitle" class="modal-title">Editar Perfil</h5>
-                        <button type="button" th:href="@{/gestor/perfil}" class="close" data-dismiss="modal"
+                        <button type="button" th:href="@{/admin/perfil}" class="close" data-dismiss="modal"
                                 aria-label="Close">
                             <a type="button"
-                               th:href="@{/gestor/perfil}"
+                               th:href="@{/admin/perfil}"
                                class="close" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </a>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" th:action="@{/gestor/save}" th:object="${user}" enctype="multipart/form-data">
+                        <form method="post" th:action="@{/admin/save}" th:object="${user}" enctype="multipart/form-data">
                             <input hidden readonly type="text" class="form-control" th:field="*{idusuarios}">
-                            
+
                             <div class="form-group">
                                 <label class="col-form-label">Nombre:</label>
                                 <input type="text" class="form-control" th:field="*{nombre}">
@@ -218,7 +209,7 @@
                                 <img id="foto" class="rounded-pill" width="100" style="height: auto;" th:src="*{foto}">
                             </div>
                             <div class="form-group mb-0">
-                                <label for="photo" class="col-form-label">Editar foto (Opcional, Máx 2MB):<br>Soportado: jpg, png, jpeg</label>
+                                <label for="photo" class="col-form-label">Editar foto (Opcional, Máx 2MB):</label>
                                 <input type="file" id="photo" name="photo">
                                 <div class="text-danger" th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}">
                                     Error
@@ -232,7 +223,7 @@
                             </div>
                             <input hidden="hidden" type="text" name="deletefoto"/>
                             <div class="modal-footer">
-                                <a type="button" th:href="@{/gestor/perfil}" class="btn btn-secondary">Cancelar</a>
+                                <a type="button" th:href="@{/admin/perfil}" class="btn btn-secondary">Cancelar</a>
                                 <button type="submit" class="btn btn-info"><a style="color:white;text-decoration:none">Actualizar</a>
                                 </button>
                             </div>
@@ -255,7 +246,7 @@
                                                         height: 488px;">
                         <img id="fotoinv"
                              th:src="${session.usuario.foto}"
-                        
+
                              alt="Foto no disponible:(" style=" position: absolute;
                                                     top: 0;
                                                     left: 0;
@@ -268,39 +259,10 @@
                                                     max-height: 100%;"
                              src="">
                     </div>
-                
+
                 </div>
             </div>
         </div>
-        
-        <!-- Modal Note>
-        <div-- class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Modificar Nota</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <textarea type="text" class="form-control" id="recipient-name1"
-                                          placeholder="Nota...."></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary"><a href="perfilGestor.html"
-                                                                         style="color:white;text-decoration:none">Guardar
-                            cambios</a></button>
-                    </div>
-                </div>
-            </div>
-        </div-->
-    
+
     </body>
 </html>

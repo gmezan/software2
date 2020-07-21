@@ -28,6 +28,10 @@
                 background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.46)), fixed no-repeat center url(https://cdn.pixabay.com/photo/2013/08/20/15/47/sunset-174276_960_720.jpg);
                 background-size: cover;
             }
+            
+            h1 {
+                text-shadow: -2px 0 3px #ffffff6b, 2px 0 1px #ffffff;
+            }
         </style>
     </head>
     <body>
@@ -65,6 +69,12 @@
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                          aria-labelledby="userDropdown">
+                        <a class="dropdown-item" th:href="@{/sede/perfil}">
+                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Ver Mi Perfil
+                        </a>
+                        
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Cerrar Sesión
@@ -114,7 +124,7 @@
             
             <!-- Heading -->
             <div class="sidebar-heading">
-                Listas
+                Sede
             </div>
             
             <!-- Nav Item - Productos -->
@@ -127,15 +137,14 @@
                 <div id="collapseInv" class="collapse" th:classappend="${param1=='Productos'}?  show : ''"
                      aria-labelledby="headingInv" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" th:classappend="${param2=='ListaProductosConfirmados'}?  active : ''"
-                           th:href="@{/sede/productosConfirmados}">Productos confirmados</a>
                         <a class="collapse-item" th:classappend="${param2=='ListaProductosPorConfirmar'}?  active : ''"
                            th:href="@{/sede/productosPorConfirmar}">Productos por confirmar</a>
+                        <a class="collapse-item" th:classappend="${param2=='ListaProductosConfirmados'}?  active : ''"
+                           th:href="@{/sede/productosConfirmados}">Productos confirmados</a>
                     </div>
                 </div>
             </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            
             <!-- Nav Item - Ventas -->
             <li class="nav-item" th:classappend="${param1=='Ventas'}? active : ''">
                 <a class="nav-link" th:classappend="${param1=='Ventas'}? '': collapsed" href="#"
@@ -154,15 +163,22 @@
                     </div>
                 </div>
             </li>
-
-            <hr class="sidebar-divider my-0">
+            
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Tiendas
+            </div>
             <!-- Nav Item - Reportes -->
             <li class="nav-item" th:classappend="${param1=='AsignadoTienda'}? active : ''">
                 <a class="nav-link" th:href="@{/sede/AsignadoTienda}">
                     <i class="fas fa-fw fa-truck"></i>
                     <span>Asignado a tienda</span></a>
             </li>
-            <hr class="sidebar-divider my-0">
+            
             <!-- Nav Item - Reportes -->
             <li class="nav-item" th:classappend="${param1=='Tiendas'}? active : ''">
                 <a class="nav-link" th:href="@{/sede/tienda}">
@@ -171,7 +187,12 @@
             </li>
             
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <hr class="sidebar-divider">
+            
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Data
+            </div>
             <!-- Nav Item - Reportes -->
             <li class="nav-item" th:classappend="${param1=='Reportes'}? active : ''">
                 <a class="nav-link" th:href="@{/sede/reportes}">

@@ -57,17 +57,12 @@ public class SedeController {
     @Autowired
     CustomMailService customMailService;
 
-    @GetMapping(value = {"/", ""})
-    public String init() {
-        return "redirect:/sede/productosPorConfirmar";
-    }
-
 
     @GetMapping("productosPorConfirmar")
     public String productosPorConfirmar(HttpSession session, Model model) {
 
         Usuarios sede = (Usuarios) session.getAttribute("usuario");
-
+        session.setAttribute("controller","sede/productosPorConfirmar");
         model.addAttribute("listaProductosPorConfirmar", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
         return "sede/ListaProductosPorConfirmar";
 
@@ -151,7 +146,7 @@ public class SedeController {
             }
         }
 
-        if (!bindingResult.hasFieldErrors("id") && ventas.getConfirmado()) {
+        if (!bindingResult.hasFieldErrors("id") && ventas.getConfirmado() && ventas.getId().validateNumeroDocumento()) {
             Optional<Ventas> optVenta = ventasRepository.findById(ventas.getId());
 
             if (optVenta.isPresent()) {
@@ -161,6 +156,13 @@ public class SedeController {
 
         }
         if (bindingResult.hasFieldErrors("id") || bindingResult.hasFieldErrors("rucdni") || bindingResult.hasFieldErrors("nombrecliente") || bindingResult.hasFieldErrors("lugarventa") || bindingResult.hasFieldErrors("fecha") || bindingResult.hasFieldErrors("cantidad")) {
+            AsignadosSedesId id = new AsignadosSedesId(usuariosRepository.findById(idgestor).get(), ventas.getVendedor(),
+                    ventas.getInventario(),
+                    idestadoasign, ventas.getPrecioventa().floatValue());
+
+            Optional<AsignadosSedes> asignadosSedesOptional = asignadosSedesRepository.findById(id);
+            asignadosSedes = asignadosSedesOptional.get();
+            model.addAttribute("cantAsignV", asignadosSedes.getCantidadactual());
             model.addAttribute("idgestor", idgestor);
             model.addAttribute("idestadoasign", idestadoasign);
             model.addAttribute("listaTiendas", tiendaRepository.findAll());
@@ -197,6 +199,7 @@ public class SedeController {
                 if (asignadosSedes.getStock() ==0){
                     customMailService.sendStockAlert(asignadosSedes);
                 }
+                customMailService.sendSaleConfirmation(ventas, asignadosSedes.getId().getGestor().getCorreo());
             } catch (MessagingException | IOException  e) {
                 e.printStackTrace();
             }
@@ -223,7 +226,7 @@ public class SedeController {
                 return "redirect:/sede/productosConfirmados";
             }
 
-            if (asignacionTiendas.getStock() <= 0) {
+            if (asignacionTiendas.getStock() < 0) {
                 bindingResult.rejectValue("stock", "error.user", "Ingrese una cantidad valida");
             } else {
                 if (asignacionTiendas.getStock() > asignadosSedes.getCantidadactual()) {
@@ -232,6 +235,7 @@ public class SedeController {
             }
 
             if (bindingResult.hasErrors() ) {
+                model.addAttribute("cantAsign", asignadosSedes.getCantidadactual());
                 Usuarios sede = (Usuarios) session.getAttribute("usuario");
                 model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
                 model.addAttribute("listaTiendas", tiendaRepository.findAll());
@@ -313,15 +317,23 @@ public class SedeController {
 
         if (asignadosSedesOptional.isPresent()) {
 
-            AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
-                    id.getProductoinventario(), 3, id.getPrecioventa());
-            asignadosSedesRepository.deleteById(id);
-            AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
-            asignadosSedes.setId(idNew);
-            asignadosSedes.setMensaje(mensaje);
-            attr.addFlashAttribute("msgExito", "Se ha reportado el problema correctamente");
+            if (mensaje==null || mensaje.trim().isEmpty()){
+                attr.addFlashAttribute("msgError", "Debe ingresar un mensaje");
+            }
+            else if (mensaje.trim().length()>256){
+                attr.addFlashAttribute("msgError", "Mensaje muy largo, máximo 256 caracteres");
+            }
+            else{
+                AsignadosSedesId idNew = new AsignadosSedesId(id.getGestor(), id.getSede(),
+                        id.getProductoinventario(), 3, id.getPrecioventa());
+                asignadosSedesRepository.deleteById(id);
+                AsignadosSedes asignadosSedes = asignadosSedesOptional.get();
+                asignadosSedes.setId(idNew);
+                asignadosSedes.setMensaje(mensaje.trim());
+                asignadosSedesRepository.save(asignadosSedes);
+                attr.addFlashAttribute("msgExito", "Se ha reportado el problema correctamente");
+            }
 
-            asignadosSedesRepository.save(asignadosSedes);
         }
         return "redirect:/sede/productosPorConfirmar";
     }
@@ -375,6 +387,7 @@ public class SedeController {
         if (bindingResult.hasFieldErrors("cantDevol")) {
 
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
+            model.addAttribute("cantAsignD", asignadosSedes.getCantidadactual());
             model.addAttribute("listaProductosConfirmados", asignadosSedesRepository.buscarPorSede(sede.getIdusuarios()));
             model.addAttribute("listaTiendas", tiendaRepository.findAll());
             model.addAttribute("msgErrorD", "ERROR");
@@ -471,10 +484,10 @@ public class SedeController {
     @ResponseBody
     @PostMapping(value = "/productosConfirmados/post", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap<String, String>> getAsignTiendaPost(@RequestParam(value = "gestor") Integer gestor,
-                                                                    @RequestParam(value = "sede") Integer sede,
-                                                                    @RequestParam(value = "productoinventario") String inv,
-                                                                    @RequestParam(value = "estadoasignacion") Integer estadoasignacion,
-                                                                    @RequestParam(value = "precioventa") Float precioventa) {
+                                                                      @RequestParam(value = "sede") Integer sede,
+                                                                      @RequestParam(value = "productoinventario") String inv,
+                                                                      @RequestParam(value = "estadoasignacion") Integer estadoasignacion,
+                                                                      @RequestParam(value = "precioventa") Float precioventa) {
 
         AsignadosSedesId asignadosSedesId = new AsignadosSedesId(gestor,sede,inv,estadoasignacion,precioventa);
         return new ResponseEntity<>(new HashMap<String, String>() {{
@@ -490,7 +503,60 @@ public class SedeController {
 
         }},
                 HttpStatus.OK);
+
+
     }
 
+    @ResponseBody
+    @PostMapping(value = "/productosConfirmados/postV", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, String>> getRegistrarVentaPost(@RequestParam(value = "idgestor") Integer gestor,
+                                                                      @RequestParam(value = "vendedor") Integer sede,
+                                                                      @RequestParam(value = "inventario") String inv,
+                                                                      @RequestParam(value = "idestadoasign") Integer estadoasignacion,
+                                                                      @RequestParam(value = "precioventa") Float precioventa) {
+
+        AsignadosSedesId asignadosSedesId = new AsignadosSedesId(gestor,sede,inv,estadoasignacion,precioventa);
+        return new ResponseEntity<>(new HashMap<String, String>() {{
+            asignadosSedesId.setProductoinventario(inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
+            asignadosSedesRepository.findAll();
+            AsignadosSedes asignadosSedes = asignadosSedesRepository.findById(asignadosSedesId).orElse(null);
+            put("idgestor", Integer.toString(asignadosSedesId.getGestor().getIdusuarios()));
+            put("vendedor", Integer.toString(asignadosSedesId.getSede().getIdusuarios()));
+            put("inventario", asignadosSedesId.getProductoinventario().getCodigoinventario());
+            put("idestadoasign", Integer.toString(asignadosSedesId.getEstadoasignacion()));
+            put("precioventa", Float.toString(asignadosSedesId.getPrecioventa()));
+            put("cantAsignV", asignadosSedes != null ? Integer.toString(asignadosSedes.getCantidadactual()) : null);
+
+        }},
+                HttpStatus.OK);
+
+
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/productosConfirmados/postD", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, String>> getDevPost(@RequestParam(value = "idgestor") Integer gestor,
+                                                                      @RequestParam(value = "idsede") Integer sede,
+                                                                      @RequestParam(value = "idproductoinv") String inv,
+                                                                      @RequestParam(value = "idestadoasign") Integer estadoasignacion,
+                                                                      @RequestParam(value = "idprecioventa") Float precioventa) {
+
+        AsignadosSedesId asignadosSedesId = new AsignadosSedesId(gestor,sede,inv,estadoasignacion,precioventa);
+        return new ResponseEntity<>(new HashMap<String, String>() {{
+            asignadosSedesId.setProductoinventario(inventarioRepository.findByCodigoinventario(asignadosSedesId.getProductoinventario().getCodigoinventario()));
+            asignadosSedesRepository.findAll();
+            AsignadosSedes asignadosSedes = asignadosSedesRepository.findById(asignadosSedesId).orElse(null);
+            put("idgestord", Integer.toString(asignadosSedesId.getGestor().getIdusuarios()));
+            put("idseded", Integer.toString(asignadosSedesId.getSede().getIdusuarios()));
+            put("idproductoinvd", asignadosSedesId.getProductoinventario().getCodigoinventario());
+            put("idestadoasignd", Integer.toString(asignadosSedesId.getEstadoasignacion()));
+            put("idprecioventad", Float.toString(asignadosSedesId.getPrecioventa()));
+            put("cantAsignD", asignadosSedes != null ? Integer.toString(asignadosSedes.getCantidadactual()) : null);
+
+        }},
+                HttpStatus.OK);
+
+
+    }
 }
     
