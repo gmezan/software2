@@ -72,20 +72,24 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr th:each="asig,i:${listaAsignados}">
+                                            <tr th:each="asig,i:${listaAsignados}" th:if="${asig.stock > 0}">
                                                 <td th:text="${i.index+1}">1</td>
                                                 <td th:text="${asig.id.productoinventario.codigoinventario}">Codigo 1</td>
                                                 <td th:text="${asig.id.sede.getFullname()}">Sede 1</td>
                                                 <td th:text="${asig.stock}">20</td>
                                                 <td th:text="${asig.id.precioventa}">20</td>
                                                 <td th:text="${asig.fechaenvio}">20</td>
-                                                <td> <div th:text="${asig.id.getNombreEstado()}"  th:class="${asig.claseHtml}"></div></td>
-                                                <td th:text="${asig.stock - asig.cantidadactual}">20</td>
-                                                <td th:if="${asig.id.getEstadoasignacion() != 3}"></td>
+                                                <td th:text="${asig.id.getNombreEstado()}">Recibido por sede</td>
+                                                <td th:if="${asig.id.getEstadoasignacion() == 2}" th:text="${asig.stock - asig.cantidadactual}">20</td>
+                                                <td th:if="${asig.id.getEstadoasignacion() != 2}">-</td>
+                                                <td th:if="${asig.id.getEstadoasignacion() < 3}"></td>
                                                 <td th:if="${asig.id.getEstadoasignacion() == 3}">
                                                     <button th:attr="data-msg=${asig.mensaje}, data-gestor=${asig.id.gestor.idusuarios}, data-sede=${asig.id.sede.idusuarios}, data-inventario=${asig.id.productoinventario.codigoinventario},
                                                                 data-estado=${asig.id.estadoasignacion}, data-precio=${asig.id.precioventa}, data-stock=${asig.stock}"
-                                                            type="button" class="btn btn-danger" data-toggle="modal" id="DescartarBoton" data-target="#DescartarModal"><i class="fas fa-exclamation"></i></button>
+                                                            type="button" class="btn btn-danger" data-toggle="modal" id="DescartarBoton" data-target="#DescartarModal"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                                <td th:if="${asig.id.getEstadoasignacion() == 4}">
+                                                    <a  type="button" class="btn btn-warning" th:href="@{'/gestor/devoluciones'}"><i class="fas fa-redo-alt"></i></a>
                                                 </td>
                                             </tr>
                                         </tbody>
