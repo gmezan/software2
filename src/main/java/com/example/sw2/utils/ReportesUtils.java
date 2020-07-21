@@ -172,9 +172,9 @@ public abstract class ReportesUtils {
                     }
                     createCell(row,i++,dataRow.getVendedor(),style);
                     createCell(row,i++, String.valueOf(dataRow.getDnivendedor()),style);
-                    createCell(row,i++,"",style).setCellValue(dataRow.getPrecio_venta()/dataRow.getCantidad());
-                    createCell(row,i++,"",style).setCellValue(dataRow.getCantidad());
                     createCell(row,i++,"",style).setCellValue(dataRow.getPrecio_venta());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getCantidad());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getPrecio_venta()*dataRow.getCantidad());
                     createCell(row,i++,dataRow.getFecha(),style);
                     if(dataRow.getMedia()==null||dataRow.getMedia().equals("")){
                         createCell(row,i,"-",style);
