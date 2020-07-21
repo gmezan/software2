@@ -116,7 +116,7 @@ public class ReporteGestorService extends ReportesUtils implements IReporteGesto
         fillCellsInSheet(sheet,columns,reportesSedes,workbook,titulo);
     }
     private void llenarReporteProducto(Workbook workbook, Reportes reportes){
-        String[] columns = {"Nombre","Linea","Codigo","Suma Ventas","Cantidad Vendidos"};
+        String[] columns = {"Nombre","Linea","Codigo","Precio Total","Cantidad Vendidos"};
         Sheet sheet= workbook.createSheet("Reporte producto " + LocalDate.now().toString());
         setColumnWidths(sheet,reportes.getOrderBy());
         String titulo = "";

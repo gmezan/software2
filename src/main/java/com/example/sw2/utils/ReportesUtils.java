@@ -86,7 +86,7 @@ public abstract class ReportesUtils {
                     createCell(row, i++,dataRow.getNombre(),style);
                     createCell(row,i++,dataRow.getCodigo(),style);
                     createCell(row,i++,"",style).setCellValue(dataRow.getCantidadartesanos());
-                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas()*dataRow.getCantidadvendidos());
                     createCell(row,i,"",style).setCellValue(dataRow.getCantidadvendidos());
                 }
 
@@ -113,7 +113,7 @@ public abstract class ReportesUtils {
                     createCell(row,i++,dataRow.getNombre(),style);
                     createCell(row,i++,dataRow.getLinea(),style);
                     createCell(row,i++,dataRow.getCodigonom(),style);
-                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas()*dataRow.getCantidadvendidos());
                     createCell(row,i,"",style).setCellValue(dataRow.getCantidadvendidos());
                 }
                 //Lo único que va hardoceado son los números 9,10 y 12 que pertenecen a las columnas que se van a sumar
