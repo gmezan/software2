@@ -112,23 +112,23 @@
                                     
                                     <ul class="list-inline mb-0">
                                         <li class="list-inline-item mb-4">
-                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${prod_porConfirmar}">241</h5>
+                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${prod_porConfirmar!=null? prod_porConfirmar : '0'}">241</h5>
                                             <small class="text-muted">Productos Por Confirmar</small>
                                         </li>
                                         <li class="list-inline-item mb-4">
-                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${prod_Confirmado}">84K</h5>
+                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${prod_Confirmado!=null? prod_Confirmado : '0'}">84K</h5>
                                             <small class="text-muted"> Productos Confirmados</small>
                                         </li>
                                         <li class="list-inline-item mb-4">
-                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${stockProductos}">84K</h5>
+                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${stockProductos!=null? stockProductos : '0'}">84K</h5>
                                             <small class="text-muted">Stock Total de Productos</small>
                                         </li>
                                         <li class="list-inline-item mb-4">
-                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${cantTiendas}">84K</h5>
+                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${cantTiendas!=null? cantTiendas : '0'}">84K</h5>
                                             <small class="text-muted">Tiendas</small>
                                         </li>
                                         <li class="list-inline-item mb-4">
-                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${cantProd_enTienda}">84K</h5>
+                                            <h5 class="font-weight-bold mb-2 d-block" th:text="${cantProd_enTienda!=null? cantProd_enTienda : '0'}">84K</h5>
                                             <small class="text-muted"> Productos en Tiendas</small>
                                         </li>
                                     </ul>
