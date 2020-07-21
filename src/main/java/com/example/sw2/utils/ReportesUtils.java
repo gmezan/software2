@@ -63,7 +63,7 @@ public abstract class ReportesUtils {
                         createCell(row,i++,dataRow.getRuc_dni(),style);
                     }
                     createCell(row,i++,dataRow.getProducto(),style);
-                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas()*dataRow.getCantidadvendidos());
                     createCell(row,i,"",style).setCellValue(dataRow.getCantidadvendidos());
                 }
 
@@ -137,7 +137,7 @@ public abstract class ReportesUtils {
                     createCell(row,i++,"",style).setCellValue(dataRow.getDni());
                     createCell(row,i++,dataRow.getCorreo(),style);
                     createCell(row,i++,"",style).setCellValue(dataRow.getTelefono());
-                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas());
+                    createCell(row,i++,"",style).setCellValue(dataRow.getSumaventas()*dataRow.getCantidadvendidos());
                     createCell(row,i,"",style).setCellValue(dataRow.getCantidadvendidos());
                 }
 
