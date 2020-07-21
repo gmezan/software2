@@ -1,4 +1,4 @@
-const BASE = window.location.href.split("/")[0]+"//"+window.location.href.split("/")[2]+"/notification";
+/*const BASE = window.location.href.split("/")[0]+"//"+window.location.href.split("/")[2]+"/notification";
 const unread = 'style="background:rgba(148, 244, 255, 0.8)"';
 const maxHeight = 400;
 $(function () {
@@ -39,4 +39,4 @@ $(function () {
                 alert("Ocurrió un error al cargar la página");
             });
     });
-});
+});*/

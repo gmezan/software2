@@ -5,7 +5,6 @@ import com.example.sw2.entity.StorageServiceResponse;
 import com.example.sw2.entity.Roles;
 import com.example.sw2.entity.Usuarios;
 import com.example.sw2.repository.AsignadosSedesRepository;
-import com.example.sw2.repository.NotificaRepository;
 import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.utils.CustomMailService;
 import com.example.sw2.utils.UploadObject;
@@ -37,8 +36,6 @@ public class GestoresController {
     AsignadosSedesRepository asignadosSedesRepository;
     @Autowired
     CustomMailService customMailService;
-    @Autowired
-    NotificaRepository notificaRepository;
     @Autowired
     StorageServiceDao storageServiceDao;
 

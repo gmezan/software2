@@ -4,7 +4,6 @@ package com.example.sw2.controller.gestor;
 import com.example.sw2.Dao.StorageServiceDao;
 import com.example.sw2.entity.*;
 import com.example.sw2.repository.AsignadosSedesRepository;
-import com.example.sw2.repository.NotificaRepository;
 import com.example.sw2.repository.UsuariosRepository;
 import com.example.sw2.utils.CustomMailService;
 import com.example.sw2.utils.ExceptionView;
@@ -44,8 +43,6 @@ public class ListaSedeGestorController {
     AsignadosSedesRepository asignadosSedesRepository;
     @Autowired
     CustomMailService customMailService;
-    @Autowired
-    NotificaRepository notificaRepository;
     @Autowired
     StorageServiceDao storageServiceDao;
     /*
