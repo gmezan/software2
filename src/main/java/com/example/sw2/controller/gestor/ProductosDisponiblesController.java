@@ -29,8 +29,10 @@ import javax.validation.constraints.Null;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
+import static com.example.sw2.constantes.CustomConstants.MANAGER_EMAIL;
 import static com.example.sw2.constantes.CustomConstants.MediosDePago;
 
 @Controller
@@ -148,7 +150,14 @@ public class ProductosDisponiblesController {
             venta.setVendedor((Usuarios) session.getAttribute("usuario"));
             ventasRepository.save(venta);
             try {
-                customMailService.sendSaleConfirmation(venta);
+                ArrayList<String> sa = new ArrayList<String>(){
+                    {usuariosRepository.findUsuariosByRoles_idroles(2).forEach(usuarios -> {
+                        if (!(venta.getVendedor().getIdusuarios()==usuarios.getIdusuarios()))
+                            add(usuarios.getCorreo());});}
+                };
+                String[] mails = new String[sa.size()];
+                mails = sa.toArray(mails);
+                customMailService.sendSaleConfirmation(venta,mails);
             } catch (MessagingException | IOException  e) {
                 e.printStackTrace();
             }

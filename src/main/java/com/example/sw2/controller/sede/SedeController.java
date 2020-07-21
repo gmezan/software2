@@ -199,7 +199,7 @@ public class SedeController {
                 if (asignadosSedes.getStock() ==0){
                     customMailService.sendStockAlert(asignadosSedes);
                 }
-                customMailService.sendSaleConfirmation(ventas);
+                customMailService.sendSaleConfirmation(ventas, asignadosSedes.getId().getGestor().getCorreo());
             } catch (MessagingException | IOException  e) {
                 e.printStackTrace();
             }
