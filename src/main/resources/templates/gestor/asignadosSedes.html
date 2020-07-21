@@ -84,7 +84,7 @@
                                                 <td th:if="${asig.id.getEstadoasignacion() != 2}">-</td>
                                                 <td th:if="${asig.id.getEstadoasignacion() < 3}"></td>
                                                 <td th:if="${asig.id.getEstadoasignacion() == 3}">
-                                                    <button th:attr="data-msg=${asig.mensaje}, data-gestor=${asig.id.gestor.idusuarios}, data-sede=${asig.id.sede.idusuarios}, data-inventario=${asig.id.productoinventario.codigoinventario},
+                                                    <button th:attr="data-msg=${asig.id.sede.fullname+': '+asig.mensaje}, data-gestor=${asig.id.gestor.idusuarios}, data-sede=${asig.id.sede.idusuarios}, data-inventario=${asig.id.productoinventario.codigoinventario},
                                                                 data-estado=${asig.id.estadoasignacion}, data-precio=${asig.id.precioventa}, data-stock=${asig.stock}"
                                                             type="button" class="btn btn-danger" data-toggle="modal" id="DescartarBoton" data-target="#DescartarModal"><i class="fas fa-exclamation-circle"></i></button>
                                                 </td>
