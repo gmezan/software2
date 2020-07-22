@@ -114,6 +114,7 @@ public class AsignadoTiendaController {
 
         if(bindingResult.hasErrors()){
             Usuarios sede = (Usuarios) session.getAttribute("usuario");
+            model.addAttribute("cantAsign", aTienda.getStock());
             model.addAttribute("asignados", asignacionTiendasRepository.findAsignacionTiendasByStockGreaterThanAndAsignadosSedes_Id_Sede(0,sede));
             model.addAttribute("id1", idAstiendas);
             model.addAttribute("tipodoc", CustomConstants.getTiposDocumento());
