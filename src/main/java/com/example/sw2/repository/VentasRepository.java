@@ -26,6 +26,8 @@ public interface VentasRepository extends JpaRepository<Ventas, Integer> {
 
     Optional<Ventas> findByIdventasAndConfirmado(Integer i, Boolean conf);
 
+    List<Ventas> findByVendedor_IdusuariosAndConfirmado(int id, boolean confirmado);
+
     @Query(value = "select distinct year(fecha) from Ventas", nativeQuery = true)
     List<Integer> getYears();
 

@@ -101,7 +101,7 @@
                                 <div class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}" ></div>
                             </div>
                             <div class="form-group">
-                                <label for="precioventa" class="col-form-label" th:text="'Precio de venta: S/. (Precio Ref. Precio Mosqoy S/.'+*{inventario.costomosqoy} +')'">Precio de venta: S/.</label>
+                                <label for="precioventa" class="col-form-label" th:text="'Precio de venta unitario: S/. (Precio Ref. Precio Mosqoy S/.'+*{inventario.costomosqoy} +')'">Precio de venta: S/.</label>
                                 <input type="number" step="0.01" class="form-control" th:field="*{precioventa}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('precioventa')}" th:errors="*{precioventa}" ></div>
                             </div>
