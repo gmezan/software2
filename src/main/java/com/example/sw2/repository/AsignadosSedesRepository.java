@@ -55,7 +55,7 @@ public interface AsignadosSedesRepository extends JpaRepository<AsignadosSedes, 
 
     AsignadosSedes findById_Productoinventario_CodigoinventarioAndId_PrecioventaAndId_EstadoasignacionAndId_Sede_Idusuarios(String codigo, Float precio, int estado, int dni);
 
-    @Query(value = "SELECT COUNT(estadoasignacion) FROM mosqoy.Asignados_sedes WHERE estadoasignacion = ?1 AND sede = ?2", nativeQuery = true)
+    @Query(value = "SELECT SUM(cantidadactual) FROM mosqoy.Asignados_sedes WHERE estadoasignacion = ?1 AND sede = ?2", nativeQuery = true)
     String cantProductosSegunEstado(int estadoasignacion, int sede);
 
     @Query(value = "SELECT SUM(stock) FROM mosqoy.Asignados_sedes WHERE estadoasignacion = 2 AND sede = ?1", nativeQuery = true)
