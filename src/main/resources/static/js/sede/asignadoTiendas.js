@@ -37,7 +37,7 @@ $(function() {
     }).done(function(ventas){
         if (ventas!=null){
             $("#registrarModal  #fechaasignacion").text('Este producto se asignó el ' + ventas.fechaasignacion);
-            $("#registrarModal  #cant").text('Cantidad:  (Cantidad Disponible: ' + ventas.stock + ')');
+            $("#registrarModal  #cant").text(ventas.stock);
             $("#registrarModal  #id1").val(ventas.idtiendas);
             $("#registrarModal  #rucdni").val(ventas.tienda.ruc);
             $("#registrarModal  #nombrecliente").val(ventas.tienda.nombre);
