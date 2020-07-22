@@ -92,7 +92,7 @@ public class AsignadoTiendaController {
             bindingResult.rejectValue("cantidad", "error.user","La cantidad no puede ser mayor al stock de la tienda");
         }
         if(venta.getFecha()!= null && venta.getFecha().isBefore(aTienda.getFechaasignacion())){
-                bindingResult.rejectValue("fecha", "error.user","La fecha de venta no puede ser antes de la fecha de asignación");
+                bindingResult.rejectValue("fecha", "error.user","La fecha de venta no puede ser antes de la fecha de asignación ("+ aTienda.getFechaasignacion()+")");
         }
 
         //Verificar que se haya ingresado un numero correcto de documento si la venta es confirmada
