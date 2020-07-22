@@ -26,6 +26,8 @@ public interface VentasRepository extends JpaRepository<Ventas, Integer> {
 
     Optional<Ventas> findByIdventasAndConfirmado(Integer i, Boolean conf);
 
+    List<Ventas> findByVendedor_IdusuariosAndConfirmado(int id, boolean confirmado);
+
     @Query(value = "select distinct year(fecha) from Ventas", nativeQuery = true)
     List<Integer> getYears();
 
@@ -59,10 +61,13 @@ public interface VentasRepository extends JpaRepository<Ventas, Integer> {
     List<DatosGestorVentasDto> obtenerDatosGestorVentas();
 
     @Query(value="SELECT COUNT(idventas) FROM mosqoy.Ventas WHERE vendedor = ?1",nativeQuery=true)
-    String cantVentas(int usuario);
+    String cantVentasPorGestor(int usuario);
 
     @Query(value="SELECT COUNT(idventas) FROM mosqoy.Ventas v INNER JOIN Usuarios u ON (v.vendedor = u.dni) WHERE u.rol = ?1",nativeQuery=true)
-    String cantVentasTotales(int rol);
+    String cantVentasTotalesDeGestores(int rol);
+
+    @Query(value="SELECT SUM(v.cantidad) FROM mosqoy.Ventas v INNER JOIN Usuarios u ON (v.vendedor = u.dni) WHERE u.rol = ?1",nativeQuery=true)
+    String cantProductosVendidosPorGestor(int rol);
 
     @Query(value="SELECT ven.* FROM Ventas ven WHERE ven.vendedor = ?1",nativeQuery=true)
     List<Ventas> buscarPorGestor(int gestor);

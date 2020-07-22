@@ -123,8 +123,9 @@ public class GestorController {
         model.addAttribute("stock_enSede", asignadosSedesRepository.stockProductosEnSede());
         model.addAttribute("cantProdDevueltos", asignadosSedesRepository.cantProductosDevueltos(newUser.getIdusuarios()));
         model.addAttribute("stock_devuelto", asignadosSedesRepository.stockProductosDevueltos(newUser.getIdusuarios()));
-        model.addAttribute("cantVentas", ventasRepository.cantVentas(newUser.getIdusuarios()));
-        model.addAttribute("cantVentasTotales", ventasRepository.cantVentasTotales(newUser.getRoles().getIdroles()));
+        model.addAttribute("cantVentas", ventasRepository.cantVentasPorGestor(newUser.getIdusuarios()));
+        model.addAttribute("cantVentasEnTotal", ventasRepository.cantVentasTotalesDeGestores(newUser.getRoles().getIdroles()));
+        model.addAttribute("cantProdVendidos", ventasRepository.cantProductosVendidosPorGestor(newUser.getRoles().getIdroles()));
     }
 
     //Web service
