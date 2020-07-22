@@ -21,7 +21,7 @@ public class Tienda implements Serializable {
     @Column(nullable = false)
     private String nombre;
     @NotBlank(message = "El campo no puede estar vacío")
-    @Pattern(regexp = "^[0-9]{11}$", message = "Ingresar un número de RUC válido")
+    @Pattern(regexp = "^[0-9]{11}$", message = "Ingresar un número de RUC válido (11 Dígitos)")
     @Column(nullable = false)
     private String ruc;
     @NotBlank(message = "El campo no puede estar vacío")
