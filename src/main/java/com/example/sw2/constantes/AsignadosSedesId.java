@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -25,6 +26,7 @@ public class AsignadosSedesId implements Serializable {
     @Column(name = "estadoasignacion")
     private Integer estadoasignacion;
     @Column(name = "precioventa")
+    @Digits(integer = 10 /*precision*/, fraction = 2 /*scale*/, message = "Ingrese un precio válido")
     private Float precioventa;
 
 
