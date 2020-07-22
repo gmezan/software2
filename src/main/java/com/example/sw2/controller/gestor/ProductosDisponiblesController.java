@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.Null;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -215,7 +216,7 @@ public class ProductosDisponiblesController {
         else
             asignadosSedes.getId().setSede(optionalUsuarios.get());
 
-        if (asignadosSedes.getStock()==0)
+        if (asignadosSedes.getStock()==null || asignadosSedes.getStock()==0)
             bindingResult.rejectValue("stock","error.user","La cantidad debe ser mayor a 0");
 
         //Se verifica la fecha de envio
@@ -228,8 +229,13 @@ public class ProductosDisponiblesController {
 
 
         //Se verfica el precio de venta
-        if (!((asignadosSedes.getId().getPrecioventa()!=null) && asignadosSedes.getId().getPrecioventa()>0.0))
+        if (!((asignadosSedes.getId().getPrecioventa()!=null) && (asignadosSedes.getId().getPrecioventa()>=0.01) && (asignadosSedes.getId().getPrecioventa()<=((float)9999999.99)) ))
             bindingResult.rejectValue("id.precioventa","error.user","Ingrese un precio válido");
+        else {
+             if( getNumberOfDecimalPlaces(new BigDecimal(Float.toString(asignadosSedes.getId().getPrecioventa())))>2) {
+                 bindingResult.rejectValue("id.precioventa", "error.user", "Ingrese un precio válido");
+             }
+        }
 
         //Se verifica la cantidad asignada
         if((asignadosSedes.getStock()!=null) && (optionalInventario.get().getCantidadgestor()<asignadosSedes.getStock()))
@@ -266,6 +272,13 @@ public class ProductosDisponiblesController {
             attributes.addFlashAttribute("msg", "Producto asignado exitosamente");
             return "redirect:/gestor/productosDisponibles";
         }
+    }
+
+
+    public int getNumberOfDecimalPlaces(BigDecimal bigDecimal) {
+        String string = bigDecimal.stripTrailingZeros().toPlainString();
+        int index = string.indexOf(".");
+        return index < 0 ? 0 : string.length() - index - 1;
     }
 
 
